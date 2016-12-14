@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title GimmeCar - Redlands Car Rental
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'public/landing'
+    = stylesheet_link_tag 'modules/mobile'
+    meta(name="viewport" content="width=device-width" initial-scale=1 maximum-scale=1 user-scalable="no")
+
+
+  body
+    header
+      .container
+        h1 GimmeCar
+
+        nav
+          ul
+            li 909-810-8639
+            li
+              button.btn.btn-primary Reserve
+
+    #landing
+      == yield
+
+    footer
+      .container
+        #footer-content
+          .one-half
+            h5 Locations
+            dl
+              dt Super 8 - Redlands
+              dd 1160 Arizona St.
+              dd Redlands, CA 92374
+
+        #footer-copyright
+          h1.left Auto Guru Rental Systems, LLC.
+          ul.right.list-horizontal
+            li
+              a(href='https://twitter.com/gimmecar') Twitter

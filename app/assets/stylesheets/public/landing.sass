@@ -1,0 +1,193 @@
+@import "basecoat/normalize"
+@import "basecoat/base"
+
+@import "global/colors"
+@import "global/layout"
+@import "global/text"
+
+@import "modules/mobile"
+
+@import "components/buttons"
+@import "components/footer"
+@import "components/lists"
+@import "components/nav"
+
+#landing
+  max-width: 100rem
+  margin: 0 auto
+
+#billboard
+  width: 100%
+  padding: 4rem 1rem
+
+  text-align: center
+
+  h2
+    margin: 0 auto $margin-ex-sm
+    padding: $padding-ex-sm $padding-sm
+
+    display: inline-block
+
+    text-align: center
+    font-size: 3.5rem
+    font-weight: 400
+    letter-spacing: -0.03125rem
+    color: #222222
+
+    + p
+      margin-top: 0rem
+      margin-bottom: 6rem
+      color: #333333
+
+#billboard-reservation
+  margin: 0 auto
+
+#billboard-reservation-inputs
+  max-width: 40rem
+  margin: 0 auto
+  border-radius: 0.125rem
+
+  > div
+    padding: $padding-sm
+    float: left
+
+  > div:first-of-type
+    border-top-left-radius: 0.25rem
+    border-bottom-left-radius: 0.25rem
+
+  > div:last-of-type
+    border-top-right-radius: 0.25rem
+    border-bottom-right-radius: 0.25rem
+
+  label
+    float: left
+    width: 100%
+
+    //text-transform: uppercase
+    font-size: 0.875rem
+    font-weight: 700
+    line-height: 0.875rem
+    text-align: left
+
+  .label-note
+    float: left
+    margin: $margin-sm 0 0
+
+    color: #999999
+    font-size: 0.875rem
+    font-weight: 700
+    line-height: 0.875rem
+    text-align: left
+
+
+  input
+    margin-top: $margin-ex-sm
+    float: left
+    width: 100%
+    height: 2.125rem
+
+    border: 0
+    border-bottom: 0.125rem solid #dddddd
+    background: none
+
+    font-size: 0.875rem
+    font-family: "Hack"
+    color: #192531
+
+    &:hover
+      border-color: #cccccc
+
+    &:focus
+      border-color: $blue
+
+  input:disabled
+    color: #333333
+    cursor: not-allowed
+    border-color: #dddddd
+
+
+#billboard-reservation-location
+  width: 100%
+
+#billboard-reservation-date
+  float: left
+  width: 50%
+
+#billboard-reservation-submit
+  width: 100%
+
+  button
+    width: 100%
+    height: 2rem + $margin-ex-sm + 0.875rem
+
+.landing-page-section
+  margin: 0 auto $margin-ex-lg
+
+#fleet
+  width: 100%
+
+  h4
+    font-size: 1.5rem
+    font-weight: 700
+    text-transform: uppercase
+    text-align: center
+
+  p
+    margin: 0 auto
+    max-width: 40rem
+
+    font-size: 1rem
+    line-height: 1.5rem
+    text-align: center
+
+  #todays-rate
+    margin-top: $margin-default
+
+    span
+      font-size: 1.5rem
+      font-weight: 700
+      line-height: 1.75rem
+      color: $blue
+
+  img
+    height: 100%
+    width: 100%
+    max-width: 51.5625rem
+    max-height: 19.1875rem
+    display: block
+    margin: 5rem auto 0
+
+#faq
+  max-width: 45rem
+
+  h4
+    font-size: 1rem
+    font-weight: 700
+    text-align: center
+    margin-bottom: $margin-lg
+
+    &:after
+      content: " "
+      width: 4rem
+      height: 0.125rem
+      display: block
+      margin: 0.625rem auto 0
+      text-align: center
+
+      background: #dddddd
+
+  dl
+    max-width: 100%
+    margin: 0 auto
+    float: left
+
+  dt,
+  dd
+    font-size: 0.875rem
+
+  dt
+    font-weight: 700
+
+  dd
+    margin: $margin-ex-sm 0 $margin-default
+    padding: 0

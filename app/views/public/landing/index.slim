@@ -1,0 +1,48 @@
+#billboard
+  .container
+    h2 Hassel Free Car Rental.
+    p
+      | 24-7 Car Rental. Currently serving&nbsp;
+      b Redlands, Loma Linda, Highland,&nbsp;
+      | and&nbsp;
+      b San Bernardino.
+
+    #billboard-reservation
+      #billboard-reservation-inputs
+        #billboard-reservation-location
+          label
+            | Where:&nbsp;
+          input(type='text' value='Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374' disabled)
+          /p.label-note Currently, our only location.
+
+        #billboard-reservation-date
+          label From:
+          input(type='text' placeholder='mm/dd/yyyy')
+
+        #billboard-reservation-date
+          label To:
+          input(type='text' placeholder='mm/dd/yyyy')
+
+        #billboard-reservation-submit
+          button.btn.btn-lg.btn-primary(type='submit') Continue
+
+.container
+  #fleet.landing-page-section
+    h4 Our Fleet
+    p Our fleet of Toyota Corollas come with RoadSide Assistance, back-up camera, brake assist, bluetooth, and USB and axuiliary inputs for a safe and comfortable trip.
+    p#todays-rate
+      b
+        | Today's Rate:&nbsp;
+        span $34
+        | &nbsp;/ day
+
+    img(name='GimmeCar Rental Fleet' src='assets/toyota_corolla.png')
+
+  #faq.landing-page-section
+    h4 Here's a few answers to our most common questions
+    dl
+      dt What kinds of credentials will I need to rent a car?
+      dd You must have a valid U.S. driver's licence in the driver's name, a Visa, Master, Discover, or American Express credit card, and auto insurance.
+
+      dt Whats the minimum age required?
+      dd You need to be atleast 21 years of age to rent a car.

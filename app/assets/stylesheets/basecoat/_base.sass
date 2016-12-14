@@ -1,0 +1,181 @@
+@import "global/layout"
+@import "global/colors"
+
+*
+  box-sizing: border-box
+
+html,
+body
+  background: $background-color-page
+
+  font-family: "Lato", serif
+  -webkit-font-smoothing: antialiased
+  font-size: 100%
+
+html
+  min-height: 100%
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus
+  outline: none
+
+.container
+  width: 100%
+  min-width: $min-width
+  max-width: $max-width
+  padding: 0 $outer-margin
+  margin: 0 auto
+
+#content
+  min-width: $min-width - $outer-margin - $outer-margin
+  margin: 0 auto
+  margin-top: 3.4375rem
+
+// CLEAR FIX
+div
+  position: relative
+
+  &:before, &:after
+    content: " "
+    display: table
+
+  &:after
+    clear: both
+
+.hide
+  display: none
+
+.inline-block
+  display: inline-block
+
+.block
+  display: block
+
+.center
+  margin: 0 auto
+
+// Margins & Paddings
+.margin-default
+  margin: $margin-default
+
+.padding-default
+  padding: $padding-default
+
+.margin-sm
+  margin: $margin-sm
+
+.padding-sm
+  padding: $padding-sm
+
+.margin-top-ex-sm
+  margin-top: $margin-ex-sm
+
+.margin-top-sm
+  margin-top: $margin-sm
+
+.margin-top-default
+  margin-top: $margin-default
+
+.margin-top-lg
+  margin-top: $margin-lg
+
+.margin-top-ex-lg
+  margin-top: $margin-ex-lg
+
+.margin-left-ex-sm
+  margin-left: $margin-ex-sm !important
+
+.margin-left-sm
+  margin-left: $margin-sm
+
+.margin-right-default
+  margin-right: $margin-default
+
+.padding-left-default
+  padding-left: $padding-default
+
+.padding-left-sm
+  padding-left: $padding-sm
+
+.margin-bottom-default
+  margin-bottom: $margin-default !important
+
+.padding-bottom-default
+  padding-bottom: $padding-default
+
+.margin-bottom-lg
+  margin-bottom: $margin-lg
+
+.margin-bottom-sm
+  margin-bottom: $margin-sm
+
+.margin-right-sm
+  margin-right: $margin-sm !important
+
+.padding-right-sm
+  padding-right: $padding-sm !important
+
+.padding-top-sm
+  padding-top: $padding-sm
+
+.padding-top-default
+  padding-top: $padding-default
+
+.padding-top-lg
+  padding-top: $padding-lg
+
+.margin-auto
+  margin: auto
+
+// Floats
+.right
+  float: right !important
+  right: 0
+
+.left
+  float: left !important
+  left: 0
+
+// Cursor
+.cursor-help
+  cursor: help
+
+.cursor-pointer
+  cursor: pointer
+
+// Column widths
+.one-third
+  width: 33.333333%
+
+.two-thirds
+  width: 66.666667%
+
+.one-fourth
+  width: 25%
+
+.one-half
+  width: 50%
+
+.three-fourths
+  width: 75%
+
+.one-fifth
+  width: 20%
+
+.two-fifths
+  width: 40%
+
+.three-fifths
+  width: 60%
+
+.four-fifths
+  width: 80%
+
+.whole
+  width: 100%
+
+// Text
+.text-center
+  text-align: center
