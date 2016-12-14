@@ -4,6 +4,7 @@ development:
   username: postgres
   password: root
   port: 5432
+  encoding: utf8
 
 production:
   adapter: postgresql
@@ -11,7 +12,7 @@ production:
   database: <%= ENV["DATABASE_NAME"] %>
   username: <%= ENV["DATABASE_USERNAME"] %>
   password: <%= ENV["DATABASE_PASSWORD"] %>
-  host: <%= ENV["DATABASE_URL"] %>
+  host: <%= ENV["DATABASE_HOST"] %>
   port: 5432
 
 # Warning: The database defined as "test" will be erased and
@@ -22,4 +23,5 @@ test:
   database: gimmecar_test
   username: postgres
   password: root
+  port: 5432
   encoding: utf8
