@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215035801) do
+ActiveRecord::Schema.define(version: 20161219200030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20161215035801) do
     t.text    "notes"
   end
 
+  create_table "rates", force: :cascade do |t|
+    t.integer "location_id"
+    t.date    "date"
+    t.integer "rate"
+    t.string  "vehicle_type"
+    t.index ["location_id"], name: "index_rates_on_location_id", using: :btree
+  end
+
   create_table "rentals", force: :cascade do |t|
     t.integer "driver_id"
     t.integer "vehicle_id"
@@ -59,6 +67,19 @@ ActiveRecord::Schema.define(version: 20161215035801) do
     t.index ["pickup_location_id"], name: "index_rentals_on_pickup_location_id", using: :btree
     t.index ["return_location_id"], name: "index_rentals_on_return_location_id", using: :btree
     t.index ["vehicle_id"], name: "index_rentals_on_vehicle_id", using: :btree
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string  "first_name"
+    t.string  "last_name"
+    t.string  "email"
+    t.string  "crypted_password"
+    t.string  "password_salt"
+    t.string  "persistence_token"
+    t.string  "single_access_token"
+    t.string  "perishable_token"
+    t.boolean "active",              default: false
+    t.boolean "confirmed",           default: false
   end
 
   create_table "vehicles", force: :cascade do |t|
