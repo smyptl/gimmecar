@@ -9,22 +9,37 @@
 
     #billboard-reservation
       #billboard-reservation-inputs
-        #billboard-reservation-location
-          label
-            | Where:&nbsp;
-          input(type='text' value='Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374' disabled)
-          /p.label-note Currently, our only location.
+        .input-container
+          .input-block
+            label.input-label Where:
+            select.input-field
+              option(value='', disabled) Current, our only location.
+              option(value='', selected) Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
+        .input-container
+          .one-half.left
+            .input-block.one-half
+              label.input-label From:
+              input.input-field(type='text' placeholder='mm/dd/yyyy')
+            .input-block.one-half
+              select.input-field(name='pickup_time' placeholder='--:-- AM/PM')
+                option(value='' disabled) --:-- AM/PM
+                - Lib::InputConstants::DATES.each do |date|
+                  option(value=date.first)= date.last
 
-        #billboard-reservation-date
-          label From:
-          input(type='text' placeholder='mm/dd/yyyy')
+          .one-half.left
+            .input-block.one-half
+              label.input-label To:
+              input.input-field(type='text' placeholder='mm/dd/yyyy')
+            .input-block.one-half
+              select.input-field(name='return_time' placeholder='--:-- AM/PM')
+                option(value='' disabled) --:-- AM/PM
+                - Lib::InputConstants::DATES.each do |date|
+                  option(value=date.first)= date.last
 
-        #billboard-reservation-date
-          label To:
-          input(type='text' placeholder='mm/dd/yyyy')
 
-        #billboard-reservation-submit
-          button.btn.btn-lg.btn-primary(type='submit') Continue
+        .input-container
+          .input-submit
+            button.btn.btn-lg.btn-full.btn-primary.left(type='submit') Continue
 
 .container
   #fleet.landing-page-section
