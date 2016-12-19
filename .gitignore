@@ -27,10 +27,10 @@
 !/tmp/.keep
 
 # Ignore Node
-node_modules/
+node_modules
 
 # Ignore all files created by webpack
-app/assets/javascripts/
+app/assets/javascripts
 
 # Ignore Byebug command history file.
 .byebug_history
