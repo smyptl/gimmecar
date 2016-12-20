@@ -11,7 +11,8 @@ class CreateDrivers < ActiveRecord::Migration[5.0]
       t.string :city
       t.string :state
       t.string :zip_code
-      t.integer :phone_number
+      t.integer :home_phone_number
+      t.integer :cell_phone_number
       t.string :email
       t.date :date_of_birth
       t.string :license_number
