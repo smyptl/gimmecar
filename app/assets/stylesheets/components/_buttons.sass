@@ -19,14 +19,15 @@
   -webkit-appearance: none
 
   &:hover,
-  &:active
+  &:active,
+  &:focus
     background: #f3f3f3
-
-  &:active
-    box-shadow: inset 0px 1px 0 0 $border-color-dark
 
   &:focus
     box-shadow: 0 0 0.1875rem 0 $border-color-dark
+
+  &:active
+    box-shadow: inset 0px 1px 0 0 $border-color-dark
 
 .btn[disabled]
   cursor: not-allowed
@@ -94,7 +95,7 @@
   height: $input-height-lg
   padding: 0 1rem
   font-size: 1rem
-  line-height: 2.625rem
+  line-height: $input-height-lg - 0.125rem
   border-radius: 0.1875rem
 
 .btn.btn-md
@@ -112,13 +113,6 @@
 
   [class^="icon-"]:before
     font-size: 0.8125rem
-
-//.btn.btn-ex-sm
-  //height: $btn-ex-sm-height
-  //padding: 0 0.375rem
-
-  //font-size: 0.625rem
-  //line-height: 1.5rem
 
 .btn.btn-blue
   background: lighten($blue, 4%)
@@ -140,18 +134,6 @@
 
   &:focus
     box-shadow: 0 0 0.1875rem 0 darken($border-color-blue, 15%)
-
-  &:active
-    box-shadow: inset 0px 1px 0 0 darken($border-color-blue, 15%)
-
-.btn.btn-share
-  color: $text-color-blue
-
-  &:hover,
-  &:active
-    border-color: darken($border-color-blue, 15%)
-    background: darken($blue, 2%)
-    color: #ffffff
 
   &:active
     box-shadow: inset 0px 1px 0 0 darken($border-color-blue, 15%)

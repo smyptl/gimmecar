@@ -10,6 +10,9 @@
         required: true,
       },
     },
+    mounted () {
+      this.updateValue(this.value)
+    },
     watch: {
       value (val, oldVal) {
         this.updateValue(val)

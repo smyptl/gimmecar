@@ -18,37 +18,66 @@
 
 #billboard
   width: 100%
-  padding: 4rem 1rem
+  max-width: 40rem
+  padding: $margin-ex-lg 0
+  margin: 0 auto
 
-  text-align: center
+  text-align: left
 
   h2
     margin: 0 auto $margin-ex-sm
-    padding: $padding-ex-sm $padding-sm
+    padding: $padding-ex-sm 0
 
-    display: inline-block
-
-    text-align: center
     font-size: 3.5rem
     font-weight: 400
     letter-spacing: -0.03125rem
-    color: #222222
 
     + p
       margin-top: 0rem
-      margin-bottom: 6rem
-      color: #333333
+      margin-bottom: $margin-lg
+      padding-left: 0.125rem
+
+      font-size: 1.125rem
+      line-height: 1.5rem
+      color: #606060
 
 #billboard-reservation
   margin: 0 auto
 
 #billboard-reservation-inputs
-  max-width: 40rem
+  max-width: 45rem
   margin: 0 auto
   border-radius: 0.125rem
+  position: relative
 
-.landing-page-section
-  margin: 0 auto $margin-ex-lg
+//#rental-details,
+//#rental-summary,
+//#rental-reserve
+
+#rental-summary
+  h6
+    float: left
+    width: 100%
+    margin-bottom: $margin-sm
+    padding-bottom: $padding-sm
+
+    border-bottom: 1px solid $border-color-dark
+
+  h5
+    float: left
+    width: 100%
+    border-top: 2px solid $border-color-dark
+    padding-top: $padding-sm
+
+  ul
+    margin-bottom: $margin-default
+
+  li
+    float: left
+    width: 100%
+    margin-bottom: $margin-sm
+
+    font-size: 0.875rem
 
 #fleet
   width: 100%
