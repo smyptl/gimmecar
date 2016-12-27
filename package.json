@@ -11,6 +11,7 @@
     "test": "karma start ./spec/frontend/karma.conf.js"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "css-loader": "^0.26.1",
     "node-sass": "^4.1.0",
     "pug": "^2.0.0-beta6",

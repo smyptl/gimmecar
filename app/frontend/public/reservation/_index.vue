@@ -34,16 +34,16 @@
       },
       enter(el, done) {
         if (this.transition_type == 'forward') {
-          this.fadeIn(el, done, { scale: [1, 1], fromScale: [0.975, 0.975]})
+          this.fadeIn(el, done, { scale: [1, 1], fromScale: [0.99, 0.99]})
         } else {
-          this.fadeIn(el, done, { scale: [1, 1], fromScale: [1.025, 1.025]})
+          this.fadeIn(el, done, { scale: [1, 1], fromScale: [1.01, 1.01]})
         }
       },
       leave(el, done) {
         if (this.transition_type == 'forward') {
-          this.fadeOut(el, done, { scale: [1.025, 1.025], fromScale: [1, 1]})
+          this.fadeOut(el, done, { scale: [1.01, 1.01], fromScale: [1, 1]})
         } else {
-          this.fadeOut(el, done, { scale: [0.975, 0.975], fromScale: [1, 1]})
+          this.fadeOut(el, done, { scale: [0.99, 0.99], fromScale: [1, 1]})
         }
       },
       fadeIn(el, done, settings) {
@@ -183,5 +183,8 @@
           button.btn.btn-full(@click="current_step = 'rental-summary', transition_type = 'backward'") Go Back
         .input-block.four-fifths.fixed
           button.btn.btn-full.btn-primary Reserve Car
+
+    #rental-confirmation(v-if="current_step == 'rental-confirmation'" key='reserve')
+
 
 </template>
