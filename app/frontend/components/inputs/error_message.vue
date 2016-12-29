@@ -1,5 +1,5 @@
 <script>
-  import { compact } from 'lodash'
+  import Compact from 'lodash/compact'
 
   export default {
     props: {
@@ -16,7 +16,7 @@
     },
     computed: {
       hasError() {
-        return this.errors && this.errors[this.value] && compact(this.errors[this.value]).length
+        return this.errors && this.errors[this.value] && Compact(this.errors[this.value]).length
       },
     },
   }
@@ -24,6 +24,8 @@
 
 <template lang='pug'>
   p.input-error-message(v-if='hasError')
-    template(v-for='error in errors[value]')
+    template(v-for='(error, index) in errors[value]')
       | {{ error }}
+      template(v-if='errors[value].length > 1 && (index + 1) != errors[value].length')
+        | ,&nbsp;
 </template>
