@@ -2,7 +2,7 @@ class Lib::TypeCast::Integer
 
   def self.type_cast(value)
     case value
-    when ::Fixnum || ::Bignum
+    when ::Integer
       value
     when ::Float || ::BigDecimal
       value.to_i

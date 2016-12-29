@@ -6,16 +6,16 @@ module Lib::Forms::Actions
   included do
     define_callbacks :save, :execute
 
-    def self.execute(success, failure, params)
+    def self.execute(success, failure, params = {})
       self.new().execute(success, failure, params)
     end
 
-    def self.execute!(params)
+    def self.execute!(params = {})
       self.new().execute!(params)
     end
   end
 
-  def execute(success, failure, params)
+  def execute(success, failure, params = {})
     @params = params
 
     run_callbacks :execute do
@@ -32,7 +32,7 @@ module Lib::Forms::Actions
     end
   end
 
-  def execute!(params)
+  def execute!(params = {})
     success = lambda { |_| return true }
     failure = lambda { |_| return false }
     execute(success, failure, params)

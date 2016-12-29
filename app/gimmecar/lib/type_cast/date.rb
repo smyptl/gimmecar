@@ -5,7 +5,8 @@ class Lib::TypeCast::Date
 
   def self.type_cast(value)
     return value if value.is_a?(Date)
-    value = value.to_s.strip
+
+    value = Lib::TypeCast::String.type_cast(value)
 
     if value =~ JSON_REGEX
       parse = JSON_REGEX.match(value)

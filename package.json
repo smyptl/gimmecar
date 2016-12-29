@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "index.js",
   "repository": "git@github.com:smyptl/gimmecar.git",
-  "author": "Samay Patel <samay@capyx.com>",
+  "author": "Samay Patel <samay@gimmecar.com>",
   "license": "MIT",
   "scripts": {
     "dev": "webpack -w -d --display-reasons --display-chunks --progress --config ./config/webpack.js",
@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "css-loader": "^0.26.1",
+    "lodash": "^4.17.3",
     "node-sass": "^4.1.0",
     "pug": "^2.0.0-beta6",
     "sass-loader": "^4.1.0",
@@ -20,6 +21,6 @@
     "vue": "^2.1.6",
     "vue-loader": "^10.0.2",
     "vue-template-compiler": "^2.1.6",
-    "webpack": "2.2.0-rc.1"
+    "webpack": "^1.14.0"
   }
 }
