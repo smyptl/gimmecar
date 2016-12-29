@@ -26,8 +26,9 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore Node
+# Ignore
 node_modules
+xcrun
 
 # Ignore all files created by webpack
 app/assets/javascripts
