@@ -12,6 +12,7 @@ class Services::Public::GetRates < Lib::Forms::Base
 
   def rental_period
     return unless pickup && drop_off
+    return unless pickup.before?(drop_off)
     @rental_period ||= Lib::DateRange.new(pickup, drop_off)
   end
 
@@ -65,7 +66,7 @@ class Services::Public::GetRates < Lib::Forms::Base
     return unless pickup && drop_off
 
     case
-    when !drop_off.after?(pickup)
+    when !pickup.before?(drop_off)
       errors.add(:drop_off, "drop off date must be after pickup date")
       errors.add(:drop_off_date, nil)
       errors.add(:drop_off_time, nil)

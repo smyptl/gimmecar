@@ -11,12 +11,14 @@ class Actions::CreateReservation < Lib::Forms::Base
   attribute :email,         :string
   attribute :phone_number,  :integer
 
-  validates :first_name, :last_name, :email,
+  validates :first_name, :last_name,
     presence: true
 
+  validates :email,
+    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: "must be a valid email" }
+
   validates :phone_number,
-    presence: true,
-    length: { is: 10 }
+    length: { is: 10, wrong_length: "must be a valid phone number with area code" }
 
   def rental_period
     @rental_period ||= Lib::DateRange.new(pickup, drop_off)
