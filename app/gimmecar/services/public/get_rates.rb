@@ -55,7 +55,7 @@ class Services::Public::GetRates < Lib::Forms::Base
   def pickup_is_after_today
     return unless pickup
 
-    if pickup.before?(DateTime.now)
+    if pickup.before?(DateTime.now.in_time_zone("Pacific Time (US & Canada)"))
       errors.add(:pickup, "can't be in the past")
       errors.add(:pickup_date, nil)
       errors.add(:pickup_time, nil)

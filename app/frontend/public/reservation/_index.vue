@@ -280,10 +280,6 @@
               option(value='10:30 PM') 10:30 PM
               option(value='11:00 PM') 11:00 PM
               option(value='11:30 PM') 11:30 PM
-            input-error-message(value='pickup_time', :errors='errors')
-          .input-block.whole
-            input-error-message(value='pickup', :errors='errors')
-
             input-error-message(value='drop_off_time', :errors='errors')
           .input-block.whole
             input-error-message(value='drop_off', :errors='errors')
