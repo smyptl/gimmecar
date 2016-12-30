@@ -16,7 +16,7 @@ describe Lib::TypeCast::DateTime do
       end
 
       it "value is date and time are valid in string" do
-        expect(Lib::TypeCast::DateTime.type_cast({ :date => "1/1/2012", :time => "2:00 PM" })).to eq(DateTime.new(2012, 1, 1, 14, 0, 0, "-8"))
+        expect(Lib::TypeCast::DateTime.type_cast({ :date => "1/1/2012", :time => "2:20 PM" })).to eq(DateTime.new(2012, 1, 1, 14, 20, 0, "-8"))
       end
 
       it "value is DateTime object" do

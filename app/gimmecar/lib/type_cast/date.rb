@@ -14,7 +14,7 @@ class Lib::TypeCast::Date
     end
 
     if value =~ DATE_REGEX
-      Date.strptime(value, "%m/%d/%Y").in_time_zone("Pacific Time (US & Canada)")
+      Date.strptime(value, "%m/%d/%Y").in_time_zone("America/Los_Angeles")
     end
   end
 end

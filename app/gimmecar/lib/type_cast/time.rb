@@ -8,7 +8,9 @@ class Lib::TypeCast::Time
     value = Lib::TypeCast::String.type_cast(value)
 
     if value =~ TIME_REGEX
-      Time.strptime(value, '%I:%M %p').in_time_zone("Pacific Time (US & Canada)")
+      Time.use_zone("America/Los_Angeles") do
+        Time.strptime(value, '%I:%M %p')
+      end
     end
   end
 end

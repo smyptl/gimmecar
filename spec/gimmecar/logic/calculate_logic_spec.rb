@@ -35,7 +35,7 @@ describe Logic::CalculateRental do
         expect(l.rates).to eq([
           {
             value: 3500,
-            date: Date.new(2011, 1, 1)
+            date: DateTime.new(2011, 1, 1, 7, 0, 0)
           },
         ])
       end
@@ -49,7 +49,7 @@ describe Logic::CalculateRental do
         expect(l.rates).to eq([
           {
             value: 2334,
-            date: Date.new(2011, 1, 1)
+            date: DateTime.new(2011, 1, 1, 6, 0, 0)
           },
         ])
       end
