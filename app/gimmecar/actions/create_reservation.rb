@@ -68,7 +68,7 @@ class Actions::CreateReservation < Lib::Forms::Base
   end
 
   def save
-    Public::RentalConfirmation.customer(success_args).deliver_now
-     Public::RentalConfirmation.samay(success_args).deliver_now
+    Public::RentalConfirmation.customer(success_args).deliver_later
+    Public::RentalConfirmation.samay(success_args).deliver_later
   end
 end
