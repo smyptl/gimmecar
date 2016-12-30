@@ -24,7 +24,7 @@ class Logic::CalculateRental < Lib::Logic::Base
     output = []
 
     rental_period.days_apart.times do |x|
-      date = (rental_period.start_date + x).to_date
+      date = (rental_period.start_date + x)
 
       #rate = Rate.where(:date => date).rate || RATE
       rate = RATE
@@ -49,7 +49,7 @@ class Logic::CalculateRental < Lib::Logic::Base
 
       output << {
         :value => value,
-        :date  => rental_period.end_date.to_date
+        :date  => rental_period.end_date
       }
     end
 
