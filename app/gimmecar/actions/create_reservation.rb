@@ -43,11 +43,13 @@ class Actions::CreateReservation < Lib::Forms::Base
   end
 
   def success_args
-    {
+    @success_args ||= {
       :vehicle             => "Toyota Corolla",
       :location            => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
       :first_name          => first_name,
       :last_name           => last_name,
+      :email               => email,
+      :phone_number        => phone_number,
       :confirmation_number => confirmation_number,
       :pickup              => pickup,
       :drop_off            => drop_off,
@@ -66,5 +68,7 @@ class Actions::CreateReservation < Lib::Forms::Base
   end
 
   def save
+    Public::RentalConfirmation.customer(success_args).deliver_now
+     Public::RentalConfirmation.samay(success_args).deliver_now
   end
 end

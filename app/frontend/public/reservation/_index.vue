@@ -152,7 +152,7 @@
     #rental-details(v-if="current_step == 'rental-details'" key='details')
       .input-row
         label.input-label.input-lg Where:
-        .input-block
+        .input-block.whole
           select.input-field.input-lg
             option(value='' disabled) Current, our only location.
             option(value='') Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
@@ -289,7 +289,7 @@
             input-error-message(value='drop_off', :errors='errors')
 
         .input-submit
-          .input-block
+          .input-block.whole
             button.btn.btn-full.btn-primary.left(type='submit' @click='viewRates') View Rates
 
     #rental-summary.rental-invoice(v-if="current_step == 'rental-summary'" key='summary')
@@ -350,7 +350,7 @@
           | Email
           span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
 
-        .input-block
+        .input-block.whole
           input.input-field.input-lg(type='text' v-model='email' v-error:email='errors' placeholder='john@gmail.com')
           input-error-message(value='email', :errors='errors')
 
@@ -359,7 +359,7 @@
           | Phone #
           span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
 
-        .input-block
+        .input-block.whole
           input.input-field.input-lg(type='text' v-model='phone_number' v-error:phone_number='errors' placeholder='805-555-1234')
           input-error-message(value='phone_number', :errors='errors')
 
@@ -371,7 +371,7 @@
 
     #rental-confirmation.rental-invoice(v-if="current_step == 'rental-confirmation'" key='confirmation')
       h3.emoji :]
-      p.text-center Thanks for choosing us, {{ first_name }}!!! Your confirmation number is {{ rental_summary.confirmation_number }}. We will give you a call shortly to confirm your reservation.
+      p.text-center Thanks for choosing us, {{ first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 
       h6.margin-bottom-sm.margin-top-default Rental Confirmation
       ul.left.whole.list-no-style

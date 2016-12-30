@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack -w -d --display-reasons --display-chunks --progress --config ./config/webpack.js",
-    "build": "webpack -p --config ./config/webpack.js",
-    "test": "karma start ./spec/frontend/karma.conf.js"
+    "test": "karma start ./spec/frontend/karma.conf.js",
+    "heroku-postbuild": "webpack -p --config ./config/webpack.js"
   },
   "babel": {
     "presets": [
