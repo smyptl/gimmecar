@@ -16,7 +16,7 @@ describe Lib::TypeCast::Date do
       end
 
       it "is in wrong format" do
-        expect(Lib::TypeCast::Date.type_cast("1/6/2000")).to_not eq(Date.new(2000,6,1))
+        expect(Lib::TypeCast::Date.type_cast("1/6/2000")).to_not eq(Date.new(2000,6,1).in_time_zone("America/Los_Angeles"))
       end
 
       it "value is invalid date" do

@@ -8,9 +8,7 @@ class Lib::TypeCast::Time
     value = Lib::TypeCast::String.type_cast(value)
 
     if value =~ TIME_REGEX
-      Time.use_zone("America/Los_Angeles") do
-        Time.strptime(value, '%I:%M %p')
-      end
+      Time.use_zone("America/Los_Angeles") { Time.parse(value) }
     end
   end
 end
