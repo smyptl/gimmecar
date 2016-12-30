@@ -1,0 +1,138 @@
+.form-step
+  height: 100%
+  width: 100%
+  float: left
+  display: block
+
+  h3
+    margin: $margin-default 0 0 -0.8125rem
+
+    text-transform: uppercase
+    font-size: 1.25rem
+    font-weight: 400
+    font-family: "Oswald"
+    color: #666666
+
+    &:after
+      content: ' '
+      height: 0.125rem
+      width: 3rem
+      display: block
+      margin-top: $padding-sm
+      margin-left: $margin-lg + 0.75rem
+
+      background: $border-color-light
+
+.form-inputs
+  width: 100%
+  float: left
+  padding-left: $padding-lg
+
+.input-row,
+.input-submit,
+.input-label,
+.input-field
+  width: 100%
+  float: left
+
+.input-container
+  float: left
+  padding: 0
+  margin: 0
+
+.input-submit
+  padding: $padding-default 0
+
+.input-block
+  float: left
+  padding: 0 $padding-ex-sm/2
+
+.input-flex-container
+  display: flex
+  flex-direction: row
+
+  .input-element-fixed
+    width: auto
+
+  .input-element-flex
+    flex: 1
+
+.input-label
+  padding: $padding-default $padding-ex-sm/2 0
+
+  font-size: 0.8125rem
+  font-weight: 700
+  line-height: 1.25rem
+  text-align: left
+
+  cursor: pointer
+
+.input-label.input-lg
+  font-size: 0.875rem
+
+.input-label-note
+  font-weight: 400
+  color: #999999
+
+.input-field
+  height: $input-height
+  margin-top: $margin-ex-sm
+  padding: $padding-sm
+  position: relative
+
+  background-color: $background-color-input
+  border-radius: 0.125rem
+  border: 1px solid $border-color-input
+
+  cursor: pointer
+  font-size: $font-size-default - 0.0625rem
+  font-family: "Hack"
+  font-weight: 400
+
+  &:focus
+    z-index: 2
+    border-color: $blue
+    background-color: #ffffff
+    box-shadow: 0 0 0.125rem 0 lighten($blue, 30%)
+
+.input-field.input-lg
+  height: $input-height-lg
+  font-size: $font-size-default
+
+.input-field,
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+
+select.input-field
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>")
+  background-repeat: no-repeat
+  background-size: 0.75rem
+  background-position: right $padding-sm center
+
+.input-field.input-field-error
+  color: $text-color-red
+  border-color: $border-color-red
+  background-color: #ffffff
+
+  &:focus
+    border-color: $border-color-red
+    box-shadow: 0 0 0.125rem 0 lighten($red, 16%)
+
+.input-error-message
+  float: left
+  margin: 0 ($margin-ex-sm/2) 0 0
+  padding: $padding-ex-sm
+
+  border: 1px solid $border-color-yellow
+  border-top: 0
+  border-bottom-left-radius: 2px
+  border-bottom-right-radius: 2px
+  background-color: $background-color-yellow
+
+  text-align: left
+  font-size: $font-size-default
+  font-weight: 700
+  color: #444444

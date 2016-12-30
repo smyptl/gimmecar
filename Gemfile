@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 
+gem 'jbuilder'
+
 # Use postgres as the database for Active Record
 gem 'pg'
 
@@ -12,6 +14,7 @@ gem 'foreman'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem 'roadie-rails'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -30,16 +33,25 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # Email Opener
+  gem "letter_opener"
+end
+
+group :test do
+  gem "rspec-rails"
+  gem "capybara"
+  gem "capybara-webkit"
 end
 
 # User SLIM as the templating engine
 gem 'slim'
 gem 'slim-rails'
 
-# Bugsnag
+# Developer Tools
 gem 'bugsnag'
+gem 'annotate'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-ruby "2.3.1"
+ruby "2.4.0"

@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title GimmeCar - Redlands Car Rental
+    meta(name="viewport" content="width=device-width" initial-scale=1 maximum-scale=1 user-scalable="no")
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'public/landing'
+  body
+    #email-layout(style='margin: 0 auto; max-width: 32rem; width: 100%')
+      = yield

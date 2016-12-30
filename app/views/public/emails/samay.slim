@@ -1,0 +1,45 @@
+.rental-invoice
+  p= "NEW RESERVATION!!!"
+
+  h6.margin-bottom-sm.margin-top-default Rental Confirmation
+  ul.left.whole.list-no-style
+    li
+      | Confirmation #:&nbsp;
+      b= @email.fetch(:confirmation_number)
+    li
+      | Vehicle:&nbsp;
+      b= @email.fetch(:vehicle)
+    li
+      | Location:&nbsp;
+      b= @email.fetch(:location)
+    li
+      | Name:&nbsp;
+      b= "#{@email.fetch(:first_name)} #{@email.fetch(:last_name)}"
+    li
+      | Email:&nbsp;
+      b= @email.fetch(:email)
+    li
+      | Phone Number:&nbsp;
+      b= @email.fetch(:phone_number)
+    li
+      | Pickup:&nbsp;
+      b= format_date_time(@email.fetch(:pickup))
+    li
+      | Drop Off:&nbsp;
+      b= format_date_time(@email.fetch(:drop_off))
+
+  h6.margin-bottom-sm Rates
+  ul.left.whole.list-no-style
+    - @email.fetch(:rates).each do |rate|
+      span.left= format_date(rate.fetch(:date))
+      span.right= format_currency(rate.fetch(:value))
+
+  h6.margin-bottom-sm Taxes & Fees
+  ul.left.whole.list-no-style
+    li
+      span.left Sales (8%)
+      span.right= format_currency(@email.fetch(:tax))
+
+  h5
+    span.left Estimated Total:
+    span.right= format_currency(@email.fetch(:total))

@@ -1,16 +1,6 @@
-@import "basecoat/normalize"
-@import "basecoat/base"
-
 @import "global/colors"
 @import "global/layout"
-@import "global/text"
-
-@import "modules/mobile"
-
-@import "components/buttons"
-@import "components/footer"
-@import "components/lists"
-@import "components/nav"
+@import "global/type"
 
 #landing
   max-width: 100rem
@@ -18,110 +8,73 @@
 
 #billboard
   width: 100%
-  padding: 4rem 1rem
+  max-width: 40rem
+  padding: $margin-ex-lg 0
+  margin: 0 auto
 
-  text-align: center
+  text-align: left
 
   h2
     margin: 0 auto $margin-ex-sm
-    padding: $padding-ex-sm $padding-sm
+    padding: $padding-ex-sm 0
 
-    display: inline-block
-
-    text-align: center
     font-size: 3.5rem
     font-weight: 400
     letter-spacing: -0.03125rem
-    color: #222222
 
     + p
       margin-top: 0rem
-      margin-bottom: 6rem
-      color: #333333
+      margin-bottom: $margin-lg
+      padding-left: 0.125rem
+
+      font-size: 1.125rem
+      line-height: 1.5rem
+      color: #606060
 
 #billboard-reservation
   margin: 0 auto
 
 #billboard-reservation-inputs
-  max-width: 40rem
+  max-width: 45rem
   margin: 0 auto
   border-radius: 0.125rem
+  position: relative
 
-  > div
-    padding: $padding-sm
-    float: left
+//#rental-details,
+//#rental-summary,
+//#rental-reserve
 
-  > div:first-of-type
-    border-top-left-radius: 0.25rem
-    border-bottom-left-radius: 0.25rem
-
-  > div:last-of-type
-    border-top-right-radius: 0.25rem
-    border-bottom-right-radius: 0.25rem
-
-  label
+.rental-invoice
+  h6
     float: left
     width: 100%
+    margin-bottom: $margin-sm
+    padding-bottom: $padding-sm
 
-    //text-transform: uppercase
-    font-size: 0.875rem
-    font-weight: 700
-    line-height: 0.875rem
-    text-align: left
+    border-bottom: 1px solid $border-color-dark
 
-  .label-note
-    float: left
-    margin: $margin-sm 0 0
-
-    color: #999999
-    font-size: 0.875rem
-    font-weight: 700
-    line-height: 0.875rem
-    text-align: left
-
-
-  input
-    margin-top: $margin-ex-sm
+  h5
     float: left
     width: 100%
-    height: 2.125rem
+    border-top: 2px solid $border-color-dark
+    padding-top: $padding-sm
 
-    border: 0
-    border-bottom: 0.125rem solid #dddddd
-    background: none
+  ul
+    margin-bottom: $margin-default
+
+  li
+    float: left
+    width: 100%
+    margin-bottom: $margin-sm
 
     font-size: 0.875rem
-    font-family: "Hack"
-    color: #192531
 
-    &:hover
-      border-color: #cccccc
+.emoji
+  margin-bottom: $margin-default
 
-    &:focus
-      border-color: $blue
-
-  input:disabled
-    color: #333333
-    cursor: not-allowed
-    border-color: #dddddd
-
-
-#billboard-reservation-location
-  width: 100%
-
-#billboard-reservation-date
-  float: left
-  width: 50%
-
-#billboard-reservation-submit
-  width: 100%
-
-  button
-    width: 100%
-    height: 2rem + $margin-ex-sm + 0.875rem
-
-.landing-page-section
-  margin: 0 auto $margin-ex-lg
+  font-size: 4rem
+  text-align: center
+  color: darken(#ffd856, 15%)
 
 #fleet
   width: 100%
@@ -159,6 +112,7 @@
 
 #faq
   max-width: 45rem
+  margin: $margin-lg auto
 
   h4
     font-size: 1rem

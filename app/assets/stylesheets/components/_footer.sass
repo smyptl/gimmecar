@@ -1,13 +1,13 @@
 @import "global/colors"
-@import "global/text"
+@import "global/type"
 @import "global/layout"
 
 footer
   width: 100%
+  background: $background-color-footer
+  color: #eaeaea
 
 #footer-content
-  border-top: 2px solid $border-color-dark
-  border-bottom: 1px solid $border-color-light
   padding: $padding-lg 0
 
   h5
@@ -28,6 +28,8 @@ footer
     margin: 0
 
 #footer-copyright
+  margin: $margin-default 0
+
   > *
     margin: $margin-default 0
     line-height: $font-size-default + 0.25rem

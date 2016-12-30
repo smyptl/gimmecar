@@ -1,22 +1,35 @@
+@import "global/layout"
+
+// iPad Mini
+@media screen and (max-width: 48.5rem)
+  .form-step
+    width: 100%
+
+  .form-inputs
+    width: 100%
+
+// Mobile Phone
 @media screen and (max-width: 37.5rem)
   html
     font-size: 90%
 
-  .one-third,
-  .two-thirds,
-  .one-fourth,
-  .one-half,
-  .three-fourths,
-  .one-fifth,
-  .two-fifths,
-  .three-fifths,
-  .four-fifths
+  .one-third:not(.fixed),
+  .two-thirds:not(.fixed),
+  .one-fourth:not(.fixed),
+  .one-half:not(.fixed),
+  .three-fourths:not(.fixed),
+  .one-fifth:not(.fixed),
+  .two-fifths:not(.fixed),
+  .three-fifths:not(.fixed),
+  .four-fifths:not(.fixed),
+  .three-sevenths:not(.fixed),
+  .four-sevenths:not(.fixed)
     width: 100%
 
+  .container
+    padding-left: $padding-sm
+    padding-right: $padding-sm
 
-  #billboard-reservation-date
-    width: 50%
-
-  #billboard-reservation-location,
-  #billboard-reservation-submit
-    width: 100%
+  #billboard
+    h2
+      font-size: 3rem

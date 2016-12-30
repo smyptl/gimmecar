@@ -4,6 +4,15 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore vim
+*.swp
+*.swo
+*.swn
+*~
+
+# Ignore DS_Store
+.DS_Store
+
 # Ignore bundler config.
 /.bundle
 
@@ -16,6 +25,13 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+
+# Ignore
+node_modules
+xcrun
+
+# Ignore all files created by webpack
+app/assets/javascripts
 
 # Ignore Byebug command history file.
 .byebug_history
