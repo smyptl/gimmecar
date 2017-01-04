@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
 
+  get "/404" => "errors#not_found"
+  get "/422" => "errors#unacceptable"
+  get "/500" => "errors#internal_error"
+
   scope module: 'admin', constraints: { subdomain: 'admin' } do
     root 'login#index'
   end
 
-<<<<<<< HEAD
-  scope module: 'public', constraints: { subdomain: '' } do
-=======
   scope module: 'public' do
->>>>>>> master
     root 'landing#index'
 
     get  'reservation', to: 'reservation#index'
