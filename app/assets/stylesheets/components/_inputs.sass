@@ -95,6 +95,13 @@
     background-color: #ffffff
     box-shadow: 0 0 0.125rem 0 lighten($blue, 30%)
 
+  &::input-placeholder,
+  &:input-placeholder,
+  &:input-placeholder,
+  &:placeholder,
+
+    color: $text-color-placeholder
+
 .input-field.input-lg
   height: $input-height-lg
   font-size: $font-size-default
@@ -111,6 +118,9 @@ select.input-field
   background-repeat: no-repeat
   background-size: 0.75rem
   background-position: right $padding-sm center
+
+  option:disabled
+    color: $text-color-placeholder
 
 .input-field.input-field-error
   color: $text-color-red

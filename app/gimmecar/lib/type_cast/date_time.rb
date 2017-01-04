@@ -1,15 +1,17 @@
 class Lib::TypeCast::DateTime
 
+  JSON_REGEX = /(-?\d+)[-](\d{2})[-](\d{2})?(\d{2})?.*/
+
   def self.type_cast(value)
     case value
-    when Hash
-      date = Lib::TypeCast::Date.type_cast(value.fetch(:date, nil))
-      return unless date
-
-      time = Lib::TypeCast::Time.type_cast(value.fetch(:time, nil))
-      return unless time
-
-      Lib::DateTime.create(date, time)
+    when String
+      if value =~ JSON_REGEX
+        begin
+          DateTime.parse(value)
+        rescue ArgumentError
+          nil
+        end
+      end
     when DateTime
       value
     end

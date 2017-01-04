@@ -8,7 +8,7 @@ describe Lib::TypeCast::Date do
       end
 
       it "value is date in string" do
-        expect(Lib::TypeCast::Date.type_cast("1/01/2001")).to eq(Date.new(2001,1,1).in_time_zone("America/Los_Angeles"))
+        expect(Lib::TypeCast::Date.type_cast("1/01/2001")).to eq(Date.new(2001,1,1))
       end
 
       it "value is Date object" do
@@ -16,7 +16,7 @@ describe Lib::TypeCast::Date do
       end
 
       it "is in wrong format" do
-        expect(Lib::TypeCast::Date.type_cast("1/6/2000")).to_not eq(Date.new(2000,6,1).in_time_zone("America/Los_Angeles"))
+        expect(Lib::TypeCast::Date.type_cast("1/6/2000")).to_not eq(Date.new(2000,6,1))
       end
 
       it "value is invalid date" do
@@ -30,11 +30,11 @@ describe Lib::TypeCast::Date do
 
     context "json date" do
       it "valid test 1" do
-        expect(Lib::TypeCast::Date.type_cast("2011-12-31T23:59:59+00:00")).to eq(Date.new(2011,12,31).in_time_zone("America/Los_Angeles"))
+        expect(Lib::TypeCast::Date.type_cast("2011-12-31T23:59:59+00:00")).to eq(Date.new(2011,12,31))
       end
 
       it "valid test 2" do
-        expect(Lib::TypeCast::Date.type_cast("2001-09-01T07:00:00.000Z")).to eq(Date.new(2001, 9, 1).in_time_zone("America/Los_Angeles"))
+        expect(Lib::TypeCast::Date.type_cast("2001-09-01T07:00:00.000Z")).to eq(Date.new(2001, 9, 1))
       end
 
       it "invalid" do

@@ -1,6 +1,8 @@
 var path = require('path');
 var projectRoot = path.resolve(__dirname, '../');
 
+var webpack = require("webpack");
+
 module.exports = {
   entry: './app/frontend/public/index',
   output: {
@@ -18,17 +20,22 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.s[a|c]ss$/,
-        loader: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
+        test: /\.styl$/,
+        loader: ["style-loader", "css-loader", "postcss-loader", "stylus-loader"],
       },
     ],
   },
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.js', '.vue', '.styl'],
     alias: {
       'Components': path.resolve(__dirname, '../app/frontend/components'),
       'Filters':    path.resolve(__dirname, '../app/frontend/filters'),
+      'Utils':      path.resolve(__dirname, '../app/frontend/utils'),
+      'Styles':     path.resolve(__dirname, '../app/frontend/styles'),
     },
   },
   devtool: 'source-map',
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  ],
 }

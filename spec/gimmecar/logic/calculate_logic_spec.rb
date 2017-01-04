@@ -35,7 +35,7 @@ describe Logic::CalculateRental do
         expect(l.rates).to eq([
           {
             value: 3500,
-            date: DateTime.new(2011, 1, 1, 7, 0, 0)
+            date: DateTime.new(2011, 1, 1, 4, 0, 0)
           },
         ])
       end
@@ -49,7 +49,29 @@ describe Logic::CalculateRental do
         expect(l.rates).to eq([
           {
             value: 2334,
-            date: DateTime.new(2011, 1, 1, 6, 0, 0)
+            date: DateTime.new(2011, 1, 1, 4, 0, 0)
+          },
+        ])
+      end
+
+      it "returns last date for partial if rental is greater than 24 hours" do
+        rental_period = Lib::DateRange.new(DateTime.new(2011, 1, 1, 3, 0, 0), DateTime.new(2011, 1, 3, 4, 0, 0))
+        rental = double(:rental, :rental_period => rental_period)
+
+        l = Logic::CalculateRental.new(rental)
+
+        expect(l.rates).to eq([
+          {
+            value: 3500,
+            date: DateTime.new(2011, 1, 1, 3, 0, 0)
+          },
+          {
+            value: 3500,
+            date: DateTime.new(2011, 1, 2, 3, 0, 0)
+          },
+          {
+            value: 1167,
+            date: DateTime.new(2011, 1, 3, 4, 0, 0)
           },
         ])
       end

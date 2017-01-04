@@ -1,15 +1,13 @@
 class Actions::CreateReservation < Lib::Forms::Base
   include Lib::Forms::Actions
 
-  attribute :pickup_date,   :date
-  attribute :pickup_time,   :time
-  attribute :drop_off_date, :date
-  attribute :drop_off_time, :time
+  attribute :pickup,       :date_time
+  attribute :drop_off,     :date_time
 
-  attribute :first_name,    :string
-  attribute :last_name,     :string
-  attribute :email,         :string
-  attribute :phone_number,  :integer
+  attribute :first_name,   :string
+  attribute :last_name,    :string
+  attribute :email,        :string
+  attribute :phone_number, :integer
 
   validates :first_name, :last_name,
     presence: true
@@ -25,16 +23,6 @@ class Actions::CreateReservation < Lib::Forms::Base
   end
 
   private
-
-  def pickup
-    return unless pickup_date && pickup_time
-    @pickup ||= Lib::DateTime.create(pickup_date, pickup_time)
-  end
-
-  def drop_off
-    return unless drop_off_date && drop_off_time
-    @drop_off ||= Lib::DateTime.create(drop_off_date, drop_off_time)
-  end
 
   def failure_args
     {

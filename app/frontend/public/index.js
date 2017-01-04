@@ -1,4 +1,4 @@
-import Promise from 'promise-polyfill';
+import Promise from 'promise-polyfill'
 
 import Vue from 'vue'
 import Reservation from './reservation/_index.vue'

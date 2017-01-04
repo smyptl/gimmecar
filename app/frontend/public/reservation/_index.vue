@@ -1,8 +1,9 @@
 <script>
   import Snabbt from 'snabbt.js'
   import Axios from 'axios'
+  import Moment from 'moment'
 
-  import InputDate from 'Components/inputs/date'
+  import InputDateTime from 'Components/inputs/date_time'
   import InputError from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
 
@@ -13,10 +14,8 @@
     name: "reservation",
     data() {
       return {
-        pickup_date: new Date,
-        pickup_time: '11:00 PM',
-        drop_off_date: new Date().setDate(new Date().getDate() + 1),
-        drop_off_time: '11:00 PM',
+        pickup: new Date().setHours(new Date().getHours() + 1),
+        drop_off: new Date().setDate(new Date().getDate() + 1),
         first_name: '',
         last_name: '',
         email: '',
@@ -30,7 +29,7 @@
       }
     },
     components: {
-      InputDate,
+      InputDateTime,
       InputErrorMessage,
     },
     filters: {
@@ -40,14 +39,26 @@
     directives: {
       error: InputError,
     },
+    computed: {
+      pickup_date () {
+        return Moment(this.pickup).format('LL')
+      },
+      pickup_time () {
+        return Moment(this.pickup).format('LT')
+      },
+      drop_off_date () {
+        return Moment(this.drop_off).format('LL')
+      },
+      drop_off_time () {
+        return Moment(this.drop_off).format('LT')
+      },
+    },
     methods: {
       viewRates() {
         Axios.get('/reservation', {
             params: {
-              pickup_date: this.pickup_date,
-              pickup_time: this.pickup_time,
-              drop_off_date: this.drop_off_date,
-              drop_off_time: this.drop_off_time,
+              pickup: this.pickup,
+              drop_off: this.drop_off,
             }
           })
           .then(response => {
@@ -71,10 +82,8 @@
             last_name: this.last_name,
             email: this.email,
             phone_number: this.phone_number,
-            pickup_date: this.pickup_date,
-            pickup_time: this.pickup_time,
-            drop_off_date: this.drop_off_date,
-            drop_off_time: this.drop_off_time,
+            pickup: this.pickup,
+            drop_off: this.drop_off,
           },
           {
             headers: {
@@ -161,127 +170,14 @@
       .input-row
         .input-container.one-half
           label.input-label.input-lg From:
-
-          .input-block.one-half.fixed
-            input-date.input-lg(v-model='pickup_date' v-error:pickup_date='errors' name='pickup_date')
-            input-error-message(value='pickup_date', :errors='errors')
-          .input-block.one-half.fixed
-            select.input-field.input-lg(v-model='pickup_time' v-error:pickup_time='errors' placeholder='--:-- AM/PM' name='pickup_time')
-              option(value='' disabled) --:-- AM/PM
-              option(value='12:00 AM') 12:00 AM
-              option(value='12:30 AM') 12:30 AM
-              option(value='1:00 AM') 1:00 AM
-              option(value='1:30 AM') 1:30 AM
-              option(value='2:00 AM') 2:00 AM
-              option(value='2:30 AM') 2:30 AM
-              option(value='3:00 AM') 3:00 AM
-              option(value='3:30 AM') 3:30 AM
-              option(value='4:00 AM') 4:00 AM
-              option(value='4:30 AM') 4:30 AM
-              option(value='5:00 AM') 5:00 AM
-              option(value='5:30 AM') 5:30 AM
-              option(value='6:00 AM') 6:00 AM
-              option(value='6:30 AM') 6:30 AM
-              option(value='7:00 AM') 7:00 AM
-              option(value='7:30 AM') 7:30 AM
-              option(value='8:00 AM') 8:00 AM
-              option(value='8:30 AM') 8:30 AM
-              option(value='8:00 AM') 8:00 AM
-              option(value='8:30 AM') 8:30 AM
-              option(value='9:00 AM') 9:00 AM
-              option(value='9:30 AM') 9:30 AM
-              option(value='10:00 AM') 10:00 AM
-              option(value='10:30 AM') 10:30 AM
-              option(value='11:00 AM') 11:00 AM
-              option(value='11:30 AM') 11:30 AM
-              option(value='12:00 PM') 12:00 PM
-              option(value='12:30 PM') 12:30 PM
-              option(value='1:00 PM') 1:00 PM
-              option(value='1:30 PM') 1:30 PM
-              option(value='2:00 PM') 2:00 PM
-              option(value='2:30 PM') 2:30 PM
-              option(value='3:00 PM') 3:00 PM
-              option(value='3:30 PM') 3:30 PM
-              option(value='4:00 PM') 4:00 PM
-              option(value='4:30 PM') 4:30 PM
-              option(value='5:00 PM') 5:00 PM
-              option(value='5:30 PM') 5:30 PM
-              option(value='6:00 PM') 6:00 PM
-              option(value='6:30 PM') 6:30 PM
-              option(value='7:00 PM') 7:00 PM
-              option(value='7:30 PM') 7:30 PM
-              option(value='8:00 PM') 8:00 PM
-              option(value='8:30 PM') 8:30 PM
-              option(value='9:00 PM') 9:00 PM
-              option(value='9:30 PM') 9:30 PM
-              option(value='10:00 PM') 10:00 PM
-              option(value='10:30 PM') 10:30 PM
-              option(value='11:00 PM') 11:00 PM
-              option(value='11:30 PM') 11:30 PM
-            input-error-message(value='pickup_time', :errors='errors')
-          .input-block.whole
+          input-date-time(v-model='pickup' timezone='America/Los_Angeles')
+          .input-block
             input-error-message(value='pickup', :errors='errors')
 
         .input-container.one-half
           label.input-label.input-lg To:
-          .input-block.one-half.fixed
-            input-date.input-lg(v-model='drop_off_date' v-error:drop_off_date='errors' name='drop_off_date')
-            input-error-message(value='drop_off_date', :errors='errors')
-          .input-block.one-half.fixed
-            select.input-field.input-lg(v-model='drop_off_time' v-error:drop_off_time='errors' placeholder='--:-- AM/PM' name='drop_off_time')
-              option(value='' disabled) --:-- AM/PM
-              option(value='12:00 AM') 12:00 AM
-              option(value='12:30 AM') 12:30 AM
-              option(value='1:00 AM') 1:00 AM
-              option(value='1:30 AM') 1:30 AM
-              option(value='2:00 AM') 2:00 AM
-              option(value='2:30 AM') 2:30 AM
-              option(value='3:00 AM') 3:00 AM
-              option(value='3:30 AM') 3:30 AM
-              option(value='4:00 AM') 4:00 AM
-              option(value='4:30 AM') 4:30 AM
-              option(value='5:00 AM') 5:00 AM
-              option(value='5:30 AM') 5:30 AM
-              option(value='6:00 AM') 6:00 AM
-              option(value='6:30 AM') 6:30 AM
-              option(value='7:00 AM') 7:00 AM
-              option(value='7:30 AM') 7:30 AM
-              option(value='8:00 AM') 8:00 AM
-              option(value='8:30 AM') 8:30 AM
-              option(value='8:00 AM') 8:00 AM
-              option(value='8:30 AM') 8:30 AM
-              option(value='9:00 AM') 9:00 AM
-              option(value='9:30 AM') 9:30 AM
-              option(value='10:00 AM') 10:00 AM
-              option(value='10:30 AM') 10:30 AM
-              option(value='11:00 AM') 11:00 AM
-              option(value='11:30 AM') 11:30 AM
-              option(value='12:00 PM') 12:00 PM
-              option(value='12:30 PM') 12:30 PM
-              option(value='1:00 PM') 1:00 PM
-              option(value='1:30 PM') 1:30 PM
-              option(value='2:00 PM') 2:00 PM
-              option(value='2:30 PM') 2:30 PM
-              option(value='3:00 PM') 3:00 PM
-              option(value='3:30 PM') 3:30 PM
-              option(value='4:00 PM') 4:00 PM
-              option(value='4:30 PM') 4:30 PM
-              option(value='5:00 PM') 5:00 PM
-              option(value='5:30 PM') 5:30 PM
-              option(value='6:00 PM') 6:00 PM
-              option(value='6:30 PM') 6:30 PM
-              option(value='7:00 PM') 7:00 PM
-              option(value='7:30 PM') 7:30 PM
-              option(value='8:00 PM') 8:00 PM
-              option(value='8:30 PM') 8:30 PM
-              option(value='9:00 PM') 9:00 PM
-              option(value='9:30 PM') 9:30 PM
-              option(value='10:00 PM') 10:00 PM
-              option(value='10:30 PM') 10:30 PM
-              option(value='11:00 PM') 11:00 PM
-              option(value='11:30 PM') 11:30 PM
-            input-error-message(value='drop_off_time', :errors='errors')
-          .input-block.whole
+          input-date-time(v-model='drop_off' timezone='America/Los_Angeles')
+          .input-block
             input-error-message(value='drop_off', :errors='errors')
 
         .input-submit

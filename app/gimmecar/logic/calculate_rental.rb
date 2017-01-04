@@ -47,9 +47,15 @@ class Logic::CalculateRental < Lib::Logic::Base
         value = rate
       end
 
+      if rental_period.days_apart == 0
+        date = rental_period.start_date
+      else
+        date = rental_period.end_date
+      end
+
       output << {
         :value => value,
-        :date  => rental_period.end_date
+        :date  => date
       }
     end
 

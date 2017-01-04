@@ -1,10 +1,8 @@
 class Services::Public::GetRates < Lib::Forms::Base
   include Lib::Forms::Actions
 
-  attribute :pickup_date,   :date
-  attribute :pickup_time,   :time
-  attribute :drop_off_date, :date
-  attribute :drop_off_time, :time
+  attribute :pickup,   :date_time
+  attribute :drop_off, :date_time
 
   validate :pickup_and_drop_off_present,
     :pickup_is_after_today,
@@ -18,37 +16,17 @@ class Services::Public::GetRates < Lib::Forms::Base
 
   private
 
-  def pickup
-    return unless pickup_date && pickup_time
-    @pickup ||= Lib::DateTime.create(pickup_date, pickup_time)
-  end
-
-  def drop_off
-    return unless drop_off_date && drop_off_time
-    @drop_off ||= Lib::DateTime.create(drop_off_date, drop_off_time)
-  end
-
   def pickup_and_drop_off_present
-    case
-    when pickup_date.nil? && pickup_time.nil?
+    if pickup.nil?
       errors.add(:pickup, "pickup date and time is required")
       errors.add(:pickup_date, nil)
       errors.add(:pickup_time, nil)
-    when pickup_date.nil?
-      errors.add(:pickup_date, "pickup date is required")
-    when pickup_time.nil?
-      errors.add(:pickup_time, "pickup time is required")
     end
 
-    case
-    when drop_off_date.nil? && drop_off_time.nil?
+    if drop_off.nil?
       errors.add(:drop_off, "drop off date and time is required")
       errors.add(:drop_off_date, nil)
       errors.add(:drop_off_time, nil)
-    when drop_off_date.nil?
-      errors.add(:drop_off_date, "drop off date is required")
-    when drop_off_time.nil?
-      errors.add(:drop_off_time, "drop off time is required")
     end
   end
 
