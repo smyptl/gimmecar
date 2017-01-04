@@ -1,0 +1,34 @@
+@import "global/colors"
+@import "global/layout"
+
+.error-container
+  position: absolute
+  width: 100%
+  height: 100vh
+  text-align: center
+  background-color: $background-color-panel
+
+  .message
+    height: 25rem
+    width: 25rem
+    max-width: 100%
+
+    padding: $padding-default
+    margin: 15% auto 0
+
+    a
+      color: #cccccc
+      display: inline-block
+      margin-top: 6.25rem
+
+      &:hover
+        color: #333333
+
+    img
+      text-shadow: 0 1px 0 $border-color-dark
+
+    h3
+      color: #333333
+      margin-top: $margin-lg
+      font-weight: 700
+      font-size: 1rem

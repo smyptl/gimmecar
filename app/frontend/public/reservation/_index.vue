@@ -10,6 +10,8 @@
   import FDate from "Filters/date"
   import Currency from 'Filters/currency'
 
+  Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+
   export default {
     name: "reservation",
     data() {
@@ -59,7 +61,7 @@
             params: {
               pickup: this.pickup,
               drop_off: this.drop_off,
-            }
+            },
           })
           .then(response => {
             this.rental_summary = response.data
@@ -229,30 +231,30 @@
 
     #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
       .input-row
-        label.input-label.input-lg Name
+        label.input-label.input-lg(for='last_name') Name
         .input-block.one-half.fixed
-          input.input-field.input-lg(type='text' v-model='first_name' v-error:first_name='errors' placeholder='First')
+          input.input-field.input-lg(type='text' v-model='first_name' id='first_name' v-error:first_name='errors' placeholder='First')
           input-error-message(value='first_name', :errors='errors')
         .input-block.one-half.fixed
-          input.input-field.input-lg(type='text' v-model='last_name' v-error:last_name='errors' placeholder='Last')
+          input.input-field.input-lg(type='text' v-model='last_name' id='last_name' v-error:last_name='errors' placeholder='Last')
           input-error-message(value='last_name', :errors='errors')
 
       .input-row
-        label.input-label.input-lg
+        label.input-label.input-lg(for='input_email')
           | Email
           span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
 
         .input-block.whole
-          input.input-field.input-lg(type='text' v-model='email' v-error:email='errors' placeholder='john@gmail.com')
+          input.input-field.input-lg(type='text' v-model='email' id='input_email' v-error:email='errors' placeholder='john@gmail.com')
           input-error-message(value='email', :errors='errors')
 
       .input-row
-        label.input-label.input-lg
+        label.input-label.input-lg(for='input_phone_number')
           | Phone #
           span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
 
         .input-block.whole
-          input.input-field.input-lg(type='text' v-model='phone_number' v-error:phone_number='errors' placeholder='805-555-1234')
+          input.input-field.input-lg(type='text' v-model='phone_number' id='input_phone_number' v-error:phone_number='errors' placeholder='805-555-1234')
           input-error-message(value='phone_number', :errors='errors')
 
       .input-submit.input-flex-container

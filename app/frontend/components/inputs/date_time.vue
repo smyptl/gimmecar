@@ -4,6 +4,7 @@
   import EventListener from 'Utils/event_listener'
 
   import isDate from 'lodash/isDate'
+  import Includes from 'lodash/includes'
 
   const MONTH_NAMES = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
@@ -95,7 +96,7 @@
       formatTime () {
         var minutes = this.current_date_time.format('mm')
 
-        if (['00', '30'].includes(minutes)) {
+        if (Includes(['00', '30'], minutes)) {
           this.time_formatted = this.current_date_time.format('HHmm')
         }
       },
