@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     root 'login#index'
   end
 
-  scope module: 'public', constraints: { subdomain: '' } do
+  scope module: 'public' do
     root 'landing#index'
 
     get  'reservation', to: 'reservation#index'
