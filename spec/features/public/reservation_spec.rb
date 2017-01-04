@@ -15,7 +15,19 @@ feature "Reservations", js: true do
     end
 
     click_button "Reserve Car"
-    expect(page.driver.console_messages.last).to eq(nil)
-    expect(page).to have_content("can't be blank")
+
+    within("#rental-reserve") do
+      fill_in :first_name, with: 'John'
+      fill_in :last_name, with: 'Doe'
+      fill_in 'Email', with: 'test@gmail.com'
+      fill_in 'Phone #', with: 9012351234
+    end
+
+    click_button 'Reserve Car'
+
+    expect(page).to have_content('Rental Confirmation')
+    expect(page).to have_content('Confirmation #')
+
+    expect(ActionMailer::Base.deliveries.count).to eq(2)
   end
 end

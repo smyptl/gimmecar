@@ -1,4 +1,7 @@
 class Public::ReservationController < ApplicationController
+  include Concerns::AuthorizeApi
+
+  before_action :authorize_api
 
   def index
     success = lambda do |args|
