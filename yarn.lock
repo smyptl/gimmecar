@@ -1427,8 +1427,8 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
 fsevents@^1.0.0:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.0.15.tgz#fa63f590f3c2ad91275e4972a6cea545fb0aae44"
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.0.17.tgz#8537f3f12272678765b4fd6528c0f1f66f8f4558"
   dependencies:
     nan "^2.3.0"
     node-pre-gyp "^0.6.29"
@@ -1808,7 +1808,7 @@ is-plain-obj@^1.0.0:
 
 is-posix-bracket@^0.1.0:
   version "0.1.1"
-  resolved "http://registry.npmjs.org/is-posix-bracket/-/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
+  resolved "https://registry.yarnpkg.com/is-posix-bracket/-/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
 
 is-primitive@^2.0.0:
   version "2.0.0"
@@ -3512,6 +3512,10 @@ vue-loader@^10.0.2:
     vue-hot-reload-api "^2.0.1"
     vue-style-loader "^1.0.0"
     vue-template-es2015-compiler "^1.2.2"
+
+vue-router@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.1.1.tgz#10c31bbdcb6da92bd3e0223fa12345e73018625a"
 
 vue-style-loader@^1.0.0:
   version "1.0.0"

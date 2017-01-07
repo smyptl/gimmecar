@@ -1,32 +1,15 @@
-.form-step
-  height: 100%
+$input-padding-y: $padding-ex-sm/2
+
+.form-container
+  width: 20rem
+  margin: 0 auto
+
+.form-header
   width: 100%
-  float: left
-  display: block
+  margin: $padding-default 0
 
-  h3
-    margin: $margin-default 0 0 -0.8125rem
-
-    text-transform: uppercase
-    font-size: 1.25rem
-    font-weight: 400
-    font-family: "Oswald"
-    color: #666666
-
-    &:after
-      content: ' '
-      height: 0.125rem
-      width: 3rem
-      display: block
-      margin-top: $padding-sm
-      margin-left: $margin-lg + 0.75rem
-
-      background: $border-color-light
-
-.form-inputs
-  width: 100%
-  float: left
-  padding-left: $padding-lg
+  font-size: 1.25rem
+  font-weight: 900
 
 .input-row,
 .input-submit,
@@ -43,9 +26,10 @@
 .input-submit
   padding: $padding-default 0
 
+.form-header,
 .input-block
   float: left
-  padding: 0 $padding-ex-sm/2
+  padding: 0 $input-padding-y
 
 .input-flex-container
   display: flex
@@ -58,9 +42,11 @@
     flex: 1
 
 .input-label
-  padding: $padding-default $padding-ex-sm/2 0
+  padding-top: $padding-default
+  padding-left: $input-padding-y
+  padding-right: $input-padding-y
 
-  font-size: 0.8125rem
+  font-size: 0.75rem
   font-weight: 700
   line-height: 1.25rem
   text-align: left
@@ -68,6 +54,7 @@
   cursor: pointer
 
 .input-label.input-lg
+  padding-top: $padding-default
   font-size: 0.875rem
 
 .input-label-note
@@ -76,7 +63,7 @@
 
 .input-field
   height: $input-height
-  margin-top: $margin-ex-sm
+  margin-top: $margin-ex-sm/2
   padding: $padding-sm
   position: relative
 
@@ -85,7 +72,7 @@
   border: 1px solid $border-color-input
 
   cursor: pointer
-  font-size: $font-size-default - 0.0625rem
+  font-size: $font-size-default - 0.125rem
   font-family: "Hack"
   font-weight: 400
 
@@ -99,12 +86,12 @@
   &:input-placeholder,
   &:input-placeholder,
   &:placeholder,
-
     color: $text-color-placeholder
 
 .input-field.input-lg
   height: $input-height-lg
   font-size: $font-size-default
+  margin-top: $margin-ex-sm
 
 .input-field,
 input[type=number]::-webkit-inner-spin-button,
@@ -121,6 +108,10 @@ select.input-field
 
   option:disabled
     color: $text-color-placeholder
+
+.input-contrast
+  background-color: #ffffff
+  border-color: $border-color-dark
 
 .input-field.input-field-error
   color: $text-color-red

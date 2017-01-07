@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  get "/404" => "errors#not_found"
-  get "/422" => "errors#unacceptable"
-  get "/500" => "errors#internal_error"
+  get '/404', to: 'errors#not_found'
+  get '/422', to: 'errors#unacceptable'
+  get '/500', to: 'errors#internal_error'
 
   scope module: 'admin', constraints: { subdomain: 'admin' } do
     root 'login#index'

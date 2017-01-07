@@ -4,7 +4,10 @@ var projectRoot = path.resolve(__dirname, '../');
 var webpack = require("webpack");
 
 module.exports = {
-  entry: './app/frontend/public/index',
+  entry: {
+    public: './app/frontend/public/index',
+    admin: './app/frontend/admin/index',
+  },
   output: {
     path: path.resolve(__dirname, '../app/assets/javascripts'),
     filename: '[name].js',
@@ -37,5 +40,26 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.HotModuleReplacementPlugin(),
+
   ],
+}
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.plugins.push(
+  new webpack.optimize.UglifyJsPlugin({
+      sourcemap: true,
+      compress: {
+        warnings: false
+      }
+    })
+  )
+
+  module.exports.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    })
+  )
 }
