@@ -34,13 +34,16 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Email Opener
-  gem "letter_opener"
+  gem 'letter_opener'
+  # Annotate
+  gem 'annotate'
 end
 
 group :test do
-  gem "rspec-rails"
-  gem "capybara"
-  gem "capybara-webkit"
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'factory_girl'
 end
 
 # User SLIM as the templating engine
@@ -54,4 +57,4 @@ gem 'annotate'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-ruby "2.4.0"
+ruby '2.4.0'

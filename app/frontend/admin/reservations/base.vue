@@ -1,6 +1,6 @@
 <script>
   export default {
-    name: 'application',
+    name: 'dashboard',
   }
 </script>
 

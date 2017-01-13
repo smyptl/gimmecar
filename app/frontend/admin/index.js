@@ -10,12 +10,14 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 var Layout = require('./layout')
-var Application = require('./base')
+var Dashboard = require('./dashboard/base')
+var Reservations = require('./reservations/base')
 
 const router = new VueRouter({
-  mode: 'history',
+  linkActiveClass: 'active',
   routes: [
-    { path: '/', name: 'dashboard', component: Application },
+    { path: '/dashboard', name: 'dashboard', component: Dashboard },
+    { path: '/reservations', name: 'reservations', component: Reservations },
   ],
 })
 

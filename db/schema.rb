@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219200030) do
+ActiveRecord::Schema.define(version: 20170107195800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,9 @@ ActiveRecord::Schema.define(version: 20161219200030) do
     t.string  "city"
     t.string  "state"
     t.string  "zip_code"
-    t.integer "phone_number"
+    t.string  "country"
+    t.integer "home_phone_number"
+    t.integer "cell_phone_number"
     t.string  "email"
     t.date    "date_of_birth"
     t.string  "license_number"
@@ -33,10 +35,25 @@ ActiveRecord::Schema.define(version: 20161219200030) do
     t.string  "license_country"
     t.date    "license_expiration_date"
     t.string  "insurance_company"
+    t.string  "insurance_agent"
     t.string  "insurance_policy_number"
     t.string  "insurance_phone_number"
     t.boolean "do_not_rent"
     t.text    "notes"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.string "latitude"
+    t.string "longitude"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "country"
+    t.string "phone_number"
   end
 
   create_table "rates", force: :cascade do |t|
@@ -48,24 +65,23 @@ ActiveRecord::Schema.define(version: 20161219200030) do
   end
 
   create_table "rentals", force: :cascade do |t|
-    t.integer "driver_id"
-    t.integer "vehicle_id"
-    t.string  "status"
-    t.text    "notes"
-    t.integer "pickup_location_id"
-    t.date    "pickup_date"
-    t.time    "pickup_time"
-    t.integer "pickup_odometer"
-    t.integer "pickup_fuel"
-    t.integer "return_location_id"
-    t.date    "return_date"
-    t.time    "return_time"
-    t.integer "return_odometer"
-    t.integer "return_fuel"
-    t.string  "vehicle_type"
+    t.string   "number"
+    t.string   "status"
+    t.integer  "driver_id"
+    t.integer  "vehicle_id"
+    t.text     "notes"
+    t.integer  "pickup_location_id"
+    t.datetime "pickup"
+    t.integer  "pickup_odometer"
+    t.float    "pickup_fuel"
+    t.integer  "drop_off_location_id"
+    t.datetime "drop_off"
+    t.integer  "drop_off_odometer"
+    t.float    "drop_off_fuel"
+    t.string   "vehicle_type"
     t.index ["driver_id"], name: "index_rentals_on_driver_id", using: :btree
+    t.index ["drop_off_location_id"], name: "index_rentals_on_drop_off_location_id", using: :btree
     t.index ["pickup_location_id"], name: "index_rentals_on_pickup_location_id", using: :btree
-    t.index ["return_location_id"], name: "index_rentals_on_return_location_id", using: :btree
     t.index ["vehicle_id"], name: "index_rentals_on_vehicle_id", using: :btree
   end
 
