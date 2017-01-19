@@ -1,5 +1,4 @@
 <script>
-  import Snabbt from 'snabbt.js'
   import Axios from 'axios'
   import Moment from 'moment'
 
@@ -7,8 +6,10 @@
   import InputError from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
 
-  import FDate from "Filters/date"
-  import Currency from 'Filters/currency'
+  import Rates from 'Admin/quotes/_rates'
+
+  import SlideTransition from 'Utils/transitions/slide'
+  import ErrorTransition from 'Utils/transitions/error'
 
   Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
@@ -22,10 +23,8 @@
         last_name: '',
         email: '',
         phone_number: '',
-        rental_summary: {},
+        summary: {},
         current_step: 'rental-details',
-        leaving_element_height: null,
-        entering_element_height: null,
         transition_type: 'forward',
         errors: {}
       }
@@ -33,27 +32,10 @@
     components: {
       InputDateTime,
       InputErrorMessage,
-    },
-    filters: {
-      date: FDate,
-      Currency,
+      Rates,
     },
     directives: {
       error: InputError,
-    },
-    computed: {
-      pickup_date () {
-        return Moment(this.pickup).format('LL')
-      },
-      pickup_time () {
-        return Moment(this.pickup).format('LT')
-      },
-      drop_off_date () {
-        return Moment(this.drop_off).format('LL')
-      },
-      drop_off_time () {
-        return Moment(this.drop_off).format('LT')
-      },
     },
     methods: {
       viewRates() {
@@ -64,14 +46,14 @@
             },
           })
           .then(response => {
-            this.rental_summary = response.data
+            this.summary = response.data
             this.transition_type = 'forward'
             this.current_step = 'rental-summary'
             this.errors = {}
           })
           .catch(error => {
             this.errors = error.response.data.errors
-            this.shake(this.$el)
+            ErrorTransition(this.$el)
           })
       },
       newReservation() {
@@ -93,63 +75,22 @@
             }
           })
           .then(response => {
-            this.rental_summary = response.data
+            this.summary = response.data
             this.transition_type = 'forward'
             this.current_step = 'rental-confirmation'
             this.errors = {}
           })
           .catch(error => {
             this.errors = error.response.data.errors
-            this.shake(this.$el)
+            ErrorTransition(this.$el)
           })
       },
       enter(el, done) {
-        if (this.transition_type == 'forward') {
-          this.fadeIn(el, done, { scale: [1, 1], fromScale: [0.99, 0.99]})
-        } else {
-          this.fadeIn(el, done, { scale: [1, 1], fromScale: [1.01, 1.01]})
-        }
+        SlideTransition.enter(el, done, this.transition_type == 'forward')
       },
       leave(el, done) {
-        if (this.transition_type == 'forward') {
-          this.fadeOut(el, done, { scale: [1.01, 1.01], fromScale: [1, 1]})
-        } else {
-          this.fadeOut(el, done, { scale: [0.99, 0.99], fromScale: [1, 1]})
-        }
+        SlideTransition.leave(el, done, this.transition_type == 'forward')
       },
-      shake(el) {
-        Snabbt(el, 'attention', {
-          position: [50, 0, 0],
-          springConstant: 2.4,
-          springDeceleration: 0.9,
-        })
-      },
-      fadeIn(el, done, settings) {
-        Snabbt(el, {
-          opacity: 1,
-          fromOpacity: 0.01,
-          scale: settings.scale,
-          fromScale: settings.fromScale,
-          easing: 'ease',
-          duration: 200,
-          complete() {
-            done()
-          },
-        })
-      },
-      fadeOut(el, done, settings) {
-        Snabbt(el, {
-          opacity: 0.01,
-          fromOpacity: 1,
-          scale: settings.scale,
-          fromScale: settings.fromScale,
-          easing: 'ease',
-          duration: 200,
-          complete() {
-            done()
-          },
-        })
-      }
     },
   }
 </script>
@@ -164,7 +105,7 @@
       .input-row
         label.input-label.input-lg Where:
         .input-block.whole
-          select.input-field.input-lg
+          select.input-field.input-lg.input-contrast
             option(value='' disabled) Current, our only location.
             option(value='') Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
           input-error-message(value='location', :errors='errors')
@@ -172,13 +113,13 @@
       .input-row
         .input-container.one-half
           label.input-label.input-lg From:
-          input-date-time(v-model='pickup' timezone='America/Los_Angeles')
+          input-date-time.input-contrast(v-model='pickup' timezone='America/Los_Angeles')
           .input-block
             input-error-message(value='pickup', :errors='errors')
 
         .input-container.one-half
           label.input-label.input-lg To:
-          input-date-time(v-model='drop_off' timezone='America/Los_Angeles')
+          input-date-time.input-contrast(v-model='drop_off' timezone='America/Los_Angeles')
           .input-block
             input-error-message(value='drop_off', :errors='errors')
 
@@ -187,41 +128,7 @@
             button.btn.btn-full.btn-primary.left(type='submit' @click='viewRates') View Rates
 
     #rental-summary.rental-invoice(v-if="current_step == 'rental-summary'" key='summary')
-      .input-block.margin-top-default
-        h6.margin-bottom-sm Rental Details
-        ul.left.whole.list-no-style
-          li
-            | Vehicle:&nbsp;
-            b {{ rental_summary.vehicle }}
-          li
-            | Location:&nbsp;
-            b {{ rental_summary.location }}
-
-          li
-            | Pick Up:&nbsp;
-            b {{ pickup_date }} @ {{ pickup_time }}
-
-          li
-            | Return:&nbsp;
-            b {{ drop_off_date }} @ {{ drop_off_time }}
-
-
-        h6.margin-bottom-sm Rates
-        ul.left.whole.list-no-style
-          li(v-for='rate in rental_summary.rates')
-            span.left {{ rate.date | date }}
-            span.right {{ rate.value | currency }}
-
-        h6.margin-bottom-sm Taxes & Fees
-        ul.left.whole.list-no-style
-          li
-            span.left Sales (8%)
-            span.right {{ rental_summary.tax | currency }}
-
-        h5
-          span.left Estimated Total:
-          span.right {{ rental_summary.total | currency }}
-
+      rates(:summary='summary')
 
       .input-submit.input-flex-container
         .input-block.input-element-fixed
@@ -233,10 +140,10 @@
       .input-row
         label.input-label.input-lg(for='last_name') Name
         .input-block.one-half.fixed
-          input.input-field.input-lg(type='text' v-model='first_name' id='first_name' v-error:first_name='errors' placeholder='First')
+          input.input-field.input-lg.input-contrast(type='text' v-model='first_name' id='first_name' v-error:first_name='errors' placeholder='First')
           input-error-message(value='first_name', :errors='errors')
         .input-block.one-half.fixed
-          input.input-field.input-lg(type='text' v-model='last_name' id='last_name' v-error:last_name='errors' placeholder='Last')
+          input.input-field.input-lg.input-contrast(type='text' v-model='last_name' id='last_name' v-error:last_name='errors' placeholder='Last')
           input-error-message(value='last_name', :errors='errors')
 
       .input-row
@@ -245,7 +152,7 @@
           span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
 
         .input-block.whole
-          input.input-field.input-lg(type='text' v-model='email' id='input_email' v-error:email='errors' placeholder='john@gmail.com')
+          input.input-field.input-lg.input-contrast(type='text' v-model='email' id='input_email' v-error:email='errors' placeholder='john@gmail.com')
           input-error-message(value='email', :errors='errors')
 
       .input-row
@@ -254,7 +161,7 @@
           span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
 
         .input-block.whole
-          input.input-field.input-lg(type='text' v-model='phone_number' id='input_phone_number' v-error:phone_number='errors' placeholder='805-555-1234')
+          input.input-field.input-lg.input-contrast(type='text' v-model='phone_number' id='input_phone_number' v-error:phone_number='errors' placeholder='805-555-1234')
           input-error-message(value='phone_number', :errors='errors')
 
       .input-submit.input-flex-container
@@ -267,41 +174,6 @@
       h3.emoji :]
       p.text-center Thanks for choosing us, {{ first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 
-      h6.margin-bottom-sm.margin-top-default Rental Confirmation
-      ul.left.whole.list-no-style
-        li
-          | Confirmation #:&nbsp;
-          b {{ rental_summary.confirmation_number }}
-        li
-          | Vehicle:&nbsp;
-          b {{ rental_summary.vehicle }}
-        li
-          | Location:&nbsp;
-          b {{ rental_summary.location }}
-
-        li
-          | Pick Up:&nbsp;
-          b {{ pickup_date }} @ {{ pickup_time }}
-
-        li
-          | Return:&nbsp;
-          b {{ drop_off_date }} @ {{ drop_off_time }}
-
-
-      h6.margin-bottom-sm Rates
-      ul.left.whole.list-no-style
-        li(v-for='rate in rental_summary.rates')
-          span.left {{ rate.date | date }}
-          span.right {{ rate.value | currency }}
-
-      h6.margin-bottom-sm Taxes & Fees
-      ul.left.whole.list-no-style
-        li
-          span.left Sales (8%)
-          span.right {{ rental_summary.tax | currency }}
-
-      h5
-        span.left Estimated Total:
-        span.right {{ rental_summary.total | currency }}
+      rates(:summary='summary')
 
 </template>

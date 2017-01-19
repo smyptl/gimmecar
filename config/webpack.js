@@ -35,6 +35,7 @@ module.exports = {
       'Filters':    path.resolve(__dirname, '../app/frontend/filters'),
       'Utils':      path.resolve(__dirname, '../app/frontend/utils'),
       'Styles':     path.resolve(__dirname, '../app/frontend/styles'),
+      'Admin':      path.resolve(__dirname, '../app/frontend/admin'),
     },
   },
   devtool: 'source-map',

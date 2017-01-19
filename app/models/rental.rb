@@ -22,6 +22,7 @@
 class Rental < ApplicationRecord
 
   belongs_to :driver
+  belongs_to :additional_driver, class_name: 'Driver'
   belongs_to :vehicle
 
   belongs_to :pickup_location,   class_name: 'Location'

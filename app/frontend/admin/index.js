@@ -9,19 +9,19 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-var Layout = require('./layout')
-var Dashboard = require('./dashboard/base')
-var Reservations = require('./reservations/base')
-
 const router = new VueRouter({
   linkActiveClass: 'active',
   routes: [
-    { path: '/dashboard', name: 'dashboard', component: Dashboard },
-    { path: '/reservations', name: 'reservations', component: Reservations },
+    { path: '/dashboard',    name: 'dashboard',    component: require('./dashboard/base') },
+    { path: '/reservations', name: 'reservations', component: require('./reservations/base') },
+    { path: '/rentals',      name: 'rentals',      component: require('./rentals/base') },
+    { path: '/rates',        name: 'rates',        component: require('./rates/base') },
+    { path: '/vehicles',     name: 'vehicles',     component: require('./vehicles/base') },
+    { path: '/quotes',       name: 'quotes',       component: require('./quotes/base') },
   ],
 })
 
 new Vue({
   router,
-  render: h => h(Layout),
+  render: h => h(require('./layout/base')),
 }).$mount('#gimmecar-app')

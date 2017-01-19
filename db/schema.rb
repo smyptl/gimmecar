@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170107195800) do
+ActiveRecord::Schema.define(version: 20170113214017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170107195800) do
     t.string  "title"
     t.string  "first_name"
     t.string  "last_name"
+    t.string  "name"
     t.string  "gender"
     t.string  "address_1"
     t.string  "address_2"
@@ -34,12 +35,23 @@ ActiveRecord::Schema.define(version: 20170107195800) do
     t.string  "license_state"
     t.string  "license_country"
     t.date    "license_expiration_date"
-    t.string  "insurance_company"
-    t.string  "insurance_agent"
-    t.string  "insurance_policy_number"
-    t.string  "insurance_phone_number"
     t.boolean "do_not_rent"
+    t.string  "stripe_id"
     t.text    "notes"
+  end
+
+  create_table "insurance_policies", force: :cascade do |t|
+    t.integer "user_id"
+    t.date    "confirmation_date"
+    t.integer "driver_id"
+    t.string  "company"
+    t.string  "agent"
+    t.string  "policy_number"
+    t.string  "phone_number"
+    t.date    "effective_date"
+    t.date    "expiration_date"
+    t.index ["driver_id"], name: "index_insurance_policies_on_driver_id", using: :btree
+    t.index ["user_id"], name: "index_insurance_policies_on_user_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -66,9 +78,13 @@ ActiveRecord::Schema.define(version: 20170107195800) do
 
   create_table "rentals", force: :cascade do |t|
     t.string   "number"
+    t.string   "source"
     t.string   "status"
+    t.boolean  "confirmed"
     t.integer  "driver_id"
+    t.integer  "additional_driver_id"
     t.integer  "vehicle_id"
+    t.string   "vehicle_type"
     t.text     "notes"
     t.integer  "pickup_location_id"
     t.datetime "pickup"
@@ -78,7 +94,8 @@ ActiveRecord::Schema.define(version: 20170107195800) do
     t.datetime "drop_off"
     t.integer  "drop_off_odometer"
     t.float    "drop_off_fuel"
-    t.string   "vehicle_type"
+    t.boolean  "collision_damage_waiver"
+    t.index ["additional_driver_id"], name: "index_rentals_on_additional_driver_id", using: :btree
     t.index ["driver_id"], name: "index_rentals_on_driver_id", using: :btree
     t.index ["drop_off_location_id"], name: "index_rentals_on_drop_off_location_id", using: :btree
     t.index ["pickup_location_id"], name: "index_rentals_on_pickup_location_id", using: :btree
@@ -99,6 +116,8 @@ ActiveRecord::Schema.define(version: 20170107195800) do
   end
 
   create_table "vehicles", force: :cascade do |t|
+    t.integer "original_location_id"
+    t.integer "location_id"
     t.string  "vehicle_type"
     t.string  "vin"
     t.string  "license_number"
@@ -113,6 +132,8 @@ ActiveRecord::Schema.define(version: 20170107195800) do
     t.string  "fuel_grade"
     t.integer "tank_size"
     t.text    "notes"
+    t.index ["location_id"], name: "index_vehicles_on_location_id", using: :btree
+    t.index ["original_location_id"], name: "index_vehicles_on_original_location_id", using: :btree
   end
 
 end

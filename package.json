@@ -6,7 +6,7 @@
   "author": "Samay Patel <samay@gimmecar.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack -w -d --display-reasons --display-chunks --progress --config ./config/webpack.js",
+    "dev": "webpack -w -d --display-reasons --progress --hide-modules --config ./config/webpack.js",
     "test": "karma start ./spec/frontend/karma.conf.js",
     "heroku-postbuild": "webpack -p --config ./config/webpack.js"
   },

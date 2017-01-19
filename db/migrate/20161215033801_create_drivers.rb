@@ -5,6 +5,7 @@ class CreateDrivers < ActiveRecord::Migration[5.0]
       t.string :title
       t.string :first_name
       t.string :last_name
+      t.string :name
       t.string :gender
       t.string :address_1
       t.string :address_2
@@ -20,11 +21,8 @@ class CreateDrivers < ActiveRecord::Migration[5.0]
       t.string :license_state
       t.string :license_country
       t.date :license_expiration_date
-      t.string :insurance_company
-      t.string :insurance_agent
-      t.string :insurance_policy_number
-			t.string :insurance_phone_number
       t.boolean :do_not_rent
+      t.string :stripe_id
       t.text :notes
     end
   end

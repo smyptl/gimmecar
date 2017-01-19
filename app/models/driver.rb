@@ -33,6 +33,8 @@ class Driver < ApplicationRecord
 
   has_many :rentals
 
+  has_one :current_insurance_policy
+
   def name
     "#{first_name} #{last_name}"
   end

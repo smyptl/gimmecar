@@ -1,9 +1,9 @@
 <script>
   export default {
-    name: 'reservations',
+    name: 'vehicles',
   }
 </script>
 
 <template lang='pug'>
-  h1 Reservations
+  h1 Vehicles
 </template>

@@ -5,6 +5,7 @@
 
   import isDate from 'lodash/isDate'
   import Includes from 'lodash/includes'
+  import Range from 'lodash/range'
 
   const MONTH_NAMES = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
@@ -31,7 +32,9 @@
       return {
         current_date_time: '',
         date_formatted: '',
-        time_formatted: '',
+        hour_formatted: '',
+        minute_formatted: '',
+        period_formatted: '',
         view_calendar: false,
       }
     },
@@ -54,6 +57,9 @@
       },
     },
     methods: {
+      range (start, end) {
+        return Range(start, end)
+      },
       showCalendar () {
         this.view_calendar = true
       },
@@ -65,6 +71,7 @@
       },
       parseValue (val) {
         this.current_date_time = Moment.tz(val, this.time_zone)
+
         this.formatDate()
         this.formatTime()
       },
@@ -85,20 +92,20 @@
         this.emitInput()
       },
       parseTime () {
-        var time = Moment.tz(this.time_formatted, "HHmm", this.time_zone)
-        this.current_date_time.set('hour',   time.get('hour'))
-        this.current_date_time.set('minute', time.get('minute'))
+        var date_time = Moment(this.hour_formatted + ':' + this.minute_formatted + ' ' + this.period_formatted, ["h:mm A"])
+
+        this.current_date_time.set('hour', date_time.hour())
+        this.current_date_time.set('minute', date_time.minute())
+
         this.emitInput()
       },
       formatDate () {
         this.date_formatted = this.current_date_time.format("M/D/YYYY")
       },
       formatTime () {
-        var minutes = this.current_date_time.format('mm')
-
-        if (Includes(['00', '30'], minutes)) {
-          this.time_formatted = this.current_date_time.format('HHmm')
-        }
+        this.hour_formatted   = this.current_date_time.format('h')
+        this.minute_formatted = this.current_date_time.format('m')
+        this.period_formatted = this.current_date_time.format('A')
       },
       emitInput () {
         this.$emit('input', this.current_date_time.format())
@@ -117,61 +124,23 @@
         v-model='date_formatted'
         @change='parseDate')
 
-    .input-block.one-half.fixed
-      select.input-field(placeholder='--:-- AM/PM' v-bind:name='name' v-model='time_formatted' @change='parseTime')
-        option(value='' disabled) --:-- AM/PM
-        option(value='0000') 12:00 AM
-        option(value='0030') 12:30 AM
-        option(value='0100') 1:00 AM
-        option(value='0130') 1:30 AM
-        option(value='0200') 2:00 AM
-        option(value='0230') 2:30 AM
-        option(value='0300') 3:00 AM
-        option(value='0330') 3:30 AM
-        option(value='0400') 4:00 AM
-        option(value='0430') 4:30 AM
-        option(value='0500') 5:00 AM
-        option(value='0530') 5:30 AM
-        option(value='0600') 6:00 AM
-        option(value='0630') 6:30 AM
-        option(value='0700') 7:00 AM
-        option(value='0730') 7:30 AM
-        option(value='0800') 8:00 AM
-        option(value='0830') 8:30 AM
-        option(value='0800') 8:00 AM
-        option(value='0830') 8:30 AM
-        option(value='0900') 9:00 AM
-        option(value='0930') 9:30 AM
-        option(value='1000') 10:00 AM
-        option(value='1030') 10:30 AM
-        option(value='1100') 11:00 AM
-        option(value='1130') 11:30 AM
-        option(value='1200') 12:00 PM
-        option(value='1230') 12:30 PM
-        option(value='1300') 1:00 PM
-        option(value='1330') 1:30 PM
-        option(value='1400') 2:00 PM
-        option(value='1430') 2:30 PM
-        option(value='1500') 3:00 PM
-        option(value='1530') 3:30 PM
-        option(value='1600') 4:00 PM
-        option(value='1630') 4:30 PM
-        option(value='1700') 5:00 PM
-        option(value='1730') 5:30 PM
-        option(value='1800') 6:00 PM
-        option(value='1830') 6:30 PM
-        option(value='1900') 7:00 PM
-        option(value='1930') 7:30 PM
-        option(value='2000') 8:00 PM
-        option(value='2030') 8:30 PM
-        option(value='2100') 9:00 PM
-        option(value='2130') 9:30 PM
-        option(value='2200') 10:00 PM
-        option(value='2230') 10:30 PM
-        option(value='2300') 11:00 PM
-        option(value='2330') 11:30 PM
+    .input-container.one-half.fixed
+      .input-block.one-third.fixed
+        select.input-field(v-bind:name='name' v-model='hour_formatted' @change='parseTime')
+          option(value='' disabled) --
+          option(v-for='n in range(1, 13)' value=n) {{ n }}
+      .input-block.one-third.fixed
+        select.input-field(v-bind:name='name' v-model='minute_formatted' @change='parseTime')
+          option(value='' disabled) --
+          option(v-for='n in range(0, 60)' value=n) {{ n }}
 
-    .input-block.whole
+      .input-block.one-third.fixed
+        select.input-field(v-bind:name='name' v-model='period_formatted' @change='parseTime')
+          option(value='' disabled) --
+          option(value='AM') AM
+          option(value='PM') PM
+
+    <!--.input-block.whole-->
       .calendar(v-show='view_calendar')
         span.calendar-header
           a.left &#8592;
