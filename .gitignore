@@ -32,6 +32,8 @@ xcrun
 
 # Ignore all files created by webpack
 app/assets/javascripts
+public/assets
 
 # Ignore Byebug command history file.
 .byebug_history
+/public/packs
