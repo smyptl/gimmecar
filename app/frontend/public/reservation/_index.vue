@@ -1,12 +1,11 @@
 <script>
   import Axios from 'axios'
-  import Moment from 'moment'
 
   import InputDateTime from 'Components/inputs/date_time'
   import InputError from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
 
-  import Rates from 'Admin/quotes/_rates'
+  import Rates from 'Admin/quotes/_summary'
 
   import SlideTransition from 'Utils/transitions/slide'
   import ErrorTransition from 'Utils/transitions/error'
