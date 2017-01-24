@@ -1,6 +1,4 @@
 <script>
-  import { mapMutations } from 'vuex'
-
   import Form from 'Utils/form'
 
   import InputError from 'Components/inputs/error'

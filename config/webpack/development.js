@@ -14,7 +14,6 @@ _.forEach(Object.keys(config.entry), function (name) {
 })
 
 config = merge(config, {
-  devtool: 'sourcemap',
   devServer: {
     hot: true,
   },
