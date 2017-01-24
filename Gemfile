@@ -14,19 +14,31 @@ gem 'foreman'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem 'autoprefixer-rails'
 gem 'roadie-rails'
+
+# User SLIM as the templating engine
+gem 'slim'
+gem 'slim-rails'
 
 # Webpack
 gem 'webpacker', github: 'rails/webpacker'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
+
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+
+# Use for Authentication
+gem 'jwt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+
+  # Seed Data
+  gem 'faker'
 end
 
 group :development do
@@ -48,10 +60,6 @@ group :test do
   gem 'capybara-webkit'
   gem 'factory_girl'
 end
-
-# User SLIM as the templating engine
-gem 'slim'
-gem 'slim-rails'
 
 # Developer Tools
 gem 'bugsnag'

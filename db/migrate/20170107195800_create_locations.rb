@@ -14,5 +14,11 @@ class CreateLocations < ActiveRecord::Migration[5.0]
       t.string :country
       t.string :phone_number
     end
+
+    create_table :locations_users do |t|
+      t.timestamp
+      t.belongs_to :user
+      t.belongs_to :location
+    end
   end
 end

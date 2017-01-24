@@ -18,6 +18,8 @@
 
 class Location < ApplicationRecord
 
+  has_and_belongs_to_many :users
+
   has_many :rentals, foreign_key: 'pickup_location_id'
   has_many :drop_off_rentals, class_name: 'Rental', foreign_key: 'drop_off_location_id'
 
@@ -30,5 +32,12 @@ class Location < ApplicationRecord
 
   def calendar
     current_rentals + future_rentals
+  end
+
+  def to_javascript
+    {
+      :name => name,
+      :slug => slug,
+    }
   end
 end

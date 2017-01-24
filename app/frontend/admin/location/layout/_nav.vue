@@ -94,8 +94,9 @@
   @import '~Styles/global/layout'
 
   nav
-    position: relative
+    position: absolute
     z-index: 2
+    margin-top: 2rem
     padding-right: $padding-default
 
     width: 100%
@@ -134,9 +135,6 @@
           margin: 0.5rem ($margin-sm + $margin-ex-sm)
           margin-left: 0
           fill: #bababa
-
-        span
-          float: left
 
       > a.active
         color: $text-color-dark-blue

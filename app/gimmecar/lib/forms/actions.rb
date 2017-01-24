@@ -49,6 +49,8 @@ module Lib::Forms::Actions
   end
 
   def failure_args
-    raise NotImplementedError
+    {
+      :errors => errors,
+    }
   end
 end

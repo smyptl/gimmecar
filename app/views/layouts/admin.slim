@@ -12,4 +12,17 @@ html#bg-app
 
     body
       #gimmecar-app
+
+      javascript:
+        var USER = {}
+        var LOCATION = {}
+
+      - if current_user
+        javascript:
+          var USER = #{{ current_user.to_javascript.to_json }}
+
+      - if location
+        javascript:
+          var LOCATION = #{{ location.to_javascript.to_json }}
+
       = javascript_pack_tag 'admin'

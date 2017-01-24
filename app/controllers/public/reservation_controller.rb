@@ -1,5 +1,4 @@
 class Public::ReservationController < ApplicationController
-  include Concerns::AuthorizeApi
 
   before_action :authorize_api
 
@@ -25,5 +24,11 @@ class Public::ReservationController < ApplicationController
     end
 
     Actions::CreateReservation.new(params.require(:reservation)).execute(success, failure)
+  end
+
+  private
+
+  def authorize_api
+    raise ApplicationController::Error403 unless request.xhr?
   end
 end

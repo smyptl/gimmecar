@@ -6,6 +6,7 @@
 #  title                   :string
 #  first_name              :string
 #  last_name               :string
+#  name                    :string
 #  gender                  :string
 #  address_1               :string
 #  address_2               :string
@@ -21,11 +22,8 @@
 #  license_state           :string
 #  license_country         :string
 #  license_expiration_date :date
-#  insurance_company       :string
-#  insurance_agent         :string
-#  insurance_policy_number :string
-#  insurance_phone_number  :string
 #  do_not_rent             :boolean
+#  stripe_id               :string
 #  notes                   :text
 #
 

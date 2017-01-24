@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
   rescue_from Error404, :with => :render_404
   def render_404; render_error(404); end
 
+  private
+
   def render_error(status)
     render :template => 'errors/error', :layout => false, :status => status
     return

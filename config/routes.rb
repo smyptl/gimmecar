@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   get '/500', to: 'errors#internal_error'
 
   scope module: :admin, constraints: { subdomain: 'admin' } do
-    root 'login#index'
+    root 'token#index'
+    post '/', to: 'token#create'
+
+    get 'locations' => 'location#index'
 
     scope ':slug', module: :location, as: :location do
-
       get '/dashboard', to: 'dashboard#index'
       get '/search', to: 'search#index'
       get '/vehicles', to: 'vehicles#index'
@@ -32,10 +34,10 @@ Rails.application.routes.draw do
 
       get 'rentals/new/validate-drivers'
       get 'rentals/new/add-ons'
-      get 'rentals/new'
+      get 'rentals/new/summary'
       get 'rentals/new/payment'
 
-      resources :drivers do
+      resources :drivers, only: [:show] do
         resources :insurance_policies
       end
     end

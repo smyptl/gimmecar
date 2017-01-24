@@ -3,20 +3,21 @@
 
   export default {
     props: {
-      value: {
+      field: {
+        required: true,
         type: String,
-        required: true
       },
       errors: {
-        type: Object,
-        default() {
-          return {}
-        },
+        required: true,
       },
     },
     computed: {
       hasError() {
-        return this.errors && this.errors[this.value] && Compact(this.errors[this.value]).length
+        if (this.errors) {
+          return this.errors.length > 0
+        }
+
+        return false
       },
     },
   }
@@ -24,8 +25,8 @@
 
 <template lang='pug'>
   p.input-error-message(v-if='hasError')
-    template(v-for='(error, index) in errors[value]')
+    template(v-for='(error, index) in errors')
       | {{ error }}
-      template(v-if='errors[value].length > 1 && (index + 1) != errors[value].length')
+      template(v-if='errors.length > 1 && (index + 1) != errors.length')
         | ,&nbsp;
 </template>

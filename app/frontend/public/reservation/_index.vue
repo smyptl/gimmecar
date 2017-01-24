@@ -5,10 +5,10 @@
   import InputError from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
 
-  import Rates from 'Admin/quotes/_summary'
+  import Rates from 'Admin/location/quotes/_summary'
 
   import SlideTransition from 'Utils/transitions/slide'
-  import ErrorTransition from 'Utils/transitions/error'
+  import ErrorTransition from 'Utils/transitions/shake'
 
   Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
