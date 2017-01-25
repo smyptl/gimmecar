@@ -20,6 +20,21 @@ const router = new VueRouter({
   routes: [
     {
       path: '/', name: 'login', component: require('./login/base'),
+      beforeEnter: (to, from, next) => {
+        if (USER.name && LOCATION.slug) {
+          next({ path: 'dashboard', params: { location: LOCATION.slug } })
+        } else if (USER.name) {
+          next({ path: 'locations' })
+        } else {
+          next()
+        }
+      }
+    },
+    {
+      path: '/locations', name: 'locations', component: require('./locations/base'),
+      beforeEnter: (to, from, next) => {
+        next()
+      },
     },
     {
       path: '/:location',
@@ -32,6 +47,15 @@ const router = new VueRouter({
         { path: 'vehicles',     name: 'vehicles',     component: require('./location/vehicles/base') },
         { path: 'quotes',       name: 'quotes',       component: require('./location/quotes/base') },
       ],
+      beforeEnter: (to, from, next) => {
+        if (!USER.name) {
+          return next({ name: 'login' })
+        } else if (!LOCATION.slug) {
+          return next({ name: 'locations' })
+        } else {
+          return next()
+        }
+      },
     },
   ],
 })

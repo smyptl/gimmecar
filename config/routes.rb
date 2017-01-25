@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     root 'token#index'
     post '/', to: 'token#create'
 
-    get 'locations' => 'location#index'
+    get 'locations' => 'locations#index'
 
     scope ':slug', module: :location, as: :location do
       get '/dashboard', to: 'dashboard#index'

@@ -29,8 +29,12 @@
           })
           .then(response => {
             USER = response.data.user
-            LOCATION = response.data.locations[0]
-            this.$router.push({ name: 'dashboard', params: { location: LOCATION.slug } })
+
+            if (response.data.locations.length == 1) {
+              LOCATION = response.data.locations[0]
+              return this.$router.push({ name: 'dashboard', params: { location: LOCATION.slug } })
+             }
+            return this.$router.push({ name: 'locations' })
           })
           .catch(error => {
             Shake(document.getElementById('login-form'))
