@@ -12,7 +12,6 @@ html#bg-app
 
     body
       #gimmecar-app
-
       - if current_user
         javascript:
           var USER = #{{ current_user.to_javascript.to_json }}
