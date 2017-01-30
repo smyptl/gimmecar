@@ -9,7 +9,7 @@ class Admin::BaseController < ApplicationController
   private
 
   def authorize_api
-    render 'admin/index' unless api?
+    #render 'admin/index' unless api?
   end
 
   def api?

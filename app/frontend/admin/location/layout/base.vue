@@ -17,7 +17,7 @@
     },
     computed: {
       location () {
-        return LOCATION
+        return { name: 'TEST' }
       }
     },
     methods: {

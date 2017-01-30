@@ -1,6 +1,4 @@
-class Admin::Location::QuotesController < Admin::BaseController
-
-  before_action :authenticate_user, :authenticate_location
+class Admin::Location::QuotesController < Admin::Location::BaseController
 
   def index
   end

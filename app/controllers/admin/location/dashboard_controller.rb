@@ -1,6 +1,4 @@
-class Admin::Location::DashboardController < Admin::BaseController
-
-  before_action :authenticate_user, :authenticate_location
+class Admin::Location::DashboardController < Admin::Location::BaseController
 
   def index
   end

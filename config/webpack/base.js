@@ -6,7 +6,8 @@ var webpack = require("webpack")
 module.exports = {
   entry: {
     public: './app/frontend/public/index',
-    admin: './app/frontend/admin/index',
+    admin_login: './app/frontend/admin/login/index',
+    admin_location: './app/frontend/admin/location/index',
   },
   output: {
     path: path.resolve(__dirname, '../../public/assets'),

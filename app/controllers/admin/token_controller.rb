@@ -5,6 +5,7 @@ class Admin::TokenController < Admin::BaseController
   layout 'admin'
 
   def index
+    render 'admin/login'
   end
 
   def create

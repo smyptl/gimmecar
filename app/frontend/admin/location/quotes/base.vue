@@ -33,11 +33,11 @@
     template(v-if='step == "rates"')
       h4.form-header.form-header-first Rental Dates
       .input-row
-        .input-container.one-half.fixed
+        .input-container.one-half
           label.input-label From:
           input-date-time(v-model='pickup')
 
-        .input-container.one-half.fixed
+        .input-container.one-half
           label.input-label To:
           input-date-time(v-model='drop_off')
 
