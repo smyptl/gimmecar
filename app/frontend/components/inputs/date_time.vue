@@ -31,25 +31,11 @@
     data () {
       return {
         current_date_time: '',
-        date_formatted: '',
-        hour_formatted: '',
-        minute_formatted: '',
-        period_formatted: '',
-        view_calendar: false,
+        date_time_formatted: '',
       }
     },
     mounted () {
-      var calendar = this.$el.querySelector('.calendar')
-      var input = this.$el.querySelector('.date-field')
-
-      this._closeEvent = EventListener.listen(window, 'click', (e) => {
-        if (!calendar.contains(e.target) && !input.contains(e.target)) {
-          this.hideCalendar()
-        }
-      })
-
-      this.parseValue(this.value)
-      this.emitInput()
+      return this.parseValue(this.value)
     },
     watch: {
       value (val, oldVal) {
@@ -60,52 +46,32 @@
       range (start, end) {
         return Range(start, end)
       },
-      showCalendar () {
-        this.view_calendar = true
-      },
-      hideCalendar () {
-        this.view_calendar = false
+      showClock () {
+        this.view_clock = true
       },
       selectDate (value) {
         this.hideCalendar()
       },
       parseValue (val) {
         this.current_date_time = Moment.tz(val, this.time_zone)
-
-        this.formatDate()
-        this.formatTime()
+        this.formatDateTime()
       },
-      parseDate () {
-        if (this.date_formatted.match(DATE_REGEX)) {
-          var date = Moment.tz(this.date_formatted, "MM/DD/YYYY", this.time_zone)
-        } else {
-          var date = Moment.tz(this.date_formatted, "MM/DD/YY", this.time_zone)
-        }
+      parseDateTime () {
+        var date = Moment.tz(this.date_time_formatted, "M/D/Y @ h:mm A", this.time_zone)
 
         if (date._isValid) {
-          this.current_date_time.set('date',  date.get('date'))
-          this.current_date_time.set('month', date.get('month'))
-          this.current_date_time.set('year',  date.get('year'))
+          this.current_date_time.set('date',   date.get('date'))
+          this.current_date_time.set('month',  date.get('month'))
+          this.current_date_time.set('year',   date.get('year'))
+          this.current_date_time.set('hour',   date.get('hour'))
+          this.current_date_time.set('minute', date.get('minute'))
         }
 
-        this.formatDate()
+        this.formatDateTime()
         this.emitInput()
       },
-      parseTime () {
-        var date_time = Moment(this.hour_formatted + ':' + this.minute_formatted + ' ' + this.period_formatted, ["h:mm A"])
-
-        this.current_date_time.set('hour', date_time.hour())
-        this.current_date_time.set('minute', date_time.minute())
-
-        this.emitInput()
-      },
-      formatDate () {
-        this.date_formatted = this.current_date_time.format("M/D/YYYY")
-      },
-      formatTime () {
-        this.hour_formatted   = this.current_date_time.format('h')
-        this.minute_formatted = this.current_date_time.format('m')
-        this.period_formatted = this.current_date_time.format('A')
+      formatDateTime () {
+        this.date_time_formatted = this.current_date_time.format("M/D/YYYY @ h:mm A")
       },
       emitInput () {
         this.$emit('input', this.current_date_time.format())
@@ -116,90 +82,62 @@
 
 <template lang='pug'>
   .whole.left
-    .input-block.one-half.fixed
+    .input-block.whole
       input.input-field.date-field(
         type='text'
-        placeholder='mm/dd/yyyy'
+        placeholder='mm/dd/yyyy @ hh:mm xm'
         v-bind:name='name'
-        v-model='date_formatted'
-        @change='parseDate')
+        v-model='date_time_formatted'
+        @change='parseDateTime')
 
-    .input-container.one-half.fixed
-      .input-block.one-third.fixed
-        select.input-field(v-bind:name='name' v-model='hour_formatted' @change='parseTime')
-          option(value='' disabled) --
-          option(v-for='n in range(1, 13)' value=n) {{ n }}
-      .input-block.one-third.fixed
-        select.input-field(v-bind:name='name' v-model='minute_formatted' @change='parseTime')
-          option(value='' disabled) --
-          option(v-for='n in range(0, 60)' value=n) {{ n }}
-
-      .input-block.one-third.fixed
-        select.input-field(v-bind:name='name' v-model='period_formatted' @change='parseTime')
-          option(value='' disabled) --
-          option(value='AM') AM
-          option(value='PM') PM
-
-    <!--.input-block.whole-->
-      .calendar(v-show='view_calendar')
-        span.calendar-header
-          a.left &#8592;
-          | January 2017
-          a.right &#8594;
-        .calendar-content
-          .whole.left
-            span.calendar-sub-header S
-            span.calendar-sub-header M
-            span.calendar-sub-header T
-            span.calendar-sub-header W
-            span.calendar-sub-header T
-            span.calendar-sub-header F
-            span.calendar-sub-header S
-          span.calendar-row
-            a.calendar-day.disabled(@click='selectDate(value)') 1
-            a.calendar-day.selected(@click='selectDate(value)') 2
-            a.calendar-day(@click='selectDate(value)') 3
-            a.calendar-day(@click='selectDate(value)') 4
-            a.calendar-day(@click='selectDate(value)') 5
-            a.calendar-day(@click='selectDate(value)') 6
-            a.calendar-day(@click='selectDate(value)') 7
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 8
-            a.calendar-day(@click='selectDate(value)') 9
-            a.calendar-day(@click='selectDate(value)') 10
-            a.calendar-day(@click='selectDate(value)') 11
-            a.calendar-day(@click='selectDate(value)') 12
-            a.calendar-day(@click='selectDate(value)') 13
-            a.calendar-day(@click='selectDate(value)') 14
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 15
-            a.calendar-day(@click='selectDate(value)') 16
-            a.calendar-day(@click='selectDate(value)') 17
-            a.calendar-day(@click='selectDate(value)') 18
-            a.calendar-day(@click='selectDate(value)') 19
-            a.calendar-day(@click='selectDate(value)') 20
-            a.calendar-day(@click='selectDate(value)') 21
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 22
-            a.calendar-day(@click='selectDate(value)') 23
-            a.calendar-day(@click='selectDate(value)') 24
-            a.calendar-day(@click='selectDate(value)') 25
-            a.calendar-day(@click='selectDate(value)') 26
-            a.calendar-day(@click='selectDate(value)') 27
-            a.calendar-day(@click='selectDate(value)') 28
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 29
-            a.calendar-day(@click='selectDate(value)') 30
-            a.calendar-day(@click='selectDate(value)') 31
-            a.calendar-day.disabled
-            a.calendar-day.disabled
-            a.calendar-day.disabled
-            a.calendar-day.disabled
 </template>
 
 <style lang='stylus'>
   @import '~Styles/global/colors'
   @import '~Styles/global/layout'
+
+  .clock
+    position: absolute
+    width: 100%
+    z-index: 2
+    margin-top: $input-height + $margin-ex-sm
+
+    background: #ffffff
+    border-radius: 0.125rem
+    border: 1px solid $border-color-dark
+
+  .clock-hour,
+  .clock-minute,
+  .clock-period
+    float: left
+    height: 9rem
+
+    overflow-x: hidden
+    overflow-y: auto
+
+  .clock-hour,
+  .clock-minute
+    border-right: 1px solid $border-color-dark
+
+  .clock-item
+    float: left
+    width: 95%
+    height: 1.5rem
+    margin: 0.125rem 2.5%
+
+    border-radius: 0.125rem
+
+    font-size: 0.75rem
+    line-height: @height
+    text-align: center
+    cursor: pointer
+
+    &:hover
+      background: $background-color-header
+
+  .clock-item.selected
+    background: $blue
+    color: #ffffff
 
   .calendar
     position: absolute

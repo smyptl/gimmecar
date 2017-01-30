@@ -9,9 +9,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-import Axios from 'axios'
-Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-Axios.defaults.headers.common['X-CSRF-Token'] = document.getElementsByName('csrf-token')[0].content
+import Axios from 'Utils/axios'
 Vue.prototype.$http = Axios
 
 const router = new VueRouter({

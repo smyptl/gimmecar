@@ -6,7 +6,7 @@
   "author": "Samay Patel <samay@gimmecar.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --config ./config/webpack/development.js",
+    "dev": "webpack-dev-server --progress --inline --config ./config/webpack/development.js",
     "test": "karma start ./spec/frontend/karma.conf.js"
   },
   "babel": {

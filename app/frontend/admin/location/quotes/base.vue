@@ -2,7 +2,7 @@
   import Axios from 'axios'
   Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
-  import RatesSummary from './_summary'
+  import RatesSummary from './summary'
 
   import InputDateTime from 'Components/inputs/date_time'
 
@@ -33,11 +33,11 @@
     template(v-if='step == "rates"')
       h4.form-header.form-header-first Rental Dates
       .input-row
-        .input-container.one-half
+        .input-container.one-half.fixed
           label.input-label From:
           input-date-time(v-model='pickup')
 
-        .input-container.one-half
+        .input-container.one-half.fixed
           label.input-label To:
           input-date-time(v-model='drop_off')
 

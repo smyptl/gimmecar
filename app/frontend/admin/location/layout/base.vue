@@ -3,10 +3,10 @@
 
   import isUndefined from 'lodash/isUndefined'
 
-  import Navigation from './_nav'
+  import Navigation from './nav'
 
   export default {
-    name: 'layout',
+    name: 'location',
     data () {
       return {
         nav: false,

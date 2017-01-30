@@ -2,12 +2,10 @@ import Promise from 'promise-polyfill'
 
 import Vue from 'vue'
 
-import Axios from 'axios'
-Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-Axios.defaults.headers.common['X-CSRF-Token'] = document.getElementsByName('csrf-token')[0].content
+import Axios from 'Utils/axios'
 Vue.prototype.$http = Axios
 
-import Reservation from './reservation/_index.vue'
+import Reservation from './reservation/index.vue'
 
 // To add to window
 if (!window.Promise) {
