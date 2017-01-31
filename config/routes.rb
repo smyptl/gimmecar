@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unacceptable'
   get '/500', to: 'errors#internal_error'
 
-  scope module: :admin, constraints: { subdomain: 'admin' } do
+  scope module: :admin, constraints: { subdomain: /^admin(\.|$)/ } do
     root 'login#index'
     post '/', to: 'login#create'
 
