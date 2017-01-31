@@ -195,8 +195,10 @@
 </template>
 
 
-<style lang='stylus' scoped>
+<style lang='stylus'>
   @import '~Styles/global/colors'
   @import '~Styles/global/layout'
 
+  .input-field
+    background-color: #f7f7f7
 </style>
