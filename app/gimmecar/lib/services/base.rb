@@ -37,13 +37,8 @@ class Lib::Services::Base
     raise MethodNotImplemented
   end
 
-  def with_permissions_for(id)
-    @user_permission = UserPermission.data(id)
-    self
-  end
-
-  def user_permission
-    @user_permission || (raise NotImplementedError)
+  def user
+    @user || (raise NotImplementedError)
   end
 
   def include(hash)

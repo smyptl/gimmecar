@@ -5,6 +5,7 @@
 
   import isDate from 'lodash/isDate'
   import Includes from 'lodash/includes'
+  import Range from 'lodash/range'
 
   const MONTH_NAMES = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
@@ -30,23 +31,11 @@
     data () {
       return {
         current_date_time: '',
-        date_formatted: '',
-        time_formatted: '',
-        view_calendar: false,
+        date_time_formatted: '',
       }
     },
     mounted () {
-      var calendar = this.$el.querySelector('.calendar')
-      var input = this.$el.querySelector('.date-field')
-
-      this._closeEvent = EventListener.listen(window, 'click', (e) => {
-        if (!calendar.contains(e.target) && !input.contains(e.target)) {
-          this.hideCalendar()
-        }
-      })
-
-      this.parseValue(this.value)
-      this.emitInput()
+      return this.parseValue(this.value)
     },
     watch: {
       value (val, oldVal) {
@@ -54,51 +43,35 @@
       },
     },
     methods: {
-      showCalendar () {
-        this.view_calendar = true
+      range (start, end) {
+        return Range(start, end)
       },
-      hideCalendar () {
-        this.view_calendar = false
+      showClock () {
+        this.view_clock = true
       },
       selectDate (value) {
         this.hideCalendar()
       },
       parseValue (val) {
         this.current_date_time = Moment.tz(val, this.time_zone)
-        this.formatDate()
-        this.formatTime()
+        this.formatDateTime()
       },
-      parseDate () {
-        if (this.date_formatted.match(DATE_REGEX)) {
-          var date = Moment.tz(this.date_formatted, "MM/DD/YYYY", this.time_zone)
-        } else {
-          var date = Moment.tz(this.date_formatted, "MM/DD/YY", this.time_zone)
-        }
+      parseDateTime () {
+        var date = Moment.tz(this.date_time_formatted, "M/D/YYYY @ h:mm A", this.time_zone)
 
         if (date._isValid) {
-          this.current_date_time.set('date',  date.get('date'))
-          this.current_date_time.set('month', date.get('month'))
-          this.current_date_time.set('year',  date.get('year'))
+          this.current_date_time.set('date',   date.get('date'))
+          this.current_date_time.set('month',  date.get('month'))
+          this.current_date_time.set('year',   date.get('year'))
+          this.current_date_time.set('hour',   date.get('hour'))
+          this.current_date_time.set('minute', date.get('minute'))
         }
 
-        this.formatDate()
+        this.formatDateTime()
         this.emitInput()
       },
-      parseTime () {
-        var time = Moment.tz(this.time_formatted, "HHmm", this.time_zone)
-        this.current_date_time.set('hour',   time.get('hour'))
-        this.current_date_time.set('minute', time.get('minute'))
-        this.emitInput()
-      },
-      formatDate () {
-        this.date_formatted = this.current_date_time.format("M/D/YYYY")
-      },
-      formatTime () {
-        var minutes = this.current_date_time.format('mm')
-
-        if (Includes(['00', '30'], minutes)) {
-          this.time_formatted = this.current_date_time.format('HHmm')
-        }
+      formatDateTime () {
+        this.date_time_formatted = this.current_date_time.format("M/D/YYYY @ h:mm A")
       },
       emitInput () {
         this.$emit('input', this.current_date_time.format())
@@ -109,128 +82,62 @@
 
 <template lang='pug'>
   .whole.left
-    .input-block.one-half.fixed
+    .input-block.whole
       input.input-field.date-field(
         type='text'
-        placeholder='mm/dd/yyyy'
+        placeholder='mm/dd/yyyy @ hh:mm am/pm'
         v-bind:name='name'
-        v-model='date_formatted'
-        @change='parseDate')
+        v-model='date_time_formatted'
+        @change='parseDateTime')
 
-    .input-block.one-half.fixed
-      select.input-field(placeholder='--:-- AM/PM' v-bind:name='name' v-model='time_formatted' @change='parseTime')
-        option(value='' disabled) --:-- AM/PM
-        option(value='0000') 12:00 AM
-        option(value='0030') 12:30 AM
-        option(value='0100') 1:00 AM
-        option(value='0130') 1:30 AM
-        option(value='0200') 2:00 AM
-        option(value='0230') 2:30 AM
-        option(value='0300') 3:00 AM
-        option(value='0330') 3:30 AM
-        option(value='0400') 4:00 AM
-        option(value='0430') 4:30 AM
-        option(value='0500') 5:00 AM
-        option(value='0530') 5:30 AM
-        option(value='0600') 6:00 AM
-        option(value='0630') 6:30 AM
-        option(value='0700') 7:00 AM
-        option(value='0730') 7:30 AM
-        option(value='0800') 8:00 AM
-        option(value='0830') 8:30 AM
-        option(value='0800') 8:00 AM
-        option(value='0830') 8:30 AM
-        option(value='0900') 9:00 AM
-        option(value='0930') 9:30 AM
-        option(value='1000') 10:00 AM
-        option(value='1030') 10:30 AM
-        option(value='1100') 11:00 AM
-        option(value='1130') 11:30 AM
-        option(value='1200') 12:00 PM
-        option(value='1230') 12:30 PM
-        option(value='1300') 1:00 PM
-        option(value='1330') 1:30 PM
-        option(value='1400') 2:00 PM
-        option(value='1430') 2:30 PM
-        option(value='1500') 3:00 PM
-        option(value='1530') 3:30 PM
-        option(value='1600') 4:00 PM
-        option(value='1630') 4:30 PM
-        option(value='1700') 5:00 PM
-        option(value='1730') 5:30 PM
-        option(value='1800') 6:00 PM
-        option(value='1830') 6:30 PM
-        option(value='1900') 7:00 PM
-        option(value='1930') 7:30 PM
-        option(value='2000') 8:00 PM
-        option(value='2030') 8:30 PM
-        option(value='2100') 9:00 PM
-        option(value='2130') 9:30 PM
-        option(value='2200') 10:00 PM
-        option(value='2230') 10:30 PM
-        option(value='2300') 11:00 PM
-        option(value='2330') 11:30 PM
-
-    .input-block.whole
-      .calendar(v-show='view_calendar')
-        span.calendar-header
-          a.left &#8592;
-          | January 2017
-          a.right &#8594;
-        .calendar-content
-          .whole.left
-            span.calendar-sub-header S
-            span.calendar-sub-header M
-            span.calendar-sub-header T
-            span.calendar-sub-header W
-            span.calendar-sub-header T
-            span.calendar-sub-header F
-            span.calendar-sub-header S
-          span.calendar-row
-            a.calendar-day.disabled(@click='selectDate(value)') 1
-            a.calendar-day.selected(@click='selectDate(value)') 2
-            a.calendar-day(@click='selectDate(value)') 3
-            a.calendar-day(@click='selectDate(value)') 4
-            a.calendar-day(@click='selectDate(value)') 5
-            a.calendar-day(@click='selectDate(value)') 6
-            a.calendar-day(@click='selectDate(value)') 7
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 8
-            a.calendar-day(@click='selectDate(value)') 9
-            a.calendar-day(@click='selectDate(value)') 10
-            a.calendar-day(@click='selectDate(value)') 11
-            a.calendar-day(@click='selectDate(value)') 12
-            a.calendar-day(@click='selectDate(value)') 13
-            a.calendar-day(@click='selectDate(value)') 14
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 15
-            a.calendar-day(@click='selectDate(value)') 16
-            a.calendar-day(@click='selectDate(value)') 17
-            a.calendar-day(@click='selectDate(value)') 18
-            a.calendar-day(@click='selectDate(value)') 19
-            a.calendar-day(@click='selectDate(value)') 20
-            a.calendar-day(@click='selectDate(value)') 21
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 22
-            a.calendar-day(@click='selectDate(value)') 23
-            a.calendar-day(@click='selectDate(value)') 24
-            a.calendar-day(@click='selectDate(value)') 25
-            a.calendar-day(@click='selectDate(value)') 26
-            a.calendar-day(@click='selectDate(value)') 27
-            a.calendar-day(@click='selectDate(value)') 28
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 29
-            a.calendar-day(@click='selectDate(value)') 30
-            a.calendar-day(@click='selectDate(value)') 31
-            a.calendar-day.disabled
-            a.calendar-day.disabled
-            a.calendar-day.disabled
-            a.calendar-day.disabled
 </template>
 
 <style lang='stylus'>
   @import '~Styles/global/colors'
   @import '~Styles/global/layout'
+
+  .clock
+    position: absolute
+    width: 100%
+    z-index: 2
+    margin-top: $input-height + $margin-ex-sm
+
+    background: #ffffff
+    border-radius: 0.125rem
+    border: 1px solid $border-color-dark
+
+  .clock-hour,
+  .clock-minute,
+  .clock-period
+    float: left
+    height: 9rem
+
+    overflow-x: hidden
+    overflow-y: auto
+
+  .clock-hour,
+  .clock-minute
+    border-right: 1px solid $border-color-dark
+
+  .clock-item
+    float: left
+    width: 95%
+    height: 1.5rem
+    margin: 0.125rem 2.5%
+
+    border-radius: 0.125rem
+
+    font-size: 0.75rem
+    line-height: @height
+    text-align: center
+    cursor: pointer
+
+    &:hover
+      background: $background-color-header
+
+  .clock-item.selected
+    background: $blue
+    color: #ffffff
 
   .calendar
     position: absolute

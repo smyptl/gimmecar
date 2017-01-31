@@ -1,32 +1,31 @@
-.form-step
-  height: 100%
+$input-padding-y: $padding-ex-sm/2
+$input-margin-x: $margin-ex-sm/2
+
+.form-container
   width: 100%
-  float: left
-  display: block
+  max-width: 40rem
 
-  h3
-    margin: $margin-default 0 0 -0.8125rem
+  margin: 0 auto
 
-    text-transform: uppercase
-    font-size: 1.25rem
-    font-weight: 400
-    font-family: "Oswald"
-    color: #666666
+.form-header.form-header-first
+  margin-top: 0
 
-    &:after
-      content: ' '
-      height: 0.125rem
-      width: 3rem
-      display: block
-      margin-top: $padding-sm
-      margin-left: $margin-lg + 0.75rem
+  &:before
+    content: ' '
+    height: 0.125rem
+    width: 3rem
+    display: block
+    margin-bottom: $padding-default
 
-      background: $border-color-light
+    background: $blue
 
-.form-inputs
+
+.form-header
   width: 100%
-  float: left
-  padding-left: $padding-lg
+  margin: $padding-default 0 $padding-sm
+
+  font-size: 1.25rem
+  font-weight: 700
 
 .input-row,
 .input-submit,
@@ -41,11 +40,14 @@
   margin: 0
 
 .input-submit
-  padding: $padding-default 0
+  padding-top: $padding-default
+  padding-bottom: $padding-default
 
+.form-header,
 .input-block
   float: left
-  padding: 0 $padding-ex-sm/2
+  padding-left: $input-padding-y
+  padding-right: $input-padding-y
 
 .input-flex-container
   display: flex
@@ -58,9 +60,11 @@
     flex: 1
 
 .input-label
-  padding: $padding-default $padding-ex-sm/2 0
+  padding-top: $padding-sm
+  padding-left: $input-padding-y
+  padding-right: $input-padding-y
 
-  font-size: 0.8125rem
+  font-size: 0.75rem
   font-weight: 700
   line-height: 1.25rem
   text-align: left
@@ -68,6 +72,7 @@
   cursor: pointer
 
 .input-label.input-lg
+  padding-top: $padding-default
   font-size: 0.875rem
 
 .input-label-note
@@ -76,7 +81,7 @@
 
 .input-field
   height: $input-height
-  margin-top: $margin-ex-sm
+  margin: $input-margin-x 0
   padding: $padding-sm
   position: relative
 
@@ -85,7 +90,7 @@
   border: 1px solid $border-color-input
 
   cursor: pointer
-  font-size: $font-size-default - 0.0625rem
+  font-size: $font-size-default - 0.125rem
   font-family: "Hack"
   font-weight: 400
 
@@ -97,9 +102,7 @@
 
   &::input-placeholder,
   &:input-placeholder,
-  &:input-placeholder,
   &:placeholder,
-
     color: $text-color-placeholder
 
 .input-field.input-lg
@@ -122,6 +125,10 @@ select.input-field
   option:disabled
     color: $text-color-placeholder
 
+.input-contrast
+  border-color: $border-color-input-contrast
+  background-color: $background-color-input-contrast
+
 .input-field.input-field-error
   color: $text-color-red
   border-color: $border-color-red
@@ -133,8 +140,8 @@ select.input-field
 
 .input-error-message
   float: left
-  margin: 0 ($margin-ex-sm/2) 0 0
-  padding: $padding-ex-sm
+  margin: -$input-margin-x $input-padding-y $input-margin-x
+  padding: $input-margin-x $padding-ex-sm
 
   border: 1px solid $border-color-yellow
   border-top: 0
@@ -143,6 +150,10 @@ select.input-field
   background-color: $background-color-yellow
 
   text-align: left
-  font-size: $font-size-default
+  font-size: 0.75rem
   font-weight: 700
   color: #444444
+
+.input-error-message.input-lg
+  font-size: $font-size-default
+  padding: $padding-ex-sm

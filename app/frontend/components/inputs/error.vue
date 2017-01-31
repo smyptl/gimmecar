@@ -2,7 +2,7 @@
   import Includes from 'lodash/includes'
 
   var addRemoveClass = (el, binding, vnode) => {
-    if (binding.value && binding.value[binding.arg]) {
+    if (binding.value) {
       if (!Includes(el.className, 'input-field-error')) {
         el.className += ' input-field-error'
       }

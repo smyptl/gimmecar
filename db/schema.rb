@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219200030) do
+ActiveRecord::Schema.define(version: 20170113214017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,24 +19,60 @@ ActiveRecord::Schema.define(version: 20161219200030) do
     t.string  "title"
     t.string  "first_name"
     t.string  "last_name"
+    t.string  "name"
     t.string  "gender"
     t.string  "address_1"
     t.string  "address_2"
     t.string  "city"
     t.string  "state"
     t.string  "zip_code"
-    t.integer "phone_number"
+    t.string  "country"
+    t.integer "home_phone_number"
+    t.integer "cell_phone_number"
     t.string  "email"
     t.date    "date_of_birth"
     t.string  "license_number"
     t.string  "license_state"
     t.string  "license_country"
     t.date    "license_expiration_date"
-    t.string  "insurance_company"
-    t.string  "insurance_policy_number"
-    t.string  "insurance_phone_number"
     t.boolean "do_not_rent"
+    t.string  "stripe_id"
     t.text    "notes"
+  end
+
+  create_table "insurance_policies", force: :cascade do |t|
+    t.integer "user_id"
+    t.date    "confirmation_date"
+    t.integer "driver_id"
+    t.string  "company"
+    t.string  "agent"
+    t.string  "policy_number"
+    t.string  "phone_number"
+    t.date    "effective_date"
+    t.date    "expiration_date"
+    t.index ["driver_id"], name: "index_insurance_policies_on_driver_id", using: :btree
+    t.index ["user_id"], name: "index_insurance_policies_on_user_id", using: :btree
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.string "latitude"
+    t.string "longitude"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "country"
+    t.string "phone_number"
+  end
+
+  create_table "locations_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "location_id"
+    t.index ["location_id"], name: "index_locations_users_on_location_id", using: :btree
+    t.index ["user_id"], name: "index_locations_users_on_user_id", using: :btree
   end
 
   create_table "rates", force: :cascade do |t|
@@ -48,24 +84,28 @@ ActiveRecord::Schema.define(version: 20161219200030) do
   end
 
   create_table "rentals", force: :cascade do |t|
-    t.integer "driver_id"
-    t.integer "vehicle_id"
-    t.string  "status"
-    t.text    "notes"
-    t.integer "pickup_location_id"
-    t.date    "pickup_date"
-    t.time    "pickup_time"
-    t.integer "pickup_odometer"
-    t.integer "pickup_fuel"
-    t.integer "return_location_id"
-    t.date    "return_date"
-    t.time    "return_time"
-    t.integer "return_odometer"
-    t.integer "return_fuel"
-    t.string  "vehicle_type"
+    t.string   "number"
+    t.string   "source"
+    t.string   "status"
+    t.boolean  "confirmed"
+    t.integer  "driver_id"
+    t.integer  "additional_driver_id"
+    t.integer  "vehicle_id"
+    t.string   "vehicle_type"
+    t.text     "notes"
+    t.integer  "pickup_location_id"
+    t.datetime "pickup"
+    t.integer  "pickup_odometer"
+    t.float    "pickup_fuel"
+    t.integer  "drop_off_location_id"
+    t.datetime "drop_off"
+    t.integer  "drop_off_odometer"
+    t.float    "drop_off_fuel"
+    t.boolean  "collision_damage_waiver"
+    t.index ["additional_driver_id"], name: "index_rentals_on_additional_driver_id", using: :btree
     t.index ["driver_id"], name: "index_rentals_on_driver_id", using: :btree
+    t.index ["drop_off_location_id"], name: "index_rentals_on_drop_off_location_id", using: :btree
     t.index ["pickup_location_id"], name: "index_rentals_on_pickup_location_id", using: :btree
-    t.index ["return_location_id"], name: "index_rentals_on_return_location_id", using: :btree
     t.index ["vehicle_id"], name: "index_rentals_on_vehicle_id", using: :btree
   end
 
@@ -73,16 +113,16 @@ ActiveRecord::Schema.define(version: 20161219200030) do
     t.string  "first_name"
     t.string  "last_name"
     t.string  "email"
-    t.string  "crypted_password"
-    t.string  "password_salt"
+    t.string  "password_digest"
+    t.boolean "active",            default: false
+    t.boolean "confirmed",         default: false
     t.string  "persistence_token"
-    t.string  "single_access_token"
     t.string  "perishable_token"
-    t.boolean "active",              default: false
-    t.boolean "confirmed",           default: false
   end
 
   create_table "vehicles", force: :cascade do |t|
+    t.integer "original_location_id"
+    t.integer "location_id"
     t.string  "vehicle_type"
     t.string  "vin"
     t.string  "license_number"
@@ -97,6 +137,8 @@ ActiveRecord::Schema.define(version: 20161219200030) do
     t.string  "fuel_grade"
     t.integer "tank_size"
     t.text    "notes"
+    t.index ["location_id"], name: "index_vehicles_on_location_id", using: :btree
+    t.index ["original_location_id"], name: "index_vehicles_on_original_location_id", using: :btree
   end
 
 end

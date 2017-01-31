@@ -14,16 +14,31 @@ gem 'foreman'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem 'autoprefixer-rails'
 gem 'roadie-rails'
+
+# User SLIM as the templating engine
+gem 'slim'
+gem 'slim-rails'
+
+# Webpack
+gem 'webpacker', github: 'rails/webpacker'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
+
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+
+# Use for Authentication
+gem 'jwt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+
+  # Seed Data
+  gem 'faker'
 end
 
 group :development do
@@ -34,18 +49,18 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Email Opener
-  gem "letter_opener"
+  gem 'letter_opener'
+  # Annotate
+  gem 'annotate'
 end
 
 group :test do
-  gem "rspec-rails"
-  gem "capybara"
-  gem "capybara-webkit"
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'factory_girl'
+  gem 'database_cleaner'
 end
-
-# User SLIM as the templating engine
-gem 'slim'
-gem 'slim-rails'
 
 # Developer Tools
 gem 'bugsnag'
@@ -54,4 +69,4 @@ gem 'annotate'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-ruby "2.4.0"
+ruby '2.4.0'

@@ -17,7 +17,16 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
+
+  # Database Cleaner
+  # Since use_transactional_fixtures is false, use database cleaner
+  # Needed to test javascript in browser
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
+  config.before(:each) { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, :js => true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each) { DatabaseCleaner.clean }
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -71,16 +80,25 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  # Include FactoryGirl
+  config.include FactoryGirl::Syntax::Methods
 end
 
 # Javascript driver for capybara
 Capybara.javascript_driver = :webkit
+Capybara.configure do |config|
+  config.always_include_port = true
+  config.default_max_wait_time = 5
+end
+
 Capybara::Webkit.configure do |config|
   # By default, requests to outside domains (anything besides localhost) will
   # result in a warning. Several methods allow you to change this behavior.
 
   # Silently return an empty 200 response for any requests to unknown URLs.
   config.block_unknown_urls
+  config.allow_url('*.dev')
 
   # Timeout if requests take longer than 5 seconds
   config.timeout = 4
