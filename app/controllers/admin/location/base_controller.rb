@@ -1,20 +1,17 @@
 class Admin::Location::BaseController < ApplicationController
   include Admin::Concerns::User
+  include Admin::Concerns::Api
 
-  helper_method :location, :current_user
+  before_action :authenticate_user, :authenticate_location, :authorize_api
 
-  before_action :authorize_api, :authenticate_user, :authenticate_location
+  helper_method :location
 
   layout 'admin'
 
   private
 
-  def authorize_api
-    render 'admin/location' unless api?
-  end
-
-  def api?
-    request.xhr?
+  def render_layout
+    render 'admin/location'
   end
 
   def authenticate_location
@@ -23,7 +20,7 @@ class Admin::Location::BaseController < ApplicationController
     if api?
       head 404
     else
-      Error404
+      raise ApplicationController::Error404
     end
   end
 

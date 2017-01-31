@@ -8,19 +8,16 @@ module Admin::Concerns::User
     if api?
       head 404
     else
-      raise Error404
+      raise ApplicationController::Error404
     end
   end
 
   def current_user
     @current_user ||= begin
-                        User.authenticate_by_token(token)
-                      rescue
+                        ::User.authenticate_by_token(token)
+                      rescue JWT::DecodeError
                         nil
                       end
-  end
-
-  def set_token
   end
 
   def token

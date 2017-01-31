@@ -127,10 +127,10 @@
       #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
         form(@submit.prevent='createReservation')
           .input-row
-            label.input-label.input-lg(for='last_name') Name
+            label.input-label.input-lg(for='first_name') Name
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field.input-lg(
+                input.input-field#first_name(
                   type='text'
                   placeholder='Henry'
                   v-model='form.first_name'
@@ -141,7 +141,7 @@
 
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field.input-lg(
+                input.input-field#last_name(
                   type='text'
                   placeholder='Ford'
                   v-model='form.last_name'
@@ -156,7 +156,7 @@
               span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
 
             .input-block.whole
-              input.input-field.input-lg(
+              input.input-field#input_email(
                 type='email'
                 placeholder='hford@gmail.com'
                 v-model='form.email'
@@ -171,7 +171,7 @@
               span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
 
             .input-block.whole
-              input.input-field.input-lg(
+              input.input-field#input_phone_number(
                 type='number'
                 placeholder='805-990-1234'
                 v-model='form.phone_number'
@@ -189,7 +189,7 @@
 
       #rental-confirmation.rental-invoice(v-if="current_step == 'rental-confirmation'" key='confirmation')
         h3.emoji :]
-        p.text-center Thanks for choosing us, {{ first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
+        p.text-center Thanks for choosing us, {{ form.first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 
         rates(:summary='summary')
 </template>

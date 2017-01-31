@@ -16,9 +16,9 @@
       Navigation,
     },
     computed: {
-      location () {
-        return { name: 'TEST' }
-      }
+      location_name () {
+        return LOCATION_NAME
+      },
     },
     methods: {
       openNav () {
@@ -80,7 +80,7 @@
 
       h1.logo.root-link
         | GimmeCar
-        small {{ location.name }}
+        small {{ location_name }}
 
       ul#short-cuts.list-horizontal
         li.nav-link

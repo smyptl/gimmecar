@@ -6,7 +6,9 @@ var config = require('./base.js')
 
 module.exports = merge(config, {
   output: {
-    filename: "[name]-[hash].js"
+    path: path.resolve(__dirname, '../../public/packs'),
+    filename: "[name]-[hash].js",
+    publicPath: '/',
   },
 
   plugins: [

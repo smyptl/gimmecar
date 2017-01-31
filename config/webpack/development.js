@@ -1,3 +1,5 @@
+var path = require('path')
+
 var webpack = require('webpack')
 var merge   = require('webpack-merge')
 var config  = require('./base.js')
@@ -19,6 +21,8 @@ config = merge(config, {
     hot: true,
   },
   output: {
+    path: path.resolve(__dirname, '../../public/assets'),
+    filename: '[name].js',
     publicPath: 'http://localhost:8080/'
   },
   stats: {

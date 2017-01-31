@@ -13,16 +13,13 @@
 #  perishable_token  :string
 #
 
-class User < ApplicationRecord
-  include Concerns::User::Authentication
+FactoryGirl.define do
 
-  has_and_belongs_to_many :locations
-
-  def name
-    "#{first_name} #{last_name}"
-  end
-
-  def number_of_locations
-    locations.count
+  factory :user do
+    first_name Faker::Name.first_name
+    last_name Faker::Name.last_name
+    email Faker::Internet.email
+    password '1234'
+    password_confirmation '1234'
   end
 end

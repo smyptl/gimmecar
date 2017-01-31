@@ -33,11 +33,4 @@ class Location < ApplicationRecord
   def calendar
     current_rentals + future_rentals
   end
-
-  def to_javascript
-    {
-      :name => name,
-      :slug => slug,
-    }
-  end
 end

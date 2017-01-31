@@ -14,9 +14,9 @@ feature "Reservations", js: true do
       click_button "Reserve"
     end
 
-    click_button "Reserve Car"
+    within('#rental-reserve') do
+      expect(page).to have_content('Name')
 
-    within("#rental-reserve") do
       fill_in :first_name, with: 'John'
       fill_in :last_name, with: 'Doe'
       fill_in 'Email', with: 'test@gmail.com'
@@ -25,8 +25,9 @@ feature "Reservations", js: true do
 
     click_button 'Reserve Car'
 
-    expect(page).to have_content('Rental Confirmation')
-    expect(page).to have_content('Confirmation #')
+    expect(page).to have_content('Thanks for choosing us, John!!!')
+    expect(page).to have_content('Rental Details')
+    expect(page).to have_content('Confirmation Number')
 
     expect(ActionMailer::Base.deliveries.count).to eq(2)
   end

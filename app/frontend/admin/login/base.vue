@@ -24,17 +24,11 @@
     },
     methods: {
       loginUser () {
-        this.$http.post(this.$route.path, {
+        this.$http.post('/', {
             login: this.login.data()
           })
           .then(response => {
-            USER = response.data.user
-
-            if (response.data.locations.length == 1) {
-              LOCATION = response.data.locations[0]
-              return this.$router.push({ name: 'dashboard', params: { location: LOCATION.slug } })
-             }
-            return this.$router.push({ name: 'locations' })
+            window.location = response.data.links.next
           })
           .catch(error => {
             Shake(document.getElementById('login-form'))
@@ -56,9 +50,9 @@
       #login-form
         form(@submit.prevent='loginUser()')
           .input-row
-            label.input-label Email:
+            label.input-label(for='email') Email:
             .input-block.whole
-              input.input-field(
+              input.input-field#email(
                 type='email'
                 placeholder='hford@gimmecar.com'
                 v-model='login.email'
@@ -68,9 +62,9 @@
             input-error-message(field='email' v-bind:errors='login.errors.get("email")')
 
           .input-row
-            label.input-label Password:
+            label.input-label(for='password') Password:
             .input-block.whole
-              input.input-field(
+              input.input-field#password(
                 type='password'
                 placeholder='!0nG-06scUr3-P@55wOrD'
                 v-model='login.password'

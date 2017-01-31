@@ -1,4 +1,5 @@
-class Admin::LocationsController < Admin::BaseController
+class Admin::LocationsController < ApplicationController
+  include Admin::Concerns::User
 
   before_action :authenticate_user
 

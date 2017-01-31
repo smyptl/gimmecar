@@ -1,6 +1,7 @@
 Rails.application.configure do
   # Make javascript_pack_tag lookup digest hash to enable long-term caching
   config.x.webpacker[:digesting] = true
+  config.serve_static_assets = true
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -98,4 +99,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Allow for subdomains
+  config.action_dispatch.tld_length = 0
 end

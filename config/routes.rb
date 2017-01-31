@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get '/500', to: 'errors#internal_error'
 
   scope module: :admin, constraints: { subdomain: 'admin' } do
-    root 'token#index'
-    post '/', to: 'token#create'
+    root 'login#index'
+    post '/', to: 'login#create'
 
     get 'locations' => 'locations#index'
 

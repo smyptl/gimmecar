@@ -1,6 +1,10 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Make javascript_pack_tag lookup digest hash to enable long-term caching
+  config.x.webpacker[:digesting] = true
+  config.serve_static_assets = true
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
@@ -41,4 +45,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Allow for subdomains
+  config.action_dispatch.tld_length = 0
 end

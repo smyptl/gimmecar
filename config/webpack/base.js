@@ -9,11 +9,6 @@ module.exports = {
     admin_login: './app/frontend/admin/login/index',
     admin_location: './app/frontend/admin/location/index',
   },
-  output: {
-    path: path.resolve(__dirname, '../../public/assets'),
-    filename: '[name].js',
-    publicPath: '/',
-  },
   module: {
     rules: [
       {

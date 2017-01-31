@@ -59,6 +59,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'factory_girl'
+  gem 'database_cleaner'
 end
 
 # Developer Tools

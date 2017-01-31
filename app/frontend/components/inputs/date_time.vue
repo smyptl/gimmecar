@@ -57,7 +57,7 @@
         this.formatDateTime()
       },
       parseDateTime () {
-        var date = Moment.tz(this.date_time_formatted, "M/D/Y @ h:mm A", this.time_zone)
+        var date = Moment.tz(this.date_time_formatted, "M/D/YYYY @ h:mm A", this.time_zone)
 
         if (date._isValid) {
           this.current_date_time.set('date',   date.get('date'))
@@ -85,7 +85,7 @@
     .input-block.whole
       input.input-field.date-field(
         type='text'
-        placeholder='mm/dd/yyyy @ hh:mm xm'
+        placeholder='mm/dd/yyyy @ hh:mm am/pm'
         v-bind:name='name'
         v-model='date_time_formatted'
         @change='parseDateTime')
