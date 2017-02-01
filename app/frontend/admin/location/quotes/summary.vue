@@ -19,7 +19,7 @@
 </script>
 
 <template lang='pug'>
-  .input-block.margin-top-default
+  .input-block.margin-top-default.whole
     h6.margin-bottom-sm Rental Details
     ul.left.whole.list-no-style
       li(v-if='summary.confirmation_number')
@@ -57,3 +57,33 @@
       span.left Estimated Total:
       span.right {{ summary.total | currency }}
 </template>
+
+<style lang='stylus' scoped>
+  @import '~Styles/global/colors'
+  @import '~Styles/global/layout'
+
+  h6
+    float: left
+    width: 100%
+    margin-bottom: $margin-sm
+    padding-bottom: $padding-sm
+
+    border-bottom: 1px solid $border-color-dark
+
+  h5
+    float: left
+    width: 100%
+    border-top: 2px solid $border-color-dark
+    padding-top: $padding-sm
+
+  ul
+    margin-bottom: $margin-default
+
+  li
+    float: left
+    width: 100%
+    margin-bottom: $margin-sm
+
+    font-size: 0.875rem
+
+</style>

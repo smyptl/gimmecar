@@ -36,15 +36,6 @@
       }
     },
     mounted () {
-      var calendar = this.$el.querySelector('.calendar')
-      var input = this.$el.querySelector('.date-field')
-
-      this._closeEvent = EventListener.listen(window, 'click', (e) => {
-        if (!calendar.contains(e.target) && !input.contains(e.target)) {
-          this.hideCalendar()
-        }
-      })
-
       this.parseValue(this.value)
       this.emitInput()
     },
@@ -54,15 +45,6 @@
       },
     },
     methods: {
-      showCalendar () {
-        this.view_calendar = true
-      },
-      hideCalendar () {
-        this.view_calendar = false
-      },
-      selectDate (value) {
-        this.hideCalendar()
-      },
       parseValue (val) {
         this.current_date_time = Moment.tz(val, this.time_zone)
         this.formatDate()
@@ -110,7 +92,7 @@
 <template lang='pug'>
   .whole.left
     .input-block.one-half.fixed
-      input.input-field.date-field(
+      input.input-field.input-lg(
         type='text'
         placeholder='mm/dd/yyyy'
         v-bind:name='name'
@@ -118,7 +100,7 @@
         @change='parseDate')
 
     .input-block.one-half.fixed
-      select.input-field(placeholder='--:-- AM/PM' v-bind:name='name' v-model='time_formatted' @change='parseTime')
+      select.input-field.input-lg(placeholder='--:-- AM/PM' v-bind:name='name' v-model='time_formatted' @change='parseTime')
         option(value='' disabled) --:-- AM/PM
         option(value='0000') 12:00 AM
         option(value='0030') 12:30 AM
@@ -171,61 +153,6 @@
         option(value='2300') 11:00 PM
         option(value='2330') 11:30 PM
 
-    .input-block.whole
-      .calendar(v-show='view_calendar')
-        span.calendar-header
-          a.left &#8592;
-          | January 2017
-          a.right &#8594;
-        .calendar-content
-          .whole.left
-            span.calendar-sub-header S
-            span.calendar-sub-header M
-            span.calendar-sub-header T
-            span.calendar-sub-header W
-            span.calendar-sub-header T
-            span.calendar-sub-header F
-            span.calendar-sub-header S
-          span.calendar-row
-            a.calendar-day.disabled(@click='selectDate(value)') 1
-            a.calendar-day.selected(@click='selectDate(value)') 2
-            a.calendar-day(@click='selectDate(value)') 3
-            a.calendar-day(@click='selectDate(value)') 4
-            a.calendar-day(@click='selectDate(value)') 5
-            a.calendar-day(@click='selectDate(value)') 6
-            a.calendar-day(@click='selectDate(value)') 7
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 8
-            a.calendar-day(@click='selectDate(value)') 9
-            a.calendar-day(@click='selectDate(value)') 10
-            a.calendar-day(@click='selectDate(value)') 11
-            a.calendar-day(@click='selectDate(value)') 12
-            a.calendar-day(@click='selectDate(value)') 13
-            a.calendar-day(@click='selectDate(value)') 14
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 15
-            a.calendar-day(@click='selectDate(value)') 16
-            a.calendar-day(@click='selectDate(value)') 17
-            a.calendar-day(@click='selectDate(value)') 18
-            a.calendar-day(@click='selectDate(value)') 19
-            a.calendar-day(@click='selectDate(value)') 20
-            a.calendar-day(@click='selectDate(value)') 21
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 22
-            a.calendar-day(@click='selectDate(value)') 23
-            a.calendar-day(@click='selectDate(value)') 24
-            a.calendar-day(@click='selectDate(value)') 25
-            a.calendar-day(@click='selectDate(value)') 26
-            a.calendar-day(@click='selectDate(value)') 27
-            a.calendar-day(@click='selectDate(value)') 28
-          span.calendar-row
-            a.calendar-day(@click='selectDate(value)') 29
-            a.calendar-day(@click='selectDate(value)') 30
-            a.calendar-day(@click='selectDate(value)') 31
-            a.calendar-day.disabled
-            a.calendar-day.disabled
-            a.calendar-day.disabled
-            a.calendar-day.disabled
 </template>
 
 <style lang='stylus'>

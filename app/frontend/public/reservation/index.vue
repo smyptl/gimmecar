@@ -113,16 +113,16 @@
 
             .input-submit
               .input-block.whole
-                input.btn.btn-full.btn-primary(type='submit' value='View Rates')
+                input.btn.btn-full.btn-lg.btn-primary(type='submit' value='View Rates')
 
-      #rental-summary.rental-invoice(v-if="current_step == 'rental-summary'" key='summary')
+      #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
         rates(:summary='summary')
 
         .input-submit.input-flex-container
           .input-block.input-element-fixed
-            button.btn(@click="current_step = 'rental-details', transition_type = 'backward'") Go Back
+            button.btn.btn-lg(@click="current_step = 'rental-details', transition_type = 'backward'") Go Back
           .input-block.input-element-flex
-            button.btn.btn-full.btn-primary(@click='newReservation') Reserve
+            button.btn.btn-lg.btn-full.btn-primary(@click='newReservation') Reserve
 
       #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
         form(@submit.prevent='createReservation')
@@ -130,7 +130,7 @@
             label.input-label.input-lg(for='first_name') Name
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field#first_name(
+                input.input-field.input-lg#first_name(
                   type='text'
                   placeholder='Henry'
                   v-model='form.first_name'
@@ -141,7 +141,7 @@
 
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field#last_name(
+                input.input-field.input-lg#last_name(
                   type='text'
                   placeholder='Ford'
                   v-model='form.last_name'
@@ -156,7 +156,7 @@
               span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
 
             .input-block.whole
-              input.input-field#input_email(
+              input.input-field.input-lg#input_email(
                 type='email'
                 placeholder='hford@gmail.com'
                 v-model='form.email'
@@ -171,7 +171,7 @@
               span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
 
             .input-block.whole
-              input.input-field#input_phone_number(
+              input.input-field.input-lg#input_phone_number(
                 type='number'
                 placeholder='805-990-1234'
                 v-model='form.phone_number'
@@ -183,11 +183,11 @@
 
           .input-submit.input-flex-container
             .input-block.input-element-fixed
-              button.btn.btn-full(@click.prevent="current_step = 'rental-summary', transition_type = 'backward'") Go Back
+              button.btn.btn-lg(@click.prevent="current_step = 'rental-summary', transition_type = 'backward'") Go Back
             .input-block.input-element-flex
-              input.btn.btn-full.btn-primary(type='submit' value='Reserve Car')
+              input.btn.btn-lg.btn-full.btn-primary(type='submit' value='Reserve Car')
 
-      #rental-confirmation.rental-invoice(v-if="current_step == 'rental-confirmation'" key='confirmation')
+      #rental-confirmation(v-if="current_step == 'rental-confirmation'" key='confirmation')
         h3.emoji :]
         p.text-center Thanks for choosing us, {{ form.first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 

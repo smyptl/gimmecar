@@ -6,7 +6,7 @@ var config  = require('./base.js')
 var _       = require('lodash')
 
 _.forEach(Object.keys(config.entry), function (name) {
-  var hot_reload = 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr&noInfo=true'
+  var hot_reload = 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr&noInfo=true&reload=true'
 
   if (_.isArray(config.entry[name])) {
     config.entry[name].push(hot_reload)

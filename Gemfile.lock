@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/rails/webpacker.git
-  revision: ef24b74b5e41c1c93ac75f658f5aa205df2347d8
+  revision: 331deaeb5a5a9ac25d3be886e72d4a89b35b7abd
   specs:
     webpacker (0.2)
       activesupport (>= 3.0.0, < 5.1)
@@ -53,7 +53,7 @@ GEM
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 12.0)
     arel (7.1.4)
-    autoprefixer-rails (6.7.1)
+    autoprefixer-rails (6.7.2)
       execjs
     bcrypt (3.1.11)
     bugsnag (5.1.0)
@@ -86,7 +86,7 @@ GEM
       thor (~> 0.19.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    i18n (0.7.0)
+    i18n (0.8.0)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)

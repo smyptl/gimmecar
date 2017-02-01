@@ -14,9 +14,13 @@ Rails.application.routes.draw do
       get '/dashboard', to: 'dashboard#index'
       get '/search', to: 'search#index'
       get '/vehicles', to: 'vehicles#index'
+
       get '/quotes', to: 'quotes#index'
+      #post '/quotes', to: 'quotes#show'
 
       resources :rates
+
+      get '/new', to: 'new#index'
 
       resources :reservations do
         post 'email-confirmation', to: 'email_confirmation#index'
@@ -32,10 +36,12 @@ Rails.application.routes.draw do
         post 'extend', to: 'extend#create'
       end
 
-      get 'rentals/new/validate-drivers'
-      get 'rentals/new/add-ons'
-      get 'rentals/new/summary'
-      get 'rentals/new/payment'
+      post 'rentals/new/rates'
+      post 'rentals/new/driver'
+      post 'rentals/new/additional-driver'
+      post 'rentals/new/add-ons'
+      post 'rentals/new/summary'
+      post 'rentals/new/payment'
 
       resources :drivers, only: [:show] do
         resources :insurance_policies

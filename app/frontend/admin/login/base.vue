@@ -1,9 +1,6 @@
 <script>
   import Form from 'Utils/form'
 
-  import InputError from 'Components/inputs/error'
-  import InputErrorMessage from 'Components/inputs/error_message'
-
   import Shake from 'Utils/transitions/shake'
 
   export default {
@@ -15,12 +12,6 @@
           password: '',
         }),
       }
-    },
-    components: {
-      InputErrorMessage,
-    },
-    directives: {
-      error: InputError,
     },
     methods: {
       loginUser () {

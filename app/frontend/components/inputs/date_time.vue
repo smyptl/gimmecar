@@ -35,7 +35,8 @@
       }
     },
     mounted () {
-      return this.parseValue(this.value)
+      this.parseValue(this.value)
+      this.emitInput()
     },
     watch: {
       value (val, oldVal) {
