@@ -11,11 +11,14 @@ class Logic::CalculateRental < Lib::Logic::Base
   end
 
   def tax
-    @tax ||= (rates.sum { |r| r.fetch(:value) } * SALES_TAX).ceil
+    @tax ||= {
+      :value => (rates.sum { |r| r.fetch(:value) } * SALES_TAX).ceil,
+      :rate  => SALES_TAX,
+    }
   end
 
   def total
-    @total ||= rates.sum { |r| r.fetch(:value) } + tax
+    @total ||= rates.sum { |r| r.fetch(:value) } + tax.fetch(:value)
   end
 
   private

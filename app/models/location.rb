@@ -30,6 +30,9 @@ class Location < ApplicationRecord
 
   has_many :vehicles
 
+  def description
+  end
+
   def calendar
     current_rentals + future_rentals
   end

@@ -41,7 +41,6 @@ Rails.application.routes.draw do
       post 'rentals/new/additional-driver'
       post 'rentals/new/add-ons'
       post 'rentals/new/summary'
-      post 'rentals/new/payment'
 
       resources :drivers, only: [:show] do
         resources :insurance_policies

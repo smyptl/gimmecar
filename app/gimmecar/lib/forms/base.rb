@@ -1,35 +1,9 @@
 class Lib::Forms::Base
   include ActiveModel::Validations
   include ActiveModel::Validations::Callbacks
-  include Lib::Forms::NestedAttributes
-  #include Lib::Forms::Documents
-  #include Lib::Forms::Signatures
 
   PROHIBITED_METHODS = [
     :initialize,
-    :assign_attributes,
-    :populate_form,
-    :get_attributes,
-    :set_attributes,
-    :form_attributes,
-    :read_attribute,
-    :write_attribute,
-    :parse_attribute,
-    :write_document,
-    :attributes_with_documents_extracted,
-    :parse_document,
-    :parse_document_for_audit_log,
-    :save_documents,
-    :upload_single_document,
-    :upload_array_of_documents,
-    :upload_document,
-    :old_document,
-    :metadata,
-    :write_signature,
-    :parse_signature,
-    :parse_signature_for_audit_log,
-    :save_signatures,
-    :save_signature
   ]
 
   class_attribute :_form_attributes
@@ -59,14 +33,18 @@ class Lib::Forms::Base
     # hash, which gets passed down to inherited classes (see inherited() above.!
     # It defines a getter and setter method for the attribute that read and write
     # to the @attributes instance variable
-    def attribute(name, type, options = {}, &block)
-      _form_attributes[name] = {:type => type, :options => options}
-      define_attribute_read_and_write_methods(name)
+    def attributes
+      attributes = Lib::Forms::Attributes::Base.new
+      yield attributes
+      _form_attributes.merge!(attributes.fetch)
+      define_attribute_read_and_write_methods
     end
 
-    def define_attribute_read_and_write_methods(name)
-      define_attribute_read_method(name)
-      define_method("#{name}=") { |value| write_attribute(name, value) }
+    def define_attribute_read_and_write_methods
+      _form_attributes.each do |name, _|
+        define_attribute_read_method(name)
+        define_method("#{name}=") { |value| write_attribute(name, value) }
+      end
     end
 
     def define_attribute_read_method(name)

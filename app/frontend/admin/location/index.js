@@ -23,8 +23,19 @@ const router = new VueRouter({
   linkActiveClass: 'active',
   routes: [
     { path: '/:location/dashboard',    name: 'dashboard',    component: require('./dashboard/base') },
-    { path: '/:location/reservations', name: 'reservations', component: require('./reservations/base') },
-    { path: '/:location/rentals',      name: 'rentals',      component: require('./rentals/base') },
+    {
+      path: '/:location/reservations', component: require('./layout/empty'),
+      children: [
+        { path: '',    name: 'reservations',    component: require('./reservations/base') },
+        { path: 'new', name: 'new_reservation', component: require('./reservations/new/base') },
+      ]
+    },
+    { path: '/:location/rentals', component: require('./layout/empty'),
+      children: [
+        { path: '',    name: 'rentals',    component: require('./rentals/base') },
+        { path: 'new', name: 'new_rental', component: require('./rentals/new/base') },
+      ]
+    },
     { path: '/:location/rates',        name: 'rates',        component: require('./rates/base') },
     { path: '/:location/vehicles',     name: 'vehicles',     component: require('./vehicles/base') },
   ],

@@ -2,6 +2,7 @@
   import FDate from "Filters/date"
   import FDateTime from "Filters/date_time"
   import Currency from 'Filters/currency'
+  import Percent from 'Filters/percent'
 
   export default {
     props: {
@@ -12,6 +13,7 @@
     },
     filters: {
       Currency,
+      Percent,
       date: FDate,
       date_time: FDateTime,
     },
@@ -25,12 +27,14 @@
       li(v-if='summary.confirmation_number')
         | Confirmation Number:&nbsp;
         b {{ summary.confirmation_number }}
-      li
-        | Vehicle:&nbsp;
-        b {{ summary.vehicle }}
+
       li
         | Location:&nbsp;
         b {{ summary.location }}
+
+      li
+        | Vehicle:&nbsp;
+        b {{ summary.vehicle }}
 
       li
         | Pick Up:&nbsp;
@@ -39,7 +43,6 @@
       li
         | Return:&nbsp;
         b {{ summary.drop_off | date_time }}
-
 
     h6.margin-bottom-sm Rates
     ul.left.whole.list-no-style
@@ -50,8 +53,8 @@
     h6.margin-bottom-sm Taxes & Fees
     ul.left.whole.list-no-style
       li
-        span.left Sales (8%)
-        span.right {{ summary.tax | currency }}
+        span.left Sales ({{ summary.tax.rate | percent }})
+        span.right {{ summary.tax.value | currency }}
 
     h5
       span.left Estimated Total:
@@ -82,7 +85,7 @@
   li
     float: left
     width: 100%
-    margin-bottom: $margin-sm
+    margin-bottom: $margin-sm * 0.75
 
     font-size: 0.875rem
 

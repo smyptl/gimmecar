@@ -3,8 +3,10 @@ class Actions::Admin::User::Login < Lib::Forms::Base
 
   attr_reader :user, :auth_token
 
-  attribute :email,    :string
-  attribute :password, :string
+  attributes do |a|
+    a.string :email
+    a.string :password
+  end
 
   validates :email, :password,
     presence: true

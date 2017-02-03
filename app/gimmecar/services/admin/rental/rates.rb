@@ -1,12 +1,16 @@
-class Services::Admin::Quote < Lib::Forms::Base
+class Services::Admin::Rental::Rates < Lib::Forms::Base
   include Lib::Forms::Actions
 
-  attribute :pickup,   :date_time
-  attribute :drop_off, :date_time
+  attributes do |a|
+    a.date_time :pickup
+    a.date_time :drop_off
+  end
 
-  validate :pickup_and_drop_off_present,
-    :pickup_is_after_today,
-    :valid_drop_off,
+  validates :pickup, :drop_off,
+    presence: true
+
+  validate :pickup_is_after_today,
+    :valid_drop_off
 
   def rental_period
     return unless pickup && drop_off
@@ -16,28 +20,9 @@ class Services::Admin::Quote < Lib::Forms::Base
 
   private
 
-  def pickup_and_drop_off_present
-    if pickup.nil?
-      errors.add(:pickup, "pickup date and time is required")
-      errors.add(:pickup_date, nil)
-      errors.add(:pickup_time, nil)
-    end
-
-    if drop_off.nil?
-      errors.add(:drop_off, "drop off date and time is required")
-      errors.add(:drop_off_date, nil)
-      errors.add(:drop_off_time, nil)
-    end
-  end
-
   def pickup_is_after_today
     return unless pickup
-
-    if pickup.past?
-      errors.add(:pickup, "can't be in the past")
-      errors.add(:pickup_date, nil)
-      errors.add(:pickup_time, nil)
-    end
+    errors.add(:pickup, "can't be in the past") if (pickup + 30.minutes).past?
   end
 
   def valid_drop_off
@@ -46,12 +31,8 @@ class Services::Admin::Quote < Lib::Forms::Base
     case
     when !pickup.before?(drop_off)
       errors.add(:drop_off, "drop off date must be after pickup date")
-      errors.add(:drop_off_date, nil)
-      errors.add(:drop_off_time, nil)
     when rental_period.days_apart > 10
       errors.add(:drop_off, "can't book a rental for more than 10 days")
-      errors.add(:drop_off_date, nil)
-      errors.add(:drop_off_time, nil)
     end
   end
 

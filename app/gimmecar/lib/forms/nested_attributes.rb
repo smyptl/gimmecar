@@ -3,15 +3,11 @@ module Lib::Forms::NestedAttributes
 
   included do
     class << self
-      def nested_attributes(name, options = {}, &block)
-        # Creates an attributes array that accepts an array with three values,
-        # matches the number of parameters for the attribute method. Then it
-        # creates it into appropriate hash with :name, :type, :options
-        #
-        # This implies that it will be a array with multiple groups, outcome
-        # to equal :field => [{:name, :type, :options}]
-        attributes = []
-        block.call(attributes)
+      def nested_attribute(name, options = {})
+        # Creates a nested hash or array (if options[:array] => true). The block
+        # passes the same type of attributes available.
+
+        yield td if block_given?
 
         nested_attributes = ActiveSupport::HashWithIndifferentAccess.new
         attributes.each { |attr| nested_attributes[attr[0]] = { :type => attr[1], :options => (attr[2] || {})}  }
@@ -19,7 +15,7 @@ module Lib::Forms::NestedAttributes
         _form_attributes[name] = {:type => :nested, :attributes => nested_attributes, :options => options}
         define_attribute_read_method(name)
         define_method("#{name}=") do |values|
-          write_nested_attributes(name, values)
+          write_nested_attribute(name, values)
         end
       end
     end
@@ -27,7 +23,7 @@ module Lib::Forms::NestedAttributes
 
   private
 
-  def write_nested_attributes(name, values)
+  def write_nested_attribute(name, values)
     get_attributes[name] = parse_nested_attribute(values, _form_attributes[name][:attributes])
   end
 

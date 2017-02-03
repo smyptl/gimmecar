@@ -37,8 +37,8 @@
   h6.margin-bottom-sm Taxes & Fees
   ul.left.whole.list-no-style
     li
-      span.left Sales (8%)
-      span.right= format_currency(@email.fetch(:tax))
+      span.left= "Sales (#{format_percent(@email.fetch(:tax).fetch(:value))})"
+      span.right= format_currency(@email.fetch(:tax).fetch(:value))
 
   h5
     span.left Estimated Total:
