@@ -1,29 +1,65 @@
 class Lib::Forms::Attributes::TypeCast
+  JSON_REGEX = /(-?\d+)[-](\d{2})[-](\d{2})?(\d{2})?.*/
+  DATE_REGEX = /^((((0[13578])|([13578])|(1[02]))[\/](([1-9])|([0-2][0-9])|(3[01])))|(((0[469])|([469])|(11))[\/](([1-9])|([0-2][0-9])|(30)))|((2|02)[\/](([1-9])|([0-2][0-9]))))[\/]\d{4}$|^\d{4}$/
+
   class << self
-    def typecast_attribute(value, rule)
-      if rule.is_a?(Hash)
-        typecast_hash(value, rule)
+    def boolean(value)
+      case value.class.name
+      when "Boolean"
+        value
+      when "Integer"
+        value == 1
       else
-        type_cast(value, rule)
+        value = value.to_s.strip
+        value == "1" || value == "true"
       end
     end
 
-    def typecast_hash(values, rules)
-      output = []
-      values.each do |value|
-        return if value.nil?
-        typecasted_values = {}
-        rules.each do |k, v|
-          typecasted_value = typecast_attribute(value.fetch(k, nil), v.to_s)
-          typecasted_values[k] = typecasted_value unless typecasted_value.blank?
-        end
-        output << typecasted_values unless typecasted_values.blank?
-      end unless values.blank?
-      output
+    def date(value)
+      return value if value.is_a?(Date)
+
+      value = string(value)
+
+      if value =~ JSON_REGEX
+        parse = JSON_REGEX.match(value)
+        value = "#{parse[2]}/#{parse[3]}/#{parse[1]}"
+      end
+
+      if value =~ DATE_REGEX
+        Date.strptime(value, "%m/%d/%Y")
+      end
     end
 
-    def type_cast(value, type)
-      "Lib::TypeCast::#{type.to_s.camelize}".constantize.type_cast(value)
+    def date_time(value)
+      case value
+      when String
+        if value =~ JSON_REGEX
+          begin
+            DateTime.parse(value)
+          rescue ArgumentError
+            nil
+          end
+        end
+      when DateTime
+        value
+      end
+    end
+
+    def integer(value)
+      case value
+      when ::Integer
+        value
+      when ::Float || ::BigDecimal
+        value.to_i
+      else
+        value = value.to_s.gsub(/([^0-9.])/, "")
+        value.blank? ? nil : value.to_i
+      end
+    end
+
+    def string(value)
+      value = value.to_s.strip
+      value.blank? ? nil : value
     end
   end
 end

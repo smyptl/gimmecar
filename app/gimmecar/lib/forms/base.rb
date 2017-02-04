@@ -76,7 +76,7 @@ class Lib::Forms::Base
   def attributes
     set_attributes
     modify_attributes
-    get_attributes
+    @attributes
   end
 
   # This method will not call modify_attributes, designed to avoid
@@ -120,10 +120,10 @@ class Lib::Forms::Base
   def modify_attributes
   end
 
-  def get_attributes
+  def set_attributes
     @attributes ||= ActiveSupport::HashWithIndifferentAccess.new
   end
-  alias_method :set_attributes, :get_attributes
+  alias_method :get_attributes, :set_attributes
 
   def read_attribute(attribute)
     get_attributes[attribute]
@@ -137,23 +137,14 @@ class Lib::Forms::Base
   def write_attribute(attribute, value)
     attribute = attribute.to_sym
     if _form_attributes[attribute]
-      # Retrieves the options and type of the attribute
-      type    = _form_attributes[attribute][:type]
-      options = _form_attributes[attribute][:options]
-
-      get_attributes[attribute] = parse_attribute(value, type, options)
+      get_attributes[attribute] = parse_attribute(value, _form_attributes[attribute])
     else
       # Returns value if no attribute specified by form
       get_attributes[attribute] = value
     end
   end
 
-  def parse_attribute(value, type, options = {})
-    if options[:array]
-      return [] if value.blank?
-      value.map { |v| Lib::TypeCast::Base.type_cast(v, type) }.reject(&:blank?)
-    else
-      Lib::TypeCast::Base.type_cast(value, type)
-    end
+  def parse_attribute(value, settings)
+    Lib::Forms::Attributes::Base.parse(value, settings)
   end
 end

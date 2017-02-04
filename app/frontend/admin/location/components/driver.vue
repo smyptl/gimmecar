@@ -88,19 +88,21 @@
 
     .input-row
       label.input-label Insuance
-      .input-container.one-third
+      .input-container.two-fifths
         .input-block.whole
           input.input-field(type='text' placeholder='Company Name')
-      .input-container.one-third
-        .input-block.whole
+      .input-container.three-fifths
+        .input-block.two-thirds.fixed
           input.input-field(type='text' placeholder='Policy #')
+        .input-block.one-third.fixed
+          input.input-field(type='text' placeholder='Expiration Date')
     .input-row
       .input-container.one-half.fixed
         .input-block.whole
-          input.input-field(type='text' placeholder='Agent Name')
+          input.input-field(type='text' placeholder='Agent / Representative / Adjustor')
       .input-container.one-half.fixed
         .input-block.whole
-          input.input-field(type='number' placeholder='Agent Phone #')
+          input.input-field(type='number' placeholder='Phone #')
 
     h4.form-header
       a Add Additional Driver
