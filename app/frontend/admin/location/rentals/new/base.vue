@@ -33,6 +33,7 @@
             cell_phone_number: '',
             home_phone_number: '',
           },
+          add_additional_driver: false,
           additional_driver: {
             first_name: '',
             last_name: '',
@@ -104,20 +105,20 @@
       .input-row
         .input-container.one-half
           label.input-label From:
-          input-date-time(
-            v-model='rental.pickup'
-            v-error='rental.errors.has("pickup")'
-            @input='rental.errors.clear("pickup")')
-
+          .input-block.whole
+            input-date-time(
+              v-model='rental.pickup'
+              v-error='rental.errors.has("pickup")'
+              @input='rental.errors.clear("pickup")')
           input-error-message(field='pickup' v-bind:errors='rental.errors.get("pickup")')
 
         .input-container.one-half
           label.input-label To:
-          input-date-time(
-            v-model='rental.drop_off'
-            v-error='rental.errors.has("drop_off")'
-            @input='rental.errors.clear("drop_off")')
-
+          .input-block.whole
+            input-date-time(
+              v-model='rental.drop_off'
+              v-error='rental.errors.has("drop_off")'
+              @input='rental.errors.clear("drop_off")')
           input-error-message(field='drop_off' v-bind:errors='rental.errors.get("drop_off")')
 
       .input-submit.input-block
@@ -139,5 +140,10 @@
         small.right 3 of 10
 
       driver(v-bind:form='rental')
+
+      .input-submit.whole
+        button.btn.left(@click="step = 'summary', transition_type = 'backward'") Go Back
+        button.btn.btn-primary.right(@click.prevent='step = "vehicle"') Continue
+
 
 </template>

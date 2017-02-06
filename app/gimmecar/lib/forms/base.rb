@@ -23,8 +23,8 @@ class Lib::Forms::Base
       end
     end
 
-    def populate_form(data_or_id)
-      new().populate_form(data_or_id)
+    def populate_form(data: nil, id: nil)
+      new().populate_form(data: data, id: id)
     end
 
     private
@@ -41,7 +41,7 @@ class Lib::Forms::Base
     end
 
     def define_attribute_read_and_write_methods
-      _form_attributes.each do |name, _|
+      _form_attributes.each do |name, settings|
         define_attribute_read_method(name)
         define_method("#{name}=") { |value| write_attribute(name, value) }
       end
@@ -63,12 +63,11 @@ class Lib::Forms::Base
     self
   end
 
-  def populate_form(data_or_id)
-    if data_or_id.respond_to?(:to_i)
-      data = send(:data, data_or_id)
-    else
-      data = data_or_id
+  def populate_form(data: nil, id: nil)
+    if id
+      data = send(:data, id)
     end
+
     self._form_attributes.each { |key, _| send("#{key.to_s}=", data.send(key)) } if data
     self
   end
@@ -76,36 +75,11 @@ class Lib::Forms::Base
   def attributes
     set_attributes
     modify_attributes
-    @attributes
+    get_attributes
   end
 
-  # This method will not call modify_attributes, designed to avoid
-  # data manipulations to ensure data can be used for javascript
-  # forms.
-  # Sends a hash of attributes with the structure
-  # of data expected, even if the form has npt
-  # been populated yet
   def form_attributes
-    return get_attributes unless @attributes.nil?
-    attrs = {}
-    self._form_attributes.each do |key, value|
-      attr_value = nil
-      case value[:type]
-      when :document, :signature
-        if value[:options][:array]
-          attr_value = []
-        else
-          attr_value = { }
-        end
-      when :nested
-        attr_value = [value[:attributes].reduce({}) { |hash, (k, _)|  hash.merge(k.to_sym => nil)}]
-      else
-        attr_value = nil
-      end
-
-      attrs[key] = attr_value
-    end
-    attrs
+    get_attributes
   end
 
   private
@@ -137,14 +111,10 @@ class Lib::Forms::Base
   def write_attribute(attribute, value)
     attribute = attribute.to_sym
     if _form_attributes[attribute]
-      get_attributes[attribute] = parse_attribute(value, _form_attributes[attribute])
+      get_attributes[attribute] = Lib::Forms::Attributes::Base.parse(value, _form_attributes[attribute])
     else
       # Returns value if no attribute specified by form
       get_attributes[attribute] = value
     end
-  end
-
-  def parse_attribute(value, settings)
-    Lib::Forms::Attributes::Base.parse(value, settings)
   end
 end

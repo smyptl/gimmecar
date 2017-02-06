@@ -1,4 +1,5 @@
 class Lib::Forms::Attributes::TypeCast
+
   JSON_REGEX = /(-?\d+)[-](\d{2})[-](\d{2})?(\d{2})?.*/
   DATE_REGEX = /^((((0[13578])|([13578])|(1[02]))[\/](([1-9])|([0-2][0-9])|(3[01])))|(((0[469])|([469])|(11))[\/](([1-9])|([0-2][0-9])|(30)))|((2|02)[\/](([1-9])|([0-2][0-9]))))[\/]\d{4}$|^\d{4}$/
 
@@ -10,7 +11,7 @@ class Lib::Forms::Attributes::TypeCast
       when "Integer"
         value == 1
       else
-        value = value.to_s.strip
+        value = string(value)
         value == "1" || value == "true"
       end
     end

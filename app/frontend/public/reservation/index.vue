@@ -46,6 +46,7 @@
           })
           .then(response => {
             this.summary = response.data
+            this.form.errors.clear()
             this.transition_type = 'forward'
             this.current_step = 'rental-summary'
             this.errors = {}
@@ -103,12 +104,20 @@
           .input-row
             .input-container.one-half
               label.input-label.input-lg From:
-              input-date-time(v-model='form.pickup' timezone='America/Los_Angeles')
+              input-date-time(
+                v-model='form.pickup'
+                v-error='form.errors.has("pickup")'
+                timezone='America/Los_Angeles'
+                @input='form.errors.clear("pickup")')
               input-error-message.input-message-lg(field='pickup' v-bind:errors='form.errors.get("pickup")')
 
             .input-container.one-half
               label.input-label.input-lg To:
-              input-date-time(v-model='form.drop_off' timezone='America/Los_Angeles')
+              input-date-time(
+                v-model='form.drop_off'
+                v-error='form.errors.has("drop_off")'
+                timezone='America/Los_Angeles'
+                @input='form.errors.clear("drop_off")')
               input-error-message.input-message-lg(field='drop_off' v-bind:errors='form.errors.get("drop_off")')
 
             .input-submit
@@ -200,5 +209,5 @@
   @import '~Styles/global/layout'
 
   .input-field
-    background-color: #f7f7f7
+    background-color: $background-color-app
 </style>

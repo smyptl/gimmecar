@@ -121,7 +121,7 @@
         float: left
         height: 1.25rem
         width: 1.25rem
-        fill: #929ea7
+        fill: #9badb6
 
       &:hover svg
         fill: $blue

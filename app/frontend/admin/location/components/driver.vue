@@ -105,6 +105,7 @@
           input.input-field(type='number' placeholder='Phone #')
 
     h4.form-header
-      a Add Additional Driver
+      a(v-if='form.add_additional_driver') Remove Additional Driver
+      a(v-else) Add Additional Driver
 
 </template>

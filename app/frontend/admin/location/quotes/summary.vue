@@ -76,7 +76,7 @@
   h5
     float: left
     width: 100%
-    border-top: 2px solid $border-color-dark
+    border-top: 0.125rem solid $border-color-dark
     padding-top: $padding-sm
 
   ul

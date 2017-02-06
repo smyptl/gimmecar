@@ -82,14 +82,12 @@
 </script>
 
 <template lang='pug'>
-  .whole.left
-    .input-block.whole
-      input.input-field.date-field(
-        type='text'
-        placeholder='mm/dd/yyyy @ hh:mm am/pm'
-        v-bind:name='name'
-        v-model='date_time_formatted'
-        @change='parseDateTime')
+  input.input-field.date-field(
+    type='text'
+    placeholder='mm/dd/yyyy @ hh:mm am/pm'
+    v-bind:name='name'
+    v-model='date_time_formatted'
+    @change='parseDateTime')
 
 </template>
 

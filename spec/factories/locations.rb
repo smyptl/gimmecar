@@ -20,6 +20,6 @@ FactoryGirl.define do
 
   factory :location do
     name Faker::Company.name
-    slug { Faker::Internet.slug(name) }
+    slug { Faker::Internet.slug(name, '-') }
   end
 end

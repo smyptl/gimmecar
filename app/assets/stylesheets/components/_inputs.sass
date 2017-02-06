@@ -98,7 +98,7 @@ $input-margin-x: $margin-ex-sm/2
     z-index: 2
     border-color: $blue
     background-color: #ffffff
-    box-shadow: 0 0 0.125rem 0 lighten($blue, 30%)
+    box-shadow: 0 0 0.125rem 0 lighten($blue, 20%)
 
   &::input-placeholder,
   &:input-placeholder,
@@ -129,7 +129,8 @@ select.input-field
   border-color: $border-color-input-contrast
   background-color: $background-color-input-contrast
 
-.input-field.input-field-error
+.input-field.input-field-error,
+.input-field-error .input-field
   color: $text-color-red
   border-color: $border-color-red
   background-color: #ffffff
@@ -145,8 +146,8 @@ select.input-field
 
   border: 1px solid $border-color-yellow
   border-top: 0
-  border-bottom-left-radius: 2px
-  border-bottom-right-radius: 2px
+  border-bottom-left-radius: 0.125rem
+  border-bottom-right-radius: 0.125rem
   background-color: $background-color-yellow
 
   text-align: left

@@ -26,7 +26,7 @@
 class Rental < ApplicationRecord
 
   belongs_to :driver
-  belongs_to :additional_driver, class_name: 'Driver'
+  belongs_to :additional_driver, class_name: 'Driver', required: false
   belongs_to :vehicle
 
   belongs_to :pickup_location,   class_name: 'Location'
@@ -34,7 +34,7 @@ class Rental < ApplicationRecord
 
   scope :reserved,  -> { where(status: 'reserved') }
   scope :cancelled, -> { where(status: 'cancelled') }
-  scope :rented,    -> { where(status: 'rented') }
+  scope :open,      -> { where(status: 'open') }
   scope :closed,    -> { where(status: 'closed') }
 
   scope :past, -> { where('drop_off < ?', Date.today) }
