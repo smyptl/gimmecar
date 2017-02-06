@@ -26,8 +26,9 @@ class Logic::CalculateRental < Lib::Logic::Base
   def calculate_rate
     output = []
 
+    date = rental_period.start_date
+
     rental_period.days_apart.times do |x|
-      date = (rental_period.start_date + x)
 
       #rate = Rate.where(:date => date).rate || RATE
       rate = RATE
@@ -36,9 +37,11 @@ class Logic::CalculateRental < Lib::Logic::Base
         :value => rate,
         :date  => date,
       }
+
+      date += 1
     end
 
-    extra_hours = rental_period.hours_apart % 24
+    extra_hours = Lib::DateRange.new(date, rental_period.end_date).hours_apart
 
     if extra_hours > 0
       #rate = Rate.where(:date => rental_period.end_date) || RATE
@@ -48,12 +51,6 @@ class Logic::CalculateRental < Lib::Logic::Base
         value = (rate / BigDecimal.new(3, 1)).ceil * extra_hours
       else
         value = rate
-      end
-
-      if rental_period.days_apart == 0
-        date = rental_period.start_date
-      else
-        date = rental_period.end_date
       end
 
       output << {

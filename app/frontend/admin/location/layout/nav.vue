@@ -27,7 +27,7 @@
           scale: [1, 1],
           fromScale: [0.95, 0.95],
           position: [0, 0, 0],
-          fromPosition: [-10, -10, -500],
+          fromPosition: [-5, -5, -500],
           opacity: 1,
           fromOpacity: 0,
           duration: 150,
@@ -40,7 +40,7 @@
         Snabbt(el, {
           scale: [0.95, 0.95],
           fromScale: [1, 1],
-          position: [-10, -10, -500],
+          position: [-5, -5, -500],
           fromPosition: [0, 0, 0],
           opacity: 0,
           fromOpacity: 1,
