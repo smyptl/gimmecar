@@ -5,6 +5,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     a.date_time :pickup
     a.date_time :drop_off
 
+    a.integer :driver_id
     a.nested :driver do |n|
       n.string  :first_name
       n.string  :last_name
@@ -35,6 +36,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
     a.boolean :add_additional_driver
 
+    a.integer :additional_driver_id
     a.nested :additional_driver do |n|
       n.string  :first_name
       n.string  :last_name
@@ -56,5 +58,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
     a.string :reference_code
     a.string :discount_code
+
+    a.string :strip_token
   end
 end

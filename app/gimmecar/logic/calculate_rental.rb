@@ -4,7 +4,7 @@ class Logic::CalculateRental < Lib::Logic::Base
 
   RATE = 3500
 
-  SALES_TAX = BigDecimal.new(0.08, 1)
+  SALES_TAX = BigDecimal.new(0.0775, 8)
 
   def rates
     @rates ||= calculate_rate

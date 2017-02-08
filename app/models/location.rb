@@ -36,4 +36,8 @@ class Location < ApplicationRecord
   def calendar
     current_rentals + future_rentals
   end
+
+  def available_vehicles(date_range)
+    vehicles.select { |v| !v.open_rental? }
+  end
 end

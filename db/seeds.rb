@@ -6,7 +6,7 @@ user = User.create({
   :password_confirmation => '1234',
 })
 
-user.locations << Location.create({
+location = Location.create({
   :name      => 'Hotel California',
   :slug      => 'hotel-california',
   :address_1 => Faker::Address.street_address,
@@ -16,4 +16,18 @@ user.locations << Location.create({
   :country   => 'United States',
   :latitude  => Faker::Address.latitude,
   :longitude => Faker::Address.longitude,
+})
+
+user.locations << location
+
+location.vehicles << Vehicle.create({
+  :original_location => location,
+  :vehicle_type      => 'mid_size',
+  :vin               => Faker::Vehicle.vin,
+  :license_number    => '6TRJ244',
+  :make              => 'Toyota',
+  :model             => 'Corolla',
+  :year              => 2017,
+  :color             => 'white',
+  :original_odometer => 12,
 })

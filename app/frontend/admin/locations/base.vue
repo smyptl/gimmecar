@@ -33,6 +33,7 @@
 </script>
 
 <template lang='pug'>
+  h1 Locations
 </template>
 
 <style lang='stylus' scoped>

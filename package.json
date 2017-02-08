@@ -37,6 +37,7 @@
     "promise-polyfill": "^6.0.2",
     "pug": "^2.0.0-beta6",
     "sass-loader": "^4.1.0",
+    "signature_pad": "^1.5.3",
     "snabbt.js": "^0.6.4",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.4.0",

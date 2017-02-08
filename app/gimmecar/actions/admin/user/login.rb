@@ -38,7 +38,7 @@ class Actions::Admin::User::Login < Lib::Forms::Base
     when 1
       url_helper.location_dashboard_path(slug: user.locations.first.slug)
     else
-      url_helpers.locations_path
+      url_helper.locations_path
     end
   end
 

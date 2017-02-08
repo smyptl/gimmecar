@@ -13,6 +13,8 @@ feature 'Login', js: true do
 
     visit_admin root_path
 
+    expect(page.driver.console_messages).to eq([])
+
     fill_in 'Email', with: user.email
     fill_in 'Password', with: '1234'
     click_button 'Login'

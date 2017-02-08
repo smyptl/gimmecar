@@ -10,5 +10,5 @@
 </script>
 
 <template lang='pug'>
-  calendar
+  h1 Dashboard
 </template>

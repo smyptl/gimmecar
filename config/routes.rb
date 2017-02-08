@@ -35,16 +35,17 @@ Rails.application.routes.draw do
         get 'extend',  to: 'extend#index'
         post 'extend', to: 'extend#create'
       end
-
-      post 'rentals/new/rates'
-      post 'rentals/new/driver'
-      post 'rentals/new/additional-driver'
-      post 'rentals/new/add-ons'
-      post 'rentals/new/summary'
+      post 'rentals/new/vehicles' => 'rentals/new#vehicles'
+      post 'rentals/new/rates'    => 'rentals/new#rates'
+      post 'rentals/new/drivers'  => 'rentals/new#drivers'
+      post 'rentals/new/summary'  => 'rentals/new#summary'
+      post 'rentals/new/cards'    => 'rentals/new#cards'
+      post 'rentals/new/sign'     => 'rentals/new#sign'
 
       resources :drivers, only: [:show] do
         resources :insurance_policies
       end
+      post 'drivers/search'
     end
   end
 

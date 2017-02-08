@@ -24,9 +24,13 @@
 class Vehicle < ApplicationRecord
 
   has_many :rentals
+  has_one :open_rental, -> { open }
   has_one :last_rental, -> { past }
 
-  belongs_to :original_location
+  belongs_to :original_location, class_name: 'Location'
   belongs_to :location
 
+  def open_rental?
+    !open_rental.blank?
+  end
 end
