@@ -70,7 +70,7 @@ class Lib::Forms::Attributes::Base
   def nested(name, options = {})
     form = Lib::Forms::Attributes::Base.new
     yield form
-    @attributes[name] = { :type => :nested, :options => options, :attributes => forms.fetch }
+    @attributes[name] = { :type => :nested, :options => options, :attributes => form.fetch }
   end
 
   def fetch

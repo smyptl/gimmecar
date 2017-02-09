@@ -22,17 +22,18 @@
 #  drop_off_fuel           :float
 #  collision_damage_waiver :boolean
 #
+require 'factories/drivers'
+require 'factories/vehicles'
 
 FactoryGirl.define do
 
   factory :rental do
 
-    trait :quote do
-      status 'quote'
+    trait :open do
+      status 'open'
     end
 
-    trait :rented do
-      status 'rented'
-    end
+    driver { create(:driver) }
+    vehicle { create(:vehicle, location: pickup_location, original_location: pickup_location) }
   end
 end

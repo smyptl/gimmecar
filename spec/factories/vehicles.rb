@@ -21,16 +21,13 @@
 #  notes                :text
 #
 
-class Vehicle < ApplicationRecord
+FactoryGirl.define do
 
-  has_many :rentals
-  has_one :open_rental, -> { where(status: Rental::OPEN) }, class_name: 'Rental'
-  has_one :last_rental, -> { past }, class_name: 'Rental'
-
-  belongs_to :original_location, class_name: 'Location'
-  belongs_to :location
-
-  def open_rental?
-    !open_rental.blank?
+  factory :vehicle do
+    make 'BMW'
+    model '5 Series'
+    year 2017
+    color 'white'
+    vin Faker::Vehicle.vin
   end
 end
