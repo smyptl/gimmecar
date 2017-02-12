@@ -24,10 +24,11 @@
 FactoryGirl.define do
 
   factory :vehicle do
-    make 'BMW'
+    make ['BMW', 'Toyota', 'Ford'].sample
     model '5 Series'
     year 2017
-    color 'white'
+    color Faker::Color.color_name
     vin Faker::Vehicle.vin
+    license_number SecureRandom.hex(4)
   end
 end

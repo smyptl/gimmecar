@@ -31,3 +31,15 @@ location.vehicles << Vehicle.create({
   :color             => 'white',
   :original_odometer => 12,
 })
+
+location.vehicles << Vehicle.create({
+  :original_location => location,
+  :vehicle_type      => 'mid_size',
+  :vin               => Faker::Vehicle.vin,
+  :license_number    => '8ASJ123',
+  :make              => 'Toyota',
+  :model             => 'Corolla',
+  :year              => 2017,
+  :color             => 'black',
+  :original_odometer => 52,
+})

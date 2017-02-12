@@ -38,6 +38,14 @@
             cell_phone_number: '',
             home_phone_number: '',
             signature: '',
+            insurance: {
+              company_name: '',
+              policy_number: '',
+              phone_number: '',
+              effective_date: '',
+              expiration_date: '',
+              agent_name: '',
+            },
           },
           add_additional_driver: false,
           additional_driver_id: null,
@@ -61,7 +69,7 @@
             signature: '',
           },
           pickup_odometer: '',
-          pickup_fuel: '',
+          pickup_fuel: 5,
           card_selected: '',
           stripe_token: '',
         }),
@@ -192,7 +200,33 @@
         button.btn.btn-primary.right(@click.prevent='getVehicles()') Continue
 
     template(v-if='current_step == "vehicle"')
-      h1 {{ vehicles }}
+      .input-block.whole
+        table.panel-table#vehicle-table
+          thead
+            tr
+              th
+              th Make - Model
+              th Color
+              th License #
+          tbody
+            tr(v-for='vehicle in vehicles' @click.prevent='rental.vehicle_id = vehicle.id' v-bind:class='{ selected: rental.vehicle_id == vehicle.id }')
+              td
+                button.button-vehicle-id
+              td {{ vehicle.make }} {{ vehicle.model }}
+              td {{ vehicle.color | capitalize }}
+              td {{ vehicle.license_number }}
+
+      .input-row.margin-top-default
+        .input-container.two-fifths
+          label.input-label(for='pickup_odometer') Vehicle Odometer
+          .input-block.whole
+            input.input-field#pickup_odometer(type='number' v-model='rental.pickup_odometer')
+        .input-container.three-fifths
+          label.input-label(for='pickup_fuel')
+            | Fuel Level
+            small.right.text-note {{ rental.pickup_fuel }} of 10
+          .input-block.whole
+            input.input-range#pickup_fuel(type='range' v-model.number='rental.pickup_fuel' min='0' max='10')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -243,4 +277,61 @@
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/global/colors'
+  @import '~Styles/global/layout'
+
+  #vehicle-table
+    font-size: 0.875rem
+    text-align: left
+    font-weight: 400
+    vertical-align: middle
+
+    td,
+    th
+      margin: 0
+      padding: $padding-sm
+
+    thead
+      color: #888888
+
+    tbody
+      td:first-of-type
+        border-top-left-radius: 0.125rem
+        border-bottom-left-radius: 0.125rem
+        padding-right: 0
+        width: 1rem + $padding-sm
+
+      td:last-of-type
+        border-top-right-radius: 0.125rem
+        border-bottom-right-radius: 0.125rem
+
+      td
+        background: $background-color-panel
+
+      tr
+        border-bottom: 1px solid $border-color-light
+        cursor: pointer
+
+      tr:last-of-type
+        border-bottom: 0
+
+      tr.selected
+        font-weight: 600
+
+        .button-vehicle-id
+          border: 0.25rem solid $border-color-blue
+          background: $blue
+
+    .button-vehicle-id
+      width: 1rem
+      height: @width
+      padding: 0
+      margin: 0
+      float: left
+
+      background: #ffffff
+      border: 0.125rem solid $border-color-input
+      border-radius: 50%
+
+
 </style>

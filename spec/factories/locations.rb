@@ -19,7 +19,7 @@
 FactoryGirl.define do
 
   factory :location do
-    name Faker::Company.name
+    name 'Hotel California'
     slug { Faker::Internet.slug(name, '-') }
   end
 end

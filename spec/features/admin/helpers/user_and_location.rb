@@ -1,17 +1,19 @@
-require 'spec_helper'
-require 'features/admin/helpers/path_helper'
-
-require 'factories/locations'
 require 'factories/users'
+require 'factories/locations'
 
-feature 'Login', js: true do
-
-  scenario 'login user' do
-    user = create(:user)
+shared_context :login_user_and_select_location do
+  let(:user) { User.first || create(:user) }
+  let(:location) do
     location = create(:location)
     user.locations << location
+    location
+  end
 
+  before(:each) do
     visit_admin root_path
+
+    user
+    location
 
     expect(page.driver.console_messages).to eq([])
 
