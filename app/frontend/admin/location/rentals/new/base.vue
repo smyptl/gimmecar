@@ -37,7 +37,6 @@
             date_of_birth: '',
             cell_phone_number: '',
             home_phone_number: '',
-            signature: '',
             insurance: {
               company_name: '',
               policy_number: '',
@@ -47,6 +46,7 @@
               agent_name: '',
             },
           },
+          driver_signature: '',
           add_additional_driver: false,
           additional_driver_id: null,
           additional_driver: {
@@ -66,10 +66,11 @@
             date_of_birth: '',
             cell_phone_number: '',
             home_phone_number: '',
-            signature: '',
           },
+          additional_driver_signature: '',
           pickup_odometer: '',
           pickup_fuel: 5,
+          financial_responsibility_signature: '',
           card_selected: '',
           stripe_token: '',
         }),
@@ -94,7 +95,8 @@
           'rates',
           'drivers',
           'vehicle',
-          'sign',
+          'financial responsibility',
+          'terms and conditions',
           'payment',
         ]
       },
@@ -151,14 +153,16 @@
           this.rental.errors.record(error.response.data.errors)
         })
       },
+      createRental () {
+      },
     },
   }
 
 </script>
 
 <template lang='pug'>
-  .form-container
-    h4.form-header.form-header-first(ref='form')
+  .form-container(ref='form')
+    h4.form-header.form-header-first
       | Rental: {{ current_step | capitalize }}
       small.right {{ current_step_number }} of {{ number_of_steps }}
 
@@ -182,11 +186,18 @@
               @input='rental.errors.clear("drop_off")')
           input-error-message(field='drop_off' v-bind:errors='rental.errors.get("drop_off")')
 
+      .input-row
+        .input-container.one-third
+          label.input-label Promo Code:
+          .input-block.whole
+            input.input-field#promo_code(type='text' placeholder='A912RED1' v-model='rental.promo_code')
+          input-error-message(field='drop_off' v-bind:errors='rental.errors.get("drop_off")')
+
       .input-submit.input-block
         button.btn.btn-primary.right(@click.prevent='getRates()') Continue
 
     template(v-if='current_step == "rates"')
-      rates(v-bind:summary='summary')
+      rates.margin-top-sm(v-bind:summary='summary')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -224,7 +235,7 @@
         .input-container.three-fifths
           label.input-label(for='pickup_fuel')
             | Fuel Level
-            small.right.text-note {{ rental.pickup_fuel }} of 10
+            .input-label-note.right {{ rental.pickup_fuel }} of 10
           .input-block.whole
             input.input-range#pickup_fuel(type='range' v-model.number='rental.pickup_fuel' min='0' max='10')
 
@@ -232,15 +243,38 @@
         button.btn.left(@click.prevent='goBack()') Go Back
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
-    template(v-if='current_step == "sign"')
+    template(v-if='current_step == "financial responsibility"')
+      .input-block
+        h5.margin-top-sm Notice About Your Financial Responibility
+        p You are responsible for all collision damage to the vehicle, even if someone else caused it or the cause is unknown. You are responsible for the cost or repair up to the value of the vehicle, towing, storage and impound fees. Your own insurance, or the issuer of the credit card you use to pay for the rental, may cover all or porat of your financial responibility for damage to, or losee of the rented vehicle. You should check with your insurance company or credit card issuer, to find out about your coverage and the amount of deductible, if any, for which you may by liable. If you use a credit card that provides coverage for your responsibility for damage to, or loss of, the vehicle, you should check with the issuer to determine whether or not you must first exhaust the coverage limits of your own insurance before the credit card coverage applies.
+
+        p By initialing below, you agree to be responsible for all damage to, or loss of, the Vehicle.
       h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
       .input-block.whole
-        signature(v-model='rental.driver.signature')
+        signature(v-model='rental.driver_signature')
+
+      .input-block.input-submit
+        button.btn.left(@click.prevent='goBack()') Go Back
+        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+
+    template(v-if='current_step == "terms and conditions"')
+      .input-block
+        h5.margin-top-sm Rental Agreement Terms and Conditions
+        p
+          | 1.&nbsp;
+          u Definitions.
+          | &nbsp;"Agreement" means all terms and conditions found, any addenda and additional materials we provide at the time of rental. "You" or "your" means the person identified as the renters / drivers, and person signing this Agreement, and Authorized Driver and any person or organization to whom charges are billed by us at its or your direction. All persons referred to as "you" or "your" are jointly and severally bound by this agreement. "We", "our" or "us" means Auto Guru Rental System, Inc. DBA GimmeCar. "Authorized Driver" means the renter, the renter's spource, the renter's employer and co-worker if engaged in business activity with the renter while using the Vehicle and is at least age 21, and any additional driver listed by us on this Agreement, provided that each such person has a valid driver's license. "Vehicle" means the motor vehicle identified in this Agreement and vehicle we substitute for it, all its tires, tools, accessories, equipment, keys and Vehicle documents.
+
+        p By signing below, you agree to all of the terms and conditions of this rental agreement. You acknowledge the Vehicle has no damage. Your signature below authorizes us to process a credit card voucher in your name for all rental charges due.
+
+      h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
+      .input-block.whole
+        signature(v-model='rental.driver_signature')
 
       template(v-if='rental.add_additional_driver')
         h6.input-label.margin-top-default {{ rental.additional_driver.first_name }} {{ rental.additional_driver.last_name }}
         .input-block.whole
-          signature(v-model='rental.additional_driver.signature')
+          signature(v-model='rental.additional_driver_signature')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -249,30 +283,32 @@
 
     template(v-if='current_step == "payment"')
       .input-row
-        .input-container.two-fifths
-          label.input-label Card Number
+        label.input-label
+          | Card Number
+          .input-label-note.right DO NOT accept prepaid or debit cards. Only credit cards will be accepted.
+        .input-block.whole
+          input.input-field(type='number' size='20' data-stripe="number" placeholder='4242 4242 4242 4242')
+
+      .input-row
+        .input-container.one-third.fixed
+          label.input-label Expiration Date
+          .input-block.one-half.fixed
+            input.input-field(type='number' size='2' data-stripe="exp_month" placeholder='MM')
+          .input-block.one-half.fixed
+            input.input-field(type='number' size='2' data-stripe="exp_year" placeholder='YY')
+        .input-container.one-third.fixed
+        .input-container.one-third.fixed
+          label.input-label CVC
           .input-block.whole
-            input.input-field(type='number' size='20' data-stripe="number" placeholder='4242 4242 4242 4242')
-        .input-container.three-fifths
-          .input-container.one-third.fixed
-            label.input-label Expiration Date
-            .input-block.one-half.fixed
-              input.input-field(type='number' size='2' data-stripe="exp_month" placeholder='MM')
-            .input-block.one-half.fixed
-              input.input-field(type='number' size='2' data-stripe="exp_year" placeholder='YY')
-          .input-container.one-third.fixed
-          .input-container.one-third.fixed
-            label.input-label CVC
-            .input-block.whole
-              input.input-field(type='number' size='4' data-stripe="cvc" placeholder='123')
-          .input-container.one-third.fixed
-            label.input-label Zip Code
-            .input-block.whole
-              input.input-field(type='number' size='6' data-stripe="address_zip" placeholder='90210')
+            input.input-field(type='number' size='4' data-stripe="cvc" placeholder='123')
+        .input-container.one-third.fixed
+          label.input-label Zip Code
+          .input-block.whole
+            input.input-field(type='number' size='6' data-stripe="address_zip" placeholder='90210')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+        button.btn.btn-primary.right(@click.prevent='createRental') Continue
 
 </template>
 

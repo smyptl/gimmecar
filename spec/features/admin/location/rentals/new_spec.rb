@@ -74,12 +74,21 @@ feature 'Login', js: true do
     driver_insurance_phone_number = Faker::PhoneNumber.phone_number
     fill_in 'driver_insurance_phone_number', with: driver_insurance_phone_number
 
+    expect(page).to have_content('Add Additional Driver')
+
     click_on 'Continue'
 
+    expect(page).to have_content('Rental: Vehicle')
     expect(page).to have_content(vehicle_1.license_number)
     find('td', text: vehicle_1.license_number).click
     fill_in 'Vehicle Odometer', with: 40512
 
     click_on 'Continue'
+
+    expect(page).to have_content('Rental: Sign')
+    expect(page).to have_content("#{driver_first_name} #{driver_last_name}")
+    click_on 'Continue'
+
+    expect(page).to have_content('Rental: Payment')
   end
 end

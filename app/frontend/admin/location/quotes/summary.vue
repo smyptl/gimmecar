@@ -21,8 +21,8 @@
 </script>
 
 <template lang='pug'>
-  .input-block.margin-top-default.whole
-    h6.margin-bottom-sm Rental Details
+  .input-block.whole
+    h5.margin-bottom-sm Rental Details
     ul.left.whole.list-no-style
       li(v-if='summary.confirmation_number')
         | Confirmation Number:&nbsp;
@@ -44,19 +44,19 @@
         | Return:&nbsp;
         b {{ summary.drop_off | date_time }}
 
-    h6.margin-bottom-sm Rates
+    h5.margin-bottom-sm Rates
     ul.left.whole.list-no-style
       li(v-for='rate in summary.rates')
         span.left {{ rate.date | date }}
         span.right {{ rate.value | currency }}
 
-    h6.margin-bottom-sm Taxes & Fees
+    h5.margin-bottom-sm Taxes & Fees
     ul.left.whole.list-no-style
       li
         span.left Sales ({{ summary.tax.rate | percent }})
         span.right {{ summary.tax.value | currency }}
 
-    h5
+    h5#estimated-total
       span.left Estimated Total:
       span.right {{ summary.total | currency }}
 </template>
@@ -65,19 +65,17 @@
   @import '~Styles/global/colors'
   @import '~Styles/global/layout'
 
-  h6
-    float: left
-    width: 100%
-    margin-bottom: $margin-sm
-    padding-bottom: $padding-sm
-
-    border-bottom: 1px solid $border-color-dark
-
   h5
     float: left
     width: 100%
-    border-top: 0.125rem solid $border-color-dark
+    border-bottom: 0.0625rem solid $border-color-dark
+    padding-bottom: $padding-sm
+
+  h5#estimated-total
     padding-top: $padding-sm
+    padding-bottom: 0
+    border-top: 0.15rem solid $border-color-dark
+    border-bottom: 0
 
   ul
     margin-bottom: $margin-default

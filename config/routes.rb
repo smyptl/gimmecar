@@ -29,18 +29,20 @@ Rails.application.routes.draw do
         post 'verify-insurance', to: 'verify_insurance#create'
       end
 
-      resources :rentals, except: [:edit, :update] do
+      resources :rentals, except: [:new, :create] do
         post 'email-receipt', to: 'email_receipt#index'
 
         get 'extend',  to: 'extend#index'
         post 'extend', to: 'extend#create'
       end
-      post 'rentals/new/vehicles' => 'rentals/new#vehicles'
+
+      get  'rentals/new'          => 'rentals/new#index'
       post 'rentals/new/rates'    => 'rentals/new#rates'
       post 'rentals/new/drivers'  => 'rentals/new#drivers'
+      post 'rentals/new/vehicles' => 'rentals/new#vehicles'
       post 'rentals/new/summary'  => 'rentals/new#summary'
-      post 'rentals/new/cards'    => 'rentals/new#cards'
       post 'rentals/new/sign'     => 'rentals/new#sign'
+      post 'rentals/new/create'   => 'rentals/new#create'
 
       resources :drivers, only: [:show] do
         resources :insurance_policies
