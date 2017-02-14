@@ -235,7 +235,7 @@
         .input-container.three-fifths
           label.input-label(for='pickup_fuel')
             | Fuel Level
-            .input-label-note.right {{ rental.pickup_fuel }} of 10
+            .input-label-note.right {{ rental.pickup_fuel * 10 }}%
           .input-block.whole
             input.input-range#pickup_fuel(type='range' v-model.number='rental.pickup_fuel' min='0' max='10')
 

@@ -10,7 +10,7 @@ feature 'Login', js: true do
   scenario 'login user' do
     vehicle_1 = create(:vehicle, original_location: location, location: location)
 
-    visit_admin new_location_rental_path(:slug => location.slug)
+    visit_admin location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
     click_on 'Continue'
@@ -82,10 +82,14 @@ feature 'Login', js: true do
     expect(page).to have_content(vehicle_1.license_number)
     find('td', text: vehicle_1.license_number).click
     fill_in 'Vehicle Odometer', with: 40512
-
+    expect(page).to have_content('50%')
     click_on 'Continue'
 
-    expect(page).to have_content('Rental: Sign')
+    expect(page).to have_content('Rental: Financial Responsibility')
+    expect(page).to have_content("#{driver_first_name} #{driver_last_name}")
+    click_on 'Continue'
+
+    expect(page).to have_content('Rental: Terms and Conditions')
     expect(page).to have_content("#{driver_first_name} #{driver_last_name}")
     click_on 'Continue'
 
