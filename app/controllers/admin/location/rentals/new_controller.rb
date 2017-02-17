@@ -22,10 +22,13 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
     render status: 200, json: Services::Admin::Vehicles::Available.new(location.id).during_period(params[:rental][:pickup], params[:rental][:drop_off]).fetch
   end
 
-  def summary
+  def add_ons
   end
 
-  def sign
+  def financial_responsibility
+  end
+
+  def terms_and_conditions
   end
 
   def create

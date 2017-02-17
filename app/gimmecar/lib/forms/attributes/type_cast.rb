@@ -62,5 +62,9 @@ class Lib::Forms::Attributes::TypeCast
       value = value.to_s.strip
       value.blank? ? nil : value
     end
+
+    def signature(value)
+      value
+    end
   end
 end

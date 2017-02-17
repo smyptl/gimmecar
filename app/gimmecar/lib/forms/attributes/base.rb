@@ -61,6 +61,10 @@ class Lib::Forms::Attributes::Base
     @attributes[name] = { :type => :integer, :options => options }
   end
 
+  def signature(name, options = {})
+    @attributes[name] = { :type => :signature, :options => options }
+  end
+
   def nested(name, options = {})
     form = Lib::Forms::Attributes::Base.new
     yield form

@@ -87,7 +87,7 @@
             input.input-field#driver_home_phone_number(type='number' v-model='form.driver.home_phone_number' placeholder='805.555.1231')
 
     .input-row
-      label.input-label Insuance
+      label.input-label(for='driver_insurance_company_name') Insuance
       .input-container.two-fifths
         .input-block.whole
           input.input-field#driver_insurance_company_name(type='text' v-model='form.driver.insurance.company_name' placeholder='Company Name')

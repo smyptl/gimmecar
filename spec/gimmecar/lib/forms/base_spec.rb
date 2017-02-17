@@ -18,6 +18,7 @@ describe Lib::Forms::Base do
           a.nested :promo_codes, array: true do |p|
             p.string :code
           end
+          a.integer :ids, array: true
         end
       end
     end
@@ -58,6 +59,14 @@ describe Lib::Forms::Base do
 
       expect(form.promo_codes).to eq([])
       expect { form.promo_codes_code }.to raise_error(NoMethodError)
+    end
+
+    it 'parses array of attributes correctly' do
+      form = test_form.new({
+        ids: ['4', :four, 4, nil, '']
+      })
+
+      expect(form.ids).to eq([4, 4])
     end
   end
 end

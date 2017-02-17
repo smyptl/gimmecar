@@ -9,7 +9,7 @@
 
   import InputDateTime from 'Components/inputs/date_time'
   import Signature from 'Components/inputs/signature'
-
+  import Payment from 'Components/payment'
 
   export default {
     name: 'new',
@@ -18,7 +18,6 @@
         rental: new Form({
           pickup: new Date(),
           drop_off: new Date().setDate(new Date().getDate() + 1),
-          vehicle_id: null,
           driver_id: null,
           driver: {
             first_name: '',
@@ -47,6 +46,7 @@
             },
           },
           driver_signature: '',
+          financial_responsibility_signature: '',
           add_additional_driver: false,
           additional_driver_id: null,
           additional_driver: {
@@ -68,21 +68,25 @@
             home_phone_number: '',
           },
           additional_driver_signature: '',
+          vehicle_id: null,
           pickup_odometer: '',
           pickup_fuel: 5,
-          financial_responsibility_signature: '',
+          promo_code: '',
           card_selected: '',
           stripe_token: '',
+          stripe_customer_id: '',
         }),
+        card_error_message: '',
         current_step: 'Details',
         vehicles: [],
         summary: {},
       }
     },
     components: {
-      Rates,
       Driver,
       InputDateTime,
+      Payment,
+      Rates,
       Signature,
     },
     filters: {
@@ -154,7 +158,29 @@
           this.rental.errors.record(error.response.data.errors)
         })
       },
+      validatePayment () {
+        stripe.createToken(window.card).then(result => {
+          if (result.error) {
+            this.card_error_message = result.error.message
+          } else {
+            // Send the token to your server
+            this.stripe_token = result.token
+            this.createRental()
+          }
+        });
+      },
       createRental () {
+        this.$http.post(this.$route.path + '/', {
+          rental: this.rental.data(),
+        })
+        .then(response => {
+          this.rental.errors.clear
+          console.log('created')
+        })
+        .catch(error => {
+          Shake(this.$refs.form)
+          this.rental.errors.record(error.response.data.errors)
+        })
       },
     },
   }
@@ -257,7 +283,7 @@
         p By initialing below, you agree to be responsible for all damage to, or loss of, the Vehicle.
       h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
       .input-block.whole
-        signature(v-model='rental.driver_signature')
+        signature(v-model='rental.financial_responsibility_signature')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -291,30 +317,13 @@
       .input-row
         label.input-label
           | Card Number
-          .input-label-note.right DO NOT accept prepaid or debit cards. Only credit cards will be accepted.
+          .input-label-note.right DO NOT accept prepaid or debit cards. Only credit cards accepted.
         .input-block.whole
-          input.input-field(type='number' size='20' data-stripe="number" placeholder='4242 4242 4242 4242')
-
-      .input-row
-        .input-container.one-third.fixed
-          label.input-label Expiration Date
-          .input-block.one-half.fixed
-            input.input-field(type='number' size='2' data-stripe="exp_month" placeholder='MM')
-          .input-block.one-half.fixed
-            input.input-field(type='number' size='2' data-stripe="exp_year" placeholder='YY')
-        .input-container.one-third.fixed
-        .input-container.one-third.fixed
-          label.input-label CVC
-          .input-block.whole
-            input.input-field(type='number' size='4' data-stripe="cvc" placeholder='123')
-        .input-container.one-third.fixed
-          label.input-label Zip Code
-          .input-block.whole
-            input.input-field(type='number' size='6' data-stripe="address_zip" placeholder='90210')
+          payment
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='createRental') Continue
+        button.btn.btn-primary.right(@click.prevent='validatePayment') Continue
 
 </template>
 
@@ -374,6 +383,5 @@
       background: #ffffff
       border: 0.125rem solid $border-color-input
       border-radius: 50%
-
 
 </style>

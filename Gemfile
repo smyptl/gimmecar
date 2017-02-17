@@ -64,7 +64,9 @@ end
 
 # Developer Tools
 gem 'bugsnag'
-gem 'annotate'
+
+# Gem
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
