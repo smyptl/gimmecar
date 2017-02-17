@@ -36,13 +36,14 @@ Rails.application.routes.draw do
         post 'extend', to: 'extend#create'
       end
 
-      get  'rentals/new'          => 'rentals/new#index'
-      post 'rentals/new/rates'    => 'rentals/new#rates'
-      post 'rentals/new/drivers'  => 'rentals/new#drivers'
-      post 'rentals/new/vehicles' => 'rentals/new#vehicles'
-      post 'rentals/new/summary'  => 'rentals/new#summary'
-      post 'rentals/new/sign'     => 'rentals/new#sign'
-      post 'rentals/new/create'   => 'rentals/new#create'
+      get  'rentals/new'                          => 'rentals/new#index'
+      post 'rentals/new/rates'                    => 'rentals/new#rates'
+      post 'rentals/new/drivers'                  => 'rentals/new#drivers'
+      post 'rentals/new/vehicles'                 => 'rentals/new#vehicles'
+      post 'rentals/new/add-ons'                  => 'rentals/new#add_ons'
+      post 'rentals/new/financial-responsibility' => 'rentals/new#financial_responsibility'
+      post 'rentals/new/terms-and-conditions'     => 'rentals/new#terms_and_conditions'
+      post 'rentals/new/create'                   => 'rentals/new#create'
 
       resources :drivers, only: [:show] do
         resources :insurance_policies

@@ -23,24 +23,18 @@ class Lib::Forms::Attributes::Base
       end
     end
 
-    #def parse_nested(values, settings)
-      #return {} if values.blank?
+    def parse_nested(values, settings)
+      return {} if values.blank?
 
-      #output = {}
+      output = {}
 
-      #values.each do |value, setting|
-        #return if value.nil?
-        #typecasted_values = {}
+      values.each do |attribute, value|
+        value = parse_value(value, settings.fetch(:attributes).fetch(attribute))
+        output[attribute] = value unless value.blank?
+      end
 
-        #setting..each do |k, v|
-          #typecasted_value = typecast_attribute(value.fetch(k, nil), v.to_s)
-          #typecasted_values[k] = typecasted_value unless typecasted_value.blank?
-        #end
-        #output << typecasted_values unless typecasted_values.blank?
-      #end
-
-      #output
-    #end
+      output
+    end
   end
 
   def initialize

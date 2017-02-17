@@ -74,7 +74,7 @@
           card_selected: '',
           stripe_token: '',
         }),
-        current_step: 'details',
+        current_step: 'Details',
         vehicles: [],
         summary: {},
       }
@@ -91,13 +91,14 @@
     computed: {
       steps () {
         return [
-          'details',
-          'rates',
-          'drivers',
-          'vehicle',
-          'financial responsibility',
-          'terms and conditions',
-          'payment',
+          'Details',
+          'Rates',
+          'Drivers',
+          'Vehicle',
+          'Add-Ons',
+          'Financial Responsibility',
+          'Terms & Conditions',
+          'Payment',
         ]
       },
       number_of_steps () {
@@ -140,7 +141,7 @@
         })
       },
       validateDrivers () {
-        this.$http.post(this.$route.path + '/drivers', {
+        this.$http.post(this.$route.path + '/', {
           rental: this.rental.data(),
         })
         .then(response => {
@@ -163,10 +164,10 @@
 <template lang='pug'>
   .form-container(ref='form')
     h4.form-header.form-header-first
-      | Rental: {{ current_step | capitalize }}
+      | Rental: {{ current_step }}
       small.right {{ current_step_number }} of {{ number_of_steps }}
 
-    template(v-if='current_step == "details"')
+    template(v-if='current_step == "Details"')
       .input-row
         .input-container.one-half
           label.input-label From:
@@ -186,31 +187,24 @@
               @input='rental.errors.clear("drop_off")')
           input-error-message(field='drop_off' v-bind:errors='rental.errors.get("drop_off")')
 
-      .input-row
-        .input-container.one-third
-          label.input-label Promo Code:
-          .input-block.whole
-            input.input-field#promo_code(type='text' placeholder='A912RED1' v-model='rental.promo_code')
-          input-error-message(field='drop_off' v-bind:errors='rental.errors.get("drop_off")')
-
       .input-submit.input-block
         button.btn.btn-primary.right(@click.prevent='getRates()') Continue
 
-    template(v-if='current_step == "rates"')
+    template(v-if='current_step == "Rates"')
       rates.margin-top-sm(v-bind:summary='summary')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
-    template(v-if='current_step == "drivers"')
+    template(v-if='current_step == "Drivers"')
       driver(v-bind:form='rental')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
         button.btn.btn-primary.right(@click.prevent='getVehicles()') Continue
 
-    template(v-if='current_step == "vehicle"')
+    template(v-if='current_step == "Vehicle"')
       .input-block.whole
         table.panel-table#vehicle-table
           thead
@@ -243,7 +237,19 @@
         button.btn.left(@click.prevent='goBack()') Go Back
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
-    template(v-if='current_step == "financial responsibility"')
+    template(v-if='current_step == "Add-Ons"')
+      .input-row
+        .input-container.one-third
+          label.input-label Promo Code:
+          .input-block.whole
+            input.input-field#promo_code(type='text' placeholder='A912RED1' v-model='rental.promo_code')
+          input-error-message(field='drop_off' v-bind:errors='rental.errors.get("drop_off")')
+
+      .input-submit.input-block
+        button.btn.left(@click.prevent='goBack()') Go Back
+        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+
+    template(v-if='current_step == "Financial Responsibility"')
       .input-block
         h5.margin-top-sm Notice About Your Financial Responibility
         p You are responsible for all collision damage to the vehicle, even if someone else caused it or the cause is unknown. You are responsible for the cost or repair up to the value of the vehicle, towing, storage and impound fees. Your own insurance, or the issuer of the credit card you use to pay for the rental, may cover all or porat of your financial responibility for damage to, or losee of the rented vehicle. You should check with your insurance company or credit card issuer, to find out about your coverage and the amount of deductible, if any, for which you may by liable. If you use a credit card that provides coverage for your responsibility for damage to, or loss of, the vehicle, you should check with the issuer to determine whether or not you must first exhaust the coverage limits of your own insurance before the credit card coverage applies.
@@ -257,7 +263,7 @@
         button.btn.left(@click.prevent='goBack()') Go Back
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
-    template(v-if='current_step == "terms and conditions"')
+    template(v-if='current_step == "Terms & Conditions"')
       .input-block
         h5.margin-top-sm Rental Agreement Terms and Conditions
         p
@@ -281,7 +287,7 @@
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
 
-    template(v-if='current_step == "payment"')
+    template(v-if='current_step == "Payment"')
       .input-row
         label.input-label
           | Card Number

@@ -42,13 +42,34 @@ class Lib::Forms::Base
 
     def define_attribute_read_and_write_methods
       _form_attributes.each do |name, settings|
-        define_attribute_read_method(name)
-        define_method("#{name}=") { |value| write_attribute(name, value) }
+        case settings.fetch(:type)
+        when :nested
+          define_attribute_read_and_write_method(name)
+          define_nested_attribute_read_methods(name, settings)
+        else
+          define_attribute_read_and_write_method(name)
+        end
       end
     end
 
-    def define_attribute_read_method(name)
+    def define_attribute_read_and_write_method(name)
       define_method(name) { read_attribute(name) }
+      define_method("#{name}=") { |value| write_attribute(name, value) }
+    end
+
+    def define_nested_attribute_read_methods(name, settings, nested = [])
+      return if settings.dig(:options, :array)
+
+      nested = nested + [name]
+
+      settings.fetch(:attributes).each do |a_name, a_settings|
+        if a_settings.fetch(:type) == :nested
+          define_nested_attribute_read_methods(a_name, a_settings, nested)
+        else
+          method_name = "#{nested.join('_')}_#{a_name}"
+          define_method(method_name) { read_nested_attribute(a_name, nested) }
+        end
+      end
     end
   end
 
@@ -101,6 +122,10 @@ class Lib::Forms::Base
 
   def read_attribute(attribute)
     get_attributes[attribute]
+  end
+
+  def read_nested_attribute(attribute, nested)
+    get_attributes.dig(*nested, attribute)
   end
 
   # It writes the attributes to the @attributes instance variable.
