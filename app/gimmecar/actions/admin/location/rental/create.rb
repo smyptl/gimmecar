@@ -71,6 +71,14 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     a.string :strip_token
   end
 
+  validates :pickup,
+    presence: true,
+    after_date: -> { DateTime.today - 20.minutes }
+
+  validates :drop_off,
+    presence: true,
+    after_date: { with: -> { pickup }, message: 'must be after pickup', allow_nil: true }
+
   with_options if: :add_additional_driver do |a|
     a.validates :additional_driver_first_name, :additional_driver_last_name,
       presence: true
@@ -103,7 +111,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       presence: true,
       email: true
 
-    a.validates :additional_driver_phone_number,
-      presence: true
+    a.validates :additional_driver_cell_phone_number, :additional_driver_home_phone_number,
+      presence: true,
+      numercality: { only_integer: true },
+      length: { in: 10..11 }
   end
 end
