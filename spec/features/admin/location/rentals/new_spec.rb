@@ -85,11 +85,16 @@ feature 'Login', js: true do
     expect(page).to have_content('50%')
     click_on 'Continue'
 
+    expect(page).to have_content('Rental: Add-Ons')
+    click_on 'Continue'
+
     expect(page).to have_content('Rental: Financial Responsibility')
+    expect(page).to have_content('Notice About Your Financial Responibility')
     expect(page).to have_content("#{driver_first_name} #{driver_last_name}")
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Terms and Conditions')
+    expect(page).to have_content('Rental Agreement Terms and Conditions')
     expect(page).to have_content("#{driver_first_name} #{driver_last_name}")
     click_on 'Continue'
 

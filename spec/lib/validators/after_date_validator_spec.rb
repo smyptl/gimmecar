@@ -68,4 +68,20 @@ describe AfterDateValidator do
 
     expect(form.valid?).to eq(true)
   end
+
+  it 'does not add error if value is blank' do
+    test_form = Class.new(Lib::Forms::Base) do
+
+      attributes do |a|
+        a.date :date
+      end
+
+      validates :date,
+        after_date: -> { Date.today }
+    end
+
+    form = test_form.new
+
+    expect(form.valid?).to eq(true)
+  end
 end

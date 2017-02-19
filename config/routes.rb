@@ -43,7 +43,7 @@ Rails.application.routes.draw do
       post 'rentals/new/add-ons'                  => 'rentals/new#add_ons'
       post 'rentals/new/financial-responsibility' => 'rentals/new#financial_responsibility'
       post 'rentals/new/terms-and-conditions'     => 'rentals/new#terms_and_conditions'
-      post 'rentals/new/create'                   => 'rentals/new#create'
+      post 'rentals/new'                          => 'rentals/new#create'
 
       resources :drivers, only: [:show] do
         resources :insurance_policies

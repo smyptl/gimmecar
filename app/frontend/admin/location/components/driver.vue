@@ -1,10 +1,15 @@
 <script>
+  import InputDate from 'Components/inputs/date'
+
   export default {
     props: {
       form: {
         type: Object,
         required: true,
       },
+    },
+    components: {
+      InputDate,
     },
   }
 
@@ -33,7 +38,7 @@
         .input-block.one-half.fixed
           input.input-field#driver_license_country(type='text' v-model='form.driver.license_country' placeholder='Issue Country')
       .input-block.one-fifth
-          input.input-field#driver_license_expiration_date(type='text' v-model='form.driver.license_expiration_date' placeholder='Expiration Date')
+          input-date.input-field#driver_license_expiration_date(v-model='form.driver.license_expiration_date' placeholder='Expiration Date')
 
     .input-row
       label.input-label(for='driver_address_1')
@@ -62,7 +67,7 @@
           | Date of Birth
           span.input-label-note.right Must be 25 years of age or older.
         .input-block.whole
-          input.input-field#driver_date_of_birth(type='text' v-model='form.driver.date_of_birth' placeholder='mm/dd/yyyy')
+          input-date.input-field#driver_date_of_birth(v-model='form.driver.date_of_birth')
       .input-container.one-half
         label.input-label(for='driver_gender') Gender
         .input-block.whole
@@ -87,7 +92,9 @@
             input.input-field#driver_home_phone_number(type='number' v-model='form.driver.home_phone_number' placeholder='805.555.1231')
 
     .input-row
-      label.input-label(for='driver_insurance_company_name') Insuance
+      label.input-label(for='driver_insurance_company_name')
+        | Insuance
+        span.input-label-note.right Must cover liability and collision, call to verify insurance.
       .input-container.two-fifths
         .input-block.whole
           input.input-field#driver_insurance_company_name(type='text' v-model='form.driver.insurance.company_name' placeholder='Company Name')
@@ -95,9 +102,9 @@
         .input-block.one-third.fixed
           input.input-field#driver_insurance_policy_number(type='text' v-model='form.driver.insurance.policy_number' placeholder='Policy #')
         .input-block.one-third.fixed
-          input.input-field#driver_insurance_effective_date(type='text' v-model='form.driver.insurance.effective_date' placeholder='Effective Date')
+          input-date.input-field#driver_insurance_effective_date(v-model='form.driver.insurance.effective_date' placeholder='Effective Date')
         .input-block.one-third.fixed
-          input.input-field#driver_insurance_expiration_date(type='text' v-model='form.driver.insurance.expiration_date' placeholder='Expiration Date')
+          input-date.input-field#driver_insurance_expiration_date(v-model='form.driver.insurance.expiration_date' placeholder='Expiration Date')
     .input-row
       .input-container.one-half.fixed
         .input-block.whole
@@ -132,7 +139,7 @@
           .input-block.one-half.fixed
             input.input-field#additional_driver_license_country(type='text' v-model='form.additional_driver.license_country' placeholder='Issue Country')
         .input-block.one-fifth
-            input.input-field#additional_driver_license_expiration_date(type='text' v-model='form.additional_driver.license_expiration_date' placeholder='Expiration Date')
+            input-date.input-field#additional_driver_license_expiration_date(v-model='form.additional_driver.license_expiration_date' placeholder='Expiration Date')
 
       .input-row
         label.input-label(for='additional_driver_address_1')
@@ -161,7 +168,7 @@
             | Date of Birth
             span.input-label-note.right Must be 25 years of age or older.
           .input-block.whole
-            input.input-field#additional_driver_date_of_birth(type='text' v-model='form.additional_driver.date_of_birth' placeholder='mm/dd/yyyy')
+            input-date.input-field#additional_driver_date_of_birth(v-model='form.additional_driver.date_of_birth' placeholder='mm/dd/yyyy')
         .input-container.one-half
           label.input-label(for='additional_driver_gender') Gender
           .input-block.whole

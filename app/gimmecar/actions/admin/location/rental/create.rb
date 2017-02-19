@@ -79,6 +79,53 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     presence: true,
     after_date: { with: -> { pickup }, message: 'must be after pickup', allow_nil: true }
 
+  validates :driver_first_name, :driver_last_name,
+    presence: true
+
+  validates :driver_license_number, :driver_license_state,
+    presence: true
+
+  validates :driver_license_country,
+    presence: true
+
+  validates :driver_license_expiration_date,
+    presence: true,
+    after_date: -> { drop_off }
+
+  validates :driver_address_1, :driver_city, :driver_state, :driver_zip_code,
+    presence: true
+
+  validates :driver_country,
+    presence: true
+
+  validates :driver_gender,
+    presence: true,
+    inclusion: { in: %w(male female), message: "%{value} is not a valid gender" }
+
+  validates :driver_date_of_birth,
+    presence: true,
+    before_date: -> { Date.today - 21.years }
+
+  validates :driver_email,
+    presence: true,
+    email: true
+
+  validates :driver_cell_phone_number, :driver_home_phone_number,
+    presence: true,
+    numercality: { only_integer: true },
+    length: { in: 10..11 }
+
+  validates :driver_insurance_company_name, :driver_insurance_policy_number, :driver_insurance_phone_number, :driver_insurance_agent_name,
+    presence: true
+
+  validates :driver_insurance_effective_date,
+    presence: true,
+    before_date: { with: -> { pickup }, allow_nil: true }
+
+  validates :driver_insurance_expiration_date,
+    presence: true,
+    before_date: { with: -> { drop_off }, allow_nil: true }
+
   with_options if: :add_additional_driver do |a|
     a.validates :additional_driver_first_name, :additional_driver_last_name,
       presence: true
@@ -105,7 +152,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
     a.validates :additional_driver_date_of_birth,
       presence: true,
-      after_date: -> { Date.today - 21.years }
+      before_date: -> { Date.today - 21.years }
 
     a.validates :additional_driver_email,
       presence: true,
@@ -116,4 +163,16 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       numercality: { only_integer: true },
       length: { in: 10..11 }
   end
+
+  validates :financial_responsibility_signature, :driver_signature, :additional_driver_signature,
+    presence: true
+
+
+  validates :pickup_odometer,
+    presence: true,
+    numercality: { only_integer: true }
+
+  validates :pickup_fuel,
+    presence: true,
+    inclusion: { in: 0..10 }
 end
