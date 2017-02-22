@@ -27,7 +27,7 @@
         input.input-field#driver_last_name(type='text' v-model='form.driver.last_name' placeholder='Last')
 
     .input-row
-      label.input-label(for='license_number')
+      label.input-label(for='driver_license_number')
         | License
         span.input-label-note.right License must have a picture of the customer, or customer must have another picture ID.
       .input-block.two-fifths

@@ -38,9 +38,11 @@
           this.current_date.set('date',  date.get('date'))
           this.current_date.set('month', date.get('month'))
           this.current_date.set('year',  date.get('year'))
+          this.formatDate()
+        } else {
+          this.date_formatted = ''
         }
 
-        this.formatDate()
         this.emitInput()
       },
       formatDate () {

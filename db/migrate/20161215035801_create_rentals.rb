@@ -6,20 +6,23 @@ class CreateRentals < ActiveRecord::Migration[5.0]
       t.string :source
       t.string :status
       t.boolean :confirmed
-      t.belongs_to :driver
-      t.belongs_to :additional_driver
-      t.belongs_to :vehicle
+      t.belongs_to :driver, index: true
+      t.belongs_to :additional_driver, index: true
+      t.belongs_to :vehicle, index: true
       t.string :vehicle_type
       t.text :notes
-      t.belongs_to :pickup_location
+      t.belongs_to :pickup_location, index: true
       t.datetime :pickup
       t.integer :pickup_odometer
       t.float :pickup_fuel
-      t.belongs_to :drop_off_location
+      t.belongs_to :drop_off_location, index: true
       t.datetime :drop_off
       t.integer :drop_off_odometer
       t.float :drop_off_fuel
       t.boolean :collision_damage_waiver
+      t.text :financial_responsibility_signature
+      t.text :driver_signature
+      t.text :additional_driver_signature
     end
   end
 end

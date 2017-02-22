@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/rails/webpacker.git
-  revision: 023e5dbda8fd8bbe6e6f24788b0b45a3e72080ff
+  revision: f54cc9b0cc6fcd8267d5a176fe7e601c5f9a8ebb
   specs:
     webpacker (0.2)
       activesupport (>= 5.0)
@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: https://github.com/stripe/stripe-ruby
-  revision: ea90ddb6d3748be5c1176b1e35bc4d9a0e6d1a60
+  revision: 1bb9ac48b916b1c60591795cdb7ba6d18495e82d
   specs:
-    stripe (2.0.0)
+    stripe (2.0.1)
       faraday (~> 0)
 
 GEM
@@ -60,7 +60,7 @@ GEM
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 12.0)
     arel (7.1.4)
-    autoprefixer-rails (6.7.3)
+    autoprefixer-rails (6.7.5)
       execjs
     bcrypt (3.1.11)
     bugsnag (5.2.0)
@@ -77,7 +77,7 @@ GEM
       capybara (>= 2.3.0, < 2.13.0)
       json
     concurrent-ruby (1.0.4)
-    css_parser (1.4.8)
+    css_parser (1.4.9)
       addressable
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
@@ -95,8 +95,8 @@ GEM
       thor (~> 0.19.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    i18n (0.8.0)
-    jbuilder (2.6.1)
+    i18n (0.8.1)
+    jbuilder (2.6.2)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
     json (2.0.3)
@@ -125,7 +125,7 @@ GEM
       mini_portile2 (~> 2.1.0)
     pg (0.19.0)
     public_suffix (2.0.5)
-    puma (3.7.0)
+    puma (3.7.1)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)

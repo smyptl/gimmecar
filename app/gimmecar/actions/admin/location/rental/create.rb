@@ -67,8 +67,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
     a.string :promo_code
 
+    a.string :stripe_customer_id
     a.string :card_selected
-    a.string :strip_token
+    a.string :stripe_token
   end
 
   validates :pickup,
@@ -112,7 +113,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   validates :driver_cell_phone_number, :driver_home_phone_number,
     presence: true,
-    numercality: { only_integer: true },
+    numericality: { only_integer: true },
     length: { in: 10..11 }
 
   validates :driver_insurance_company_name, :driver_insurance_policy_number, :driver_insurance_phone_number, :driver_insurance_agent_name,
@@ -160,19 +161,37 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
     a.validates :additional_driver_cell_phone_number, :additional_driver_home_phone_number,
       presence: true,
-      numercality: { only_integer: true },
+      numericality: { only_integer: true },
       length: { in: 10..11 }
   end
 
   validates :financial_responsibility_signature, :driver_signature, :additional_driver_signature,
     presence: true
 
-
   validates :pickup_odometer,
     presence: true,
-    numercality: { only_integer: true }
+    numericality: { only_integer: true }
 
   validates :pickup_fuel,
     presence: true,
     inclusion: { in: 0..10 }
+
+  def valid?
+    valid = super
+
+    if valid
+      success = lambda do |args|
+        write_attribute(:stripe_customer_id, args.fetch(:customer_id))
+        return true
+      end
+
+      failure = lambda do |args|
+        write_attribute(:stripe_customer_id, args.fetch(:customer_id))
+        return false
+      end
+
+      charge = Charge.new()
+      charge.execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
+    end
+  end
 end

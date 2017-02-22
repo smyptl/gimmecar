@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113214017) do
+ActiveRecord::Schema.define(version: 20170221174010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "charges", force: :cascade do |t|
+    t.string  "owner_type"
+    t.integer "owner_id"
+    t.string  "stripe_charge_id"
+    t.json    "details"
+    t.json    "discount"
+    t.integer "sub_total"
+    t.json    "fees"
+    t.decimal "tax_rate"
+    t.integer "tax"
+    t.integer "total"
+    t.boolean "deposit",          default: false
+    t.index ["owner_type", "owner_id"], name: "index_charges_on_owner_type_and_owner_id", using: :btree
+  end
 
   create_table "drivers", force: :cascade do |t|
     t.string  "title"
@@ -102,6 +117,9 @@ ActiveRecord::Schema.define(version: 20170113214017) do
     t.integer  "drop_off_odometer"
     t.float    "drop_off_fuel"
     t.boolean  "collision_damage_waiver"
+    t.text     "financial_responsibility_signature"
+    t.text     "driver_signature"
+    t.text     "additional_driver_signature"
     t.index ["additional_driver_id"], name: "index_rentals_on_additional_driver_id", using: :btree
     t.index ["driver_id"], name: "index_rentals_on_driver_id", using: :btree
     t.index ["drop_off_location_id"], name: "index_rentals_on_drop_off_location_id", using: :btree

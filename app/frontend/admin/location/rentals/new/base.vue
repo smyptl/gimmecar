@@ -70,7 +70,7 @@
           additional_driver_signature: '',
           vehicle_id: null,
           pickup_odometer: '',
-          pickup_fuel: 5,
+          pickup_fuel: 10,
           promo_code: '',
           card_selected: '',
           stripe_token: '',

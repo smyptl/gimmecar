@@ -10,6 +10,10 @@
         required: true,
         type: Object,
       },
+      estimated: {
+        type: Boolean,
+        default: true,
+      },
     },
     filters: {
       Currency,
@@ -37,11 +41,11 @@
         b {{ summary.vehicle }}
 
       li
-        | Pick Up:&nbsp;
+        | Pickup:&nbsp;
         b {{ summary.pickup | date_time }}
 
       li
-        | Return:&nbsp;
+        | Drop Off:&nbsp;
         b {{ summary.drop_off | date_time }}
 
     h5.margin-bottom-sm Rates
@@ -56,9 +60,15 @@
         span.left Sales ({{ summary.tax.rate | percent }})
         span.right {{ summary.tax.value | currency }}
 
-    h5#estimated-total
-      span.left Estimated Total:
+    h5.invoice-one-line
+      span.left
+        template(v-if='estimated') Estimated&nbsp;
+        | Total:
       span.right {{ summary.total | currency }}
+    ul.left.whole.list-no-style
+      li
+        span.left Deposit
+        span.right $100.00
 </template>
 
 <style lang='stylus' scoped>
@@ -71,7 +81,7 @@
     border-bottom: 0.0625rem solid $border-color-dark
     padding-bottom: $padding-sm
 
-  h5#estimated-total
+  h5.invoice-one-line
     padding-top: $padding-sm
     padding-bottom: 0
     border-top: 0.15rem solid $border-color-dark

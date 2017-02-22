@@ -2,9 +2,9 @@ class CreateInsurancePolicies < ActiveRecord::Migration[5.0]
   def change
     create_table :insurance_policies do |t|
       t.timestamp
-      t.belongs_to :user
+      t.belongs_to :user, index: true
       t.date :confirmation_date
-      t.belongs_to :driver
+      t.belongs_to :driver, index: true
       t.string :company
       t.string :agent
       t.string :policy_number
