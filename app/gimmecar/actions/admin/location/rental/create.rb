@@ -31,7 +31,12 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
         i.string :phone_number
         i.date   :effective_date
         i.date   :expiration_date
-        i.string :agent_name
+        i.string :agent
+
+        i.boolean :verified
+        i.date    :verify_date
+        i.string  :verify_agent
+        i.string  :verify_call_center
       end
     end
     a.signature :financial_responsibility_signature
@@ -127,6 +132,12 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     presence: true,
     before_date: { with: -> { drop_off }, allow_nil: true }
 
+  validates :driver_insurance_verified,
+    acceptance: true
+
+  validates :driver_insurance_verify_date, :driver_insurance_verify_agent, :driver_insurance_verify_call_center,
+    presence: true
+
   with_options if: :add_additional_driver do |a|
     a.validates :additional_driver_first_name, :additional_driver_last_name,
       presence: true
@@ -181,6 +192,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
     if valid
       success = lambda do |args|
+        @charge = args.fetch(:charge)
         write_attribute(:stripe_customer_id, args.fetch(:customer_id))
         return true
       end
@@ -193,5 +205,39 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       charge = Charge.new()
       charge.execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
     end
+  end
+
+  def save
+    driver = Driver.create(driver.except(:insurance))
+    InsurancePolicy.create(driver.fetch(:insurance).merge(:driver => driver))
+
+    if add_additional_driver
+      additional_driver = AdditionalDriver.create(additional_driver)
+    end
+
+    rental = Rental.create_open({
+      :driver                             => driver,
+      :additional_driver                  => (additional_driver if add_additional_driver),
+      :vehicle_id                         => vehicle_id,
+      :vehicle_type                       => vehicle_type,
+      :notes                              => notes,
+      :pickup_location                    => Location.first,
+      :pickup                             => pickup,
+      :pickup_odometer                    => pickup_odometer,
+      :pickup_fuel                        => pickup_fuel,
+      :drop_off_location                  => Location.first,
+      :drop_off                           => drop_off,
+      :collision_damage_waiver            => false,
+      :financial_responsibility_signature => financial_responsibility_signature,
+      :driver_signature                   => driver_signature,
+      :additional_driver_signature        => additional_driver_signature,
+    })
+
+    charge.owner = rental
+    charge.save
+  end
+
+  def vehicle_type
+    'compact'
   end
 end

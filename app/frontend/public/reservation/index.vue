@@ -5,7 +5,7 @@
   import InputError from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
 
-  import Rates from 'Admin/location/quotes/summary'
+  import Rates from 'Admin/location/components/rental_invoice'
 
   import SlideTransition from 'Utils/transitions/slide'
   import ErrorTransition from 'Utils/transitions/shake'

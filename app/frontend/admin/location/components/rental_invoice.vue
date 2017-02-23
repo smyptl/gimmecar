@@ -12,7 +12,7 @@
       },
       estimated: {
         type: Boolean,
-        default: true,
+        default: false,
       },
     },
     filters: {
@@ -50,15 +50,15 @@
 
     h5.margin-bottom-sm Rates
     ul.left.whole.list-no-style
-      li(v-for='rate in summary.rates')
+      li(v-for='rate in summary.details')
         span.left {{ rate.date | date }}
         span.right {{ rate.value | currency }}
 
     h5.margin-bottom-sm Taxes & Fees
     ul.left.whole.list-no-style
       li
-        span.left Sales ({{ summary.tax.rate | percent }})
-        span.right {{ summary.tax.value | currency }}
+        span.left Sales ({{ summary.tax_rate | percent }})
+        span.right {{ summary.tax | currency }}
 
     h5.invoice-one-line
       span.left

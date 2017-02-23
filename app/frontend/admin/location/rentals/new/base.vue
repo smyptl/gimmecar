@@ -4,7 +4,7 @@
   import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
-  import Rates from 'Admin/location/quotes/summary'
+  import RentalInvoice from 'Admin/location/components/rental_invoice'
   import Driver from 'Admin/location/components/driver'
 
   import InputDateTime from 'Components/inputs/date_time'
@@ -86,7 +86,7 @@
       Driver,
       InputDateTime,
       Payment,
-      Rates,
+      RentalInvoice,
       Signature,
     },
     filters: {
@@ -170,7 +170,7 @@
         });
       },
       createRental () {
-        this.$http.post(this.$route.path + '/', {
+        this.$http.post(this.$route.path + '/new', {
           rental: this.rental.data(),
         })
         .then(response => {
@@ -217,7 +217,7 @@
         button.btn.btn-primary.right(@click.prevent='getRates()') Continue
 
     template(v-if='current_step == "Rates"')
-      rates.margin-top-sm(v-bind:summary='summary')
+      rental-invoice.margin-top-sm(v-bind:summary='summary' v-bind:estimated='true')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -290,6 +290,7 @@
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
     template(v-if='current_step == "Terms & Conditions"')
+      rental-invoice.margin-top-sm(v-bind:summary='summary')
       .input-block
         h5.margin-top-sm Rental Agreement Terms and Conditions
         p
@@ -320,6 +321,7 @@
           .input-label-note.right DO NOT accept prepaid or debit cards. Only credit cards accepted.
         .input-block.whole
           payment
+        p.input-error-message#stripe-card-errors
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back

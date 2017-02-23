@@ -21,6 +21,8 @@ class Charge < ApplicationRecord
   belongs_to :owners, polymorphic: true
 
   def execute(success, failure, create_customer: false, token: nil, customer_id: nil)
+    raise ArgumentError if total.nil?
+
     begin
       case
       when create_customer
@@ -33,13 +35,15 @@ class Charge < ApplicationRecord
         customer.save
       end
 
-      charge = Stripe::Charge.create({
-        :amount   => total,
-        :currency => 'usd',
-        :customer => customer_id,
-      })
+      unless total == 0
+        charge = Stripe::Charge.create({
+          :amount   => total,
+          :currency => 'usd',
+          :customer => customer_id,
+        })
 
-      write_attribute(:stripe_charge_id, charge['id'])
+        write_attribute(:stripe_charge_id, charge['id'])
+      end
 
       success.call(charge: self, customer_id: customer_id)
 

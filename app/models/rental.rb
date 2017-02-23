@@ -46,4 +46,19 @@ class Rental < ApplicationRecord
 
   scope :past, -> { where('drop_off < ?', Date.today) }
 
+  before_create :create_number
+
+  def self.create_open(args)
+    create(args.merge(:status => OPEN))
+  end
+
+  private
+
+  def create_number
+    begin
+      number = SecureRandom.hex(4)
+    end while Rental.exists?(number: number)
+
+    self.number = number
+  end
 end

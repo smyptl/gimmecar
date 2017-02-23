@@ -1,7 +1,22 @@
 <script>
   export default {
+    data () {
+      return {
+        event_listener: null,
+      }
+    },
     mounted () {
       window.card.mount(this.$el)
+
+      card.addEventListener('change', function(event) {
+        var displayError = document.getElementById('stripe-card-errors')
+        if (event.error) {
+          displayError.textContent = event.error.message
+        } else {
+          displayError.textContent = ''
+        }
+      });
+
     },
     beforeDestroy () {
       window.card.unmount()

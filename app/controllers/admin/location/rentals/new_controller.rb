@@ -12,7 +12,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       render status: 400, :json => args
     end
 
-    Services::Admin::Rental::Rates.new(params.require(:rental).permit(:pickup, :drop_off)).execute(success, failure, params)
+    Services::Admin::Rates.new(params.require(:rental).permit(:pickup, :drop_off)).execute(success, failure, params)
   end
 
   def drivers
@@ -32,5 +32,14 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
   end
 
   def create
+    success = lambda do |args|
+
+    end
+
+    failure = lambda do |args|
+
+    end
+
+    Services::Admin::Rates.new(params.require('rental')).execute(success, failure, params)
   end
 end

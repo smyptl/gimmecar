@@ -65,13 +65,15 @@ class Services::Public::GetRates < Lib::Forms::Base
 
   def success_args
     {
-      :vehicle  => "Toyota Corolla",
-      :location => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
-      :pickup   => pickup,
-      :drop_off => drop_off,
-      :rates    => calculate_rental.rates,
-      :tax      => calculate_rental.tax,
-      :total    => calculate_rental.total
+      :vehicle   => "Toyota Corolla",
+      :location  => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
+      :pickup    => pickup,
+      :drop_off  => drop_off,
+      :details   => calculate_rental.rates,
+      :sub_total => calculate_rental.sub_total,
+      :tax_rate  => calculate_rental.tax_rate,
+      :tax       => calculate_rental.tax,
+      :total     => calculate_rental.total,
     }
   end
 

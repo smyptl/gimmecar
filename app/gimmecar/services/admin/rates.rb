@@ -6,11 +6,15 @@ class Services::Admin::Rates < Lib::Forms::Base
     a.date_time :drop_off
   end
 
-  validates :pickup, :drop_off,
-    presence: true
+  validates :pickup,
+    presence: true,
+    after_date: { with: -> { DateTime.now - 30.minutes }, message: 'must be in the future' }
 
-  validate :pickup_is_after_today,
-    :valid_drop_off
+  validates :drop_off,
+    presence: true,
+    after_date: { with: -> { pickup }, allow_nil: true, message: 'must be after pickup' }
+
+  validate :valid_drop_off
 
   def rental_period
     return unless pickup && drop_off
@@ -20,18 +24,11 @@ class Services::Admin::Rates < Lib::Forms::Base
 
   private
 
-  def pickup_is_after_today
-    return unless pickup
-    errors.add(:pickup, "can't be in the past") if pickup.past?
-  end
-
   def valid_drop_off
     return unless pickup && drop_off
+    return unless pickup.before?(drop_off)
 
-    case
-    when !pickup.before?(drop_off)
-      errors.add(:drop_off, "drop off date must be after pickup date")
-    when rental_period.days_apart > 10
+    if rental_period.days_apart > 10
       errors.add(:drop_off, "can't book a rental for more than 10 days")
     end
   end
@@ -44,13 +41,15 @@ class Services::Admin::Rates < Lib::Forms::Base
 
   def success_args
     {
-      :vehicle  => "Toyota Corolla",
-      :location => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
-      :pickup   => pickup,
-      :drop_off => drop_off,
-      :rates    => calculate_rental.rates,
-      :tax      => calculate_rental.tax,
-      :total    => calculate_rental.total
+      :vehicle   => "Toyota Corolla",
+      :location  => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
+      :pickup    => pickup,
+      :drop_off  => drop_off,
+      :details   => calculate_rental.rates,
+      :sub_total => calculate_rental.sub_total,
+      :tax_rate  => calculate_rental.tax_rate,
+      :tax       => calculate_rental.tax,
+      :total     => calculate_rental.total,
     }
   end
 

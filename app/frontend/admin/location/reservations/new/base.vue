@@ -2,7 +2,7 @@
   import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
-  import Quote from 'Admin/location/quotes/summary'
+  import Quote from 'Admin/location/components/rental_invoice'
 
   import InputDateTime from 'Components/inputs/date_time'
 
