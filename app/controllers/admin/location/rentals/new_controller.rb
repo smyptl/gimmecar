@@ -33,13 +33,13 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
 
   def create
     success = lambda do |args|
-
+      render status: 200
     end
 
     failure = lambda do |args|
-
+      render status: 400, :json => args
     end
 
-    Services::Admin::Rates.new(params.require('rental')).execute(success, failure, params)
+    Actions::Admin::Location::Rental::Create.new(params.require('rental')).execute(success, failure, params)
   end
 end

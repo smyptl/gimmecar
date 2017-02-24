@@ -41,6 +41,10 @@ class Location < ApplicationRecord
     vehicles.select { |v| !v.open_rental? }
   end
 
+  def available_vehicle_ids(date_range)
+    available_vehicles(date_range).pluck(:id)
+  end
+
   def vehicle_ids
     vehicles.pluck(:id)
   end

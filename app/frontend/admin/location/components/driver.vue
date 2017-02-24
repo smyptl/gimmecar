@@ -113,6 +113,23 @@
         .input-block.whole
           input.input-field#driver_insurance_phone_number(type='number' v-model='form.driver.insurance.phone_number' placeholder='Phone #')
 
+    .input-row
+      label.input-label(for='driver_insurance_verified') Insurance Verified?
+      .input-flex-container.whole
+        .input-block.input-element-fixed
+          input.input-field#driver_insurance_verified(type='checkbox' v-model='form.driver.insurance.verified')
+
+        .input-element-flex(v-if='form.driver.insurance.verified')
+          .input-block.two-fifths
+            input.input-field#driver_insurance_verify_agent(type='text' v-model='form.driver.insurance.verify_agent' placeholder='Agent Name')
+          .input-block.two-fifths
+            input.input-field#driver_insurance_verify_call_center(type='text' v-model='form.driver.insurance.verify_call_center' placeholder='Call Center')
+          .input-block.one-fifth
+            input-date#driver_insurance_verify_date(type='text' v-model='form.driver.insurance.verify_date' placeholder='Date')
+
+
+
+
     h4.form-header
       a.link-danger(v-if='form.add_additional_driver' @click='form.add_additional_driver = false') Remove Additional Driver
       a(v-else @click='form.add_additional_driver = true') Add Additional Driver

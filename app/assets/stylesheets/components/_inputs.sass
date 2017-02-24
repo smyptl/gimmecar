@@ -130,6 +130,27 @@ select.input-field
   option:disabled
     color: $text-color-placeholder
 
+input[type=checkbox].input-field
+  height: $input-height - 1rem
+  width: $input-height - 1rem
+  margin: ($input-margin-x + 0.5rem) 0
+  padding: 0
+  position: relative
+
+  background-color: $background-color-input
+  border-radius: 0.125rem
+  border: 1px solid $border-color-input
+  color: $background-color-input
+
+  cursor: pointer
+
+  &:focus
+    box-shadow: none
+
+  &:checked
+    border-color: $blue
+    background-color: $blue
+
 input.input-range
   width: 100%
   float: left

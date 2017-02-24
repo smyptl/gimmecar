@@ -3,7 +3,6 @@
 # Table name: drivers
 #
 #  id                      :integer          not null, primary key
-#  title                   :string
 #  first_name              :string
 #  last_name               :string
 #  name                    :string

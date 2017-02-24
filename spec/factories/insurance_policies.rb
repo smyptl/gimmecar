@@ -16,9 +16,18 @@
 #  verify_call_center :string
 #
 
-class InsurancePolicy < ApplicationRecord
+FactoryGirl.define do
+  factory :insurance_policy do
+    confirmation_date Date.today
+    company_name Faker::Company.name
+    agent Faker::Name.name
+    policy_number SecureRandom.hex(10)
+    phone_number Faker::PhoneNumber.phone_number
+    effective_date Date.today - 6.months
+    expiration_date Date.today + 6.months
 
-  belongs_to :user
-  belongs_to :driver
-
+    verify_date Date.today
+    verify_agent Faker::Name.name
+    verify_call_center Faker::Address.city
+  end
 end

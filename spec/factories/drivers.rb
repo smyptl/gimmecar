@@ -3,7 +3,6 @@
 # Table name: drivers
 #
 #  id                      :integer          not null, primary key
-#  title                   :string
 #  first_name              :string
 #  last_name               :string
 #  name                    :string
@@ -29,6 +28,22 @@
 
 FactoryGirl.define do
   factory :driver do
-
+    first_name Faker::Name.first_name
+    last_name Faker::Name.last_name
+    address_1 Faker::Address.street_address
+    address_2 Faker::Address.secondary_address
+    city Faker::Address.city
+    state Faker::Address.state
+    zip_code Faker::Address.zip_code
+    country Faker::Address.country
+    cell_phone_number Faker::PhoneNumber.cell_phone
+    home_phone_number Faker::PhoneNumber.phone_number
+    gender Faker::Demographic.sex
+    email Faker::Internet.email
+    date_of_birth Date.today - 26.years
+    license_number '123JAS12'
+    license_state { state }
+    license_country { country }
+    license_expiration_date Date.today + 1.year
   end
 end

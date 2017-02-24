@@ -7,10 +7,11 @@
 #  owner_id         :integer
 #  stripe_charge_id :string
 #  details          :json
-#  discount         :json
 #  sub_total        :integer
+#  discount         :json
 #  fees             :json
-#  tax_rate         :decimal(, )
+#  tax_rate         :decimal(10, 4)
+#  decimal          :decimal(10, 4)
 #  tax              :integer
 #  total            :integer
 #  deposit          :boolean          default(FALSE)

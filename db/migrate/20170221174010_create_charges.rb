@@ -8,7 +8,7 @@ class CreateCharges < ActiveRecord::Migration[5.0]
       t.integer :sub_total
       t.json :discount
       t.json :fees
-      t.decimal :tax_rate, :decimal, precision: 2, scale: 4
+      t.decimal :tax_rate, :decimal, precision: 10, scale: 4
       t.integer :tax
       t.integer :total
       t.boolean :deposit, default: false

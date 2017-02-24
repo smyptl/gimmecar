@@ -9,7 +9,7 @@
 
   import InputDateTime from 'Components/inputs/date_time'
   import Signature from 'Components/inputs/signature'
-  import Payment from 'Components/payment'
+  import Payment from 'Components/inputs/payment'
 
   export default {
     name: 'new',
@@ -42,7 +42,11 @@
               phone_number: '',
               effective_date: '',
               expiration_date: '',
-              agent_name: '',
+              agent: '',
+              verified: false,
+              verify_date: new Date(),
+              verify_agent: '',
+              verify_call_center: '',
             },
           },
           driver_signature: '',
@@ -99,7 +103,6 @@
           'Rates',
           'Drivers',
           'Vehicle',
-          'Add-Ons',
           'Financial Responsibility',
           'Terms & Conditions',
           'Payment',
@@ -170,7 +173,7 @@
         });
       },
       createRental () {
-        this.$http.post(this.$route.path + '/new', {
+        this.$http.post(this.$route.path, {
           rental: this.rental.data(),
         })
         .then(response => {
@@ -251,7 +254,7 @@
         .input-container.two-fifths
           label.input-label(for='pickup_odometer') Vehicle Odometer
           .input-block.whole
-            input.input-field#pickup_odometer(type='number' v-model='rental.pickup_odometer')
+            input.input-field#pickup_odometer(type='text' v-model='rental.pickup_odometer')
         .input-container.three-fifths
           label.input-label(for='pickup_fuel')
             | Fuel Level

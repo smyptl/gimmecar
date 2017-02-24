@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: charges
+#
+#  id               :integer          not null, primary key
+#  owner_type       :string
+#  owner_id         :integer
+#  stripe_charge_id :string
+#  details          :json
+#  sub_total        :integer
+#  discount         :json
+#  fees             :json
+#  tax_rate         :decimal(10, 4)
+#  decimal          :decimal(10, 4)
+#  tax              :integer
+#  total            :integer
+#  deposit          :boolean          default(FALSE)
+#
+
 require 'spec_helper'
 require 'helpers/stripe_helper'
 

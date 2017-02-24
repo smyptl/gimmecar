@@ -79,7 +79,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   validates :pickup,
     presence: true,
-    after_date: -> { DateTime.today - 20.minutes }
+    after_date: -> { DateTime.now - 20.minutes }
 
   validates :drop_off,
     presence: true,
@@ -121,7 +121,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     numericality: { only_integer: true },
     length: { in: 10..11 }
 
-  validates :driver_insurance_company_name, :driver_insurance_policy_number, :driver_insurance_phone_number, :driver_insurance_agent_name,
+  validates :driver_insurance_company_name, :driver_insurance_policy_number, :driver_insurance_phone_number, :driver_insurance_agent,
     presence: true
 
   validates :driver_insurance_effective_date,
@@ -179,6 +179,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
   validates :financial_responsibility_signature, :driver_signature, :additional_driver_signature,
     presence: true
 
+  validates :vehicle_id,
+    inclusion: { in: :available_vehicle_ids, message: 'select a vehicle' }
+
   validates :pickup_odometer,
     presence: true,
     numericality: { only_integer: true }
@@ -186,6 +189,12 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
   validates :pickup_fuel,
     presence: true,
     inclusion: { in: 0..10 }
+
+  def rental_period
+    return unless pickup && drop_off
+    return unless pickup.before?(drop_off)
+    @rental_period ||= Lib::DateRange.new(pickup, drop_off)
+  end
 
   def valid?
     valid = super
@@ -221,11 +230,11 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       :vehicle_id                         => vehicle_id,
       :vehicle_type                       => vehicle_type,
       :notes                              => notes,
-      :pickup_location                    => Location.first,
+      :pickup_location                    => location,
       :pickup                             => pickup,
       :pickup_odometer                    => pickup_odometer,
       :pickup_fuel                        => pickup_fuel,
-      :drop_off_location                  => Location.first,
+      :drop_off_location                  => location,
       :drop_off                           => drop_off,
       :collision_damage_waiver            => false,
       :financial_responsibility_signature => financial_responsibility_signature,
@@ -239,5 +248,13 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   def vehicle_type
     'compact'
+  end
+
+  def location
+    @location ||= Location.find(params.fetch(:location_id))
+  end
+
+  def available_vehicle_ids
+    location.available_vehicle_ids(rental_period)
   end
 end
