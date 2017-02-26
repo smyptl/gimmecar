@@ -76,7 +76,6 @@
           pickup_odometer: '',
           pickup_fuel: 10,
           promo_code: '',
-          card_selected: '',
           stripe_token: '',
           stripe_customer_id: '',
         }),
@@ -167,7 +166,7 @@
             this.card_error_message = result.error.message
           } else {
             // Send the token to your server
-            this.stripe_token = result.token
+            this.rental.stripe_token = result.token
             this.createRental()
           }
         });
@@ -181,6 +180,8 @@
           console.log('created')
         })
         .catch(error => {
+          console.log(error.response.data.errors)
+
           Shake(this.$refs.form)
           this.rental.errors.record(error.response.data.errors)
         })
@@ -205,7 +206,7 @@
               v-model='rental.pickup'
               v-error='rental.errors.has("pickup")'
               @input='rental.errors.clear("pickup")')
-          input-error-message(field='pickup' v-bind:errors='rental.errors.get("pickup")')
+          input-error-message(v-bind:errors='rental.errors.get("pickup")')
 
         .input-container.one-half
           label.input-label To:
@@ -214,7 +215,7 @@
               v-model='rental.drop_off'
               v-error='rental.errors.has("drop_off")'
               @input='rental.errors.clear("drop_off")')
-          input-error-message(field='drop_off' v-bind:errors='rental.errors.get("drop_off")')
+          input-error-message(v-bind:errors='rental.errors.get("drop_off")')
 
       .input-submit.input-block
         button.btn.btn-primary.right(@click.prevent='getRates()') Continue
@@ -272,7 +273,7 @@
           label.input-label Promo Code:
           .input-block.whole
             input.input-field#promo_code(type='text' placeholder='A912RED1' v-model='rental.promo_code')
-          input-error-message(field='drop_off' v-bind:errors='rental.errors.get("drop_off")')
+          input-error-message(v-bind:errors='rental.errors.get("drop_off")')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back

@@ -99,7 +99,7 @@
               select.input-field.input-lg
                 option(value='' disabled) Current, our only location.
                 option(value='') Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
-              input-error-message(field='location' v-bind:errors='form.errors.get("location")')
+              input-error-message(v-bind:errors='form.errors.get("location")')
 
           .input-row
             .input-container.one-half
@@ -109,7 +109,7 @@
                 v-error='form.errors.has("pickup")'
                 timezone='America/Los_Angeles'
                 @input='form.errors.clear("pickup")')
-              input-error-message.input-message-lg(field='pickup' v-bind:errors='form.errors.get("pickup")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
 
             .input-container.one-half
               label.input-label.input-lg To:
@@ -118,7 +118,7 @@
                 v-error='form.errors.has("drop_off")'
                 timezone='America/Los_Angeles'
                 @input='form.errors.clear("drop_off")')
-              input-error-message.input-message-lg(field='drop_off' v-bind:errors='form.errors.get("drop_off")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
 
             .input-submit
               .input-block.whole
@@ -146,7 +146,7 @@
                   v-error='form.errors.has("first_name")'
                   @input='form.errors.clear("first_name")')
 
-              input-error-message.input-message-lg(field='first_name' v-bind:errors='form.errors.get("first_name")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("first_name")')
 
             .input-container.one-half.fixed
               .input-block.whole
@@ -157,7 +157,7 @@
                   v-error='form.errors.has("last_name")'
                   @input='form.errors.clear("last_name")')
 
-              input-error-message.input-message-lg(field='last_name' v-bind:errors='form.errors.get("last_name")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("last_name")')
 
           .input-row
             label.input-label.input-lg(for='input_email')
@@ -172,7 +172,7 @@
                 v-error='form.errors.has("email")'
                 @input='form.errors.clear("email")')
 
-            input-error-message.input-message-lg(field='email' v-bind:errors='form.errors.get("email")')
+            input-error-message.input-message-lg(v-bind:errors='form.errors.get("email")')
 
           .input-row
             label.input-label.input-lg(for='input_phone_number')
@@ -187,7 +187,7 @@
                 v-error='form.errors.has("phone_number")'
                 @input='form.errors.clear("phone_number")')
 
-            input-error-message.input-message-lg(field='phone_number' v-bind:errors='form.errors.get("phone_number")')
+            input-error-message.input-message-lg(v-bind:errors='form.errors.get("phone_number")')
 
 
           .input-submit.input-flex-container

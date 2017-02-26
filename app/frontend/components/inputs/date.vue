@@ -48,6 +48,7 @@
       formatDate () {
         if (this.current_date.isValid()) {
           this.date_formatted = this.current_date.format('M/D/YYYY')
+          this.value = this.date_formatted
         }
       },
       emitInput () {

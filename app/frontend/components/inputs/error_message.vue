@@ -3,10 +3,6 @@
 
   export default {
     props: {
-      field: {
-        required: true,
-        type: String,
-      },
       errors: {
         required: true,
       },

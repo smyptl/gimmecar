@@ -33,10 +33,11 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
 
   def create
     success = lambda do |args|
-      render status: 200
+      render status: 200, :json => args
     end
 
     failure = lambda do |args|
+      puts args[:errors].full_messages
       render status: 400, :json => args
     end
 
