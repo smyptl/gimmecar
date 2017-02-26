@@ -11,7 +11,7 @@ class CreateVehicles < ActiveRecord::Migration[5.0]
       t.string :model
       t.integer :year
       t.string :color
-      t.integer :original_odometer
+      t.decimal :original_odometer, :decimal, precision: 10, scale: 0
       t.string :transmission
       t.string :power_train
       t.integer :cylinders

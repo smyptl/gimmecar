@@ -13,8 +13,8 @@
 #  state                   :string
 #  zip_code                :string
 #  country                 :string
-#  home_phone_number       :integer
-#  cell_phone_number       :integer
+#  home_phone_number       :string
+#  cell_phone_number       :string
 #  email                   :string
 #  date_of_birth           :date
 #  license_number          :string
@@ -36,9 +36,9 @@ FactoryGirl.define do
     state Faker::Address.state
     zip_code Faker::Address.zip_code
     country Faker::Address.country
-    cell_phone_number Faker::PhoneNumber.cell_phone
-    home_phone_number Faker::PhoneNumber.phone_number
-    gender Faker::Demographic.sex
+    cell_phone_number "9091231234"
+    home_phone_number "9091239021"
+    gender ['male', 'female'].sample
     email Faker::Internet.email
     date_of_birth Date.today - 26.years
     license_number '123JAS12'

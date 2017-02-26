@@ -4,7 +4,6 @@ class CreateDrivers < ActiveRecord::Migration[5.0]
       t.timestamp
       t.string :first_name
       t.string :last_name
-      t.string :name
       t.string :gender
       t.string :address_1
       t.string :address_2
@@ -12,8 +11,8 @@ class CreateDrivers < ActiveRecord::Migration[5.0]
       t.string :state
       t.string :zip_code
       t.string :country
-      t.integer :home_phone_number
-      t.integer :cell_phone_number
+      t.string :home_phone_number
+      t.string :cell_phone_number
       t.string :email
       t.date :date_of_birth
       t.string :license_number

@@ -18,11 +18,10 @@
 
 FactoryGirl.define do
   factory :insurance_policy do
-    confirmation_date Date.today
     company_name Faker::Company.name
     agent Faker::Name.name
     policy_number SecureRandom.hex(10)
-    phone_number Faker::PhoneNumber.phone_number
+    phone_number "9091231234"
     effective_date Date.today - 6.months
     expiration_date Date.today + 6.months
 

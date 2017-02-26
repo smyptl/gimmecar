@@ -6,6 +6,20 @@ class Logic::CalculateRental < Lib::Logic::Base
 
   SALES_TAX = BigDecimal.new(0.0775, 8)
 
+  def fetch
+    {
+      :vehicle   => "Toyota Corolla",
+      :location  => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
+      :pickup    => pickup,
+      :drop_off  => drop_off,
+      :details   => rates,
+      :sub_total => sub_total,
+      :tax_rate  => tax_rate,
+      :tax       => tax,
+      :total     => total,
+    }
+  end
+
   def rates
     @rates ||= calculate_rate
   end

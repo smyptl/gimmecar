@@ -19,7 +19,7 @@
 
 class Charge < ApplicationRecord
 
-  belongs_to :owners, polymorphic: true
+  belongs_to :owner, polymorphic: true
 
   def execute(success, failure, create_customer: false, token: nil, customer_id: nil)
     raise ArgumentError if total.nil?

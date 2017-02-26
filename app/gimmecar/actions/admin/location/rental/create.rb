@@ -17,7 +17,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       n.string  :address_2
       n.string  :city
       n.string  :state
-      n.integer :zip_code
+      n.string  :zip_code
       n.string  :country
       n.string  :gender
       n.date    :date_of_birth
@@ -56,7 +56,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       n.string  :address_2
       n.string  :city
       n.string  :state
-      n.integer :zip_code
+      n.string  :zip_code
       n.string  :country
       n.string  :gender
       n.date    :date_of_birth
@@ -73,7 +73,6 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     a.string :promo_code
 
     a.string :stripe_customer_id
-    a.string :card_selected
     a.string :stripe_token
   end
 
@@ -106,7 +105,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   validates :driver_gender,
     presence: true,
-    inclusion: { in: %w(male female), message: "%{value} is not a valid gender" }
+    inclusion: { in: ['male', 'female'], message: "%{value} is not a valid gender" }
 
   validates :driver_date_of_birth,
     presence: true,
@@ -118,8 +117,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   validates :driver_cell_phone_number, :driver_home_phone_number,
     presence: true,
-    numericality: { only_integer: true },
-    length: { in: 10..11 }
+    numericality: { only_integer: true }
 
   validates :driver_insurance_company_name, :driver_insurance_policy_number, :driver_insurance_phone_number, :driver_insurance_agent,
     presence: true
@@ -130,7 +128,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   validates :driver_insurance_expiration_date,
     presence: true,
-    before_date: { with: -> { drop_off }, allow_nil: true }
+    after_date: { with: -> { drop_off }, allow_nil: true }
 
   validates :driver_insurance_verified,
     acceptance: true
@@ -172,11 +170,13 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
     a.validates :additional_driver_cell_phone_number, :additional_driver_home_phone_number,
       presence: true,
-      numericality: { only_integer: true },
-      length: { in: 10..11 }
+      numericality: { only_integer: true }
+
+    a.validates :additional_driver_signature,
+      presence: true
   end
 
-  validates :financial_responsibility_signature, :driver_signature, :additional_driver_signature,
+  validates :financial_responsibility_signature, :driver_signature,
     presence: true
 
   validates :vehicle_id,
@@ -211,25 +211,31 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
         return false
       end
 
-      charge = Charge.new()
-      charge.execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
+      rental = Logic::CalculateRental.new(self)
+
+      Charge.new({
+        :details   => rental.rates,
+        :sub_total => rental.sub_total,
+        :tax_rate  => rental.tax_rate,
+        :tax       => rental.tax,
+        :total     => rental.total,
+      }).execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
     end
   end
 
   def save
-    driver = Driver.create(driver.except(:insurance))
-    InsurancePolicy.create(driver.fetch(:insurance).merge(:driver => driver))
+    d = Driver.create(driver.except(:insurance).merge(:stripe_id => stripe_customer_id))
+    InsurancePolicy.create(driver.fetch(:insurance).merge(:driver => d, :user_id => params.fetch(:user_id)))
 
     if add_additional_driver
-      additional_driver = AdditionalDriver.create(additional_driver)
+      ad = AdditionalDriver.create(additional_driver)
     end
 
-    rental = Rental.create_open({
-      :driver                             => driver,
-      :additional_driver                  => (additional_driver if add_additional_driver),
+    @rental = Rental.create_open({
+      :driver                             => d,
+      :additional_driver                  => (ad if add_additional_driver),
       :vehicle_id                         => vehicle_id,
       :vehicle_type                       => vehicle_type,
-      :notes                              => notes,
       :pickup_location                    => location,
       :pickup                             => pickup,
       :pickup_odometer                    => pickup_odometer,
@@ -242,8 +248,15 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       :additional_driver_signature        => additional_driver_signature,
     })
 
-    charge.owner = rental
-    charge.save
+    @charge.owner = @rental
+    @charge.save
+  end
+
+  def success_args
+    {
+      message:   'rental created',
+      rental_id: @rental.id,
+    }
   end
 
   def vehicle_type

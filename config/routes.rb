@@ -57,5 +57,7 @@ Rails.application.routes.draw do
 
     get  'reservation', to: 'reservation#index'
     post 'reservation', to: 'reservation#create'
+
+    get 'receipt', to: 'landing#r'
   end
 end

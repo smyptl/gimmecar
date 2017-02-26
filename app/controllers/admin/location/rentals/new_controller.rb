@@ -40,6 +40,6 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       render status: 400, :json => args
     end
 
-    Actions::Admin::Location::Rental::Create.new(params.require('rental')).execute(success, failure, params)
+    Actions::Admin::Location::Rental::Create.new(params.require('rental')).execute(success, failure, { location_id: location.id, user_id: current_user.id })
   end
 end

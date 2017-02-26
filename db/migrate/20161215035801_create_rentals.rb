@@ -13,11 +13,12 @@ class CreateRentals < ActiveRecord::Migration[5.0]
       t.text :notes
       t.belongs_to :pickup_location, index: true
       t.datetime :pickup
-      t.integer :pickup_odometer
+      t.decimal :pickup_odometer, :decimal, precision: 10, scale: 0
       t.float :pickup_fuel
       t.belongs_to :drop_off_location, index: true
       t.datetime :drop_off
-      t.integer :drop_off_odometer
+      t.decimal :drop_off_odometer, :decimal, precision: 10, scale: 0
+      t.float :pickup_fuel
       t.float :drop_off_fuel
       t.boolean :collision_damage_waiver
       t.text :financial_responsibility_signature
