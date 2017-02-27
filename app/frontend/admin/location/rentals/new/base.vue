@@ -166,7 +166,7 @@
             this.card_error_message = result.error.message
           } else {
             // Send the token to your server
-            this.rental.stripe_token = result.token
+            this.rental.stripe_token = result.token.id
             this.createRental()
           }
         });
@@ -177,11 +177,9 @@
         })
         .then(response => {
           this.rental.errors.clear
-          console.log('created')
+          this.$router.push({ name: 'rental', params: { id: response.data.rental_id }})
         })
         .catch(error => {
-          console.log(error.response.data.errors)
-
           Shake(this.$refs.form)
           this.rental.errors.record(error.response.data.errors)
         })

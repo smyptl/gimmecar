@@ -121,7 +121,7 @@ describe Logic::CalculateRental do
       rental_period = Lib::DateRange.new(DateTime.new(2011, 1, 1), DateTime.new(2011, 1, 4))
       rental = double(:rental, :rental_period => rental_period)
 
-      expect(Logic::CalculateRental.new(rental).tax).to eq(814)
+      expect(Logic::CalculateRental.new(rental).tax).to eq(840)
     end
   end
 end

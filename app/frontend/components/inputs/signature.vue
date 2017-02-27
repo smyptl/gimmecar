@@ -39,7 +39,7 @@
         this.$el.height = 160
       },
       updateValue () {
-        this.$emit('input', this.signature_pad.toDataURL('image/svg+xml'))
+        this.$emit('input', this.signature_pad.toDataURL())
       },
     },
   }

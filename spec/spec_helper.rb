@@ -102,7 +102,7 @@ Capybara::Webkit.configure do |config|
   config.allow_url('*.stripe.com')
 
   # Timeout if requests take longer than 5 seconds
-  config.timeout = 4
+  config.timeout = 5
 
   # Don't raise errors when SSL certificates can't be validated
   config.ignore_ssl_errors

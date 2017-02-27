@@ -42,10 +42,7 @@ class Actions::CreateReservation < Lib::Forms::Base
       :confirmation_number => confirmation_number,
       :pickup              => pickup,
       :drop_off            => drop_off,
-      :rates               => calculate_rental.rates,
-      :tax                 => calculate_rental.tax,
-      :total               => calculate_rental.total
-    }
+    }.merge(calculate_rental.fetch)
   end
 
   def confirmation_number
@@ -53,7 +50,7 @@ class Actions::CreateReservation < Lib::Forms::Base
   end
 
   def calculate_rental
-    @calculate_rental ||= Logic::CalculateRental.new(self)
+    Logic::CalculateRental.new(self)
   end
 
   def save

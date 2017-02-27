@@ -34,6 +34,7 @@ const router = new VueRouter({
       children: [
         { path: '',    name: 'rentals',    component: require('./rentals/base') },
         { path: 'new', name: 'new_rental', component: require('./rentals/new/base') },
+        { path: ':id', name: 'rental',     component: require('./rentals/show') },
       ]
     },
     { path: '/:location/rates',        name: 'rates',        component: require('./rates/base') },

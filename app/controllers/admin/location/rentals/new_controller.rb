@@ -37,7 +37,6 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
     end
 
     failure = lambda do |args|
-      puts args[:errors].full_messages
       render status: 400, :json => args
     end
 

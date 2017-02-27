@@ -173,11 +173,11 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       numericality: { only_integer: true }
 
     a.validates :additional_driver_signature,
-      presence: true
+      signature: true
   end
 
   validates :financial_responsibility_signature, :driver_signature,
-    presence: true
+    signature: true
 
   validates :vehicle_id,
     inclusion: { in: :available_vehicle_ids, message: 'select a vehicle' }
@@ -225,7 +225,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   def save
     d = Driver.create(driver.except(:insurance).merge(:stripe_id => stripe_customer_id))
-    InsurancePolicy.create(driver.fetch(:insurance).merge(:driver => d, :user_id => params.fetch(:user_id)))
+    InsurancePolicy.create(driver.fetch(:insurance).except(:verified).merge(:driver => d, :user_id => params.fetch(:user_id)))
 
     if add_additional_driver
       ad = AdditionalDriver.create(additional_driver)

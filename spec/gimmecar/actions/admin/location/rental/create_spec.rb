@@ -86,10 +86,11 @@ describe Actions::Admin::Location::Rental::Create do
       charge = Charge.first
       expect(charge.owner).to eq(rental)
       expect(charge.stripe_charge_id).to_not eq(nil)
-      expect(charge.total).to_not eq(7560)
+      expect(charge.total).to eq(7560)
 
       stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
       expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])
+      expect(stripe_charge['amount']).to eq(7560)
     end
   end
 end
