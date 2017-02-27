@@ -34,4 +34,8 @@ class Vehicle < ApplicationRecord
   def open_rental?
     !open_rental.blank?
   end
+
+  def make_model
+    "#{make} #{model}"
+  end
 end

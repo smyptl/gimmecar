@@ -73,6 +73,7 @@ describe Actions::Admin::Location::Rental::Create do
 
       expect(Rental.count).to eq(1)
       rental = Rental.first
+      expect(rental.number).to_not eq(nil)
       expect(rental.driver).to eq(driver)
       expect(rental.vehicle).to eq(vehicle)
       expect(rental.additional_driver).to eq(nil)

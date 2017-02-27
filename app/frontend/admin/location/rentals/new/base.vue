@@ -147,7 +147,7 @@
         })
       },
       validateDrivers () {
-        this.$http.post(this.$route.path + '/', {
+        this.$http.post(this.$route.path, {
           rental: this.rental.data(),
         })
         .then(response => {
@@ -234,7 +234,7 @@
 
     template(v-if='current_step == "Vehicle"')
       .input-block.whole
-        table.panel-table#vehicle-table
+        table.panel-table
           thead
             tr
               th
@@ -243,8 +243,8 @@
               th License #
           tbody
             tr(v-for='vehicle in vehicles' @click.prevent='rental.vehicle_id = vehicle.id' v-bind:class='{ selected: rental.vehicle_id == vehicle.id }')
-              td
-                button.button-vehicle-id
+              td.checkbox
+                button.button-checkbox
               td {{ vehicle.make }} {{ vehicle.model }}
               td {{ vehicle.color | capitalize }}
               td {{ vehicle.license_number }}
@@ -330,62 +330,3 @@
         button.btn.btn-primary.right(@click.prevent='validatePayment') Continue
 
 </template>
-
-<style lang='stylus' scoped>
-  @import '~Styles/global/colors'
-  @import '~Styles/global/layout'
-
-  #vehicle-table
-    font-size: 0.875rem
-    text-align: left
-    font-weight: 400
-    vertical-align: middle
-
-    td,
-    th
-      margin: 0
-      padding: $padding-sm
-
-    thead
-      color: #888888
-
-    tbody
-      td:first-of-type
-        border-top-left-radius: 0.125rem
-        border-bottom-left-radius: 0.125rem
-        padding-right: 0
-        width: 1rem + $padding-sm
-
-      td:last-of-type
-        border-top-right-radius: 0.125rem
-        border-bottom-right-radius: 0.125rem
-
-      td
-        background: $background-color-panel
-
-      tr
-        border-bottom: 1px solid $border-color-light
-        cursor: pointer
-
-      tr:last-of-type
-        border-bottom: 0
-
-      tr.selected
-        font-weight: 600
-
-        .button-vehicle-id
-          border: 0.25rem solid $border-color-blue
-          background: $blue
-
-    .button-vehicle-id
-      width: 1rem
-      height: @width
-      padding: 0
-      margin: 0
-      float: left
-
-      background: #ffffff
-      border: 0.125rem solid $border-color-input
-      border-radius: 50%
-
-</style>

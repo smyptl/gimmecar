@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.json    "discount"
     t.json    "fees"
     t.decimal "tax_rate",         precision: 10, scale: 4
-    t.decimal "decimal",          precision: 10, scale: 4
     t.integer "tax"
     t.integer "total"
     t.boolean "deposit",                                   default: false

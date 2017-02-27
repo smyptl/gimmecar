@@ -49,6 +49,9 @@ class Rental < ApplicationRecord
 
   before_create :create_number
 
+  delegate :name, to: :driver, prefix: true
+  delegate :make_model, to: :vehicle, prefix: true
+
   def self.create_open(args)
     create(args.merge(:status => OPEN))
   end
