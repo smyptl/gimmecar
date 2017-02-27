@@ -5,7 +5,6 @@
 #  id                      :integer          not null, primary key
 #  first_name              :string
 #  last_name               :string
-#  name                    :string
 #  gender                  :string
 #  address_1               :string
 #  address_2               :string
