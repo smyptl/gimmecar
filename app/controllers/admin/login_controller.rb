@@ -18,7 +18,7 @@ class Admin::LoginController < ApplicationController
     success = lambda do |args|
       cookies.encrypted[:token] = {
         :value    => args.fetch(:token),
-        :secure   => Rails.env.production?,
+        :secure   => Rails.env.production? || Rails.env.staging?,
         :expires  => 1.year.from_now,
         :httponly => true,
       }
