@@ -36,6 +36,11 @@ gem 'jwt'
 # Audit Log
 gem 'paper_trail'
 
+group :development, :test, :staging do
+  # Seed Data
+  gem 'faker'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -61,9 +66,6 @@ group :test do
   gem 'factory_girl'
   gem 'database_cleaner'
 end
-
-# Seed Data
-gem 'faker'
 
 # Developer Tools
 gem 'bugsnag'
