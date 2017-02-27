@@ -69,6 +69,8 @@
     content
       router-view
 
+    footer
+
 </template>
 
 <style lang='stylus' scoped>
@@ -85,6 +87,7 @@
     display: flex
     flex-direction: row
     padding: $padding-default
+    z-index: 10
 
     text-align: center
 
@@ -130,5 +133,9 @@
     float: left
     width: 100%
     padding: 0 $padding-default
+
+  footer
+    float: left
+    margin: $margin-default 0
 
 </style>

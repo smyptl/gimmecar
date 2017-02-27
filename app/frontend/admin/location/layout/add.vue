@@ -29,7 +29,7 @@
           position: [0, 0, 0],
           fromPosition: [5, -5, -500],
           opacity: 1,
-          fromOpacity: 0,
+          fromOpacity: 0.05,
           duration: 150,
           complete() {
             done()
@@ -42,7 +42,7 @@
           fromScale: [1, 1],
           position: [5, -5, -500],
           fromPosition: [0, 0, 0],
-          opacity: 0,
+          opacity: 0.05,
           fromOpacity: 1,
           duration: 100,
           complete() {
@@ -79,7 +79,7 @@
     position: absolute
     top: 2rem
     right: 0
-    z-index: 2
+    z-index: 11
     float: left
 
     background: #ffffff

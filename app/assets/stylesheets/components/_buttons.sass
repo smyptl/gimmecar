@@ -107,7 +107,7 @@
   height: $input-height-sm
   padding: 0 0.5rem
 
-  font-size: 0.6875rem
+  font-size: 0.75rem
   line-height: $input-height-sm - 0.125rem
 
   [class^="icon-"]:before
@@ -182,8 +182,6 @@
   color: #ffffff
 
 .btn.btn-danger-muted
-  border-color: darken($border-color-red, 5%)
-  background: #ffffff
   color: $text-color-red
 
 .btn.btn-danger,
@@ -191,6 +189,7 @@
   &:hover,
   &:active,
   &:focus
+    border-color: darken($border-color-red, 5%)
     background: darken($red, 10%)
     color: #ffffff
 
