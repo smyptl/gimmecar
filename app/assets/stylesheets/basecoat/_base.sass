@@ -14,6 +14,7 @@ body
   -webkit-font-smoothing: antialiased
   font-size: 100%
 
+
 html
   background: $background-color-page
 
@@ -25,33 +26,35 @@ h2,
 h3,
 h4,
 h5,
-h6
-  margin-top: 0
-  margin-bottom: 0
-
-h1
-  font-size: 2.25rem
-
-h2
-  font-size: 2rem
-
-h3
-  font-size: 1.75rem
-
-h4
-  font-size: 1.5rem
-
-h5
-  font-size: 1.25rem
-
-h6
-  font-size: 1rem
-
-// Body text
-// --------------------------------------------------
+h6,
 p
   margin-top: 0
   margin-bottom: $margin-sm
+
+h1
+  font-size: 2rem
+
+h2
+  font-size: 1.75rem
+
+h3
+  font-size: 1.5rem
+
+h4
+  font-size: 1.25rem
+
+h5
+  font-size: 1.125rem
+
+h6
+  font-size: 0.875rem
+
+// Body text
+// --------------------------------------------------
+p,
+ul,
+ol
+  font-size: 0.875rem
 
 small
   font-size: 90%
@@ -85,12 +88,12 @@ dd
 tt,
 code
   font-family: $mono-font
-  font-size: 12px
+  font-size: 0.75rem
 
 pre
   margin-top: 0
   margin-bottom: 0
-  font: 12px $mono-font
+  font: 0.75rem $mono-font
 
 input:focus,
 select:focus,

@@ -2,8 +2,8 @@ class CreateVehicles < ActiveRecord::Migration[5.0]
   def change
     create_table :vehicles do |t|
       t.timestamp
-      t.belongs_to :original_location
-      t.belongs_to :location
+      t.belongs_to :original_location, index: true
+      t.belongs_to :location, index: true
       t.string :vehicle_type
       t.string :vin
       t.string :license_number
@@ -11,7 +11,7 @@ class CreateVehicles < ActiveRecord::Migration[5.0]
       t.string :model
       t.integer :year
       t.string :color
-      t.integer :original_odometer
+      t.decimal :original_odometer, :decimal, precision: 10, scale: 0
       t.string :transmission
       t.string :power_train
       t.integer :cylinders

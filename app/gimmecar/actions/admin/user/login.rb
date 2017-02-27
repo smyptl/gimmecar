@@ -3,8 +3,10 @@ class Actions::Admin::User::Login < Lib::Forms::Base
 
   attr_reader :user, :auth_token
 
-  attribute :email,    :string
-  attribute :password, :string
+  attributes do |a|
+    a.string :email
+    a.string :password
+  end
 
   validates :email, :password,
     presence: true
@@ -36,7 +38,7 @@ class Actions::Admin::User::Login < Lib::Forms::Base
     when 1
       url_helper.location_dashboard_path(slug: user.locations.first.slug)
     else
-      url_helpers.locations_path
+      url_helper.locations_path
     end
   end
 

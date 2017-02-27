@@ -1,8 +1,10 @@
 class Services::Public::GetRates < Lib::Forms::Base
   include Lib::Forms::Actions
 
-  attribute :pickup,   :date_time
-  attribute :drop_off, :date_time
+  attributes do |a|
+    a.date_time :pickup
+    a.date_time :drop_off
+  end
 
   validate :pickup_and_drop_off_present,
     :pickup_is_after_today,
@@ -62,19 +64,7 @@ class Services::Public::GetRates < Lib::Forms::Base
   end
 
   def success_args
-    {
-      :vehicle  => "Toyota Corolla",
-      :location => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
-      :pickup   => pickup,
-      :drop_off => drop_off,
-      :rates    => calculate_rental.rates,
-      :tax      => calculate_rental.tax,
-      :total    => calculate_rental.total
-    }
-  end
-
-  def calculate_rental
-    @calculate_rental ||= Logic::CalculateRental.new(self)
+    Logic::CalculateRental.new(self).fetch
   end
 
   def save

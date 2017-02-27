@@ -30,14 +30,14 @@
 
   h6.margin-bottom-sm Rates
   ul.left.whole.list-no-style
-    - @email.fetch(:rates).each do |rate|
+    - @email.fetch(:details).each do |rate|
       span.left= format_date(rate.fetch(:date))
       span.right= format_currency(rate.fetch(:value))
 
   h6.margin-bottom-sm Taxes & Fees
   ul.left.whole.list-no-style
     li
-      span.left Sales (8%)
+      span.left= "Sales (#{format_percent(@email.fetch(:tax_rate))})"
       span.right= format_currency(@email.fetch(:tax))
 
   h5

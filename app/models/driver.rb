@@ -3,7 +3,6 @@
 # Table name: drivers
 #
 #  id                      :integer          not null, primary key
-#  title                   :string
 #  first_name              :string
 #  last_name               :string
 #  name                    :string
@@ -14,8 +13,8 @@
 #  state                   :string
 #  zip_code                :string
 #  country                 :string
-#  home_phone_number       :integer
-#  cell_phone_number       :integer
+#  home_phone_number       :string
+#  cell_phone_number       :string
 #  email                   :string
 #  date_of_birth           :date
 #  license_number          :string

@@ -7,8 +7,8 @@ class Lib::Services::Base
     :generated_on,
     :as_of,
     :date,
-    :description,
-    :api,
+    :during_period,
+    :period,
     :uri_helpers
   ]
 
@@ -59,12 +59,21 @@ class Lib::Services::Base
   end
 
   def as_of(date)
-    @date = Lib::TypeCast::Date.type_cast(date)
+    @date = Lib::Forms::Attributes::TypeCast.date_time(date)
     self
   end
 
   def date
     @date || (raise NotImplementedError)
+  end
+
+  def during_period(start_date, end_date)
+    @period = Lib::DateRange.new(Lib::Forms::Attributes::TypeCast.date_time(start_date), Lib::Forms::Attributes::TypeCast.date_time(end_date))
+    self
+  end
+
+  def period
+    @period || (raise NotImplementedError)
   end
 
   def url_helpers

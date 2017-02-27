@@ -23,14 +23,29 @@ class Location < ApplicationRecord
   has_many :rentals, foreign_key: 'pickup_location_id'
   has_many :drop_off_rentals, class_name: 'Rental', foreign_key: 'drop_off_location_id'
 
-  has_many :current_rentals, -> { rented }, class_name: 'Rental', foreign_key: 'pickup_location_id'
+  has_many :open_rentals, -> { where(status: Rental::OPEN) }, class_name: 'Rental', foreign_key: 'pickup_location_id'
   has_many :future_rentals, -> { reserved }, class_name: 'Rental', foreign_key: 'pickup_location_id'
 
   has_many :today_drop_offs, -> { drop_off_rentals.where(date: DateTime.now) }
 
   has_many :vehicles
 
+  def description
+  end
+
   def calendar
-    current_rentals + future_rentals
+    open_rentals + future_rentals
+  end
+
+  def available_vehicles(date_range)
+    vehicles.select { |v| !v.open_rental? }
+  end
+
+  def available_vehicle_ids(date_range)
+    available_vehicles(date_range).pluck(:id)
+  end
+
+  def vehicle_ids
+    vehicles.pluck(:id)
   end
 end

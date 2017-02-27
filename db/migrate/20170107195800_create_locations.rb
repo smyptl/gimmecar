@@ -17,8 +17,8 @@ class CreateLocations < ActiveRecord::Migration[5.0]
 
     create_table :locations_users do |t|
       t.timestamp
-      t.belongs_to :user
-      t.belongs_to :location
+      t.belongs_to :user, index: true
+      t.belongs_to :location, index: true
     end
   end
 end

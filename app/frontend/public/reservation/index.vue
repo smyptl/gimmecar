@@ -5,7 +5,7 @@
   import InputError from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
 
-  import Rates from 'Admin/location/quotes/summary'
+  import Rates from 'Admin/location/components/rental_invoice'
 
   import SlideTransition from 'Utils/transitions/slide'
   import ErrorTransition from 'Utils/transitions/shake'
@@ -46,6 +46,7 @@
           })
           .then(response => {
             this.summary = response.data
+            this.form.errors.clear()
             this.transition_type = 'forward'
             this.current_step = 'rental-summary'
             this.errors = {}
@@ -98,31 +99,39 @@
               select.input-field.input-lg
                 option(value='' disabled) Current, our only location.
                 option(value='') Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
-              input-error-message(field='location' v-bind:errors='form.errors.get("location")')
+              input-error-message(v-bind:errors='form.errors.get("location")')
 
           .input-row
             .input-container.one-half
               label.input-label.input-lg From:
-              input-date-time(v-model='form.pickup' timezone='America/Los_Angeles')
-              input-error-message.input-message-lg(field='pickup' v-bind:errors='form.errors.get("pickup")')
+              input-date-time(
+                v-model='form.pickup'
+                v-error='form.errors.has("pickup")'
+                timezone='America/Los_Angeles'
+                @input='form.errors.clear("pickup")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
 
             .input-container.one-half
               label.input-label.input-lg To:
-              input-date-time(v-model='form.drop_off' timezone='America/Los_Angeles')
-              input-error-message.input-message-lg(field='drop_off' v-bind:errors='form.errors.get("drop_off")')
+              input-date-time(
+                v-model='form.drop_off'
+                v-error='form.errors.has("drop_off")'
+                timezone='America/Los_Angeles'
+                @input='form.errors.clear("drop_off")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
 
             .input-submit
               .input-block.whole
-                input.btn.btn-full.btn-primary(type='submit' value='View Rates')
+                input.btn.btn-full.btn-lg.btn-primary(type='submit' value='View Rates')
 
-      #rental-summary.rental-invoice(v-if="current_step == 'rental-summary'" key='summary')
-        rates(:summary='summary')
+      #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
+        rates.margin-top-default(:summary='summary')
 
         .input-submit.input-flex-container
           .input-block.input-element-fixed
-            button.btn(@click="current_step = 'rental-details', transition_type = 'backward'") Go Back
+            button.btn.btn-lg(@click="current_step = 'rental-details', transition_type = 'backward'") Go Back
           .input-block.input-element-flex
-            button.btn.btn-full.btn-primary(@click='newReservation') Reserve
+            button.btn.btn-lg.btn-full.btn-primary(@click='newReservation') Reserve
 
       #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
         form(@submit.prevent='createReservation')
@@ -130,25 +139,25 @@
             label.input-label.input-lg(for='first_name') Name
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field#first_name(
+                input.input-field.input-lg#first_name(
                   type='text'
                   placeholder='Henry'
                   v-model='form.first_name'
                   v-error='form.errors.has("first_name")'
                   @input='form.errors.clear("first_name")')
 
-              input-error-message.input-message-lg(field='first_name' v-bind:errors='form.errors.get("first_name")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("first_name")')
 
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field#last_name(
+                input.input-field.input-lg#last_name(
                   type='text'
                   placeholder='Ford'
                   v-model='form.last_name'
                   v-error='form.errors.has("last_name")'
                   @input='form.errors.clear("last_name")')
 
-              input-error-message.input-message-lg(field='last_name' v-bind:errors='form.errors.get("last_name")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("last_name")')
 
           .input-row
             label.input-label.input-lg(for='input_email')
@@ -156,14 +165,14 @@
               span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
 
             .input-block.whole
-              input.input-field#input_email(
+              input.input-field.input-lg#input_email(
                 type='email'
                 placeholder='hford@gmail.com'
                 v-model='form.email'
                 v-error='form.errors.has("email")'
                 @input='form.errors.clear("email")')
 
-            input-error-message.input-message-lg(field='email' v-bind:errors='form.errors.get("email")')
+            input-error-message.input-message-lg(v-bind:errors='form.errors.get("email")')
 
           .input-row
             label.input-label.input-lg(for='input_phone_number')
@@ -171,23 +180,23 @@
               span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
 
             .input-block.whole
-              input.input-field#input_phone_number(
+              input.input-field.input-lg#input_phone_number(
                 type='number'
                 placeholder='805-990-1234'
                 v-model='form.phone_number'
                 v-error='form.errors.has("phone_number")'
                 @input='form.errors.clear("phone_number")')
 
-            input-error-message.input-message-lg(field='phone_number' v-bind:errors='form.errors.get("phone_number")')
+            input-error-message.input-message-lg(v-bind:errors='form.errors.get("phone_number")')
 
 
           .input-submit.input-flex-container
             .input-block.input-element-fixed
-              button.btn.btn-full(@click.prevent="current_step = 'rental-summary', transition_type = 'backward'") Go Back
+              button.btn.btn-lg(@click.prevent="current_step = 'rental-summary', transition_type = 'backward'") Go Back
             .input-block.input-element-flex
-              input.btn.btn-full.btn-primary(type='submit' value='Reserve Car')
+              input.btn.btn-lg.btn-full.btn-primary(type='submit' value='Reserve Car')
 
-      #rental-confirmation.rental-invoice(v-if="current_step == 'rental-confirmation'" key='confirmation')
+      #rental-confirmation(v-if="current_step == 'rental-confirmation'" key='confirmation')
         h3.emoji :]
         p.text-center Thanks for choosing us, {{ form.first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 
@@ -200,5 +209,5 @@
   @import '~Styles/global/layout'
 
   .input-field
-    background-color: #f7f7f7
+    background-color: $background-color-app
 </style>

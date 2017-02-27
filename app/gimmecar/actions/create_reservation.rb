@@ -1,13 +1,14 @@
 class Actions::CreateReservation < Lib::Forms::Base
   include Lib::Forms::Actions
 
-  attribute :pickup,       :date_time
-  attribute :drop_off,     :date_time
-
-  attribute :first_name,   :string
-  attribute :last_name,    :string
-  attribute :email,        :string
-  attribute :phone_number, :integer
+  attributes do |a|
+    a.date_time :pickup
+    a.date_time :drop_off
+    a.string    :first_name
+    a.string    :last_name
+    a.string    :email
+    a.integer   :phone_number
+  end
 
   validates :first_name, :last_name,
     presence: true
@@ -41,10 +42,7 @@ class Actions::CreateReservation < Lib::Forms::Base
       :confirmation_number => confirmation_number,
       :pickup              => pickup,
       :drop_off            => drop_off,
-      :rates               => calculate_rental.rates,
-      :tax                 => calculate_rental.tax,
-      :total               => calculate_rental.total
-    }
+    }.merge(calculate_rental.fetch)
   end
 
   def confirmation_number
@@ -52,7 +50,7 @@ class Actions::CreateReservation < Lib::Forms::Base
   end
 
   def calculate_rental
-    @calculate_rental ||= Logic::CalculateRental.new(self)
+    Logic::CalculateRental.new(self)
   end
 
   def save

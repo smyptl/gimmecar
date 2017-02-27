@@ -2,16 +2,18 @@
 #
 # Table name: insurance_policies
 #
-#  id                :integer          not null, primary key
-#  user_id           :integer
-#  confirmation_date :date
-#  driver_id         :integer
-#  company           :string
-#  agent             :string
-#  policy_number     :string
-#  phone_number      :string
-#  effective_date    :date
-#  expiration_date   :date
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  driver_id          :integer
+#  company_name       :string
+#  agent              :string
+#  policy_number      :string
+#  phone_number       :string
+#  effective_date     :date
+#  expiration_date    :date
+#  verify_date        :date
+#  verify_agent       :string
+#  verify_call_center :string
 #
 
 class InsurancePolicy < ApplicationRecord

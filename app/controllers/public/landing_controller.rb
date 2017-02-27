@@ -4,4 +4,7 @@ class Public::LandingController < ApplicationController
 
   def index
   end
+
+  def r
+  end
 end

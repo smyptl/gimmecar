@@ -1,9 +1,6 @@
 <script>
   import Form from 'Utils/form'
 
-  import InputError from 'Components/inputs/error'
-  import InputErrorMessage from 'Components/inputs/error_message'
-
   import Shake from 'Utils/transitions/shake'
 
   export default {
@@ -15,12 +12,6 @@
           password: '',
         }),
       }
-    },
-    components: {
-      InputErrorMessage,
-    },
-    directives: {
-      error: InputError,
     },
     methods: {
       loginUser () {
@@ -59,7 +50,7 @@
                 v-error='login.errors.has("email")'
                 @input='login.errors.clear("email")')
 
-            input-error-message(field='email' v-bind:errors='login.errors.get("email")')
+            input-error-message(v-bind:errors='login.errors.get("email")')
 
           .input-row
             label.input-label(for='password') Password:
@@ -71,7 +62,7 @@
                 v-error='login.errors.has("password")'
                 @input='login.errors.clear("password")')
 
-            input-error-message(field='email' v-bind:errors='login.errors.get("password")')
+            input-error-message(v-bind:errors='login.errors.get("password")')
 
           .input-submit.input-block
             input.btn.btn-primary.right(type='submit' value='Login')

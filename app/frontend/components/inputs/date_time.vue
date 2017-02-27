@@ -1,10 +1,7 @@
 <script>
   import Moment from 'moment'
   import MomentTimeZone from 'moment-timezone'
-  import EventListener from 'Utils/event_listener'
 
-  import isDate from 'lodash/isDate'
-  import Includes from 'lodash/includes'
   import Range from 'lodash/range'
 
   const MONTH_NAMES = [
@@ -35,7 +32,8 @@
       }
     },
     mounted () {
-      return this.parseValue(this.value)
+      this.parseValue(this.value)
+      this.emitInput()
     },
     watch: {
       value (val, oldVal) {
@@ -59,7 +57,7 @@
       parseDateTime () {
         var date = Moment.tz(this.date_time_formatted, "M/D/YYYY @ h:mm A", this.time_zone)
 
-        if (date._isValid) {
+        if (date.isValid()) {
           this.current_date_time.set('date',   date.get('date'))
           this.current_date_time.set('month',  date.get('month'))
           this.current_date_time.set('year',   date.get('year'))
@@ -71,7 +69,7 @@
         this.emitInput()
       },
       formatDateTime () {
-        this.date_time_formatted = this.current_date_time.format("M/D/YYYY @ h:mm A")
+        this.date_time_formatted = this.current_date_time.format('M/D/YYYY @ h:mm A')
       },
       emitInput () {
         this.$emit('input', this.current_date_time.format())
@@ -81,14 +79,12 @@
 </script>
 
 <template lang='pug'>
-  .whole.left
-    .input-block.whole
-      input.input-field.date-field(
-        type='text'
-        placeholder='mm/dd/yyyy @ hh:mm am/pm'
-        v-bind:name='name'
-        v-model='date_time_formatted'
-        @change='parseDateTime')
+  input.input-field.date-field(
+    type='text'
+    placeholder='mm/dd/yyyy @ hh:mm am/pm'
+    v-bind:name='name'
+    v-model='date_time_formatted'
+    @change='parseDateTime')
 
 </template>
 

@@ -3,12 +3,14 @@
 .text-warning
   color: $text-color-yellow
 
-.text-note
+.text-note,
+.text-light
   color: #999999
 
 .logo
   font-size: 1.5rem
   font-weight: 900
+  margin: 0
 
   small
     display: block
@@ -20,6 +22,12 @@ a
   color: $blue
   text-decoration: none
   outline: 0
+
+  &:hover
+    color: #333333
+
+a.link-danger
+  color: $red
 
   &:hover
     color: #333333

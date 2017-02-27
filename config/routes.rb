@@ -14,9 +14,13 @@ Rails.application.routes.draw do
       get '/dashboard', to: 'dashboard#index'
       get '/search', to: 'search#index'
       get '/vehicles', to: 'vehicles#index'
+
       get '/quotes', to: 'quotes#index'
+      #post '/quotes', to: 'quotes#show'
 
       resources :rates
+
+      get '/new', to: 'new#index'
 
       resources :reservations do
         post 'email-confirmation', to: 'email_confirmation#index'
@@ -25,21 +29,26 @@ Rails.application.routes.draw do
         post 'verify-insurance', to: 'verify_insurance#create'
       end
 
-      resources :rentals, except: [:edit, :update] do
+      resources :rentals, except: [:new, :create] do
         post 'email-receipt', to: 'email_receipt#index'
 
         get 'extend',  to: 'extend#index'
         post 'extend', to: 'extend#create'
       end
 
-      get 'rentals/new/validate-drivers'
-      get 'rentals/new/add-ons'
-      get 'rentals/new/summary'
-      get 'rentals/new/payment'
+      get  'rentals/new'                          => 'rentals/new#index'
+      post 'rentals/new/rates'                    => 'rentals/new#rates'
+      post 'rentals/new/drivers'                  => 'rentals/new#drivers'
+      post 'rentals/new/vehicles'                 => 'rentals/new#vehicles'
+      post 'rentals/new/add-ons'                  => 'rentals/new#add_ons'
+      post 'rentals/new/financial-responsibility' => 'rentals/new#financial_responsibility'
+      post 'rentals/new/terms-and-conditions'     => 'rentals/new#terms_and_conditions'
+      post 'rentals/new'                          => 'rentals/new#create'
 
       resources :drivers, only: [:show] do
         resources :insurance_policies
       end
+      post 'drivers/search'
     end
   end
 
@@ -48,5 +57,7 @@ Rails.application.routes.draw do
 
     get  'reservation', to: 'reservation#index'
     post 'reservation', to: 'reservation#create'
+
+    get 'receipt', to: 'landing#r'
   end
 end

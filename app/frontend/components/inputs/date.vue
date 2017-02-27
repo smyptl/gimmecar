@@ -1,4 +1,6 @@
 <script>
+  import Moment from 'moment'
+  import MomentTimeZone from 'moment-timezone'
 
   export default {
     props: {
@@ -7,37 +9,50 @@
       },
       name: {
         type: String,
-        required: true,
       },
     },
+    data () {
+      return {
+        current_date: '',
+        date_formatted: '',
+      }
+    },
     mounted () {
-      this.updateValue(this.value)
+      this.parseValue(this.value)
+      this.emitInput()
     },
     watch: {
       value (val, oldVal) {
-        this.updateValue(val)
+        this.parseValue(val)
       },
     },
     methods: {
-      updateValue (val) {
-        if (val) {
-          let date = null;
+      parseValue (val) {
+        this.current_date = Moment(val)
+        this.formatDate()
+      },
+      parseDate () {
+        var date = Moment(this.date_formatted, 'M/D/YYYY')
 
-          if (typeof val.getMonth === 'function') {
-            date = val;
-          } else {
-            date = new Date(val);
-          }
-
-          if (!isNaN(date.getTime())) {
-            var yyyy = date.getFullYear().toString();
-            var mm = (date.getMonth() + 1).toString(); // getMonth() is zero-based
-            var dd = date.getDate().toString();
-            this.$emit('input', mm + '/' + dd + '/' + yyyy);
-          }
+        if (date.isValid()) {
+          this.current_date.set('date',  date.get('date'))
+          this.current_date.set('month', date.get('month'))
+          this.current_date.set('year',  date.get('year'))
+          this.formatDate()
         } else {
-          this.$emit('input', '');
+          this.date_formatted = ''
         }
+
+        this.emitInput()
+      },
+      formatDate () {
+        if (this.current_date.isValid()) {
+          this.date_formatted = this.current_date.format('M/D/YYYY')
+          this.value = this.date_formatted
+        }
+      },
+      emitInput () {
+        this.$emit('input', this.date_formatted)
       },
     },
   }
@@ -49,5 +64,6 @@
     placeholder='mm/dd/yyyy'
     v-bind:name='name'
     v-bind:value='value'
-    v-on:change="updateValue($event.target.value)")
+    v-model='date_formatted'
+    @change='parseDate')
 </template>

@@ -10,16 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113214017) do
+ActiveRecord::Schema.define(version: 20170221174010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "charges", force: :cascade do |t|
+    t.string  "owner_type"
+    t.integer "owner_id"
+    t.string  "stripe_charge_id"
+    t.json    "details"
+    t.integer "sub_total"
+    t.json    "discount"
+    t.json    "fees"
+    t.decimal "tax_rate",         precision: 10, scale: 4
+    t.decimal "decimal",          precision: 10, scale: 4
+    t.integer "tax"
+    t.integer "total"
+    t.boolean "deposit",                                   default: false
+    t.index ["owner_type", "owner_id"], name: "index_charges_on_owner_type_and_owner_id", using: :btree
+  end
+
   create_table "drivers", force: :cascade do |t|
-    t.string  "title"
     t.string  "first_name"
     t.string  "last_name"
-    t.string  "name"
     t.string  "gender"
     t.string  "address_1"
     t.string  "address_2"
@@ -27,8 +41,8 @@ ActiveRecord::Schema.define(version: 20170113214017) do
     t.string  "state"
     t.string  "zip_code"
     t.string  "country"
-    t.integer "home_phone_number"
-    t.integer "cell_phone_number"
+    t.string  "home_phone_number"
+    t.string  "cell_phone_number"
     t.string  "email"
     t.date    "date_of_birth"
     t.string  "license_number"
@@ -42,14 +56,16 @@ ActiveRecord::Schema.define(version: 20170113214017) do
 
   create_table "insurance_policies", force: :cascade do |t|
     t.integer "user_id"
-    t.date    "confirmation_date"
     t.integer "driver_id"
-    t.string  "company"
+    t.string  "company_name"
     t.string  "agent"
     t.string  "policy_number"
     t.string  "phone_number"
     t.date    "effective_date"
     t.date    "expiration_date"
+    t.date    "verify_date"
+    t.string  "verify_agent"
+    t.string  "verify_call_center"
     t.index ["driver_id"], name: "index_insurance_policies_on_driver_id", using: :btree
     t.index ["user_id"], name: "index_insurance_policies_on_user_id", using: :btree
   end
@@ -78,7 +94,8 @@ ActiveRecord::Schema.define(version: 20170113214017) do
   create_table "rates", force: :cascade do |t|
     t.integer "location_id"
     t.date    "date"
-    t.integer "rate"
+    t.decimal "rate",         precision: 10
+    t.decimal "decimal",      precision: 10
     t.string  "vehicle_type"
     t.index ["location_id"], name: "index_rates_on_location_id", using: :btree
   end
@@ -95,13 +112,17 @@ ActiveRecord::Schema.define(version: 20170113214017) do
     t.text     "notes"
     t.integer  "pickup_location_id"
     t.datetime "pickup"
-    t.integer  "pickup_odometer"
+    t.decimal  "pickup_odometer",                    precision: 10
+    t.decimal  "decimal",                            precision: 10
     t.float    "pickup_fuel"
     t.integer  "drop_off_location_id"
     t.datetime "drop_off"
-    t.integer  "drop_off_odometer"
+    t.decimal  "drop_off_odometer",                  precision: 10
     t.float    "drop_off_fuel"
     t.boolean  "collision_damage_waiver"
+    t.text     "financial_responsibility_signature"
+    t.text     "driver_signature"
+    t.text     "additional_driver_signature"
     t.index ["additional_driver_id"], name: "index_rentals_on_additional_driver_id", using: :btree
     t.index ["driver_id"], name: "index_rentals_on_driver_id", using: :btree
     t.index ["drop_off_location_id"], name: "index_rentals_on_drop_off_location_id", using: :btree
@@ -130,7 +151,8 @@ ActiveRecord::Schema.define(version: 20170113214017) do
     t.string  "model"
     t.integer "year"
     t.string  "color"
-    t.integer "original_odometer"
+    t.decimal "original_odometer",    precision: 10
+    t.decimal "decimal",              precision: 10
     t.string  "transmission"
     t.string  "power_train"
     t.integer "cylinders"
