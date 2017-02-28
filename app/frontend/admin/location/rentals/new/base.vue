@@ -177,7 +177,7 @@
         })
         .then(response => {
           this.rental.errors.clear
-          this.$router.push({ name: 'rental', params: { id: response.data.rental_id }})
+          this.$router.push({ name: 'rental', params: { number: response.data.rental_number }})
         })
         .catch(error => {
           Shake(this.$refs.form)

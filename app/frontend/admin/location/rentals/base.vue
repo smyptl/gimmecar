@@ -25,7 +25,8 @@
             this.rentals = response.data
         })
       },
-      viewRental (id) {
+      viewRental (number) {
+        this.$router.push({ name: 'rental', params: { number: number }})
       },
     },
   }
