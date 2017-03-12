@@ -197,7 +197,7 @@
               input.btn.btn-lg.btn-full.btn-primary(type='submit' value='Reserve Car')
 
       #rental-confirmation(v-if="current_step == 'rental-confirmation'" key='confirmation')
-        h3.emoji :]
+        h2.emoji :]
         p.text-center Thanks for choosing us, {{ form.first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 
         rates(:summary='summary')

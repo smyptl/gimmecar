@@ -78,7 +78,7 @@
   @import '~Styles/global/layout'
 
   #gimmecar-app
-    max-width: 80rem
+    max-width: 55rem
     margin: 0 auto
 
   header

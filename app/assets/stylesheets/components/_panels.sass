@@ -8,8 +8,13 @@
   border-radius: 0.125rem
   background-color: $background-color-panel
 
+.panel-base
+  box-shadow: 0 0.125rem 0.5rem 1px rgba(0, 0, 0, .05), 0 0 0.125rem 1px rgba(0, 0, 0, 0.03)
+  border: 0
+
 .panel-padding
-  padding: $padding-sm
+  padding: $padding-default
+  padding-bottom: 0
 
 .panel-list-header
   margin-bottom: $margin-sm
@@ -21,3 +26,33 @@
 
 .panel-list
   list-style-type: none
+
+.panel-main-details
+  margin: 0
+  float: left
+  width: 100%
+  border-top: 1px solid $border-color-dark
+  border-bottom: 1px solid $border-color-light
+  background: #fafafa
+
+  dt,
+  dd
+    float: left
+    padding-top: $padding-sm
+    padding-bottom: $padding-sm
+
+    border-top: 1px solid $border-color-light
+
+    font-size: $font-size-default
+
+  dt
+    width: 35%
+    padding-left: $padding-default
+    padding-right: $padding-sm
+    color: #000000
+
+  dd
+    width: 65%
+    padding-right: $padding-default
+    padding-left: $padding-sm
+    color: #333333

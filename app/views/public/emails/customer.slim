@@ -31,6 +31,6 @@
       span.left= "Sales (#{format_percent(@email.fetch(:tax_rate))})"
       span.right= format_currency(@email.fetch(:tax))
 
-  h5
+  h4
     span.left Estimated Total:
     span.right= format_currency(@email.fetch(:total))

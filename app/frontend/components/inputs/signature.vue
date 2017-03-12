@@ -44,7 +44,7 @@
     computed: {
       canvas () {
         return this.$el.getElementsByTagName('canvas')[0]
-      }
+      },
     },
     methods: {
       resizeCanvas () {

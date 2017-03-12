@@ -45,7 +45,7 @@
 <template lang='pug'>
   .form-container
     #quote-form(v-if='step == "rates"')
-      h4.form-header.form-header-first
+      h3.form-header.form-header-first
         | Reservation (Rates)
         small.right 1 of 10
       form(@submit.prevent='getRates()')
@@ -72,7 +72,7 @@
           input.btn.btn-primary.right(type='submit' value='Rates')
 
     template(v-if='step == "summary"')
-      h4.form-header.form-header-first Quote
+      h3.form-header.form-header-first Quote
       quote(v-bind:summary='summary')
 
       .input-submit.input-flex-container

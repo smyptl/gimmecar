@@ -26,12 +26,12 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       n.integer :home_phone_number
 
       n.nested :insurance do |i|
-        i.string :company_name
-        i.string :policy_number
-        i.string :phone_number
-        i.date   :effective_date
-        i.date   :expiration_date
-        i.string :agent
+        i.string  :company_name
+        i.string  :policy_number
+        i.integer :phone_number
+        i.date    :effective_date
+        i.date    :expiration_date
+        i.string  :agent
 
         i.boolean :verified
         i.date    :verify_date

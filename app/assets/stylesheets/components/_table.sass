@@ -6,7 +6,6 @@
   font-size: 0.875rem
   text-align: left
   font-weight: 400
-  vertical-align: middle
 
   td,
   th
@@ -15,24 +14,45 @@
 
   thead
     color: #888888
+    font-size: 0.75rem
+    text-transform: uppercase
+    border-bottom: 1px solid $border-color-light
+
+    th
+      font-weight: 400
 
   tbody
     td.checkbox
       padding-right: 0
       width: 1rem + $padding-sm
 
-    td
-      background: $background-color-panel
-
     tr
+      background: $background-color-panel
       border-top: 1px solid $border-color-light
       border-bottom: 1px solid $border-color-light
       cursor: pointer
+
+      vertical-align: middle
+      color: #333333
+
+      &:hover
+        color: #000000
 
     tr.clickable
 
     tr.selected
       font-weight: 600
+      color: #000000
+
+  tbody.alternate-color
+    tr
+      background: #f3f7fb
+      border-top: 0
+      border-bottom: 0
+
+    tr:nth-child(even)
+      background: $background-color-panel
+
 
   .button-checkbox
     width: 1rem
@@ -51,11 +71,31 @@
     background: $blue
 
 .panel-table.panel-table-key-pair
-  td:first-of-type
+  table-layout: fixed
+  margin-top: $padding-sm
+  margin-bottom: $padding-sm
+
+  td,
+  th
+    padding-top: $padding-ex-sm
+    padding-bottom: $padding-ex-sm
+
+  td:first-of-type,
+  th:first-of-type
+    padding-left: $padding-default
+    padding-right: $padding-sm
+
     width: 35%
+    font-weight: 400
+    text-align: right
+    color: #888888
 
-    background: #f1f8ff
-    font-weight: 600
+  td:nth-of-type(2),
+  th:nth-of-type(2)
+    padding-right: $padding-default
+    padding-left: $padding-sm
 
-  td:last-of-type
-    width: 65%
+  tr
+    border-top: 0
+    border-bottom: 0
+    vertical-align: top
