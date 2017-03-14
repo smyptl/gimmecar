@@ -27,6 +27,21 @@
 .panel-list
   list-style-type: none
 
+.panel-base-header
+  display: flex
+  flex-direction: row
+
+  padding: $padding-default
+
+  h2
+    margin: 0
+    float: left
+
+  h2,
+  .flex-element
+    flex: 1
+    align-self: center
+
 .panel-main-details
   margin: 0
   float: left
@@ -49,10 +64,45 @@
     width: 35%
     padding-left: $padding-default
     padding-right: $padding-sm
-    color: #000000
+    color: #333333
 
   dd
     width: 65%
     padding-right: $padding-default
     padding-left: $padding-sm
-    color: #333333
+    color: #000000
+
+.panel-details-link
+  position: relative
+  margin: 0
+  float: left
+  width: 100%
+
+  background: #ffffff
+  border-top: 1px solid $border-color-light
+
+  dt,
+  dd
+    width: 100%
+    border-top: 0
+    padding-left: $padding-default
+    padding-right: $padding-default
+
+  dt
+    padding-bottom: $padding-ex-sm
+
+  dd
+    padding-top: $padding-ex-sm
+
+  svg
+    position: absolute
+    top: 50%
+    right: $padding-default
+    margin-top: -0.375rem
+
+    height: 0.75rem
+    width: 0.75rem
+
+  span.description
+    font-size: 0.75rem
+    color: #888888

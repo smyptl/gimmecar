@@ -1,6 +1,12 @@
 <script>
-  import FDate from "Filters/date"
-  import FDateTime from "Filters/date_time"
+  import FDate from 'Filters/date'
+  import FDateTime from 'Filters/date_time'
+  import Capitalize from 'lodash/capitalize'
+
+  import Dropdown from 'Components/dropdown'
+
+  import ActionsIcon from 'Components/icons/actions'
+  import RightArrowIcon from 'Components/icons/right_arrow'
 
   export default {
     name: 'rental',
@@ -12,6 +18,12 @@
     filters: {
       date: FDate,
       date_time: FDateTime,
+      Capitalize,
+    },
+    components: {
+      ActionsIcon,
+      Dropdown,
+      RightArrowIcon,
     },
     created () {
       this.fetchData()
@@ -27,55 +39,49 @@
             this.rental = response.data
         })
       },
+      extendRental () {
+      },
     },
   }
 </script>
 
 <template lang='pug'>
   .panel.panel-base
-    h2.margin-bottom-default.panel-padding {{ rental.number }}
+    .panel-base-header
+      h2 {{ rental.number }}
+      dropdown.flex-element.right
+        actions-icon.action-icon(data-toggle='dropdown')
+        .dropdown-menu.right(slot='dropdown-menu')
+          ul
+            li
+              a(@click='extendRental()') Extend Rental
+            li
+              a(@click='closeRental()') Close
 
     dl.panel-main-details
       dt Status
-      dd {{ rental.status }}
+      dd {{ rental.status | capitalize }}
       dt Pickup
       dd {{ rental.pickup | date_time }}
       dt Drop Off
       dd {{ rental.drop_off | date_time }}
-      dt Vehicle
-      dd {{ rental.vehicle.make }} {{ rental.vehicle.model }}
-      dt Vehicle License #
-      dd {{ rental.vehicle.license_number }}
 
-    .panel-padding.left
-      h5.margin-botton-sm Driver
-      .panel
-        table.panel-table.panel-table-key-pair
-          tbody
-            tr
-              td Name
-              td {{ rental.driver.first_name }} {{ rental.driver.last_name }}
-            tr
-              td License #
-              td {{ rental.driver.license_number }}
-            tr
-              td Address
-              td
-                span.block {{ rental.driver.address_1 }}
-                span.block(v-if='rental.driver.address_2') {{ rental.driver.address_2 }}
-                span.block {{ rental.driver.city }}, {{ rental.driver.state }} {{ rental.driver.zip_code }}
-                span.block {{ rental.driver.country }}
-            tr
-              td Email
-              td {{ rental.driver.email }}
-            tr
-              td Home Phone #
-              td {{ rental.driver.home_phone_number }}
-            tr
-              td Cell Phone #
-              td {{ rental.driver.cell_phone_number }}
+      a.panel-details-link(href='####')
+        dt Driver
+        dd {{ rental.driver.first_name }} {{ rental.driver.last_name }}
+        right-arrow-icon
+      a.panel-details-link(href='####')
+        dt Vehicle
+        dd
+          span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
+          span.block.description License #: {{ rental.vehicle.license_number }}
+        right-arrow-icon
 
 </template>
 
 <style lang='stylus' scoped>
+  .action-icon
+    float: right
+    height: 1.25rem
+
 </style>
