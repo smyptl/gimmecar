@@ -41,6 +41,10 @@
       },
       extendRental () {
       },
+      closeRental () {
+      },
+      emailInvoice () {
+      },
     },
   }
 </script>
@@ -50,13 +54,16 @@
     .panel-base-header
       h2 {{ rental.number }}
       dropdown.flex-element.right
-        actions-icon.action-icon(data-toggle='dropdown')
+        a(data-toggle='dropdown')
+          actions-icon.action-icon
         .dropdown-menu.right(slot='dropdown-menu')
           ul
             li
               a(@click='extendRental()') Extend Rental
             li
               a(@click='closeRental()') Close
+            li
+              a(@click='emailInvoice') Email Invoice
 
     dl.panel-main-details
       dt Status
