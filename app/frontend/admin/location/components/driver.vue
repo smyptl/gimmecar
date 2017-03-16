@@ -299,7 +299,7 @@
                 @input='form.errors.clear("driver_insurance_verify_date")')
             input-error-message(v-bind:errors='form.errors.get("driver_insurance_verify_date")')
 
-    h4.form-header
+    h3.form-header
       a.link-danger(v-if='form.add_additional_driver' @click='form.add_additional_driver = false') Remove Additional Driver
       a(v-else @click='form.add_additional_driver = true') Add Additional Driver
 

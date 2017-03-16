@@ -11,7 +11,7 @@
 
 <template lang='pug'>
   .form-container
-    h4.form-header.form-header-first Rental Dates
+    h3.form-header.form-header-first Rental Dates
     .input-row
       .input-container.one-half
         label.input-label From:
@@ -21,9 +21,9 @@
         label.input-label To:
         input-date-time
 
-    h4.form-header Rates
+    h3.form-header Rates
 
-    h4.form-header Driver
+    h3.form-header Driver
     .input-row
       label.input-label
         | Name
@@ -113,12 +113,12 @@
             input.input-field(type='number' placeholder='')
 
 
-    h4.form-header
+    h3.form-header
       a Add Additional Driver
 
-    h4.form-header Summary
+    h3.form-header Summary
 
-    h4.form-header Payments
+    h3.form-header Payments
     .input-row
       .input-container.two-fifths
         label.input-label Credit Card #

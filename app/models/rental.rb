@@ -2,29 +2,30 @@
 #
 # Table name: rentals
 #
-#  id                                 :integer          not null, primary key
-#  number                             :string
-#  source                             :string
-#  status                             :string
-#  confirmed                          :boolean
-#  driver_id                          :integer
-#  additional_driver_id               :integer
-#  vehicle_id                         :integer
-#  vehicle_type                       :string
-#  notes                              :text
-#  pickup_location_id                 :integer
-#  pickup                             :datetime
-#  pickup_odometer                    :decimal(10, )
-#  decimal                            :decimal(10, )
-#  pickup_fuel                        :float
-#  drop_off_location_id               :integer
-#  drop_off                           :datetime
-#  drop_off_odometer                  :decimal(10, )
-#  drop_off_fuel                      :float
-#  collision_damage_waiver            :boolean
-#  financial_responsibility_signature :text
-#  driver_signature                   :text
-#  additional_driver_signature        :text
+#  id                                                   :integer          not null, primary key
+#  number                                               :string
+#  source                                               :string
+#  status                                               :string
+#  confirmed                                            :boolean
+#  driver_id                                            :integer
+#  additional_driver_id                                 :integer
+#  vehicle_id                                           :integer
+#  vehicle_type                                         :string
+#  notes                                                :text
+#  pickup_location_id                                   :integer
+#  pickup                                               :datetime
+#  pickup_odometer                                      :decimal(10, )
+#  decimal                                              :decimal(10, )
+#  pickup_fuel                                          :float
+#  drop_off_location_id                                 :integer
+#  drop_off                                             :datetime
+#  drop_off_odometer                                    :decimal(10, )
+#  drop_off_fuel                                        :float
+#  collision_damage_waiver                              :boolean
+#  driver_financial_responsibility_signature            :text
+#  additional_driver_financial_responsibility_signature :text
+#  driver_signature                                     :text
+#  additional_driver_signature                          :text
 #
 
 class Rental < ApplicationRecord
@@ -38,7 +39,8 @@ class Rental < ApplicationRecord
   belongs_to :pickup_location,   class_name: 'Location'
   belongs_to :drop_off_location, class_name: 'Location'
 
-  has_many :charges
+  has_many :line_items, as: :invoice
+  has_many :charges, as: :owner
 
   scope :reserved,  -> { where(status: 'reserved') }
   scope :cancelled, -> { where(status: 'cancelled') }
@@ -48,6 +50,9 @@ class Rental < ApplicationRecord
   scope :past, -> { where('drop_off < ?', Date.today) }
 
   before_create :create_number
+
+  delegate :name, to: :driver, prefix: true
+  delegate :make_model, to: :vehicle, prefix: true
 
   def self.create_open(args)
     create(args.merge(:status => OPEN))

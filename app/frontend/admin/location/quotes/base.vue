@@ -46,7 +46,7 @@
   .form-container
     #quote-form(v-if='step == "rates"')
       form(@submit.prevent='getRates()')
-        h4.form-header.form-header-first Rental Dates
+        h3.form-header.form-header-first Rental Dates
         .input-row
           .input-container.one-half
             label.input-label From:
@@ -70,7 +70,7 @@
           input.btn.btn-primary.right(type='submit' value='Rates')
 
     template(v-if='step == "summary"')
-      h4.form-header.form-header-first Quote
+      h3.form-header.form-header-first Quote
       quote(v-bind:summary='summary')
 
       .input-submit.input-flex-container

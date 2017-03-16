@@ -48,7 +48,6 @@
       formatDate () {
         if (this.current_date.isValid()) {
           this.date_formatted = this.current_date.format('M/D/YYYY')
-          this.value = this.date_formatted
         }
       },
       emitInput () {
@@ -63,7 +62,7 @@
     type='text'
     placeholder='mm/dd/yyyy'
     v-bind:name='name'
-    v-bind:value='value'
+    v-bind:value='date_formatted'
     v-model='date_formatted'
     @change='parseDate')
 </template>

@@ -26,16 +26,16 @@ describe Actions::Admin::Location::Rental::Create do
       drop_off = DateTime.now + 2.days
 
       Actions::Admin::Location::Rental::Create.new({
-        :pickup                             => pickup,
-        :drop_off                           => drop_off,
-        :driver                             => driver_attrs,
-        :driver_signature                   => 'test',
-        :financial_responsibility_signature => 'test',
-        :add_additional_driver              => false,
-        :vehicle_id                         => vehicle.id,
-        :pickup_odometer                    => 1250,
-        :pickup_fuel                        => 10,
-        :stripe_token                       => create_valid_credit_card_token_id,
+        :pickup                                    => pickup,
+        :drop_off                                  => drop_off,
+        :driver                                    => driver_attrs,
+        :driver_signature                          => 'test',
+        :driver_financial_responsibility_signature => 'test',
+        :add_additional_driver                     => false,
+        :vehicle_id                                => vehicle.id,
+        :pickup_odometer                           => 1250,
+        :pickup_fuel                               => 10,
+        :stripe_token                              => create_valid_credit_card_token_id,
       }).execute(success, failure, { :user_id => user.id, :location_id => location.id })
 
       expect(Driver.count).to eq(1)
@@ -73,6 +73,8 @@ describe Actions::Admin::Location::Rental::Create do
 
       expect(Rental.count).to eq(1)
       rental = Rental.first
+      expect(rental.status).to eq('open')
+      expect(rental.number).to_not eq(nil)
       expect(rental.driver).to eq(driver)
       expect(rental.vehicle).to eq(vehicle)
       expect(rental.additional_driver).to eq(nil)
@@ -82,11 +84,16 @@ describe Actions::Admin::Location::Rental::Create do
       expect(rental.pickup_odometer).to eq(1250)
       expect(rental.pickup_fuel).to eq(10)
 
+      expect(rental.line_items.count).to eq(2)
+      line_item = rental.line_items.first
+      expect(line_item.amount).to eq(3500)
+      expect(line_item.total).to eq(3780)
+
       expect(Charge.count).to eq(1)
       charge = Charge.first
       expect(charge.owner).to eq(rental)
       expect(charge.stripe_charge_id).to_not eq(nil)
-      expect(charge.total).to eq(7560)
+      expect(charge.amount).to eq(7560)
 
       stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
       expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])

@@ -30,11 +30,11 @@ const router = new VueRouter({
         { path: 'new', name: 'new_reservation', component: require('./reservations/new/base') },
       ]
     },
-    { path: '/:location/rentals', component: require('./layout/empty'),
+    { path: '/:location/rentals/new',  name: 'new_rental',   component: require('./rentals/new/base') },
+    { path: '/:location/rentals', component: require('./rentals/base'),
       children: [
-        { path: '',    name: 'rentals',    component: require('./rentals/base') },
-        { path: 'new', name: 'new_rental', component: require('./rentals/new/base') },
-        { path: ':id', name: 'rental',     component: require('./rentals/show') },
+        { path: '',        name: 'rentals',    component: require('./rentals/index') },
+        { path: ':number', name: 'rental',     component: require('./rentals/show') },
       ]
     },
     { path: '/:location/rates',        name: 'rates',        component: require('./rates/base') },

@@ -34,7 +34,7 @@
           complete() {
             done()
           },
-        });
+        })
       },
       addLeave (el, done) {
         Snabbt(el, {
@@ -48,7 +48,7 @@
           complete() {
             done()
           },
-        });
+        })
       },
     },
   }
@@ -74,6 +74,7 @@
 <style lang='stylus' scoped>
   @import '~Styles/global/colors'
   @import '~Styles/global/layout'
+  @import '~Styles/global/type'
 
   #add-container
     position: absolute
@@ -108,8 +109,8 @@
   span
     display: block
 
-    font-size: 0.875rem
     font-weight: 600
+    font-size: $font-size-default
     text-transform: uppercase
 
 </style>

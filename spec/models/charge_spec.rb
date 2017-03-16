@@ -6,14 +6,7 @@
 #  owner_type       :string
 #  owner_id         :integer
 #  stripe_charge_id :string
-#  details          :json
-#  sub_total        :integer
-#  discount         :json
-#  fees             :json
-#  tax_rate         :decimal(10, 4)
-#  decimal          :decimal(10, 4)
-#  tax              :integer
-#  total            :integer
+#  amount           :integer
 #  deposit          :boolean          default(FALSE)
 #
 
@@ -25,7 +18,7 @@ describe Charge do
   describe '#execute' do
     it 'calls success and returns self' do
       charge = Charge.new({
-        :total => 1400,
+        :amount => 1400,
       })
 
       success = double(:success)
@@ -40,7 +33,7 @@ describe Charge do
 
     it 'calls failure to prepaid card' do
       charge = Charge.new({
-        :total => 1400,
+        :amount => 1400,
       })
 
       success = double(:success)
@@ -53,7 +46,7 @@ describe Charge do
 
     it 'calls failure, card attached to customer but no charge' do
       charge = Charge.new({
-        :total => 1400,
+        :amount => 1400,
       })
 
       success = double(:success)

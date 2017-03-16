@@ -26,12 +26,12 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       n.integer :home_phone_number
 
       n.nested :insurance do |i|
-        i.string :company_name
-        i.string :policy_number
-        i.string :phone_number
-        i.date   :effective_date
-        i.date   :expiration_date
-        i.string :agent
+        i.string  :company_name
+        i.string  :policy_number
+        i.integer :phone_number
+        i.date    :effective_date
+        i.date    :expiration_date
+        i.string  :agent
 
         i.boolean :verified
         i.date    :verify_date
@@ -39,7 +39,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
         i.string  :verify_call_center
       end
     end
-    a.signature :financial_responsibility_signature
+    a.signature :driver_financial_responsibility_signature
     a.signature :driver_signature
 
     a.boolean :add_additional_driver
@@ -65,6 +65,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       n.integer :home_phone_number
     end
     a.signature :additional_driver_signature
+    a.signature :additional_driver_financial_responsibility_signature
 
     a.integer :vehicle_id
     a.integer :pickup_odometer
@@ -172,11 +173,11 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       presence: true,
       numericality: { only_integer: true }
 
-    a.validates :additional_driver_signature,
+    a.validates :additional_driver_financial_responsibility_signature, :additional_driver_signature,
       signature: true
   end
 
-  validates :financial_responsibility_signature, :driver_signature,
+  validates :driver_financial_responsibility_signature, :driver_signature,
     signature: true
 
   validates :vehicle_id,
@@ -211,15 +212,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
         return false
       end
 
-      rental = Logic::CalculateRental.new(self)
+      @rental_logic = Logic::CalculateRental.new(self)
 
-      Charge.new({
-        :details   => rental.rates,
-        :sub_total => rental.sub_total,
-        :tax_rate  => rental.tax_rate,
-        :tax       => rental.tax,
-        :total     => rental.total,
-      }).execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
+      Charge.new({ :amount => @rental_logic.total }).execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
     end
   end
 
@@ -232,30 +227,35 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     end
 
     @rental = Rental.create_open({
-      :driver                             => d,
-      :additional_driver                  => (ad if add_additional_driver),
-      :vehicle_id                         => vehicle_id,
-      :vehicle_type                       => vehicle_type,
-      :pickup_location                    => location,
-      :pickup                             => pickup,
-      :pickup_odometer                    => pickup_odometer,
-      :pickup_fuel                        => pickup_fuel,
-      :drop_off_location                  => location,
-      :drop_off                           => drop_off,
-      :collision_damage_waiver            => false,
-      :financial_responsibility_signature => financial_responsibility_signature,
-      :driver_signature                   => driver_signature,
-      :additional_driver_signature        => additional_driver_signature,
+      :driver                                               => d,
+      :additional_driver                                    => (ad if add_additional_driver),
+      :vehicle_id                                           => vehicle_id,
+      :vehicle_type                                         => vehicle_type,
+      :pickup_location                                      => location,
+      :pickup                                               => pickup,
+      :pickup_odometer                                      => pickup_odometer,
+      :pickup_fuel                                          => pickup_fuel,
+      :drop_off_location                                    => location,
+      :drop_off                                             => drop_off,
+      :collision_damage_waiver                              => false,
+      :driver_financial_responsibility_signature            => driver_financial_responsibility_signature,
+      :additional_driver_financial_responsibility_signature => additional_driver_financial_responsibility_signature,
+      :driver_signature                                     => driver_signature,
+      :additional_driver_signature                          => additional_driver_signature,
     })
 
     @charge.owner = @rental
     @charge.save
+
+    @rental_logic.line_items.each do |l|
+      @rental.line_items.create(l)
+    end
   end
 
   def success_args
     {
-      message:   'rental created',
-      rental_id: @rental.id,
+      message:       "Rental #{@rental.number} created for #{driver_first_name} #{driver_last_name}.",
+      rental_number: @rental.number,
     }
   end
 

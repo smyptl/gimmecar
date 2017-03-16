@@ -50,7 +50,8 @@
             },
           },
           driver_signature: '',
-          financial_responsibility_signature: '',
+          driver_financial_responsibility_signature: '',
+          additional_driver_financial_responsibility_signature: '',
           add_additional_driver: false,
           additional_driver_id: null,
           additional_driver: {
@@ -147,7 +148,7 @@
         })
       },
       validateDrivers () {
-        this.$http.post(this.$route.path + '/', {
+        this.$http.post(this.$route.path, {
           rental: this.rental.data(),
         })
         .then(response => {
@@ -177,7 +178,7 @@
         })
         .then(response => {
           this.rental.errors.clear
-          this.$router.push({ name: 'rental', params: { id: response.data.rental_id }})
+          this.$router.push({ name: 'rental', params: { number: response.data.rental_number }})
         })
         .catch(error => {
           Shake(this.$refs.form)
@@ -191,7 +192,7 @@
 
 <template lang='pug'>
   .form-container(ref='form')
-    h4.form-header.form-header-first
+    h3.form-header.form-header-first
       | Rental: {{ current_step }}
       small.right {{ current_step_number }} of {{ number_of_steps }}
 
@@ -234,7 +235,7 @@
 
     template(v-if='current_step == "Vehicle"')
       .input-block.whole
-        table.panel-table#vehicle-table
+        table.panel-table
           thead
             tr
               th
@@ -243,8 +244,8 @@
               th License #
           tbody
             tr(v-for='vehicle in vehicles' @click.prevent='rental.vehicle_id = vehicle.id' v-bind:class='{ selected: rental.vehicle_id == vehicle.id }')
-              td
-                button.button-vehicle-id
+              td.checkbox
+                button.button-checkbox
               td {{ vehicle.make }} {{ vehicle.model }}
               td {{ vehicle.color | capitalize }}
               td {{ vehicle.license_number }}
@@ -279,13 +280,18 @@
 
     template(v-if='current_step == "Financial Responsibility"')
       .input-block
-        h5.margin-top-sm Notice About Your Financial Responibility
+        h4.margin-top-sm Notice About Your Financial Responibility
         p You are responsible for all collision damage to the vehicle, even if someone else caused it or the cause is unknown. You are responsible for the cost or repair up to the value of the vehicle, towing, storage and impound fees. Your own insurance, or the issuer of the credit card you use to pay for the rental, may cover all or porat of your financial responibility for damage to, or losee of the rented vehicle. You should check with your insurance company or credit card issuer, to find out about your coverage and the amount of deductible, if any, for which you may by liable. If you use a credit card that provides coverage for your responsibility for damage to, or loss of, the vehicle, you should check with the issuer to determine whether or not you must first exhaust the coverage limits of your own insurance before the credit card coverage applies.
 
         p By initialing below, you agree to be responsible for all damage to, or loss of, the Vehicle.
       h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
       .input-block.whole
-        signature(v-model='rental.financial_responsibility_signature')
+        signature(v-model='rental.driver_financial_responsibility_signature')
+
+      template(v-if='rental.add_additional_driver')
+        h6.input-label.margin-top-default {{ rental.additional_driver.first_name }} {{ rental.additional_driver.last_name }}
+        .input-block.whole
+          signature(v-model='rental.additional_driver_financial_responsibility_signature')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -294,7 +300,7 @@
     template(v-if='current_step == "Terms & Conditions"')
       rental-invoice.margin-top-sm(v-bind:summary='summary')
       .input-block
-        h5.margin-top-sm Rental Agreement Terms and Conditions
+        h4.margin-top-sm Rental Agreement Terms and Conditions
         p
           | 1.&nbsp;
           u Definitions.
@@ -330,62 +336,3 @@
         button.btn.btn-primary.right(@click.prevent='validatePayment') Continue
 
 </template>
-
-<style lang='stylus' scoped>
-  @import '~Styles/global/colors'
-  @import '~Styles/global/layout'
-
-  #vehicle-table
-    font-size: 0.875rem
-    text-align: left
-    font-weight: 400
-    vertical-align: middle
-
-    td,
-    th
-      margin: 0
-      padding: $padding-sm
-
-    thead
-      color: #888888
-
-    tbody
-      td:first-of-type
-        border-top-left-radius: 0.125rem
-        border-bottom-left-radius: 0.125rem
-        padding-right: 0
-        width: 1rem + $padding-sm
-
-      td:last-of-type
-        border-top-right-radius: 0.125rem
-        border-bottom-right-radius: 0.125rem
-
-      td
-        background: $background-color-panel
-
-      tr
-        border-bottom: 1px solid $border-color-light
-        cursor: pointer
-
-      tr:last-of-type
-        border-bottom: 0
-
-      tr.selected
-        font-weight: 600
-
-        .button-vehicle-id
-          border: 0.25rem solid $border-color-blue
-          background: $blue
-
-    .button-vehicle-id
-      width: 1rem
-      height: @width
-      padding: 0
-      margin: 0
-      float: left
-
-      background: #ffffff
-      border: 0.125rem solid $border-color-input
-      border-radius: 50%
-
-</style>

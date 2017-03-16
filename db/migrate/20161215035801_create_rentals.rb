@@ -21,7 +21,8 @@ class CreateRentals < ActiveRecord::Migration[5.0]
       t.float :pickup_fuel
       t.float :drop_off_fuel
       t.boolean :collision_damage_waiver
-      t.text :financial_responsibility_signature
+      t.text :driver_financial_responsibility_signature
+      t.text :additional_driver_financial_responsibility_signature
       t.text :driver_signature
       t.text :additional_driver_signature
     end
