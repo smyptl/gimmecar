@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.integer "location_id"
     t.date    "date"
     t.decimal "rate",         precision: 10
-    t.decimal "decimal",      precision: 10
     t.string  "vehicle_type"
     t.index ["location_id"], name: "index_rates_on_location_id", using: :btree
   end
@@ -116,7 +115,6 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.integer  "pickup_location_id"
     t.datetime "pickup"
     t.decimal  "pickup_odometer",                                      precision: 10
-    t.decimal  "decimal",                                              precision: 10
     t.float    "pickup_fuel"
     t.integer  "drop_off_location_id"
     t.datetime "drop_off"
@@ -156,7 +154,6 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.integer "year"
     t.string  "color"
     t.decimal "original_odometer",    precision: 10
-    t.decimal "decimal",              precision: 10
     t.string  "transmission"
     t.string  "power_train"
     t.integer "cylinders"
