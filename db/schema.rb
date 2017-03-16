@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.json    "details"
     t.string  "item_type"
     t.integer "amount"
+    t.decimal "tax_rate",     precision: 10
     t.integer "tax"
     t.index ["invoice_type", "invoice_id"], name: "index_line_items_on_invoice_type_and_invoice_id", using: :btree
   end
@@ -97,7 +98,7 @@ ActiveRecord::Schema.define(version: 20170227044837) do
   create_table "rates", force: :cascade do |t|
     t.integer "location_id"
     t.date    "date"
-    t.decimal "rate",         precision: 10
+    t.integer "rate"
     t.string  "vehicle_type"
     t.index ["location_id"], name: "index_rates_on_location_id", using: :btree
   end
@@ -114,11 +115,11 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.text     "notes"
     t.integer  "pickup_location_id"
     t.datetime "pickup"
-    t.decimal  "pickup_odometer",                                      precision: 10
+    t.integer  "pickup_odometer"
     t.float    "pickup_fuel"
     t.integer  "drop_off_location_id"
     t.datetime "drop_off"
-    t.decimal  "drop_off_odometer",                                    precision: 10
+    t.integer  "drop_off_odometer"
     t.float    "drop_off_fuel"
     t.boolean  "collision_damage_waiver"
     t.text     "driver_financial_responsibility_signature"
@@ -153,7 +154,7 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.string  "model"
     t.integer "year"
     t.string  "color"
-    t.decimal "original_odometer",    precision: 10
+    t.integer "original_odometer"
     t.string  "transmission"
     t.string  "power_train"
     t.integer "cylinders"

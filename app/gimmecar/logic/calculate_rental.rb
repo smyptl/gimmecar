@@ -51,8 +51,9 @@ class Logic::CalculateRental < Lib::Logic::Base
 
       output << {
         :item_type => :rate,
-        :details   => { :date => date, :tax_rate => SALES_TAX },
+        :details   => { :date => date },
         :amount    => rate,
+        :tax_rate  => SALES_TAX,
         :tax       => (rate * SALES_TAX).ceil
       }
 
@@ -73,8 +74,9 @@ class Logic::CalculateRental < Lib::Logic::Base
 
       output << {
         :item_type => :rate,
-        :details   => { :date => date, :tax_rate => SALES_TAX },
+        :details   => { :date => date },
         :amount    => value,
+        :tax_rate  => SALES_TAX,
         :tax       => (value * SALES_TAX).ceil
       }
     end

@@ -10,6 +10,8 @@
   import InputDateTime from 'Components/inputs/date_time'
   import Signature from 'Components/inputs/signature'
   import Payment from 'Components/inputs/payment'
+  import FinancialResponsibility from 'Components/financial_responsibility'
+  import TermsAndConditions from 'Components/terms_and_conditions'
 
   export default {
     name: 'new',
@@ -89,9 +91,11 @@
     components: {
       Driver,
       InputDateTime,
+      FinancialResponsibility,
       Payment,
       RentalInvoice,
       Signature,
+      TermsAndConditions,
     },
     filters: {
       Capitalize,
@@ -279,11 +283,9 @@
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
     template(v-if='current_step == "Financial Responsibility"')
-      .input-block
-        h4.margin-top-sm Notice About Your Financial Responibility
-        p You are responsible for all collision damage to the vehicle, even if someone else caused it or the cause is unknown. You are responsible for the cost or repair up to the value of the vehicle, towing, storage and impound fees. Your own insurance, or the issuer of the credit card you use to pay for the rental, may cover all or porat of your financial responibility for damage to, or losee of the rented vehicle. You should check with your insurance company or credit card issuer, to find out about your coverage and the amount of deductible, if any, for which you may by liable. If you use a credit card that provides coverage for your responsibility for damage to, or loss of, the vehicle, you should check with the issuer to determine whether or not you must first exhaust the coverage limits of your own insurance before the credit card coverage applies.
+      .input-block.margin-top-sm
+        financial-responsibility
 
-        p By initialing below, you agree to be responsible for all damage to, or loss of, the Vehicle.
       h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
       .input-block.whole
         signature(v-model='rental.driver_financial_responsibility_signature')
@@ -299,14 +301,8 @@
 
     template(v-if='current_step == "Terms & Conditions"')
       rental-invoice.margin-top-sm(v-bind:summary='summary')
-      .input-block
-        h4.margin-top-sm Rental Agreement Terms and Conditions
-        p
-          | 1.&nbsp;
-          u Definitions.
-          | &nbsp;"Agreement" means all terms and conditions found, any addenda and additional materials we provide at the time of rental. "You" or "your" means the person identified as the renters / drivers, and person signing this Agreement, and Authorized Driver and any person or organization to whom charges are billed by us at its or your direction. All persons referred to as "you" or "your" are jointly and severally bound by this agreement. "We", "our" or "us" means Auto Guru Rental System, Inc. DBA GimmeCar. "Authorized Driver" means the renter, the renter's spource, the renter's employer and co-worker if engaged in business activity with the renter while using the Vehicle and is at least age 21, and any additional driver listed by us on this Agreement, provided that each such person has a valid driver's license. "Vehicle" means the motor vehicle identified in this Agreement and vehicle we substitute for it, all its tires, tools, accessories, equipment, keys and Vehicle documents.
-
-        p By signing below, you agree to all of the terms and conditions of this rental agreement. You acknowledge the Vehicle has no damage. Your signature below authorizes us to process a credit card voucher in your name for all rental charges due.
+      .input-block.margin-top-default
+        terms-and-conditions
 
       h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
       .input-block.whole

@@ -5,8 +5,9 @@ class CreateLineItems < ActiveRecord::Migration[5.0]
       t.references :invoice, polymorphic: true, index: true
       t.json :details
       t.string :item_type
-      t.integer :amount
-      t.integer :tax
+      t.integer :amount, limit: 8
+      t.decimal :tax_rate, precision: 14, scale: 4
+      t.integer :tax, limit: 8
     end
   end
 end

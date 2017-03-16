@@ -4,7 +4,7 @@ class CreateCharges < ActiveRecord::Migration[5.0]
       t.timestamp
       t.references :owner, polymorphic: true, index: true
       t.string :stripe_charge_id
-      t.integer :amount
+      t.integer :amount, limit: 8
       t.boolean :deposit, default: false
     end
   end

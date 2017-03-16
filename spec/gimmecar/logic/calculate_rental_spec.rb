@@ -14,27 +14,27 @@ describe Logic::CalculateRental do
           item_type: :rate,
           amount: 3500,
           tax: 280,
+          tax_rate:  0.08,
           details: {
             date: Date.new(2011, 1, 1),
-            tax_rate:  0.08,
           }
         },
         {
           item_type: :rate,
           amount: 3500,
           tax: 280,
+          tax_rate:  0.08,
           details: {
             date: Date.new(2011, 1, 2),
-            tax_rate:  0.08,
           }
         },
         {
           item_type: :rate,
           amount: 3500,
           tax: 280,
+          tax_rate:  0.08,
           details: {
             date: Date.new(2011, 1, 3),
-            tax_rate:  0.08,
           }
         },
       ])
@@ -52,18 +52,18 @@ describe Logic::CalculateRental do
             item_type: :rate,
             amount: 3500,
             tax: 280,
+            tax_rate:  0.08,
             details: {
               date: DateTime.new(2011, 1, 1, 4, 0, 0),
-              tax_rate:  0.08,
             }
           },
           {
             item_type: :rate,
             amount: 3500,
             tax: 280,
+            tax_rate:  0.08,
             details: {
               date: DateTime.new(2011, 1, 2, 4, 0, 0),
-              tax_rate:  0.08,
             }
           },
         ])
@@ -75,14 +75,24 @@ describe Logic::CalculateRental do
 
         l = Logic::CalculateRental.new(rental)
 
-        expect(l.rates).to eq([
+        expect(l.line_items).to eq([
           {
-            value: 3500,
-            date: DateTime.new(2011, 1, 1, 4, 0, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2011, 1, 1, 4, 0, 0),
+            }
           },
           {
-            value: 2334,
-            date: DateTime.new(2011, 1, 2, 4, 0, 0)
+            item_type: :rate,
+            amount: 2334,
+            tax: 187,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2011, 1, 2, 4, 0, 0),
+            }
           },
         ])
       end
@@ -93,18 +103,33 @@ describe Logic::CalculateRental do
 
         l = Logic::CalculateRental.new(rental)
 
-        expect(l.rates).to eq([
+        expect(l.line_items).to eq([
           {
-            value: 3500,
-            date: DateTime.new(2011, 1, 1, 3, 0, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2011, 1, 1, 3, 0, 0),
+            }
           },
           {
-            value: 3500,
-            date: DateTime.new(2011, 1, 2, 3, 0, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2011, 1, 2, 3, 0, 0),
+            }
           },
           {
-            value: 1167,
-            date: DateTime.new(2011, 1, 3, 3, 0, 0)
+            item_type: :rate,
+            amount: 1167,
+            tax: 94,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2011, 1, 3, 3, 0, 0),
+            }
           },
         ])
       end
@@ -115,26 +140,51 @@ describe Logic::CalculateRental do
 
         l = Logic::CalculateRental.new(rental)
 
-        expect(l.rates).to eq([
+        expect(l.line_items).to eq([
           {
-            value: 3500,
-            date: DateTime.new(2017, 1, 31, 10, 57, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2017, 1, 31, 10, 57, 0)
+            }
           },
           {
-            value: 3500,
-            date: DateTime.new(2017, 2, 1, 10, 57, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2017, 2, 1, 10, 57, 0)
+            }
           },
           {
-            value: 3500,
-            date: DateTime.new(2017, 2, 2, 10, 57, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2017, 2, 2, 10, 57, 0)
+            }
           },
           {
-            value: 3500,
-            date: DateTime.new(2017, 2, 3, 10, 57, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2017, 2, 3, 10, 57, 0)
+            }
           },
           {
-            value: 3500,
-            date: DateTime.new(2017, 2, 4, 10, 57, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            tax_rate:  0.08,
+            details: {
+              date: DateTime.new(2017, 2, 4, 10, 57, 0)
+            }
           },
         ])
     end

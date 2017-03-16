@@ -99,7 +99,7 @@ feature 'Login', js: true do
     end
     click_on 'Continue'
 
-    expect(page).to have_content('TEST TEST TEST')
+    expect(page).to have_content("#{driver_stub.first_name} #{driver_stub.last_name}")
 
     expect(Driver.count).to eq(1)
     driver = Driver.first
@@ -145,15 +145,10 @@ feature 'Login', js: true do
     expect(rental.pickup_odometer).to eq(40512)
     expect(rental.pickup_fuel).to eq(10)
 
-    expect(rental.line_items.count).to eq(1)
-    line_item = rental.line_items.first
-    expect(line_item.total).to eq(3780)
-
     expect(Charge.count).to eq(1)
     charge = Charge.first
     expect(charge.owner).to eq(rental)
     expect(charge.stripe_charge_id).to_not eq(nil)
-    expect(charge.total).to eq(3780)
 
     stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
     expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])
