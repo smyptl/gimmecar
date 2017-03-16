@@ -90,7 +90,7 @@ feature 'Login', js: true do
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Payment')
-    stripe_iframe = all('iframe[name=stripeField_card_element0]').last
+    stripe_iframe = all('iframe[name=stripeField_card_element1]').last
     Capybara.within_frame stripe_iframe do
       find('input[name=cardnumber]').set(CARD_TYPE[:visa])
       find('input[name="exp-date"]').set('01/20')
@@ -144,6 +144,10 @@ feature 'Login', js: true do
     expect(rental.drop_off).to_not eq(nil)
     expect(rental.pickup_odometer).to eq(40512)
     expect(rental.pickup_fuel).to eq(10)
+
+    expect(rental.line_items.count).to eq(1)
+    line_item = rental.line_items.first
+    expect(line_item.total).to eq(3780)
 
     expect(Charge.count).to eq(1)
     charge = Charge.first

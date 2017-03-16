@@ -4,13 +4,7 @@ class CreateCharges < ActiveRecord::Migration[5.0]
       t.timestamp
       t.references :owner, polymorphic: true, index: true
       t.string :stripe_charge_id
-      t.json :details
-      t.integer :sub_total
-      t.json :discount
-      t.json :fees
-      t.decimal :tax_rate, precision: 10, scale: 4
-      t.integer :tax
-      t.integer :total
+      t.integer :amount
       t.boolean :deposit, default: false
     end
   end

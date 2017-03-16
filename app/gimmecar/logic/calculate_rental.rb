@@ -8,16 +8,17 @@ class Logic::CalculateRental < Lib::Logic::Base
 
   def fetch
     {
-      :vehicle   => "Toyota Corolla",
-      :location  => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
-      :pickup    => pickup,
-      :drop_off  => drop_off,
-      :details   => rates,
-      :sub_total => sub_total,
-      :tax_rate  => tax_rate,
-      :tax       => tax,
-      :total     => total,
+      :vehicle    => "Toyota Corolla",
+      :location   => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
+      :pickup     => pickup,
+      :drop_off   => drop_off,
+      :line_items => line_items,
+      :total      => total,
     }
+  end
+
+  def line_items
+    rates
   end
 
   def rates
@@ -25,15 +26,11 @@ class Logic::CalculateRental < Lib::Logic::Base
   end
 
   def sub_total
-    @sub_total ||= rates.sum { |r| r.fetch(:value) }
-  end
-
-  def tax_rate
-    SALES_TAX
+    @sub_total ||= line_items.sum { |r| r.fetch(:amount) }
   end
 
   def tax
-    @tax = (sub_total * SALES_TAX).ceil
+    @tax = line_items.sum { |r| r.fetch(:tax) }
   end
 
   def total
@@ -53,14 +50,16 @@ class Logic::CalculateRental < Lib::Logic::Base
       rate = RATE
 
       output << {
-        :value => rate,
-        :date  => date,
+        :item_type => :rate,
+        :details   => { :date => date, :tax_rate => SALES_TAX },
+        :amount    => rate,
+        :tax       => (rate * SALES_TAX).ceil
       }
 
       date += 1
     end
 
-    extra_hours = Lib::DateRange.new(date, rental_period.end_date).hours_apart
+    extra_hours = rental_period.hours_apart % 24
 
     if extra_hours > 0
       #rate = Rate.where(:date => rental_period.end_date) || RATE
@@ -73,8 +72,10 @@ class Logic::CalculateRental < Lib::Logic::Base
       end
 
       output << {
-        :value => value,
-        :date  => date
+        :item_type => :rate,
+        :details   => { :date => date, :tax_rate => SALES_TAX },
+        :amount    => value,
+        :tax       => (value * SALES_TAX).ceil
       }
     end
 

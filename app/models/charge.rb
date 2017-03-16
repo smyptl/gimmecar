@@ -6,14 +6,7 @@
 #  owner_type       :string
 #  owner_id         :integer
 #  stripe_charge_id :string
-#  details          :json
-#  sub_total        :integer
-#  discount         :json
-#  fees             :json
-#  tax_rate         :decimal(10, 4)
-#  decimal          :decimal(10, 4)
-#  tax              :integer
-#  total            :integer
+#  amount           :integer
 #  deposit          :boolean          default(FALSE)
 #
 
@@ -22,7 +15,7 @@ class Charge < ApplicationRecord
   belongs_to :owner, polymorphic: true
 
   def execute(success, failure, create_customer: false, token: nil, customer_id: nil)
-    raise ArgumentError if total.nil?
+    raise ArgumentError if amount.nil?
 
     begin
       case
@@ -36,9 +29,9 @@ class Charge < ApplicationRecord
         customer.save
       end
 
-      unless total == 0
+      unless amount == 0
         charge = Stripe::Charge.create({
-          :amount   => total,
+          :amount   => amount,
           :currency => 'usd',
           :customer => customer_id,
         })

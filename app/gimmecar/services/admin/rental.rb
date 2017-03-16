@@ -31,7 +31,8 @@ class Services::Admin::Rental < Lib::Services::Base
     output[:drop_off_odometer]                  = rental.drop_off_odometer
     output[:drop_off_fuel]                      = rental.drop_off_fuel
     output[:collision_damage_waiver]            = rental.collision_damage_waiver
-    output[:financial_responsibility_signature] = rental.financial_responsibility_signature
+    output[:driver_financial_responsibility_signature] = rental.driver_financial_responsibility_signature
+    output[:additional_driver_financial_responsibility_signature] = rental.additional_driver_financial_responsibility_signature
     output[:driver_signature]                   = rental.driver_signature
     output[:additional_driver_signature]        = rental.additional_driver_signature
 

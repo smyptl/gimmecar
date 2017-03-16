@@ -50,7 +50,8 @@
             },
           },
           driver_signature: '',
-          financial_responsibility_signature: '',
+          driver_financial_responsibility_signature: '',
+          additional_driver_financial_responsibility_signature: '',
           add_additional_driver: false,
           additional_driver_id: null,
           additional_driver: {
@@ -285,7 +286,12 @@
         p By initialing below, you agree to be responsible for all damage to, or loss of, the Vehicle.
       h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
       .input-block.whole
-        signature(v-model='rental.financial_responsibility_signature')
+        signature(v-model='rental.driver_financial_responsibility_signature')
+
+      template(v-if='rental.add_additional_driver')
+        h6.input-label.margin-top-default {{ rental.additional_driver.first_name }} {{ rental.additional_driver.last_name }}
+        .input-block.whole
+          signature(v-model='rental.additional_driver_financial_responsibility_signature')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back

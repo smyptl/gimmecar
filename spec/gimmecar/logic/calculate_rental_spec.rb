@@ -9,19 +9,34 @@ describe Logic::CalculateRental do
       rental = double(:rental, :rental_period => rental_period)
 
       l = Logic::CalculateRental.new(rental)
-      expect(l.rates).to eq([
+      expect(l.line_items).to eq([
         {
-          value: 3500,
-          date: Date.new(2011, 1, 1)
+          item_type: :rate,
+          amount: 3500,
+          tax: 280,
+          details: {
+            date: Date.new(2011, 1, 1),
+            tax_rate:  0.08,
+          }
         },
         {
-          value: 3500,
-          date: Date.new(2011, 1, 2)
+          item_type: :rate,
+          amount: 3500,
+          tax: 280,
+          details: {
+            date: Date.new(2011, 1, 2),
+            tax_rate:  0.08,
+          }
         },
         {
-          value: 3500,
-          date: Date.new(2011, 1, 3)
-        }
+          item_type: :rate,
+          amount: 3500,
+          tax: 280,
+          details: {
+            date: Date.new(2011, 1, 3),
+            tax_rate:  0.08,
+          }
+        },
       ])
     end
 
@@ -32,14 +47,24 @@ describe Logic::CalculateRental do
 
         l = Logic::CalculateRental.new(rental)
 
-        expect(l.rates).to eq([
+        expect(l.line_items).to eq([
           {
-            value: 3500,
-            date: DateTime.new(2011, 1, 1, 4, 0, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            details: {
+              date: DateTime.new(2011, 1, 1, 4, 0, 0),
+              tax_rate:  0.08,
+            }
           },
           {
-            value: 3500,
-            date: DateTime.new(2011, 1, 2, 4, 0, 0)
+            item_type: :rate,
+            amount: 3500,
+            tax: 280,
+            details: {
+              date: DateTime.new(2011, 1, 2, 4, 0, 0),
+              tax_rate:  0.08,
+            }
           },
         ])
       end

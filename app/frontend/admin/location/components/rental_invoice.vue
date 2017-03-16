@@ -4,6 +4,9 @@
   import Currency from 'Filters/currency'
   import Percent from 'Filters/percent'
 
+  import Filter from 'lodash/filter'
+  import SumBy from 'lodash/sumBy'
+
   export default {
     props: {
       summary: {
@@ -20,6 +23,16 @@
       Percent,
       date: FDate,
       date_time: FDateTime,
+    },
+    computed: {
+      rates () {
+        return Filter(this.summary.line_items, { item_type: "rate" })
+      },
+      tax () {
+        return SumBy(this.summary.line_items, (o) => {
+          return o.tax || 0
+        })
+      },
     },
   }
 </script>
@@ -50,15 +63,15 @@
 
     h4.margin-bottom-sm Rates
     ul.left.whole.list-no-style
-      li(v-for='rate in summary.details')
-        span.left {{ rate.date | date }}
-        span.right {{ rate.value | currency }}
+      li(v-for='rate in rates')
+        span.left {{ rate.details.date | date }}
+        span.right {{ rate.amount | currency }}
 
     h4.margin-bottom-sm Taxes & Fees
     ul.left.whole.list-no-style
       li
-        span.left Sales ({{ summary.tax_rate | percent }})
-        span.right {{ summary.tax | currency }}
+        span.left Sales Tax
+        span.right {{ tax | currency }}
 
     h4.invoice-one-line
       span.left

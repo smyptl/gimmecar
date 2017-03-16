@@ -19,14 +19,8 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.string  "owner_type"
     t.integer "owner_id"
     t.string  "stripe_charge_id"
-    t.json    "details"
-    t.integer "sub_total"
-    t.json    "discount"
-    t.json    "fees"
-    t.decimal "tax_rate",         precision: 10, scale: 4
-    t.integer "tax"
-    t.integer "total"
-    t.boolean "deposit",                                   default: false
+    t.integer "amount"
+    t.boolean "deposit",          default: false
     t.index ["owner_type", "owner_id"], name: "index_charges_on_owner_type_and_owner_id", using: :btree
   end
 
@@ -67,6 +61,16 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.string  "verify_call_center"
     t.index ["driver_id"], name: "index_insurance_policies_on_driver_id", using: :btree
     t.index ["user_id"], name: "index_insurance_policies_on_user_id", using: :btree
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.string  "invoice_type"
+    t.integer "invoice_id"
+    t.json    "details"
+    t.string  "item_type"
+    t.integer "amount"
+    t.integer "tax"
+    t.index ["invoice_type", "invoice_id"], name: "index_line_items_on_invoice_type_and_invoice_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -111,15 +115,16 @@ ActiveRecord::Schema.define(version: 20170227044837) do
     t.text     "notes"
     t.integer  "pickup_location_id"
     t.datetime "pickup"
-    t.decimal  "pickup_odometer",                    precision: 10
-    t.decimal  "decimal",                            precision: 10
+    t.decimal  "pickup_odometer",                                      precision: 10
+    t.decimal  "decimal",                                              precision: 10
     t.float    "pickup_fuel"
     t.integer  "drop_off_location_id"
     t.datetime "drop_off"
-    t.decimal  "drop_off_odometer",                  precision: 10
+    t.decimal  "drop_off_odometer",                                    precision: 10
     t.float    "drop_off_fuel"
     t.boolean  "collision_damage_waiver"
-    t.text     "financial_responsibility_signature"
+    t.text     "driver_financial_responsibility_signature"
+    t.text     "additional_driver_financial_responsibility_signature"
     t.text     "driver_signature"
     t.text     "additional_driver_signature"
     t.index ["additional_driver_id"], name: "index_rentals_on_additional_driver_id", using: :btree
