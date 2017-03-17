@@ -33,7 +33,7 @@
 </script>
 
 <template lang='pug'>
-  .panel.panel-base
+  .panel.panel-base.whole
     table.panel-table
       thead
         tr

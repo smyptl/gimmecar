@@ -145,7 +145,6 @@
     text-align: center
     font-size: 0.625rem
     font-weight: 600
-    color: $text-color-default
     line-height: @height - 0.125rem
 
   .calendar-item.current

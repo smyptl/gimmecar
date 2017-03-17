@@ -98,7 +98,7 @@
     z-index: 2
     margin-top: $input-height + $margin-ex-sm
 
-    background: #ffffff
+    background: $white
     border-radius: 0.125rem
     border: 1px solid $border-color-dark
 
@@ -133,7 +133,7 @@
 
   .clock-item.selected
     background: $blue
-    color: #ffffff
+    color: $white
 
   .calendar
     position: absolute
@@ -142,7 +142,7 @@
     max-width: 20rem
     margin-top: $margin-ex-sm
 
-    background: #ffffff
+    background: $white
     border: 1px solid #dddddd
     border-radius: 2px
     box-shadow: 0 1px 0.125rem 0 $border-color-dark
@@ -181,13 +181,13 @@
     line-height: @height
     font-size: 0.6875rem
     font-weight: 600
-    color: #999999
+    color: $text-color-light
 
   .calendar-day
     height: 1.75rem
 
     border-right: 1px solid $border-color-panel
-    background: #ffffff
+    background: $white
 
     line-height: @height
     font-size: 0.8125rem
@@ -200,13 +200,13 @@
 
   .calendar-day.disabled
     cursor: not-allowed
-    color: #999999
+    color: $text-color-light
 
     &:hover
-      background: #ffffff
+      background: $white
 
   .calendar-day.selected
     background: $blue
-    color: #ffffff
+    color: $white
 
 </style>

@@ -13,7 +13,7 @@
     padding: $padding-sm
 
   thead
-    color: #888888
+    color: $silver
     font-size: 0.75rem
     text-transform: uppercase
     border-bottom: 1px solid $border-color-light
@@ -33,20 +33,20 @@
       cursor: pointer
 
       vertical-align: middle
-      color: #333333
+      color: $black-light
 
       &:hover
-        color: #000000
+        color: $black
 
     tr.clickable
 
     tr.selected
       font-weight: 600
-      color: #000000
+      color: $black
 
   tbody.alternate-color
     tr
-      background: #fafafa
+      background: $white-dark
       border-top: 0
       border-bottom: 0
 
@@ -61,7 +61,7 @@
     margin: 0
     float: left
 
-    background: #ffffff
+    background: $white
     border: 0.0625rem solid $border-color-input
     border-radius: 0.125rem
 
@@ -88,7 +88,7 @@
     width: 35%
     font-weight: 400
     text-align: right
-    color: #888888
+    color: $silver
 
   td:nth-of-type(2),
   th:nth-of-type(2)
