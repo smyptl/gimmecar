@@ -2,7 +2,7 @@ class Logic::CalculateRental < Lib::Logic::Base
 
   model :rental
 
-  RATE = 3500
+  RATE = 4400
 
   SALES_TAX = BigDecimal.new(0.08, 8)
 
