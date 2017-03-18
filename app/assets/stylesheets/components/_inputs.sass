@@ -78,7 +78,7 @@ h6.input-label
 
 .input-label-note
   font-weight: 400
-  color: #999999
+  color: $text-color-light
 
 .input-field
   height: $input-height
@@ -105,8 +105,8 @@ h6.input-label
 .StripeElement--focus
   z-index: 2
   border-color: $blue
-  background-color: #ffffff
-  box-shadow: 0 0 0.125rem 0 lighten($blue, 20%)
+  background-color: $white
+  box-shadow: 0 0 0 0.0625rem lighten($blue, 30%)
 
 .input-field.input-lg
   height: $input-height-lg
@@ -176,7 +176,7 @@ input.input-range
 
     border: 0.0625rem solid $border-color-input
     border-radius: 0.125rem
-    background: #ffffff
+    background: $white
     cursor: pointer
 
     -webkit-appearance: none
@@ -190,13 +190,13 @@ input.input-range
 .StripeElement--invalid
   color: $text-color-red
   border-color: $border-color-red
-  background-color: #ffffff
+  background-color: $white
 
 .input-field.input-field-error:focus,
 .input-field-error .input-field:focus,
 .StripeElement--invalid.StripeElement--focus
   border-color: $border-color-red
-  box-shadow: 0 0 0.125rem 0 lighten($red, 16%)
+  box-shadow: 0 0 0 0.0625rem lighten($red, 23%)
 
 .input-error-message
   float: left

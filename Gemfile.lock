@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/rails/webpacker.git
-  revision: a85a3ab0eac6626af9da0efbda9320404114d675
+  revision: 96223d1721e99d76508744e660bff7ac2dffdf96
   specs:
     webpacker (1.0)
       activesupport (>= 4.2)
@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: https://github.com/stripe/stripe-ruby
-  revision: 8f817b83653f75560029d4a3d52e029674a5f3a3
+  revision: c9a3c7933b171870fb80643f866acc3637f56e4a
   specs:
-    stripe (2.0.1)
+    stripe (2.0.3)
       faraday (~> 0)
 
 GEM
@@ -128,7 +128,7 @@ GEM
       request_store (~> 1.1)
     pg (0.20.0)
     public_suffix (2.0.5)
-    puma (3.8.1)
+    puma (3.8.2)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
