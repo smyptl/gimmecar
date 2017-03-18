@@ -120,7 +120,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     presence: true,
     numericality: { only_integer: true }
 
-  validates :driver_insurance_company_name, :driver_insurance_policy_number, :driver_insurance_phone_number, :driver_insurance_agent,
+  validates :driver_insurance_company_name, :driver_insurance_policy_number,
     presence: true
 
   validates :driver_insurance_effective_date,
