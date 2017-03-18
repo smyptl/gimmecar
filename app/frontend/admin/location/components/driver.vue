@@ -185,16 +185,31 @@
       .input-container.two-fifths
         label.input-label(for='driver_email') Email
         .input-block.whole
-          input.input-field#driver_email(type='text' v-model='form.driver.email' placeholder='john@gmail.com')
+          input.input-field#driver_email(type='text'
+            placeholder='john@gmail.com'
+            v-model='form.driver.email'
+            v-error='form.errors.has("driver_email")'
+            @input='form.errors.clear("driver_email")')
+        input-error-message(v-bind:errors='form.errors.get("driver_email")')
       .input-container.three-fifths
         .input-container.one-half.fixed
           label.input-label(for='driver_cell_phone_number') Cell Phone #
           .input-block.whole
-            input.input-field#driver_cell_phone_number(type='number' v-model='form.driver.cell_phone_number' placeholder='909.555.8639')
+            input.input-field#driver_cell_phone_number(type='text'
+              placeholder='909.555.8639'
+              v-model='form.driver.cell_phone_number'
+              v-error='form.errors.has("driver_cell_phone_number")'
+              @input='form.errors.clear("driver_cell_phone_number")')
+          input-error-message(v-bind:errors='form.errors.get("driver_cell_phone_number")')
         .input-container.one-half.fixed
           label.input-label(for='driver_home_phone_number') Home Phone #
           .input-block.whole
-            input.input-field#driver_home_phone_number(type='number' v-model='form.driver.home_phone_number' placeholder='805.555.1231')
+            input.input-field#driver_home_phone_number(type='text'
+              placeholder='805.555.1234'
+              v-model='form.driver.home_phone_number'
+              v-error='form.errors.has("driver_home_phone_number")'
+              @input='form.errors.clear("driver_home_phone_number")')
+          input-error-message(v-bind:errors='form.errors.get("driver_home_phone_number")')
 
     .input-row
       label.input-label(for='driver_insurance_company_name')
@@ -224,6 +239,7 @@
         .input-container.one-third.fixed
           .input-block.whole
             input-date.input-field#driver_insurance_effective_date(
+              type='text'
               placeholder='Effective Date'
               v-model='form.driver.insurance.effective_date'
               v-error='form.errors.has("driver_insurance_effective_date")'

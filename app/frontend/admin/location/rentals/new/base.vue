@@ -1,6 +1,4 @@
 <script>
-  import Capitalize from 'lodash/capitalize'
-
   import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
@@ -12,13 +10,13 @@
   import Payment from 'Components/inputs/payment'
   import FinancialResponsibility from 'Components/financial_responsibility'
   import TermsAndConditions from 'Components/terms_and_conditions'
+  import VehicleForm from './vehicles.vue'
 
   export default {
     name: 'new',
     data () {
       return {
         rental: new Form({
-          pickup: new Date(),
           drop_off: new Date().setDate(new Date().getDate() + 1),
           driver_id: null,
           driver: {
@@ -96,11 +94,12 @@
       RentalInvoice,
       Signature,
       TermsAndConditions,
-    },
-    filters: {
-      Capitalize,
+      VehicleForm,
     },
     computed: {
+      pickup () {
+        return new Date()
+      },
       steps () {
         return [
           'Details',
@@ -140,6 +139,19 @@
           this.rental.errors.record(error.response.data.errors)
         })
       },
+      validateDrivers () {
+        this.$http.post(this.$route.path + '/drivers', {
+          rental: this.rental.data(),
+        })
+        .then(response => {
+          this.rental.errors.clear
+          this.getVehicles()
+        })
+        .catch(error => {
+          Shake(this.$refs.form)
+          this.rental.errors.record(error.response.data.errors)
+        })
+      },
       getVehicles () {
         this.$http.post(this.$route.path + '/vehicles', {
           rental: this.rental.data(),
@@ -149,20 +161,6 @@
           this.nextStep()
         })
         .catch(error => {
-        })
-      },
-      validateDrivers () {
-        this.$http.post(this.$route.path, {
-          rental: this.rental.data(),
-        })
-        .then(response => {
-          this.rental.errors.clear
-          this.summary = response.data
-          this.nextStep()
-        })
-        .catch(error => {
-          Shake(this.$refs.form)
-          this.rental.errors.record(error.response.data.errors)
         })
       },
       validatePayment () {
@@ -203,16 +201,12 @@
     template(v-if='current_step == "Details"')
       .input-row
         .input-container.one-half
-          label.input-label From:
+          label.input-label Pickup:
           .input-block.whole
-            input-date-time(
-              v-model='rental.pickup'
-              v-error='rental.errors.has("pickup")'
-              @input='rental.errors.clear("pickup")')
-          input-error-message(v-bind:errors='rental.errors.get("pickup")')
+            input-date-time(v-model='pickup' disabled)
 
         .input-container.one-half
-          label.input-label To:
+          label.input-label Drop-off:
           .input-block.whole
             input-date-time(
               v-model='rental.drop_off'
@@ -235,36 +229,10 @@
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='getVehicles()') Continue
+        button.btn.btn-primary.right(@click.prevent='validateDrivers()') Continue
 
     template(v-if='current_step == "Vehicle"')
-      .input-block.whole
-        table.panel-table
-          thead
-            tr
-              th
-              th Make - Model
-              th Color
-              th License #
-          tbody
-            tr(v-for='vehicle in vehicles' @click.prevent='rental.vehicle_id = vehicle.id' v-bind:class='{ selected: rental.vehicle_id == vehicle.id }')
-              td.checkbox
-                button.button-checkbox
-              td {{ vehicle.make }} {{ vehicle.model }}
-              td {{ vehicle.color | capitalize }}
-              td {{ vehicle.license_number }}
-
-      .input-row.margin-top-default
-        .input-container.two-fifths
-          label.input-label(for='pickup_odometer') Vehicle Odometer
-          .input-block.whole
-            input.input-field#pickup_odometer(type='text' v-model='rental.pickup_odometer')
-        .input-container.three-fifths
-          label.input-label(for='pickup_fuel')
-            | Fuel Level
-            .input-label-note.right {{ rental.pickup_fuel * 10 }}%
-          .input-block.whole
-            input.input-range#pickup_fuel(type='range' v-model.number='rental.pickup_fuel' min='0' max='10')
+      vehicle-form(v-bind:form='rental' v-bind:vehicles='vehicles')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back

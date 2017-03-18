@@ -94,12 +94,18 @@ h6.input-label
   font-size: 0.75rem
   font-family: "Hack"
   font-weight: 400
+  color: #000000
 
   &::-webkit-input-placeholder,
   &::-input-placeholder,
   &::input-placeholder,
   &::placeholder,
     color: $text-color-placeholder
+
+.input-field:disabled
+  background: $background-color-input-disabled
+  color: $black
+  cursor: not-allowed
 
 .input-field:focus,
 .StripeElement--focus

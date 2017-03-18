@@ -8,7 +8,7 @@ class Services::Admin::Rates < Lib::Forms::Base
 
   validates :pickup,
     presence: true,
-    after_date: { with: -> { DateTime.now - 30.minutes }, message: 'must be in the future' }
+    after_date: { with: -> { DateTime.now - 59.minutes }, message: 'must be in the future' }
 
   validates :drop_off,
     presence: true,

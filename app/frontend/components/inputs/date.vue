@@ -35,23 +35,20 @@
         var date = Moment(this.date_formatted, 'M/D/YYYY')
 
         if (date.isValid()) {
-          this.current_date.set('date',  date.get('date'))
-          this.current_date.set('month', date.get('month'))
-          this.current_date.set('year',  date.get('year'))
-          this.formatDate()
-        } else {
-          this.date_formatted = ''
+          this.current_date = date
         }
 
+        this.formatDate()
         this.emitInput()
       },
       formatDate () {
+        console.log(this.current_date.isValid())
         if (this.current_date.isValid()) {
           this.date_formatted = this.current_date.format('M/D/YYYY')
         }
       },
       emitInput () {
-        this.$emit('input', this.date_formatted)
+        this.$emit('input', this.current_date)
       },
     },
   }

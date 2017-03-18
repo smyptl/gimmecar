@@ -58,11 +58,7 @@
         var date = Moment.tz(this.date_time_formatted, "M/D/YYYY @ h:mm A", this.time_zone)
 
         if (date.isValid()) {
-          this.current_date_time.set('date',   date.get('date'))
-          this.current_date_time.set('month',  date.get('month'))
-          this.current_date_time.set('year',   date.get('year'))
-          this.current_date_time.set('hour',   date.get('hour'))
-          this.current_date_time.set('minute', date.get('minute'))
+          this.current_date_time = date
         }
 
         this.formatDateTime()

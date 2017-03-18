@@ -84,12 +84,7 @@
   @import '~Styles/global/layout'
   @import '~Styles/global/type'
 
-  ol
-    float: left
-    width: 100%
-
   ol li
-    float: left
     margin-left: 1rem
     margin-bottom: $margin-sm
     padding-left: $padding-ex-sm

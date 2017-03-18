@@ -6,9 +6,9 @@ module Admin::Concerns::User
     return if current_user
 
     if api?
-      head 404
+      head 401
     else
-      raise ApplicationController::Error404
+      redirect login_path
     end
   end
 
