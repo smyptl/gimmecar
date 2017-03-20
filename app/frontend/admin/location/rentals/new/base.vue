@@ -218,7 +218,7 @@
         button.btn.btn-primary.right(@click.prevent='getRates()') Continue
 
     template(v-if='current_step == "Rates"')
-      rental-invoice.margin-top-sm(v-bind:summary='summary' v-bind:estimated='true')
+      rental-invoice.input-block.margin-top-sm(v-bind:summary='summary' v-bind:estimated='true')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -268,7 +268,7 @@
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
     template(v-if='current_step == "Terms & Conditions"')
-      rental-invoice.margin-top-sm(v-bind:summary='summary')
+      rental-invoice.input-block.margin-top-sm(v-bind:summary='summary')
       .input-block.margin-top-default
         terms-and-conditions
 

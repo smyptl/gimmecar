@@ -30,7 +30,8 @@ Rails.application.routes.draw do
       end
 
       resources :rentals, except: [:new, :create] do
-        post 'email-receipt', to: 'email_receipt#index'
+        get 'print-receipt', to: 'rentals/receipt#print'
+        post 'email-receipt', to: 'rentals/receipt#email'
 
         get 'close', to: 'close#index'
         post 'close', to: 'close#create'

@@ -50,6 +50,9 @@
       },
       emailInvoice () {
       },
+      printInvoice () {
+        window.open(this.$route.path + '/print-receipt')
+      },
     },
   }
 </script>
@@ -70,6 +73,8 @@
               a(@click='closeRental()') Close
             li
               a(@click='emailInvoice') Email Invoice
+            li
+              a(@click='printInvoice') Print Invoice
 
     dl.panel-main-details
       dt Status

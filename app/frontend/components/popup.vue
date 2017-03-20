@@ -98,6 +98,8 @@
     background: rgba(25, 25, 34, 0.65)
     transition: all 0.25s ease
     opacity: 1
+    text-align: center
+
 
   .popup-container
     max-height: 100%
@@ -105,10 +107,13 @@
     margin-left: auto
     margin-right: auto
     overflow-y: auto
+    display: inline-block
 
     background: #ffffff
     border-radius: 0.25rem
     box-shadow: 0 0.0625rem 0.5rem $black-light, 0 0.0625rem 1.5rem $black-light, 0 0.0625rem 0.125rem $silver-dark
+
+    text-align: left
 
   .popup-content
     z-index: 101
