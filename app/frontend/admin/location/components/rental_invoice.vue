@@ -38,7 +38,7 @@
 </script>
 
 <template lang='pug'>
-  .rental-invoice-summary.input-block.whole
+  .rental-invoice-summary.whole
     h4.margin-bottom-sm Rental Details
     ul.left.whole.list-no-style
       li(v-if='summary.confirmation_number')

@@ -125,7 +125,7 @@
                 input.btn.btn-full.btn-lg.btn-primary(type='submit' value='View Rates')
 
       #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
-        rates.margin-top-default(:summary='summary')
+        rates.input-block.margin-top-default(:summary='summary')
 
         .input-submit.input-flex-container
           .input-block.input-element-fixed

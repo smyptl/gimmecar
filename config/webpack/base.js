@@ -8,6 +8,7 @@ module.exports = {
     public: './app/frontend/public/index',
     admin_login: './app/frontend/admin/login/index',
     admin_location: './app/frontend/admin/location/index',
+    print_receipt: './app/frontend/admin/location/rentals/rental/print/index',
   },
   module: {
     rules: [

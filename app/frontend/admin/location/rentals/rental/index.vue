@@ -8,11 +8,14 @@
   import ActionsIcon from 'Components/icons/actions'
   import RightArrowIcon from 'Components/icons/right_arrow'
 
+  import Close from './close'
+
   export default {
     name: 'rental',
     data () {
       return {
         rental: {},
+        close: false,
       }
     },
     filters: {
@@ -22,6 +25,7 @@
     },
     components: {
       ActionsIcon,
+      Close,
       Dropdown,
       RightArrowIcon,
     },
@@ -42,8 +46,12 @@
       extendRental () {
       },
       closeRental () {
+        this.close = true
       },
       emailInvoice () {
+      },
+      printInvoice () {
+        window.open(this.$route.path + '/print-receipt')
       },
     },
   }
@@ -51,6 +59,7 @@
 
 <template lang='pug'>
   .panel.panel-base
+    close(v-if='close')
     .panel-base-header
       h2 {{ rental.number }}
       dropdown.flex-element.right
@@ -64,6 +73,8 @@
               a(@click='closeRental()') Close
             li
               a(@click='emailInvoice') Email Invoice
+            li
+              a(@click='printInvoice') Print Invoice
 
     dl.panel-main-details
       dt Status
