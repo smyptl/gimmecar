@@ -8,11 +8,14 @@
   import ActionsIcon from 'Components/icons/actions'
   import RightArrowIcon from 'Components/icons/right_arrow'
 
+  import Close from './close'
+
   export default {
     name: 'rental',
     data () {
       return {
         rental: {},
+        close: false,
       }
     },
     filters: {
@@ -22,6 +25,7 @@
     },
     components: {
       ActionsIcon,
+      Close,
       Dropdown,
       RightArrowIcon,
     },
@@ -42,6 +46,7 @@
       extendRental () {
       },
       closeRental () {
+        this.close = true
       },
       emailInvoice () {
       },
@@ -51,6 +56,7 @@
 
 <template lang='pug'>
   .panel.panel-base
+    close(v-if='close')
     .panel-base-header
       h2 {{ rental.number }}
       dropdown.flex-element.right
