@@ -65,7 +65,8 @@
     .popup
       transition(v-on:enter='openPopup' v-on:leave='closePopup')
         .popup-container
-          slot
+          .popup-content
+            slot
 
 </template>
 
@@ -74,20 +75,13 @@
   @import '~Styles/global/layout'
   @import '~Styles/global/type'
 
-  .popup-wrapper
-    position: fixed
-    top: 0
-    bottom: 0
-    left: 0
-    right: 0
-    z-index: 100
-
   .popup
     position: fixed
     top: 0
     bottom: 0
     left: 0
     right: 0
+    z-index: 100
 
     overflow-x: hidden
     overflow-y: hidden
@@ -98,8 +92,6 @@
     background: rgba(25, 25, 34, 0.65)
     transition: all 0.25s ease
     opacity: 1
-    text-align: center
-
 
   .popup-container
     max-height: 100%
@@ -107,34 +99,19 @@
     margin-left: auto
     margin-right: auto
     overflow-y: auto
-    display: inline-block
+    text-align: center
 
+  .popup-content
+    display: inline-block
+    z-index: 101
+
+    opacity: 1
+    max-width: 100%
+    transition: all 0.375s ease
     background: #ffffff
     border-radius: 0.25rem
     box-shadow: 0 0.0625rem 0.5rem $black-light, 0 0.0625rem 1.5rem $black-light, 0 0.0625rem 0.125rem $silver-dark
 
     text-align: left
-
-  .popup-content
-    z-index: 101
-
-    opacity: 1
-    text-align: left
-    transition: all 0.375s ease
-
-    > .icon-cancel
-      z-index: 95
-      position: absolute
-      top: 0
-      right: 0
-      height: $margin-lg
-      width: $margin-lg
-      text-align: center
-      line-height: $margin-lg
-      font-size: $font-size-default
-      color: #000000
-
-      &:hover
-        color: $red-text-color
 
 </style>

@@ -80,6 +80,5 @@
           button.btn.btn-full.btn-primary(@click='newReservation') Reservation
         .input-block.input-element-flex
           button.btn.btn-full.btn-primary(@click='newRental') Rental
-
-
+          
 </template>

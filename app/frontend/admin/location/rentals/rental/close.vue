@@ -23,12 +23,17 @@
 
 <template lang='pug'>
   popup(v-if='open')
-    h1 3
-    p adf
-    p TEST
+    .panel-popup-form
+      .panel-base-header
+        h2 Close - #12312313
+
+      .form-container
+        label.input-label(for='drop_off_date') Drop Off
+        .input-block.whole
+          input.input-field.input-contrast#drop_off_date(type='text')
+
 </template>
 
 <style lang='stylus' scoped>
-  p
-    height: 2000px
+  @import '~Styles/components/panels/form'
 </style>

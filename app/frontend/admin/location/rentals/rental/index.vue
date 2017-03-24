@@ -51,7 +51,7 @@
       emailInvoice () {
       },
       printInvoice () {
-        window.open(this.$route.path + '/print-receipt')
+        window.open(this.$route.path + '/receipt/print')
       },
     },
   }
@@ -98,6 +98,8 @@
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/components/panels/details'
+
   .action-icon
     float: right
     height: 1.25rem

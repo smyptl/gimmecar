@@ -125,7 +125,7 @@
         padding-left: $padding-default
 
         font-size: 1.25rem
-        font-weight: 600
+        font-weight: 700
         line-height: 2.75rem
         fill: $blue
 

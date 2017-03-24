@@ -193,8 +193,8 @@
 </script>
 
 <template lang='pug'>
-  .form-container(ref='form')
-    h3.form-header.form-header-first
+  .panel-form(ref='form')
+    h3.panel-form-header.panel-form-header-first
       | Rental: {{ current_step }}
       small.right {{ current_step_number }} of {{ number_of_steps }}
 
@@ -300,3 +300,7 @@
         button.btn.btn-primary.right(@click.prevent='validatePayment') Continue
 
 </template>
+
+<style lang='stylus'>
+  @import '~Styles/components/panels/form'
+</style>
