@@ -1,6 +1,7 @@
 <script>
-  import Snabbt from 'snabbt.js'
-  import EventListener from 'Utils/event_listener.js';
+  import EventListener from 'Utils/event_listener.js'
+
+  import IconCancel from 'Components/icons/cancel.vue'
 
   export default {
     props: {
@@ -9,52 +10,27 @@
         default: false,
       },
     },
-    mounted () {
-      const el = this.$el.getElementsByClassName('popup-container')[0]
-
-      this._closeEvent = EventListener.listen(window, 'click', (e) => {
-        console.log(!el.contains(e.target))
-        if (!el.contains(e.target)) {
-          this.close()
-        }
-      });
-    },
-    beforeDestroy () {
-      if (this._closeEvent) {
-        this._closeEvent.remove();
-      }
+    // mounted () {
+    //   const el = this.$el.getElementsByClassName('popup-container')[0]
+    //
+    //   this._closeEvent = EventListener.listen(window, 'click', (e) => {
+    //     console.log(!el.contains(e.target))
+    //     if (!el.contains(e.target)) {
+    //       this.close()
+    //     }
+    //   });
+    // },
+    // beforeDestroy () {
+    //   if (this._closeEvent) {
+    //     this._closeEvent.remove();
+    //   }
+    // },
+    components: {
+      IconCancel,
     },
     methods: {
-      close () {
-        console.log('close')
-      },
-      openPopup (el, done) {
-        Snabbt(el, {
-          scale: [1, 1],
-          fromScale: [0.95, 0.95],
-          position: [0, 0, 0],
-          fromPosition: [5, -5, -500],
-          opacity: 1,
-          fromOpacity: 0.05,
-          duration: 150,
-          complete() {
-            done()
-          },
-        })
-      },
-      closePopup (el, done) {
-        Snabbt(el, {
-          scale: [0.95, 0.95],
-          fromScale: [1, 1],
-          position: [5, -5, -500],
-          fromPosition: [0, 0, 0],
-          opacity: 0.05,
-          fromOpacity: 1,
-          duration: 100,
-          complete() {
-            done()
-          },
-        })
+      closePopup () {
+        this.$emit('close')
       },
     },
   };
@@ -63,10 +39,11 @@
 <template lang='pug'>
   .popup-wrapper(role='dialog' tabindex='0' @keyup.esc='close($event)')
     .popup
-      transition(v-on:enter='openPopup' v-on:leave='closePopup')
-        .popup-container
-          .popup-content
-            slot
+      .popup-container
+        .popup-content
+          a.link-danger#cancel-button(@click='closePopup')
+            icon-cancel
+          slot
 
 </template>
 
@@ -113,5 +90,13 @@
     box-shadow: 0 0.0625rem 0.5rem $black-light, 0 0.0625rem 1.5rem $black-light, 0 0.0625rem 0.125rem $silver-dark
 
     text-align: left
+
+  #cancel-button
+    position: absolute
+    top: $margin-default + 0.0625rem
+    right: $margin-default
+    height: 1.25rem
+    width: 1.25rem
+    z-index: 2
 
 </style>

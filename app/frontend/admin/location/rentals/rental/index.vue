@@ -50,6 +50,9 @@
       },
       emailInvoice () {
       },
+      close () {
+        this.close = false
+      },
       printInvoice () {
         window.open(this.$route.path + '/receipt/print')
       },
@@ -59,7 +62,7 @@
 
 <template lang='pug'>
   .panel.panel-base
-    close(v-if='close')
+    close(v-on:close='close' v-if='close')
     .panel-base-header
       h2 {{ rental.number }}
       dropdown.flex-element.right

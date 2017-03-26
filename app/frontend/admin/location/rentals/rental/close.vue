@@ -26,7 +26,8 @@
     },
     methods: {
       close () {
-        this.open = false
+        console.log('close')
+        this.$emit('close')
       },
       closeRental () {
       },
@@ -35,7 +36,7 @@
 </script>
 
 <template lang='pug'>
-  popup(v-if='open')
+  popup(v-if='open' v-on:close='close')
     .panel-popup-form
       .panel-form.panel-form-padding
         h3.panel-form-header Close - #12312313
