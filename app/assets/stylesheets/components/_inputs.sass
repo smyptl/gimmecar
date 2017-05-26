@@ -100,12 +100,14 @@ h6.input-label
   &::placeholder,
     color: $text-color-placeholder
 
-.input-field:disabled
+.input-field:disabled,
+.input-field.disabled
   background: $background-color-input-disabled
   color: $black
   cursor: not-allowed
 
 .input-field:focus,
+.input-field.focus,
 .StripeElement--focus
   z-index: 2
   border-color: $blue

@@ -43,7 +43,7 @@
         .input-row
           label.input-label(for='drop_off_date') Drop Off
           .input-block.whole
-            input-date-time.input-field.input-contrast#drop_off_date(v-model='form.drop_off_date')
+            input-date-time.input-contrast#drop_off_date(v-model='form.drop_off_date')
 
         .input-row
           .input-container.two-fifths

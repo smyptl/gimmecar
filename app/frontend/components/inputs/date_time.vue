@@ -1,4 +1,6 @@
 <script>
+  import EventListener from 'Utils/event_listener.js';
+
   import Moment from 'moment'
   import MomentTimeZone from 'moment-timezone'
 
@@ -25,6 +27,12 @@
           return Moment.tz.guess()
         }
       },
+      classes: {
+        type: Array,
+        default () {
+          return []
+        },
+      },
     },
     data () {
       return {
@@ -36,12 +44,24 @@
     },
     mounted () {
       this.parseValue(this.value)
-      this.emitInput()
 
       let month_year = this.current_date_time.clone()
       month_year.date(1)
 
       this.calendar_date_time = month_year
+
+      const el = this.$el;
+
+      this._closeEvent = EventListener.listen(window, 'click', (e) => {
+        if (!el.contains(e.target)) {
+          this.closeCalendar()
+        }
+      });
+    },
+    beforeDestroy () {
+      if (this._closeEvent) {
+        this._closeEvent.remove();
+      }
     },
     watch: {
       value (val, oldVal) {
@@ -103,37 +123,40 @@
         return d.format() == this.current_date.format()
       },
       calendarAddHour () {
-        this.current_date_time.add(1, 'hour')
+        if (this.current_date_time.hour() == 23) {
+          this.current_date_time.hour(0)
+        } else {
+          this.current_date_time.add(1, 'hour')
+        }
+
         this.formatDateTime()
-        this.emitInput()
       },
       calendarSubtractHour () {
-        this.current_date_time.subtract(1, 'hour')
+        if (this.current_date_time.hour() == 0) {
+          this.current_date_time.hour(23)
+        } else {
+          this.current_date_time.subtract(1, 'hour')
+        }
+
         this.formatDateTime()
-        this.emitInput()
       },
       calendarAddMinute () {
         if (this.current_date_time.minute() == 59) {
           this.current_date_time.minute(0)
         } else {
-          this.current_date_time.minute(this.current_date_time.minute() + 1)
+          this.current_date_time.add(1, 'minute')
         }
 
         this.formatDateTime()
-        this.emitInput()
       },
       calendarSubtractMinute () {
         if (this.current_date_time.minute() == 0) {
           this.current_date_time.minute(59)
         } else {
-          this.current_date_time.minute(this.current_date_time.minute() - 1)
+          this.current_date_time.subtract(1, 'minute')
         }
 
         this.formatDateTime()
-        this.emitInput()
-      },
-      showClock () {
-        this.view_clock = true
       },
       selectDate (val) {
         this.current_date_time.year(val.year())
@@ -141,30 +164,23 @@
         this.current_date_time.date(val.date())
 
         this.formatDateTime()
-        this.emitInput()
       },
       parseValue (val) {
         this.current_date_time = Moment.tz(val, this.time_zone)
         this.formatDateTime()
       },
-      parseDateTime () {
-        var date = Moment.tz(this.date_time_formatted, "M/D/YYYY @ h:mm A", this.time_zone)
-
-        if (date.isValid()) {
-          this.current_date_time = date
-        }
-
-        this.formatDateTime()
-        this.emitInput()
-      },
       formatDateTime () {
         this.date_time_formatted = this.current_date_time.format('M/D/YYYY @ h:mm A')
+        this.emitInput()
       },
       emitInput () {
         this.$emit('input', this.current_date_time.format())
       },
       toggleCalendar () {
-        this.calendar = (false == this.calendar);
+        this.calendar = (false == this.calendar)
+      },
+      closeCalendar () {
+        this.calendar = false
       },
     },
   }
@@ -172,13 +188,7 @@
 
 <template lang='pug'>
   .whole.left
-    input.input-field.date-field(
-      type='text'
-      placeholder='mm/dd/yyyy @ hh:mm am/pm'
-      v-bind:name='name'
-      v-model='date_time_formatted'
-      @click='toggleCalendar'
-      @change='parseDateTime')
+    span.input-field.date-field(:class='{ focus: calendar}' @click='toggleCalendar') {{ date_time_formatted }}
 
     .calendar(v-if='calendar')
       .calendar-header
@@ -232,7 +242,7 @@
 
 </template>
 
-<style lang='stylus'>
+<style lang='stylus' scoped>
   @import '~Styles/global/colors'
   @import '~Styles/global/layout'
   @import '~Styles/global/type'
