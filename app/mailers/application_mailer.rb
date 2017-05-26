@@ -1,5 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  include Roadie::Rails::Automatic
   include ActionView::Helpers::NumberHelper
 
   helper_method :format_percent, :format_currency, :format_date_time, :format_date
