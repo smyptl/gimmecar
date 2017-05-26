@@ -203,7 +203,7 @@
         .input-container.one-half
           label.input-label Pickup:
           .input-block.whole
-            input-date-time(v-model='pickup' disabled)
+            input-date-time(v-model='pickup' disabled=true)
 
         .input-container.one-half
           label.input-label Drop-off:

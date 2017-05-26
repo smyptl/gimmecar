@@ -89,6 +89,7 @@ h6.input-label
   border: 1px solid $border-color-input
 
   cursor: pointer
+  text-align: left
   font-size: 0.75rem
   font-family: "Hack"
   font-weight: 400
@@ -101,8 +102,12 @@ h6.input-label
     color: $text-color-placeholder
 
 .input-field:disabled,
-.input-field.disabled
+.input-field.disabled,
+.input-field.disabled:focus
   background: $background-color-input-disabled
+  border: 1px solid $border-color-input
+  box-shadow: 0 0 0 0
+
   color: $black
   cursor: not-allowed
 

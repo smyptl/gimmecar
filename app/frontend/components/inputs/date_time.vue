@@ -27,6 +27,10 @@
           return Moment.tz.guess()
         }
       },
+      disabled: {
+        type: Boolean,
+        default: false,
+      },
       classes: {
         type: Array,
         default () {
@@ -177,10 +181,21 @@
         this.$emit('input', this.current_date_time.format())
       },
       toggleCalendar () {
+        if (this.disabled) {
+          return
+        }
+
         this.calendar = (false == this.calendar)
       },
       closeCalendar () {
         this.calendar = false
+      },
+      showCalendar () {
+        if (this.disabled) {
+          return
+        }
+
+        this.calendar = true
       },
     },
   }
@@ -188,7 +203,7 @@
 
 <template lang='pug'>
   .whole.left
-    span.input-field.date-field(:class='{ focus: calendar}' @click='toggleCalendar') {{ date_time_formatted }}
+    button.input-field.date-field(:class='{ focus: calendar, disabled: disabled }' @focus='showCalendar' @blue='closeCalendar' @click='showCalendar') {{ date_time_formatted }}
 
     .calendar(v-if='calendar')
       .calendar-header
