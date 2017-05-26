@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.2'
+gem 'rails', '5.1.0'
 
 gem 'jbuilder'
 
@@ -15,7 +15,6 @@ gem 'foreman'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'autoprefixer-rails'
-gem 'roadie-rails'
 
 # User SLIM as the templating engine
 gem 'slim'

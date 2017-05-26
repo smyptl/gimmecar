@@ -37,5 +37,4 @@ public/assets
 # Ignore Byebug command history file.
 .byebug_history
 /public/packs
-/public/packs
 /node_modules

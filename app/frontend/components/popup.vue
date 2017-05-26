@@ -10,21 +10,6 @@
         default: false,
       },
     },
-    // mounted () {
-    //   const el = this.$el.getElementsByClassName('popup-container')[0]
-    //
-    //   this._closeEvent = EventListener.listen(window, 'click', (e) => {
-    //     console.log(!el.contains(e.target))
-    //     if (!el.contains(e.target)) {
-    //       this.close()
-    //     }
-    //   });
-    // },
-    // beforeDestroy () {
-    //   if (this._closeEvent) {
-    //     this._closeEvent.remove();
-    //   }
-    // },
     components: {
       IconCancel,
     },

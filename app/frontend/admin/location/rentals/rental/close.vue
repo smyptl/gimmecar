@@ -26,7 +26,6 @@
     },
     methods: {
       close () {
-        console.log('close')
         this.$emit('close')
       },
       closeRental () {
