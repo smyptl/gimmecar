@@ -41,11 +41,11 @@ module Lib::Forms::Actions
   private
 
   def save
-    raise NotImplementedError
+    raise Lib::Errors::NotImplemented
   end
 
   def success_args
-    raise NotImplementedError
+    raise Lib::Errors::NotImplemented
   end
 
   def failure_args

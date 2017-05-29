@@ -22,11 +22,9 @@ describe Actions::Admin::Location::Rental::Create do
 
       expect(success).to receive(:call)
 
-      pickup = DateTime.now
       drop_off = DateTime.now + 2.days
 
       Actions::Admin::Location::Rental::Create.new({
-        :pickup                                    => pickup,
         :drop_off                                  => drop_off,
         :driver                                    => driver_attrs,
         :driver_signature                          => 'test',
@@ -79,7 +77,7 @@ describe Actions::Admin::Location::Rental::Create do
       expect(rental.vehicle).to eq(vehicle)
       expect(rental.additional_driver).to eq(nil)
       expect(rental.number).to_not eq(nil)
-      expect(rental.pickup).to eq(pickup)
+      expect(rental.pickup).to_not eq(nil)
       expect(rental.drop_off).to eq(drop_off)
       expect(rental.pickup_odometer).to eq(1250)
       expect(rental.pickup_fuel).to eq(10)

@@ -90,7 +90,9 @@ feature 'Login', js: true do
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Payment')
-    stripe_iframe = all('iframe[name=stripeField_card_element1]').last
+
+    stripe_iframe = all('iframe[name=__privateStripeFrame4]').last
+    puts stripe_iframe
     Capybara.within_frame stripe_iframe do
       find('input[name=cardnumber]').set(CARD_TYPE[:visa])
       find('input[name="exp-date"]').set('01/20')

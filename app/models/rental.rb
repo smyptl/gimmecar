@@ -30,7 +30,8 @@
 
 class Rental < ApplicationRecord
 
-  OPEN = 'open'
+  OPEN   = 'open'
+  CLOSED = 'closed'
 
   belongs_to :driver
   belongs_to :additional_driver, class_name: 'Driver', required: false
@@ -45,7 +46,7 @@ class Rental < ApplicationRecord
   scope :reserved,  -> { where(status: 'reserved') }
   scope :cancelled, -> { where(status: 'cancelled') }
   scope :open,      -> { where(status: OPEN) }
-  scope :closed,    -> { where(status: 'closed') }
+  scope :closed,    -> { where(status: CLOSED) }
 
   scope :past, -> { where('drop_off < ?', Date.today) }
 

@@ -1,0 +1,5 @@
+{
+  "admin_location.js": "/packs-test/admin_location.js",
+  "admin_login.js": "/packs-test/admin_login.js",
+  "public.js": "/packs-test/public.js"
+}

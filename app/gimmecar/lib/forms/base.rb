@@ -106,7 +106,7 @@ class Lib::Forms::Base
   private
 
   def data(id)
-    raise NotImplementedError
+    raise Lib::Errors::NotImplemented
   end
 
   # To add or remove the attributes define this method in the

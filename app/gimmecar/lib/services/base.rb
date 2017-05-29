@@ -38,7 +38,7 @@ class Lib::Services::Base
   end
 
   def user
-    @user || (raise NotImplementedError)
+    @user || (raise Lib::Errors::NotImplemented)
   end
 
   def include(hash)
@@ -64,7 +64,7 @@ class Lib::Services::Base
   end
 
   def date
-    @date || (raise NotImplementedError)
+    @date || (raise Lib::Errors::NotImplemented)
   end
 
   def during_period(start_date, end_date)
@@ -73,7 +73,7 @@ class Lib::Services::Base
   end
 
   def period
-    @period || (raise NotImplementedError)
+    @period || (raise Lib::Errors::NotImplemented)
   end
 
   def url_helpers

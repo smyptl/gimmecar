@@ -89,7 +89,7 @@ end
 Capybara.javascript_driver = :webkit
 Capybara.configure do |config|
   config.always_include_port = true
-  config.default_max_wait_time = 5
+  config.default_max_wait_time = 10
 end
 
 Capybara::Webkit.configure do |config|
@@ -102,7 +102,7 @@ Capybara::Webkit.configure do |config|
   config.allow_url('*.stripe.com')
 
   # Timeout if requests take longer than 5 seconds
-  config.timeout = 5
+  config.timeout = 10
 
   # Don't raise errors when SSL certificates can't be validated
   config.ignore_ssl_errors

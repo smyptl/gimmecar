@@ -5,7 +5,7 @@ import Vue from 'vue'
 import Axios from 'Utils/axios'
 Vue.prototype.$http = Axios
 
-import Reservation from './reservation/index.vue'
+import Reservation from 'Public/reservation/index.vue'
 
 // To add to window
 if (!window.Promise) {
