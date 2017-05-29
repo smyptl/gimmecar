@@ -12,8 +12,7 @@
 #  model                :string
 #  year                 :integer
 #  color                :string
-#  original_odometer    :decimal(10, )
-#  decimal              :decimal(10, )
+#  original_odometer    :integer
 #  transmission         :string
 #  power_train          :string
 #  cylinders            :integer

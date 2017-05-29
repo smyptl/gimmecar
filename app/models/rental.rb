@@ -14,12 +14,11 @@
 #  notes                                                :text
 #  pickup_location_id                                   :integer
 #  pickup                                               :datetime
-#  pickup_odometer                                      :decimal(10, )
-#  decimal                                              :decimal(10, )
+#  pickup_odometer                                      :integer
 #  pickup_fuel                                          :float
 #  drop_off_location_id                                 :integer
 #  drop_off                                             :datetime
-#  drop_off_odometer                                    :decimal(10, )
+#  drop_off_odometer                                    :integer
 #  drop_off_fuel                                        :float
 #  collision_damage_waiver                              :boolean
 #  driver_financial_responsibility_signature            :text
@@ -56,12 +55,23 @@ class Rental < ApplicationRecord
   delegate :name, to: :additional_driver, prefix: true, allow_nil: true
   delegate :make_model, to: :vehicle, prefix: true
 
+  delegate :description, to: :pickup_location, prefix: true
+  delegate :latest_tax_rate, to: :pickup_location
+
   def self.create_open(args)
     create(args.merge(:status => OPEN))
   end
 
+  def rental_period
+    Lib::DateRange.new(pickup, drop_off)
+  end
+
   def total
     line_items.sum(&:total)
+  end
+
+  def calculate_tax(line_item)
+    line_item.calculate_tax(latest_tax_rate)
   end
 
   private

@@ -4,37 +4,38 @@ class Logic::CalculateRental < Lib::Logic::Base
 
   RATE = 3500
 
-  SALES_TAX = BigDecimal.new(0.08, 8)
-
   def fetch
     {
-      :vehicle    => "Toyota Corolla",
-      :location   => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
-      :pickup     => pickup,
-      :drop_off   => drop_off,
-      :line_items => line_items,
-      :total      => total,
+      :vehicle         => "Toyota Corolla",
+      :location        => rental.pickup_location_description,
+      :pickup          => pickup,
+      :drop_off        => drop_off,
+      :line_items      => line_items,
+      :sub_total       => sub_total,
+      :combined_tax_rate => combined_tax_rate,
+      :tax_collectable => tax_collectable,
+      :total           => total,
     }
   end
 
   def line_items
-    rates
-  end
-
-  def rates
     @rates ||= calculate_rate
   end
 
-  def sub_total
-    @sub_total ||= line_items.sum { |r| r.fetch(:amount) }
+  def combined_tax_rate
+    rental.latest_tax_rate.combined_tax_rate
   end
 
-  def tax
-    @tax = line_items.sum { |r| r.fetch(:tax) }
+  def sub_total
+    line_items.sum(&:amount)
+  end
+
+  def tax_collectable
+    line_items.sum(&:tax_collectable)
   end
 
   def total
-    @total ||= sub_total + tax
+    line_items.sum(&:total)
   end
 
   private
@@ -49,15 +50,9 @@ class Logic::CalculateRental < Lib::Logic::Base
       #rate = Rate.where(:date => date).rate || RATE
       rate = RATE
 
-      output << {
-        :item_type => :rate,
-        :details   => { :date => date },
-        :amount    => rate,
-        :tax_rate  => SALES_TAX,
-        :tax       => (rate * SALES_TAX).ceil
-      }
+      output << build_line_item(amount: rate, date: date)
 
-      date += 1
+      date += 1.day
     end
 
     extra_hours = rental_period.hours_apart % 24
@@ -67,20 +62,21 @@ class Logic::CalculateRental < Lib::Logic::Base
       rate = RATE
 
       if extra_hours < 3
-        value = (rate / BigDecimal.new(3, 1)).ceil * extra_hours
-      else
-        value = rate
+        rate = ((rate / BigDecimal.new(3, 1)) * extra_hours).ceil
       end
 
-      output << {
-        :item_type => :rate,
-        :details   => { :date => date },
-        :amount    => value,
-        :tax_rate  => SALES_TAX,
-        :tax       => (value * SALES_TAX).ceil
-      }
+      output << build_line_item(amount: rate, date: date)
     end
 
     output
+  end
+
+  def build_line_item(amount: amount, date: date)
+    rental.calculate_tax(LineItem.build_readonly({
+      :item_type      => :rate,
+      :date           => date,
+      :amount         => amount,
+      :taxable_amount => amount,
+    }))
   end
 end

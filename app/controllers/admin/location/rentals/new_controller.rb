@@ -35,7 +35,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
   end
 
   def vehicles
-    render status: 200, json: Services::Admin::Vehicles::Available.new(location.id).during_period(DateTime.now, params[:rental][:drop_off]).fetch
+    render status: 200, json: Services::Admin::Vehicles::Available.new(location.id).during_period(Time.now, params[:rental][:drop_off]).fetch
   end
 
   def add_ons

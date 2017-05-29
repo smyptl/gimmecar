@@ -15,10 +15,10 @@ class Lib::DateRange
   end
 
   def days_apart
-    (end_date - start_date).to_i
+    ((end_date.to_time - start_date.to_time)/1.day.second).to_i
   end
 
   def hours_apart
-    ((end_date - start_date)* 24).to_i
+    ((end_date.to_time - start_date.to_time)/1.hour.second).to_i
   end
 end
