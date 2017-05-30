@@ -1,21 +1,30 @@
-class Logic::CalculateRental < Lib::Logic::Base
+class Services::Rates < Lib::Services::Base
 
-  model :rental
+  attributes do |a|
+    a.default :location
+    a.default :rental
+  end
 
   RATE = 3500
 
   def fetch
     {
-      :vehicle         => "Toyota Corolla",
-      :location        => rental.pickup_location_description,
-      :pickup          => pickup,
-      :drop_off        => drop_off,
-      :line_items      => line_items,
-      :sub_total       => sub_total,
+      :vehicle           => "Toyota Corolla",
+      :location          => location.description,
+      :pickup            => rental.pickup,
+      :drop_off          => rental.drop_off,
+      :line_items        => line_items,
+      :sub_total         => sub_total,
       :combined_tax_rate => combined_tax_rate,
-      :tax_collectable => tax_collectable,
-      :total           => total,
+      :tax_collectable   => tax_collectable,
+      :total             => total,
     }
+  end
+
+  private
+
+  def rental_period
+    @rental_period ||= Lib::DateRange.new(rental.pickup, rental.drop_off)
   end
 
   def line_items
@@ -23,7 +32,7 @@ class Logic::CalculateRental < Lib::Logic::Base
   end
 
   def combined_tax_rate
-    rental.latest_tax_rate.combined_tax_rate
+    location.latest_combined_tax_rate
   end
 
   def sub_total
@@ -37,8 +46,6 @@ class Logic::CalculateRental < Lib::Logic::Base
   def total
     line_items.sum(&:total)
   end
-
-  private
 
   def calculate_rate
     output = []
@@ -71,8 +78,8 @@ class Logic::CalculateRental < Lib::Logic::Base
     output
   end
 
-  def build_line_item(amount: amount, date: date)
-    rental.calculate_tax(LineItem.build_readonly({
+  def build_line_item(amount:, date:)
+    location.calculate_tax(LineItem.build_readonly({
       :item_type      => :rate,
       :date           => date,
       :amount         => amount,

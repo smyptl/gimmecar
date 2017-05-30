@@ -1,5 +1,6 @@
 class AdvancedInvoicing < ActiveRecord::Migration[5.1]
   def change
+    remove_column :line_items, :tax_rate
     add_column :line_items, :date, :date
 
     add_column :line_items, :charge_id, :integer, index: true

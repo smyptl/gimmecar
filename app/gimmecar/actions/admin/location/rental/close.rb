@@ -1,5 +1,4 @@
 class Actions::Admin::Location::Rental::Close < Lib::Forms::Base
-  include Lib::Forms::Actions
 
   attributes do |a|
     a.date_time :drop_off

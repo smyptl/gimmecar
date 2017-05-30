@@ -12,7 +12,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       render status: 400, :json => args
     end
 
-    Services::Admin::Rates.new({ :pickup => DateTime.now, :drop_off => params[:rental].fetch(:drop_off) }).execute(success, failure, params)
+    Actions::Admin::Location::Rental::GetRates.new({ :pickup => DateTime.now, :drop_off => params[:rental].fetch(:drop_off) }).execute(success, failure, { :location => location })
   end
 
   def drivers
@@ -35,7 +35,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
   end
 
   def vehicles
-    render status: 200, json: Services::Admin::Vehicles::Available.new(location.id).during_period(Time.now, params[:rental][:drop_off]).fetch
+    render status: 200, json: Services::Admin::Vehicles::Available.new(location.id).during_period(DateTime.now, params[:rental][:drop_off]).fetch
   end
 
   def add_ons

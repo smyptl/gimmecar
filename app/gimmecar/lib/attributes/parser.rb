@@ -1,4 +1,4 @@
-class Lib::Forms::Attributes::Base
+class Lib::Attributes::Parser
 
   attr_reader :attributes
 
@@ -19,7 +19,7 @@ class Lib::Forms::Attributes::Base
       when :nested
         parse_nested(value, settings)
       else
-        Lib::Forms::Attributes::TypeCast.send(settings.fetch(:type), (value))
+        Lib::Attributes::TypeCast.send(settings.fetch(:type), (value))
       end
     end
 
@@ -65,8 +65,12 @@ class Lib::Forms::Attributes::Base
     @attributes[name] = { :type => :signature, :options => options }
   end
 
+  def default(name, options = {})
+    @attributes[name] = { :type => :default, :options => options }
+  end
+
   def nested(name, options = {})
-    form = Lib::Forms::Attributes::Base.new
+    form = Lib::Attributes::Parser.new
     yield form
     @attributes[name] = { :type => :nested, :options => options, :attributes => form.fetch }
   end

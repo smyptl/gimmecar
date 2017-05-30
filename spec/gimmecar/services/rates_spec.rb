@@ -3,7 +3,7 @@ require 'factories/locations'
 require 'factories/tax_rates'
 require 'factories/rentals'
 
-describe Logic::CalculateRental do
+describe Services::Rates do
 
   let(:location) { create(:location) }
   let(:tax_rates) { create(:tax_rate, location: location) }
@@ -13,10 +13,10 @@ describe Logic::CalculateRental do
       location
       tax_rates
 
-      rental = Logic::CalculateRental.new(create(:rental,
-                      :pickup_location => location,
-                      :pickup          => DateTime.new(2011, 1, 1),
-                      :drop_off        => DateTime.new(2011, 1, 4))).fetch
+      rental = Services::Rates.fetch(:location => location,
+                      :rental => double(:rental,
+                        :pickup   => DateTime.new(2011, 1, 1),
+                        :drop_off => DateTime.new(2011, 1, 4)))
 
       expect(rental[:line_items].count).to eq(3)
       expect(rental[:line_items].first.taxable_amount).to eq(3500)
@@ -33,10 +33,10 @@ describe Logic::CalculateRental do
         location
         tax_rates
 
-        rental = Logic::CalculateRental.new(create(:rental,
-                        :pickup_location => location,
-                        :pickup          => DateTime.new(2011, 1, 1, 4, 0, 0),
-                        :drop_off        => DateTime.new(2011, 1, 2, 7, 0, 0))).fetch
+        rental = Services::Rates.fetch(:location => location,
+                        :rental => double(:rental,
+                          :pickup   => DateTime.new(2011, 1, 1, 4, 0, 0),
+                          :drop_off => DateTime.new(2011, 1, 2, 7, 0, 0)))
 
         expect(rental[:line_items].count).to eq(2)
         expect(rental[:line_items].first.taxable_amount).to eq(3500)
@@ -51,14 +51,16 @@ describe Logic::CalculateRental do
         location
         tax_rates
 
-        rental = Logic::CalculateRental.new(create(:rental,
-                        :pickup_location => location,
-                        :pickup          => DateTime.new(2011, 1, 1, 4, 0, 0),
-                        :drop_off        => DateTime.new(2011, 1, 2, 6, 0, 0))).fetch
+        rental = Services::Rates.fetch(:location => location,
+                        :rental => double(:rental,
+                          :pickup   => DateTime.new(2011, 1, 1, 4, 0, 0),
+                          :drop_off => DateTime.new(2011, 1, 2, 6, 0, 0)))
 
         expect(rental[:line_items].count).to eq(2)
+        expect(rental[:line_items].first.date).to eq(Date.new(2011, 1, 1))
         expect(rental[:line_items].first.taxable_amount).to eq(3500)
         expect(rental[:line_items].first.tax_collectable).to eq(272)
+        expect(rental[:line_items].second.date).to eq(Date.new(2011, 1, 2))
         expect(rental[:line_items].second.taxable_amount).to eq(2334)
         expect(rental[:line_items].second.tax_collectable).to eq(181)
 
@@ -71,10 +73,10 @@ describe Logic::CalculateRental do
         location
         tax_rates
 
-        rental = Logic::CalculateRental.new(create(:rental,
-                        :pickup_location => location,
-                        :pickup          => DateTime.new(2011, 1, 1, 3, 0, 0),
-                        :drop_off        => DateTime.new(2011, 1, 3, 4, 0, 0))).fetch
+        rental = Services::Rates.fetch(:location => location,
+                        :rental => double(:rental,
+                          :pickup   => DateTime.new(2011, 1, 1, 3, 0, 0),
+                          :drop_off => DateTime.new(2011, 1, 3, 4, 0, 0)))
 
         expect(rental[:line_items].count).to eq(3)
         expect(rental[:line_items].first.taxable_amount).to eq(3500)
@@ -87,10 +89,10 @@ describe Logic::CalculateRental do
         location
         tax_rates
 
-        rental = Logic::CalculateRental.new(create(:rental,
-                        :pickup_location => location,
-                        :pickup          => DateTime.new(2017, 1, 31, 10, 57, 0),
-                        :drop_off        => DateTime.new(2017, 2, 5, 9, 57, 0))).fetch
+        rental = Services::Rates.fetch(:location => location,
+                        :rental => double(:rental,
+                          :pickup   => DateTime.new(2017, 1, 31, 10, 57, 0),
+                          :drop_off => DateTime.new(2017, 2, 5, 9, 57, 0)))
 
         expect(rental[:line_items].count).to eq(5)
         expect(rental[:line_items].first.taxable_amount).to eq(3500)

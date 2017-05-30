@@ -36,7 +36,7 @@ class LineItem < ApplicationRecord
   end
 
   def calculate_tax(tax_rate)
-    write_attribute(:tax_rate, tax_rate)
+    self.tax_rate = tax_rate
 
     tax = tax_rate.calculate(taxable_amount)
 

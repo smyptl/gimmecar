@@ -34,7 +34,7 @@ class Rental < ApplicationRecord
 
   belongs_to :driver
   belongs_to :additional_driver, class_name: 'Driver', required: false
-  belongs_to :vehicle
+  belongs_to :vehicle, required: false
 
   belongs_to :pickup_location,   class_name: 'Location'
   belongs_to :drop_off_location, class_name: 'Location'
@@ -68,10 +68,6 @@ class Rental < ApplicationRecord
 
   def total
     line_items.sum(&:total)
-  end
-
-  def calculate_tax(line_item)
-    line_item.calculate_tax(latest_tax_rate)
   end
 
   private

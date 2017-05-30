@@ -7,11 +7,13 @@ require 'helpers/stripe_helper'
 require 'factories/vehicles'
 require 'factories/drivers'
 require 'factories/insurance_policies'
+require 'factories/tax_rates'
 
 feature 'Login', js: true do
   include_context :login_user_and_select_location
 
   scenario 'login user' do
+    create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, original_location: location, location: location)
 
     visit_admin location_rentals_new_path(:slug => location.slug)
@@ -154,6 +156,6 @@ feature 'Login', js: true do
 
     stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
     expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])
-    expect(stripe_charge['amount']).to eq(3780)
+    expect(stripe_charge['amount']).to eq(3772)
   end
 end

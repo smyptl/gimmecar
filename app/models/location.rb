@@ -37,6 +37,14 @@ class Location < ApplicationRecord
     "#{name} - #{address_1} #{city}, #{state} #{zip_code}"
   end
 
+  def calculate_tax(line_item)
+    line_item.calculate_tax(latest_tax_rate)
+  end
+
+  def latest_combined_tax_rate
+    latest_tax_rate.combined_tax_rate
+  end
+
   def calendar
     open_rentals + future_rentals
   end

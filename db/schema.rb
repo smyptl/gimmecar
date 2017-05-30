@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.json "details"
     t.string "item_type"
     t.bigint "amount"
-    t.decimal "tax_rate", precision: 14, scale: 4
     t.bigint "tax"
     t.date "date"
     t.integer "charge_id"

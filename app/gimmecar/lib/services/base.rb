@@ -1,4 +1,4 @@
-class Lib::Services::Base
+class Lib::Services::Base < Lib::Attributes::Base
 
   PROHIBITED_METHODS = [
     :include,
@@ -16,7 +16,7 @@ class Lib::Services::Base
     def inherited(subclass)
       subclass.class_eval do
         def self.method_added(name)
-          if self::PROHIBITED_METHODS.include?(name.to_sym)
+          if Lib::Services::Base::PROHIBITED_METHODS.include?(name.to_sym)
             remove_method(name)
             raise Exception, "Can't override #{name} method."
           end
@@ -59,7 +59,7 @@ class Lib::Services::Base
   end
 
   def as_of(date)
-    @date = Lib::Forms::Attributes::TypeCast.date_time(date)
+    @date = Lib::Attributes::TypeCast.date_time(date)
     self
   end
 
@@ -68,7 +68,7 @@ class Lib::Services::Base
   end
 
   def during_period(start_date, end_date)
-    @period = Lib::DateRange.new(Lib::Forms::Attributes::TypeCast.date_time(start_date), Lib::Forms::Attributes::TypeCast.date_time(end_date))
+    @period = Lib::DateRange.new(Lib::Attributes::TypeCast.date_time(start_date), Lib::Attributes::TypeCast.date_time(end_date))
     self
   end
 

@@ -1,5 +1,4 @@
-class Services::Public::GetRates < Lib::Forms::Base
-  include Lib::Forms::Actions
+class Actions::Public::GetRates < Lib::Forms::Base
 
   attributes do |a|
     a.date_time :pickup
@@ -64,7 +63,7 @@ class Services::Public::GetRates < Lib::Forms::Base
   end
 
   def success_args
-    Logic::CalculateRental.new(self).fetch
+    Services::Rates.fetch(rental: self, location: Location.first)
   end
 
   def save

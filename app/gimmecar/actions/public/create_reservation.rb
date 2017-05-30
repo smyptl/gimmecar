@@ -1,5 +1,4 @@
-class Actions::CreateReservation < Lib::Forms::Base
-  include Lib::Forms::Actions
+class Actions::Public::CreateReservation < Lib::Forms::Base
 
   attributes do |a|
     a.date_time :pickup
