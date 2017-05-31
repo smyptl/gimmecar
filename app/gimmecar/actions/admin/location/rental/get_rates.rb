@@ -18,6 +18,8 @@ class Actions::Admin::Location::Rental::GetRates < Lib::Forms::Base
   private
 
   def valid_drop_off
+    return if errors.any?
+
     if Lib::DateRange.new(pickup, drop_off).days_apart > 10
       errors.add(:drop_off, "can't book a rental for more than 10 days")
     end

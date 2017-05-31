@@ -104,7 +104,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     @charge.save
 
     @rates.fetch(:line_items).each do |l|
-      @rental.line_items.create(l.attributes)
+      @rental.line_items.create(l.attributes.merge(charge: @charge))
     end
   end
 

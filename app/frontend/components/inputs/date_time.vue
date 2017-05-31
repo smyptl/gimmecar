@@ -203,13 +203,21 @@
 
 <template lang='pug'>
   .whole.left
-    button.input-field.date-field(:class='{ focus: calendar, disabled: disabled }' @focus='showCalendar' @blue='closeCalendar' @click='showCalendar') {{ date_time_formatted }}
+    button.input-field.date-field(:class='{ focus: calendar, disabled: disabled }' @click='toggleCalendar')
+      | {{ date_time_formatted }}
+      span.right(v-if='calendar')
 
     .calendar(v-if='calendar')
       .calendar-header
-        a.left(@click.prevent='calendar_one_month_back()') <
+        a.left(@click.prevent='calendar_one_month_back()')
+          svg(xlmns='http://www.w3.org/2000/svg' viewBox='-175 -175 1000 1000' preserveAspectRatio='xMinYMin')
+            path(d='M308 349l346-346-154-154-500 500 500 500 154-154z')
+
         span {{ calendar_month_name }} {{ calendar_year }}
-        a.right(@click.prevent='calendar_one_month_forward()') >
+        a.right(@click.prevent='calendar_one_month_forward()')
+          svg(xlmns='http://www.w3.org/2000/svg' viewBox='-250 -175 1000 1000' preserveAspectRatio='xMinYMin')
+            path(d='M154 849l500-500-500-500-154 154 346 346-346 346z')
+
       .calendar-content
         .calendar-row
           .calendar-sub-header Su
@@ -336,12 +344,21 @@
   .calendar-header
     width: 100%
     float: left
-    height: 2rem
+    height: 2.5rem
 
     line-height: @height
     font-size: 1rem
     font-weight: 700
     text-align: center
+
+    a
+      height: 1rem
+      line-height: @height
+      margin: 0.75rem @margin-sm
+
+      svg
+        width: 1rem
+        height: 1rem
 
   .calendar-content
     width: 100%

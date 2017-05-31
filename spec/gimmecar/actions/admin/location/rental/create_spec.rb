@@ -3,6 +3,7 @@ require 'factories/locations'
 require 'factories/vehicles'
 require 'factories/drivers'
 require 'factories/users'
+require 'factories/tax_rates'
 require 'factories/insurance_policies'
 require 'helpers/stripe_helper'
 
@@ -12,6 +13,7 @@ describe Actions::Admin::Location::Rental::Create do
     it 'saves driver, insurance policy, rental' do
       user = create(:user)
       location = create(:location)
+      tax_rate = create(:tax_rate, location: location)
       vehicle = create(:vehicle, original_location: location, location: location)
 
       driver_attrs = attributes_for(:driver)
@@ -76,26 +78,31 @@ describe Actions::Admin::Location::Rental::Create do
       expect(rental.driver).to eq(driver)
       expect(rental.vehicle).to eq(vehicle)
       expect(rental.additional_driver).to eq(nil)
-      expect(rental.number).to_not eq(nil)
       expect(rental.pickup).to_not eq(nil)
       expect(rental.drop_off).to eq(drop_off)
+      expect(rental.drop_off_odometer).to eq(nil)
+      expect(rental.drop_off_fuel).to eq(nil)
       expect(rental.pickup_odometer).to eq(1250)
       expect(rental.pickup_fuel).to eq(10)
-
-      expect(rental.line_items.count).to eq(2)
-      line_item = rental.line_items.first
-      expect(line_item.amount).to eq(3500)
-      expect(line_item.total).to eq(3780)
 
       expect(Charge.count).to eq(1)
       charge = Charge.first
       expect(charge.owner).to eq(rental)
       expect(charge.stripe_charge_id).to_not eq(nil)
-      expect(charge.amount).to eq(7560)
+      expect(charge.amount).to eq(7544)
+
+      expect(LineItem.count).to eq(2)
+      expect(rental.line_items.count).to eq(2)
+      rental.line_items.each do |l|
+        expect(l.tax_rate).to eq(tax_rate)
+        expect(l.amount).to eq(3500)
+        expect(l.total).to eq(3772)
+        expect(l.charge).to eq(charge)
+      end
 
       stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
       expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])
-      expect(stripe_charge['amount']).to eq(7560)
+      expect(stripe_charge['amount']).to eq(7544)
     end
   end
 end

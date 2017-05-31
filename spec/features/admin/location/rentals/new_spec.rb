@@ -13,7 +13,7 @@ feature 'Login', js: true do
   include_context :login_user_and_select_location
 
   scenario 'login user' do
-    create(:tax_rate, location: location)
+    tax_rate = create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, original_location: location, location: location)
 
     visit_admin location_rentals_new_path(:slug => location.slug)
@@ -148,6 +148,10 @@ feature 'Login', js: true do
     expect(rental.drop_off).to_not eq(nil)
     expect(rental.pickup_odometer).to eq(40512)
     expect(rental.pickup_fuel).to eq(10)
+
+    rental.line_items.each do |l|
+      expect(l.tax_rate).to eq(tax_rate)
+    end
 
     expect(Charge.count).to eq(1)
     charge = Charge.first
