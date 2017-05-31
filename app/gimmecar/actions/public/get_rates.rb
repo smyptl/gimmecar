@@ -1,69 +1,37 @@
 class Actions::Public::GetRates < Lib::Forms::Base
 
   attributes do |a|
+    a.integer :location_id
     a.date_time :pickup
     a.date_time :drop_off
   end
 
-  validate :pickup_and_drop_off_present,
-    :pickup_is_after_today,
-    :valid_drop_off,
+  validates :pickup,
+    presence: true,
+    after_date: { with: -> { DateTime.now - 59.minutes }, message: 'must be in the future' }
 
-  def rental_period
-    return unless pickup && drop_off
-    return unless pickup.before?(drop_off)
-    @rental_period ||= Lib::DateRange.new(pickup, drop_off)
-  end
+  validates :drop_off,
+    presence: true,
+    after_date: { with: -> { pickup }, allow_nil: true, message: 'must be after pickup' }
+
+  validate :valid_drop_off
 
   private
 
-  def pickup_and_drop_off_present
-    if pickup.nil?
-      errors.add(:pickup, "pickup date and time is required")
-      errors.add(:pickup_date, nil)
-      errors.add(:pickup_time, nil)
-    end
-
-    if drop_off.nil?
-      errors.add(:drop_off, "drop off date and time is required")
-      errors.add(:drop_off_date, nil)
-      errors.add(:drop_off_time, nil)
-    end
-  end
-
-  def pickup_is_after_today
-    return unless pickup
-
-    if pickup.past?
-      errors.add(:pickup, "can't be in the past")
-      errors.add(:pickup_date, nil)
-      errors.add(:pickup_time, nil)
-    end
-  end
-
   def valid_drop_off
-    return unless pickup && drop_off
+    return if errors.any?
 
-    case
-    when !pickup.before?(drop_off)
-      errors.add(:drop_off, "drop off date must be after pickup date")
-      errors.add(:drop_off_date, nil)
-      errors.add(:drop_off_time, nil)
-    when rental_period.days_apart > 10
+    if Lib::DateRange.new(pickup, drop_off).days_apart > 10
       errors.add(:drop_off, "can't book a rental for more than 10 days")
-      errors.add(:drop_off_date, nil)
-      errors.add(:drop_off_time, nil)
     end
-  end
-
-  def failure_args
-    {
-      :errors => errors,
-    }
   end
 
   def success_args
-    Services::Rates.fetch(rental: self, location: Location.first)
+    Services::Rates.fetch(rental: self, location: location)
+  end
+
+  def location
+    Location.first
   end
 
   def save

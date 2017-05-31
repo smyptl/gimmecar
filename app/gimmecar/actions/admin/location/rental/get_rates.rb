@@ -25,12 +25,6 @@ class Actions::Admin::Location::Rental::GetRates < Lib::Forms::Base
     end
   end
 
-  def failure_args
-    {
-      :errors => errors,
-    }
-  end
-
   def success_args
     Services::Rates.fetch(rental: self, location: params[:location])
   end
