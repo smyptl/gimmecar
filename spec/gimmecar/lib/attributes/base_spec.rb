@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Lib::Forms::Base do
+describe Lib::Attributes::Base do
 
   describe '.define_attribute_read_and_write_methods' do
 
     let(:test_form) do
-      Class.new(Lib::Forms::Base) do
+      Class.new(Lib::Attributes::Base) do
         attributes do |a|
           a.string :confirmation_number
           a.nested :driver do |d|

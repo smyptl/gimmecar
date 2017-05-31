@@ -1,4 +1,4 @@
-class Lib::Services::Base
+class Lib::Services::Base < Lib::Attributes::Base
 
   PROHIBITED_METHODS = [
     :include,
@@ -16,7 +16,7 @@ class Lib::Services::Base
     def inherited(subclass)
       subclass.class_eval do
         def self.method_added(name)
-          if self::PROHIBITED_METHODS.include?(name.to_sym)
+          if Lib::Services::Base::PROHIBITED_METHODS.include?(name.to_sym)
             remove_method(name)
             raise Exception, "Can't override #{name} method."
           end
@@ -38,7 +38,7 @@ class Lib::Services::Base
   end
 
   def user
-    @user || (raise NotImplementedError)
+    @user || (raise Lib::Errors::NotImplemented)
   end
 
   def include(hash)
@@ -59,21 +59,21 @@ class Lib::Services::Base
   end
 
   def as_of(date)
-    @date = Lib::Forms::Attributes::TypeCast.date_time(date)
+    @date = Lib::Attributes::TypeCast.date_time(date)
     self
   end
 
   def date
-    @date || (raise NotImplementedError)
+    @date || (raise Lib::Errors::NotImplemented)
   end
 
   def during_period(start_date, end_date)
-    @period = Lib::DateRange.new(Lib::Forms::Attributes::TypeCast.date_time(start_date), Lib::Forms::Attributes::TypeCast.date_time(end_date))
+    @period = Lib::DateRange.new(Lib::Attributes::TypeCast.date_time(start_date), Lib::Attributes::TypeCast.date_time(end_date))
     self
   end
 
   def period
-    @period || (raise NotImplementedError)
+    @period || (raise Lib::Errors::NotImplemented)
   end
 
   def url_helpers

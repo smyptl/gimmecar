@@ -51,7 +51,7 @@
       emailInvoice () {
       },
       printInvoice () {
-        window.open(this.$route.path + '/print-receipt')
+        window.open(this.$route.path + '/receipt/print')
       },
     },
   }
@@ -59,7 +59,7 @@
 
 <template lang='pug'>
   .panel.panel-base
-    close(v-if='close')
+    close(v-on:close='close = false' v-if='close')
     .panel-base-header
       h2 {{ rental.number }}
       dropdown.flex-element.right
@@ -98,6 +98,8 @@
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/components/panels/details'
+
   .action-icon
     float: right
     height: 1.25rem

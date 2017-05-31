@@ -1,5 +1,4 @@
 class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
-  include Lib::Forms::Actions
   include Actions::Admin::Location::Rental::Concerns::Driver
 
   attributes do |a|
@@ -69,9 +68,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
         return false
       end
 
-      @rental_logic = Logic::CalculateRental.new(self)
+      @rates = Services::Rates.fetch(rental: self, location: location)
 
-      Charge.new({ :amount => @rental_logic.total }).execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
+      Charge.new({ :amount => @rates.fetch(:total) }).execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
     end
   end
 
@@ -104,8 +103,8 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     @charge.owner = @rental
     @charge.save
 
-    @rental_logic.line_items.each do |l|
-      @rental.line_items.create(l)
+    @rates.fetch(:line_items).each do |l|
+      @rental.line_items.create(l.attributes.merge(charge: @charge))
     end
   end
 

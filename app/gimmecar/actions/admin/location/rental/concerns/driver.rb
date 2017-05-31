@@ -3,8 +3,6 @@ module Actions::Admin::Location::Rental::Concerns::Driver
 
   included do
     attributes do |a|
-      a.date_time :drop_off
-
       a.integer :driver_id
       a.nested :driver do |n|
         n.string  :first_name
@@ -162,7 +160,11 @@ module Actions::Admin::Location::Rental::Concerns::Driver
     end
   end
 
+  def drop_off
+    raise Lib::Errors::NotImplemented
+  end
+
   def pickup
-    DateTime.now
+    raise Lib::Errors::NotImplemented
   end
 end

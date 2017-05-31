@@ -1,7 +1,7 @@
 <script>
   import Form from 'Utils/form'
 
-  import InputDateTime from './date_time'
+  import InputDateTime from 'Components/inputs/date_time'
   import InputError from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
 
@@ -92,37 +92,36 @@
       v-on:leave='leave')
 
       #rental-details(v-if="current_step == 'rental-details'" key='details')
-        form(@submit.prevent='viewRates')
-          .input-row
-            label.input-label.input-lg Where:
-            .input-block.whole
-              select.input-field.input-lg
-                option(value='' disabled) Current, our only location.
-                option(value='') Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
-              input-error-message(v-bind:errors='form.errors.get("location")')
+        .input-row
+          label.input-label.input-lg Where:
+          .input-block.whole
+            select.input-field.input-lg
+              option(value='' disabled) Current, our only location.
+              option(value='') Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
+          input-error-message(v-bind:errors='form.errors.get("location")')
 
-          .input-row
-            .input-container.one-half
-              label.input-label.input-lg From:
-              input-date-time(
+        .input-row
+          .input-container.one-half
+            label.input-label.input-lg From:
+            .input-block.whole
+              input-date-time.input-lg(
                 v-model='form.pickup'
                 v-error='form.errors.has("pickup")'
-                timezone='America/Los_Angeles'
                 @input='form.errors.clear("pickup")')
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
+            input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
 
-            .input-container.one-half
-              label.input-label.input-lg To:
-              input-date-time(
+          .input-container.one-half
+            label.input-label.input-lg To:
+            .input-block.whole
+              input-date-time.input-lg(
                 v-model='form.drop_off'
                 v-error='form.errors.has("drop_off")'
-                timezone='America/Los_Angeles'
                 @input='form.errors.clear("drop_off")')
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
+            input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
 
-            .input-submit
-              .input-block.whole
-                input.btn.btn-full.btn-lg.btn-primary(type='submit' value='View Rates')
+          .input-submit
+            .input-block.whole
+              input.btn.btn-full.btn-lg.btn-primary(@click.prevent='viewRates' type='submit' value='View Rates')
 
       #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
         rates.input-block.margin-top-default(:summary='summary')
@@ -207,6 +206,9 @@
 <style lang='stylus'>
   @import '~Styles/global/colors'
   @import '~Styles/global/layout'
+
+  #reservation-panel
+    z-index: 2
 
   .input-field
     background-color: $background-color-app

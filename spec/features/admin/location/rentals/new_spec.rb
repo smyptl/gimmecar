@@ -7,11 +7,13 @@ require 'helpers/stripe_helper'
 require 'factories/vehicles'
 require 'factories/drivers'
 require 'factories/insurance_policies'
+require 'factories/tax_rates'
 
 feature 'Login', js: true do
   include_context :login_user_and_select_location
 
   scenario 'login user' do
+    tax_rate = create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, original_location: location, location: location)
 
     visit_admin location_rentals_new_path(:slug => location.slug)
@@ -90,7 +92,9 @@ feature 'Login', js: true do
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Payment')
-    stripe_iframe = all('iframe[name=stripeField_card_element1]').last
+
+    stripe_iframe = all('iframe[name=__privateStripeFrame4]').last
+    puts stripe_iframe
     Capybara.within_frame stripe_iframe do
       find('input[name=cardnumber]').set(CARD_TYPE[:visa])
       find('input[name="exp-date"]').set('01/20')
@@ -145,6 +149,10 @@ feature 'Login', js: true do
     expect(rental.pickup_odometer).to eq(40512)
     expect(rental.pickup_fuel).to eq(10)
 
+    rental.line_items.each do |l|
+      expect(l.tax_rate).to eq(tax_rate)
+    end
+
     expect(Charge.count).to eq(1)
     charge = Charge.first
     expect(charge.owner).to eq(rental)
@@ -152,6 +160,6 @@ feature 'Login', js: true do
 
     stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
     expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])
-    expect(stripe_charge['amount']).to eq(3780)
+    expect(stripe_charge['amount']).to eq(3772)
   end
 end

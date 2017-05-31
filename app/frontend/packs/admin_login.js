@@ -17,5 +17,5 @@ import InputErrorMessage from 'Components/inputs/error_message'
 Vue.component('input-error-message', InputErrorMessage)
 
 var vue = new Vue({
-  render: h => h(require('./base')),
+  render: h => h(require('Admin/login/base')),
 }).$mount('#gimmecar-app')

@@ -1,6 +1,5 @@
 class Actions::Admin::User::Login < Lib::Forms::Base
-  include Lib::Forms::Actions
-
+  
   attr_reader :user, :auth_token
 
   attributes do |a|

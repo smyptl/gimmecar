@@ -36,14 +36,15 @@
 
         if (date.isValid()) {
           this.current_date = date
+        } else {
+          this.current_date = null
         }
 
         this.formatDate()
         this.emitInput()
       },
       formatDate () {
-        console.log(this.current_date.isValid())
-        if (this.current_date.isValid()) {
+        if (this.current_date && this.current_date.isValid()) {
           this.date_formatted = this.current_date.format('M/D/YYYY')
         }
       },

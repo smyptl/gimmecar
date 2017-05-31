@@ -30,7 +30,19 @@ class Location < ApplicationRecord
 
   has_many :vehicles
 
+  has_many :tax_rates
+  has_one :latest_tax_rate, -> { order created_at: :desc }, class_name: 'TaxRate'
+
   def description
+    "#{name} - #{address_1} #{city}, #{state} #{zip_code}"
+  end
+
+  def calculate_tax(line_item)
+    line_item.calculate_tax(latest_tax_rate)
+  end
+
+  def latest_combined_tax_rate
+    latest_tax_rate.combined_tax_rate
   end
 
   def calendar

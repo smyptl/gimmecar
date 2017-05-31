@@ -11,7 +11,7 @@ class Public::ReservationController < ApplicationController
       render status: 400, :json => args
     end
 
-    Services::Public::GetRates.new(params.permit(:pickup, :drop_off)).execute(success, failure)
+    Actions::Public::GetRates.new(params.permit(:pickup, :drop_off)).execute(success, failure)
   end
 
   def create

@@ -23,15 +23,15 @@
             first_name: '',
             last_name: '',
             license_number: '',
-            license_state: '',
-            license_country: '',
+            license_state: 'California',
+            license_country: 'United States',
             license_expiration_date: '',
             address_1: '',
             address_2: '',
             city: '',
-            state: '',
+            state: 'California',
             zip_code: '',
-            country: '',
+            country: 'United States',
             gender: '',
             date_of_birth: '',
             cell_phone_number: '',
@@ -58,15 +58,15 @@
             first_name: '',
             last_name: '',
             license_number: '',
-            license_state: '',
-            license_country: '',
+            license_state: 'California',
+            license_country: 'United States',
             license_expiration_date: '',
             address_1: '',
             address_2: '',
             city: '',
-            state: '',
+            state: 'California',
             zip_code: '',
-            country: '',
+            country: 'United States',
             gender: '',
             date_of_birth: '',
             cell_phone_number: '',
@@ -193,8 +193,8 @@
 </script>
 
 <template lang='pug'>
-  .form-container(ref='form')
-    h3.form-header.form-header-first
+  .panel-form(ref='form')
+    h3.panel-form-header.panel-form-header-first
       | Rental: {{ current_step }}
       small.right {{ current_step_number }} of {{ number_of_steps }}
 
@@ -203,7 +203,7 @@
         .input-container.one-half
           label.input-label Pickup:
           .input-block.whole
-            input-date-time(v-model='pickup' disabled)
+            input-date-time(v-model='pickup' disabled=true)
 
         .input-container.one-half
           label.input-label Drop-off:
@@ -300,3 +300,7 @@
         button.btn.btn-primary.right(@click.prevent='validatePayment') Continue
 
 </template>
+
+<style lang='stylus'>
+  @import '~Styles/components/panels/form'
+</style>

@@ -1,5 +1,4 @@
-class Services::Admin::Rates < Lib::Forms::Base
-  include Lib::Forms::Actions
+class Actions::Admin::Location::Rental::GetRates < Lib::Forms::Base
 
   attributes do |a|
     a.date_time :pickup
@@ -16,31 +15,18 @@ class Services::Admin::Rates < Lib::Forms::Base
 
   validate :valid_drop_off
 
-  def rental_period
-    return unless pickup && drop_off
-    return unless pickup.before?(drop_off)
-    @rental_period ||= Lib::DateRange.new(pickup, drop_off)
-  end
-
   private
 
   def valid_drop_off
-    return unless pickup && drop_off
-    return unless pickup.before?(drop_off)
+    return if errors.any?
 
-    if rental_period.days_apart > 10
+    if Lib::DateRange.new(pickup, drop_off).days_apart > 10
       errors.add(:drop_off, "can't book a rental for more than 10 days")
     end
   end
 
-  def failure_args
-    {
-      :errors => errors,
-    }
-  end
-
   def success_args
-    Logic::CalculateRental.new(self).fetch
+    Services::Rates.fetch(rental: self, location: params[:location])
   end
 
   def save

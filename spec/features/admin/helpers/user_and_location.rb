@@ -15,8 +15,6 @@ shared_context :login_user_and_select_location do
     user
     location
 
-    expect(page.driver.console_messages).to eq([])
-
     fill_in 'Email', with: user.email
     fill_in 'Password', with: '1234'
     click_button 'Login'

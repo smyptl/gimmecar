@@ -1,0 +1,35 @@
+@import '~Styles/global/colors'
+@import '~Styles/global/layout'
+@import '~Styles/global/type'
+
+.panel-popup-form
+  width: 30rem
+  max-width: 100%
+
+.panel-form
+  width: 100%
+  float: left
+  margin: 0 auto
+
+.panel-form-padding
+  padding: 0 $padding-default
+
+.panel-form-header.panel-form-header-first
+  margin-top: 0
+
+  &:before
+    content: ' '
+    height: 0.125rem
+    width: 3rem
+    display: block
+    margin-bottom: $padding-default
+
+    background: $blue
+
+.panel-form-header
+  width: 100%
+  float: left
+  margin: $padding-default 0 $padding-sm
+  padding-left: $input-margin-x
+  padding-right: $input-margin-x
+  font-weight: 400

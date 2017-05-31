@@ -1,29 +1,35 @@
-var path    = require('path')
-var webpack = require('webpack')
-var merge   = require('webpack-merge')
+// Note: You must restart bin/webpack-dev-server for changes to take effect
 
-var config = require('./base.js')
+/* eslint global-require: 0 */
 
-module.exports = merge(config, {
-  output: {
-    path: path.resolve(__dirname, '../../public/packs'),
-    filename: "[name]-[hash].js",
-    publicPath: '/',
-  },
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const CompressionPlugin = require('compression-webpack-plugin')
+const sharedConfig = require('./shared.js')
+
+module.exports = merge(sharedConfig, {
+  output: { filename: '[name]-[chunkhash].js' },
+  devtool: 'source-map',
+  stats: 'normal',
 
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
     new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      sourceMap: true,
+
       compress: {
         warnings: false
+      },
+
+      output: {
+        comments: false
       }
     }),
-  ],
+
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.(js|css|html|json|ico|svg|eot|otf|ttf)$/
+    })
+  ]
 })

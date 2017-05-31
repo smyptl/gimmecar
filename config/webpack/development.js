@@ -1,52 +1,42 @@
-var path = require('path')
+// Note: You must restart bin/webpack-dev-server for changes to take effect
 
-var webpack = require('webpack')
-var merge   = require('webpack-merge')
-var config  = require('./base.js')
-var _       = require('lodash')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const sharedConfig = require('./shared.js')
+const { settings, output } = require('./configuration.js')
 
-_.forEach(Object.keys(config.entry), function (name) {
-  var hot_reload = 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr&noInfo=true&reload=true'
+module.exports = merge(sharedConfig, {
+  devtool: 'cheap-eval-source-map',
 
-  if (_.isArray(config.entry[name])) {
-    config.entry[name].push(hot_reload)
-  } else {
-    config.entry[name] = [config.entry[name], hot_reload]
-  }
-})
-
-config = merge(config, {
-  devtool: 'sourcemap',
-  devServer: {
-    hot: true,
-  },
-  output: {
-    path: path.resolve(__dirname, '../../public/assets'),
-    filename: '[name].js',
-    publicPath: 'http://localhost:8080/'
-  },
   stats: {
     errorDetails: true
   },
+
+  output: {
+    pathinfo: true
+  },
+
+  devServer: {
+    clientLogLevel: 'none',
+    https: settings.dev_server.https,
+    host: settings.dev_server.host,
+    port: settings.dev_server.port,
+    hot: true,
+    contentBase: output.path,
+    publicPath: output.publicPath,
+    compress: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    historyApiFallback: true,
+    watchOptions: {
+      ignored: /node_modules/
+    }
+  },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    // enable HMR globally
+
     new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-  ],
+    // prints more readable module names in the browser console on HMR updates
+  ]
 })
-
-var express = require('express')
-
-var app = express()
-var compiler = webpack(config);
-
-app.use(require('webpack-dev-middleware')(compiler, {
-  publicPath: config.output.publicPath,
-  quiet: true,
-}))
-
-app.use(require('webpack-hot-middleware')(compiler))
-
-app.listen(8080)
-
-module.exports = config

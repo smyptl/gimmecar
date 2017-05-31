@@ -5,8 +5,7 @@
 #  id           :integer          not null, primary key
 #  location_id  :integer
 #  date         :date
-#  rate         :decimal(10, )
-#  decimal      :decimal(10, )
+#  rate         :integer
 #  vehicle_type :string
 #
 

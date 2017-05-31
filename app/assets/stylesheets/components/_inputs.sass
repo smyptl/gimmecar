@@ -1,8 +1,6 @@
-$input-padding-y: $padding-ex-sm/2
-$input-margin-x: $margin-ex-sm/2
-
 .form-container
   width: 100%
+  float: left
 
   margin: 0 auto
 
@@ -91,10 +89,11 @@ h6.input-label
   border: 1px solid $border-color-input
 
   cursor: pointer
+  text-align: left
   font-size: 0.75rem
   font-family: "Hack"
   font-weight: 400
-  color: #000000
+  color: $black
 
   &::-webkit-input-placeholder,
   &::-input-placeholder,
@@ -102,19 +101,34 @@ h6.input-label
   &::placeholder,
     color: $text-color-placeholder
 
-.input-field:disabled
+.input-field:disabled,
+.input-field.disabled,
+.input-field.disabled:focus
   background: $background-color-input-disabled
+  border: 1px solid $border-color-input
+  box-shadow: 0 0 0 0
+
   color: $black
   cursor: not-allowed
 
 .input-field:focus,
-.StripeElement--focus
+.input-field.focus,
+.StripeElement--focus,
+.input-field.input-contrast:focus,
+.input-contrast .input-field:focus,
+.input-contrast .input-field.focus
   z-index: 2
   border-color: $blue
   background-color: $white
   box-shadow: 0 0 0 0.0625rem lighten($blue, 30%)
 
-.input-field.input-lg
+.input-field.input-contrast,
+.input-contrast .input-field
+  border-color: $border-color-input-contrast
+  background-color: $background-color-input-contrast
+
+.input-field.input-lg,
+.input-lg .input-field
   height: $input-height-lg
   font-size: $font-size-default
 
@@ -187,20 +201,22 @@ input.input-range
 
     -webkit-appearance: none
 
-.input-contrast
-  border-color: $border-color-input-contrast
-  background-color: $background-color-input-contrast
-
 .input-field.input-field-error,
 .input-field-error .input-field,
-.StripeElement--invalid
+.StripeElement--invalid,
+.input-field.input-field-error.input-contrast,
+.input-contrast .input-field.input-field-error
   color: $text-color-red
   border-color: $border-color-red
   background-color: $white
+  box-shadow: 0 0 0 0
 
 .input-field.input-field-error:focus,
 .input-field-error .input-field:focus,
-.StripeElement--invalid.StripeElement--focus
+.StripeElement--invalid.StripeElement--focus,
+.input-field.input-field-error.input-contrast:focus,
+.input-contrast .input-field.input-field-error:focus,
+.input-contrast .input-field.input-field-error.focus
   border-color: $border-color-red
   box-shadow: 0 0 0 0.0625rem lighten($red, 23%)
 

@@ -65,4 +65,9 @@
 <style lang='stylus' scoped>
   .page-break
     page-break-after: always
+
+  img
+    max-height: 12rem
+    max-width: 100%
+
 </style>

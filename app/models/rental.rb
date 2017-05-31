@@ -14,12 +14,11 @@
 #  notes                                                :text
 #  pickup_location_id                                   :integer
 #  pickup                                               :datetime
-#  pickup_odometer                                      :decimal(10, )
-#  decimal                                              :decimal(10, )
+#  pickup_odometer                                      :integer
 #  pickup_fuel                                          :float
 #  drop_off_location_id                                 :integer
 #  drop_off                                             :datetime
-#  drop_off_odometer                                    :decimal(10, )
+#  drop_off_odometer                                    :integer
 #  drop_off_fuel                                        :float
 #  collision_damage_waiver                              :boolean
 #  driver_financial_responsibility_signature            :text
@@ -30,11 +29,12 @@
 
 class Rental < ApplicationRecord
 
-  OPEN = 'open'
+  OPEN   = 'open'
+  CLOSED = 'closed'
 
   belongs_to :driver
   belongs_to :additional_driver, class_name: 'Driver', required: false
-  belongs_to :vehicle
+  belongs_to :vehicle, required: false
 
   belongs_to :pickup_location,   class_name: 'Location'
   belongs_to :drop_off_location, class_name: 'Location'
@@ -45,7 +45,7 @@ class Rental < ApplicationRecord
   scope :reserved,  -> { where(status: 'reserved') }
   scope :cancelled, -> { where(status: 'cancelled') }
   scope :open,      -> { where(status: OPEN) }
-  scope :closed,    -> { where(status: 'closed') }
+  scope :closed,    -> { where(status: CLOSED) }
 
   scope :past, -> { where('drop_off < ?', Date.today) }
 
@@ -55,8 +55,15 @@ class Rental < ApplicationRecord
   delegate :name, to: :additional_driver, prefix: true, allow_nil: true
   delegate :make_model, to: :vehicle, prefix: true
 
+  delegate :description, to: :pickup_location, prefix: true
+  delegate :latest_tax_rate, to: :pickup_location
+
   def self.create_open(args)
     create(args.merge(:status => OPEN))
+  end
+
+  def rental_period
+    Lib::DateRange.new(pickup, drop_off)
   end
 
   def total
