@@ -1,7 +1,7 @@
 class CreateRentals < ActiveRecord::Migration[5.0]
   def change
     create_table :rentals do |t|
-      t.timestamp
+      t.timestamps
       t.string :number
       t.string :source
       t.string :status

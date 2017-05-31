@@ -1,9 +1,15 @@
 require 'spec_helper'
 
+require 'factories/tax_rates'
+require 'factories/locations'
+
 feature "Reservations", js: true do
 
   scenario "create reservation" do
     visit root_path
+
+    location = create(:location)
+    create(:tax_rate, location: location)
 
     click_button "View Rates"
 

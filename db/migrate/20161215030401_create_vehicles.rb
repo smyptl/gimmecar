@@ -1,7 +1,7 @@
 class CreateVehicles < ActiveRecord::Migration[5.0]
   def change
     create_table :vehicles do |t|
-      t.timestamp
+      t.timestamps
       t.belongs_to :original_location, index: true
       t.belongs_to :location, index: true
       t.string :vehicle_type

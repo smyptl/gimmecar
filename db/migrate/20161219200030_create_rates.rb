@@ -1,7 +1,7 @@
 class CreateRates < ActiveRecord::Migration[5.0]
   def change
     create_table :rates do |t|
-      t.timestamp
+      t.timestamps
       t.belongs_to :location
       t.date :date
       t.integer :rate, limit: 8

@@ -1,7 +1,7 @@
 class CreateLocations < ActiveRecord::Migration[5.0]
   def change
     create_table :locations do |t|
-      t.timestamp
+      t.timestamps
       t.string :name
       t.string :slug
       t.string :latitude
@@ -16,7 +16,7 @@ class CreateLocations < ActiveRecord::Migration[5.0]
     end
 
     create_table :locations_users do |t|
-      t.timestamp
+      t.timestamps
       t.belongs_to :user, index: true
       t.belongs_to :location, index: true
     end

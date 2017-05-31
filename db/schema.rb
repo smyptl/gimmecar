@@ -16,6 +16,8 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   enable_extension "plpgsql"
 
   create_table "charges", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "owner_type"
     t.integer "owner_id"
     t.string "stripe_charge_id"
@@ -25,6 +27,8 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   end
 
   create_table "drivers", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
     t.string "gender"
@@ -48,6 +52,8 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   end
 
   create_table "insurance_policies", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "user_id"
     t.integer "driver_id"
     t.string "company_name"
@@ -64,15 +70,16 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   end
 
   create_table "line_items", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "invoice_type"
     t.integer "invoice_id"
     t.json "details"
     t.string "item_type"
-    t.bigint "amount"
-    t.bigint "tax"
     t.date "date"
     t.integer "charge_id"
     t.integer "tax_rate_id"
+    t.bigint "amount"
     t.bigint "taxable_amount"
     t.bigint "tax_collectable"
     t.bigint "state_taxable_amount"
@@ -83,10 +90,14 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.bigint "city_amount"
     t.bigint "district_taxable_amount"
     t.bigint "district_amount"
+    t.index ["charge_id"], name: "index_line_items_on_charge_id"
     t.index ["invoice_type", "invoice_id"], name: "index_line_items_on_invoice_type_and_invoice_id"
+    t.index ["tax_rate_id"], name: "index_line_items_on_tax_rate_id"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name"
     t.string "slug"
     t.string "latitude"
@@ -101,6 +112,8 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   end
 
   create_table "locations_users", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "user_id"
     t.integer "location_id"
     t.index ["location_id"], name: "index_locations_users_on_location_id"
@@ -108,6 +121,8 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   end
 
   create_table "rates", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "location_id"
     t.date "date"
     t.bigint "rate"
@@ -116,6 +131,8 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   end
 
   create_table "rentals", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "number"
     t.string "source"
     t.string "status"
@@ -158,6 +175,8 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -169,6 +188,8 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   end
 
   create_table "vehicles", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "original_location_id"
     t.integer "location_id"
     t.string "vehicle_type"
