@@ -1,4 +1,4 @@
-class CreateRentals < ActiveRecord::Migration[5.0]
+class CreateRentals < ActiveRecord::Migration[5.1]
   def change
     create_table :rentals do |t|
       t.timestamps
