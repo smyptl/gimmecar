@@ -12,12 +12,7 @@
 #  vehicle_type :string
 #
 
-class Rate < ApplicationRecord
-
-  VEHICLE_TYPES = [
-    :compact
-  ]
-
-  belongs_to :location
-
+FactoryGirl.define do
+  factory :rate do
+  end
 end

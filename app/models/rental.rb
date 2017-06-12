@@ -3,6 +3,8 @@
 # Table name: rentals
 #
 #  id                                                   :integer          not null, primary key
+#  created_at                                           :datetime         not null
+#  updated_at                                           :datetime         not null
 #  number                                               :string
 #  source                                               :string
 #  status                                               :string
@@ -39,6 +41,10 @@ class Rental < ApplicationRecord
   belongs_to :pickup_location,   class_name: 'Location'
   belongs_to :drop_off_location, class_name: 'Location'
 
+  belongs_to :tax_rate
+  has_one :latest_tax_rate, through: :pickup_location
+
+  has_many :rental_rates
   has_many :line_items, as: :invoice
   has_many :charges, as: :owner
 
@@ -56,7 +62,6 @@ class Rental < ApplicationRecord
   delegate :make_model, to: :vehicle, prefix: true
 
   delegate :description, to: :pickup_location, prefix: true
-  delegate :latest_tax_rate, to: :pickup_location
 
   def self.create_open(args)
     create(args.merge(:status => OPEN))

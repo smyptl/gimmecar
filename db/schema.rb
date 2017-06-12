@@ -15,18 +15,18 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "charges", id: :serial, force: :cascade do |t|
+  create_table "charges", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "owner_type"
-    t.integer "owner_id"
+    t.bigint "owner_id"
     t.string "stripe_charge_id"
     t.bigint "amount"
     t.boolean "deposit", default: false
     t.index ["owner_type", "owner_id"], name: "index_charges_on_owner_type_and_owner_id"
   end
 
-  create_table "drivers", id: :serial, force: :cascade do |t|
+  create_table "drivers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "first_name"
@@ -51,11 +51,11 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.text "notes"
   end
 
-  create_table "insurance_policies", id: :serial, force: :cascade do |t|
+  create_table "insurance_policies", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "driver_id"
+    t.bigint "user_id"
+    t.bigint "driver_id"
     t.string "company_name"
     t.string "agent"
     t.string "policy_number"
@@ -69,17 +69,21 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.index ["user_id"], name: "index_insurance_policies_on_user_id"
   end
 
-  create_table "line_items", id: :serial, force: :cascade do |t|
+  create_table "line_items", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "invoice_type"
-    t.integer "invoice_id"
-    t.json "details"
+    t.bigint "invoice_id"
     t.string "item_type"
+    t.bigint "item_id"
+    t.bigint "charge_id"
+    t.json "details"
     t.date "date"
-    t.integer "charge_id"
-    t.integer "tax_rate_id"
+    t.integer "quantity"
+    t.bigint "total"
     t.bigint "amount"
+    t.bigint "discount"
+    t.bigint "sub_total"
     t.bigint "taxable_amount"
     t.bigint "tax_collectable"
     t.bigint "state_taxable_amount"
@@ -92,10 +96,10 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.bigint "district_amount"
     t.index ["charge_id"], name: "index_line_items_on_charge_id"
     t.index ["invoice_type", "invoice_id"], name: "index_line_items_on_invoice_type_and_invoice_id"
-    t.index ["tax_rate_id"], name: "index_line_items_on_tax_rate_id"
+    t.index ["item_type", "item_id"], name: "index_line_items_on_item_type_and_item_id"
   end
 
-  create_table "locations", id: :serial, force: :cascade do |t|
+  create_table "locations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
@@ -111,42 +115,53 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.string "phone_number"
   end
 
-  create_table "locations_users", id: :serial, force: :cascade do |t|
+  create_table "locations_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "location_id"
+    t.bigint "user_id"
+    t.bigint "location_id"
     t.index ["location_id"], name: "index_locations_users_on_location_id"
     t.index ["user_id"], name: "index_locations_users_on_user_id"
   end
 
-  create_table "rates", id: :serial, force: :cascade do |t|
+  create_table "rates", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "location_id"
+    t.bigint "location_id"
+    t.boolean "default", default: false
     t.date "date"
-    t.bigint "rate"
+    t.bigint "amount"
     t.string "vehicle_type"
     t.index ["location_id"], name: "index_rates_on_location_id"
   end
 
-  create_table "rentals", id: :serial, force: :cascade do |t|
+  create_table "rental_rates", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "rental_id"
+    t.date "date"
+    t.bigint "amount"
+    t.index ["rental_id"], name: "index_rental_rates_on_rental_id"
+  end
+
+  create_table "rentals", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "number"
     t.string "source"
     t.string "status"
     t.boolean "confirmed"
-    t.integer "driver_id"
-    t.integer "additional_driver_id"
-    t.integer "vehicle_id"
+    t.bigint "driver_id"
+    t.bigint "additional_driver_id"
+    t.bigint "vehicle_id"
+    t.bigint "tax_rate_id"
     t.string "vehicle_type"
     t.text "notes"
-    t.integer "pickup_location_id"
+    t.bigint "pickup_location_id"
     t.datetime "pickup"
     t.bigint "pickup_odometer"
     t.float "pickup_fuel"
-    t.integer "drop_off_location_id"
+    t.bigint "drop_off_location_id"
     t.datetime "drop_off"
     t.bigint "drop_off_odometer"
     t.float "drop_off_fuel"
@@ -159,6 +174,7 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.index ["driver_id"], name: "index_rentals_on_driver_id"
     t.index ["drop_off_location_id"], name: "index_rentals_on_drop_off_location_id"
     t.index ["pickup_location_id"], name: "index_rentals_on_pickup_location_id"
+    t.index ["tax_rate_id"], name: "index_rentals_on_tax_rate_id"
     t.index ["vehicle_id"], name: "index_rentals_on_vehicle_id"
   end
 
@@ -174,7 +190,7 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.index ["location_id"], name: "index_tax_rates_on_location_id"
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "first_name"
@@ -187,11 +203,11 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.string "perishable_token"
   end
 
-  create_table "vehicles", id: :serial, force: :cascade do |t|
+  create_table "vehicles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "original_location_id"
-    t.integer "location_id"
+    t.bigint "original_location_id"
+    t.bigint "location_id"
     t.string "vehicle_type"
     t.string "vin"
     t.string "license_number"

@@ -26,7 +26,7 @@
     },
     computed: {
       rates () {
-        return Filter(this.summary.line_items, { item_type: "rate" })
+        return this.summary.rates
       },
     },
   }

@@ -3,6 +3,8 @@
 # Table name: locations
 #
 #  id           :integer          not null, primary key
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #  name         :string
 #  slug         :string
 #  latitude     :string
@@ -30,6 +32,8 @@ class Location < ApplicationRecord
 
   has_many :vehicles
 
+  has_many :rates, -> { where(default: false) }
+  has_many :default_rates, -> { where(default: true) }, class_name: 'Rate'
   has_many :tax_rates
   has_one :latest_tax_rate, -> { order created_at: :desc }, class_name: 'TaxRate'
 
@@ -37,8 +41,8 @@ class Location < ApplicationRecord
     "#{name} - #{address_1} #{city}, #{state} #{zip_code}"
   end
 
-  def calculate_tax(line_item)
-    line_item.calculate_tax(latest_tax_rate)
+  def rates_for(vehicle_type:, date:)
+    rates.where(vehicle_type: vehicle_type, date: date).first || default_rates.where(vehicle_type: vehicle_type).first
   end
 
   def latest_combined_tax_rate

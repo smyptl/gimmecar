@@ -53,6 +53,22 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     @rental_period ||= Lib::DateRange.new(pickup, drop_off)
   end
 
+  def rates
+    @rates ||= Services::Rates.fetch(rental: self, location: location)
+  end
+
+  def vehicle_type
+    :compact
+  end
+
+  def location
+    @location ||= Location.find(params.fetch(:location_id))
+  end
+
+  def available_vehicle_ids
+    location.available_vehicle_ids(rental_period)
+  end
+
   def valid?
     valid = super
 
@@ -64,13 +80,12 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       end
 
       failure = lambda do |args|
+        errors.add(:card, args.fetch(:message))
         write_attribute(:stripe_customer_id, args.fetch(:customer_id))
         return false
       end
 
-      @rates = Services::Rates.fetch(rental: self, location: location)
-
-      Charge.new({ :amount => @rates.fetch(:total) }).execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
+      Charge.new({ :amount => rates.fetch(:total) }).execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
     end
   end
 
@@ -78,9 +93,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     d = Driver.create(driver.except(:insurance).merge(:stripe_id => stripe_customer_id))
     InsurancePolicy.create(driver.fetch(:insurance).except(:verified).merge(:driver => d, :user_id => params.fetch(:user_id)))
 
-    if add_additional_driver
-      ad = AdditionalDriver.create(additional_driver)
-    end
+    ad = AdditionalDriver.create(additional_driver) if add_additional_driver
 
     @rental = Rental.create_open({
       :driver                                               => d,
@@ -103,8 +116,12 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     @charge.owner = @rental
     @charge.save
 
-    @rates.fetch(:line_items).each do |l|
-      @rental.line_items.create(l.attributes.merge(charge: @charge))
+    rates.fetch(:line_items).each do |l|
+      @rental.line_items.create(l.merge(charge: @charge))
+    end
+
+    rates.fetch(:line_items).select { |l| l.item_type = :rate }.each do |l|
+      @rental.rental_rates.create(:date => l.fetch(:date), :amount => l.fetch(:amount))
     end
   end
 
@@ -113,17 +130,5 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       message:       "Rental #{@rental.number} created for #{driver_first_name} #{driver_last_name}.",
       rental_number: @rental.number,
     }
-  end
-
-  def vehicle_type
-    'compact'
-  end
-
-  def location
-    @location ||= Location.find(params.fetch(:location_id))
-  end
-
-  def available_vehicle_ids
-    location.available_vehicle_ids(rental_period)
   end
 end

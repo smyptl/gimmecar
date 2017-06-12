@@ -3,6 +3,8 @@
 # Table name: tax_rates
 #
 #  id                :integer          not null, primary key
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #  location_id       :integer
 #  combined_tax_rate :decimal(14, 4)
 #  state_tax_rate    :decimal(14, 4)
@@ -23,6 +25,7 @@ class TaxRate < ApplicationRecord
     district_amount = (taxable_amount*district_tax_rate).round
 
     {
+      :taxable_amount          => taxable_amount,
       :tax_collectable         => (state_amount + county_amount + city_amount + district_amount),
       :state_taxable_amount    => taxable_amount,
       :state_amount            => state_amount,
