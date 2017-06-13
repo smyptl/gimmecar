@@ -3,6 +3,7 @@ require 'factories/locations'
 require 'factories/vehicles'
 require 'factories/drivers'
 require 'factories/users'
+require 'factories/rates'
 require 'factories/tax_rates'
 require 'factories/insurance_policies'
 require 'helpers/stripe_helper'
@@ -15,6 +16,8 @@ describe Actions::Admin::Location::Rental::Create do
       location = create(:location)
       tax_rate = create(:tax_rate, location: location)
       vehicle = create(:vehicle, original_location: location, location: location)
+
+      create(:rate, :default, vehicle_type: 'compact', location: location, amount: 3500)
 
       driver_attrs = attributes_for(:driver)
       driver_attrs[:insurance] = attributes_for(:insurance_policy)
@@ -78,6 +81,7 @@ describe Actions::Admin::Location::Rental::Create do
       expect(rental.driver).to eq(driver)
       expect(rental.vehicle).to eq(vehicle)
       expect(rental.additional_driver).to eq(nil)
+      expect(rental.tax_rate).to eq(tax_rate)
       expect(rental.pickup).to_not eq(nil)
       expect(rental.drop_off).to eq(drop_off)
       expect(rental.drop_off_odometer).to eq(nil)
@@ -94,7 +98,6 @@ describe Actions::Admin::Location::Rental::Create do
       expect(LineItem.count).to eq(2)
       expect(rental.line_items.count).to eq(2)
       rental.line_items.each do |l|
-        expect(l.tax_rate).to eq(tax_rate)
         expect(l.amount).to eq(3500)
         expect(l.total).to eq(3772)
         expect(l.charge).to eq(charge)

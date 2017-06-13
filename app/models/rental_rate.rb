@@ -12,4 +12,6 @@
 
 class RentalRate < ApplicationRecord
 
+  belongs_to :rental
+
 end

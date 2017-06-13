@@ -14,5 +14,9 @@
 
 FactoryGirl.define do
   factory :rate do
+
+    trait :default do
+      default true
+    end
   end
 end

@@ -100,6 +100,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       :additional_driver                                    => (ad if add_additional_driver),
       :vehicle_id                                           => vehicle_id,
       :vehicle_type                                         => vehicle_type,
+      :tax_rate                                             => location.latest_tax_rate,
       :pickup_location                                      => location,
       :pickup                                               => pickup,
       :pickup_odometer                                      => pickup_odometer,
@@ -116,12 +117,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     @charge.owner = @rental
     @charge.save
 
-    rates.fetch(:line_items).each do |l|
-      @rental.line_items.create(l.merge(charge: @charge))
-    end
-
-    rates.fetch(:line_items).select { |l| l.item_type = :rate }.each do |l|
-      @rental.rental_rates.create(:date => l.fetch(:date), :amount => l.fetch(:amount))
+    rates.fetch(:rates).each do |l|
+      rental_rate = RentalRate.create(:rental => @rental, :date => l.fetch('date'), :amount => l.fetch('amount'))
+      @rental.line_items.create(l.merge(charge: @charge, item: rental_rate))
     end
   end
 

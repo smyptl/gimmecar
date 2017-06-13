@@ -71,7 +71,7 @@ class Services::Rates < Lib::Services::Base
 
     extra_hours = rental_period.hours_apart % 24
 
-    if extra_hours >= 0
+    if extra_hours > 0
       rate = rate(date)
 
       if extra_hours < 3
@@ -86,7 +86,7 @@ class Services::Rates < Lib::Services::Base
 
   def build_rate(amount:, discount: 0, date:)
     attrs = LineItem.calculate(amount: amount, discount: discount, tax_rate: location.latest_tax_rate)
-    attrs[:date] = date
+    attrs['date'] = date
     attrs
   end
 
