@@ -3,6 +3,8 @@
 # Table name: charges
 #
 #  id               :integer          not null, primary key
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #  owner_type       :string
 #  owner_id         :integer
 #  stripe_charge_id :string
@@ -13,6 +15,7 @@
 class Charge < ApplicationRecord
 
   belongs_to :owner, polymorphic: true
+  has_many :line_items
 
   def execute(success, failure, create_customer: false, token: nil, customer_id: nil)
     raise ArgumentError if amount.nil?

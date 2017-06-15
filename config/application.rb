@@ -14,5 +14,7 @@ module GimmeCar
 
     # Config Time Zone
     config.time_zone = "Etc/UTC"
+
+    config.assets.initialize_on_precompile = false
   end
 end

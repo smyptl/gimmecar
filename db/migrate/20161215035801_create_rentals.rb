@@ -1,4 +1,4 @@
-class CreateRentals < ActiveRecord::Migration[5.0]
+class CreateRentals < ActiveRecord::Migration[5.1]
   def change
     create_table :rentals do |t|
       t.timestamps
@@ -9,6 +9,7 @@ class CreateRentals < ActiveRecord::Migration[5.0]
       t.belongs_to :driver, index: true
       t.belongs_to :additional_driver, index: true
       t.belongs_to :vehicle, index: true
+      t.belongs_to :tax_rate, index: true
       t.string :vehicle_type
       t.text :notes
       t.belongs_to :pickup_location, index: true

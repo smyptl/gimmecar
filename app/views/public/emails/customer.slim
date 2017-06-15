@@ -1,36 +1,17 @@
-.rental-invoice
-  p= "Hi, #{@email.fetch(:first_name)}! Below is your rental car reservation summary."
-
-  h6.margin-bottom-sm.margin-top-default Rental Confirmation
-  ul.left.whole.list-no-style
-    li
-      | Confirmation #:&nbsp;
-      b= @email.fetch(:confirmation_number)
-    li
-      | Vehicle:&nbsp;
-      b= @email.fetch(:vehicle)
-    li
-      | Location:&nbsp;
-      b= @email.fetch(:location)
-    li
-      | Pickup:&nbsp;
-      b= format_date_time(@email.fetch(:pickup))
-    li
-      | Drop Off:&nbsp;
-      b= format_date_time(@email.fetch(:drop_off))
-
-  h6.margin-bottom-sm Rates
-  ul.left.whole.list-no-style
-    - @email.fetch(:details).each do |rate|
-      span.left= format_date(rate.fetch(:date))
-      span.right= format_currency(rate.fetch(:value))
-
-  h6.margin-bottom-sm Taxes & Fees
-  ul.left.whole.list-no-style
-    li
-      span.left= "Sales (#{format_percent(@email.fetch(:tax_rate))})"
-      span.right= format_currency(@email.fetch(:tax))
-
-  h4
-    span.left Estimated Total:
-    span.right= format_currency(@email.fetch(:total))
+= "Hi #{@email.fetch(:first_name)},"
+<br/>
+<br/>
+= "Thank you for making reservation with us. Your confirmation number is #{@email.fetch(:confirmation_number)} for your rental from #{format_date_time(@email.fetch(:pickup))} to #{format_date_time(@email.fetch(:drop_off))}."
+<br/>
+<br/>
+= "If you have any questions, please feel free to reach out at (909) 318-0450 or samay@gimmecar.com."
+<br/>
+<br/>
+= "*****"
+<br/>
+<br/>
+= "GimmeCar"
+<br/>
+= "(909) 318-0450"
+<br/>
+= "team@gimmecar.com"

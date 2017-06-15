@@ -7,6 +7,7 @@ require 'helpers/stripe_helper'
 require 'factories/vehicles'
 require 'factories/drivers'
 require 'factories/insurance_policies'
+require 'factories/rates'
 require 'factories/tax_rates'
 
 feature 'Login', js: true do
@@ -15,6 +16,8 @@ feature 'Login', js: true do
   scenario 'login user' do
     tax_rate = create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, original_location: location, location: location)
+
+    create(:rate, :default, vehicle_type: :compact, location: location, amount: 3500)
 
     visit_admin location_rentals_new_path(:slug => location.slug)
 
@@ -148,15 +151,16 @@ feature 'Login', js: true do
     expect(rental.drop_off).to_not eq(nil)
     expect(rental.pickup_odometer).to eq(40512)
     expect(rental.pickup_fuel).to eq(10)
-
-    rental.line_items.each do |l|
-      expect(l.tax_rate).to eq(tax_rate)
-    end
+    expect(rental.tax_rate).to eq(tax_rate)
 
     expect(Charge.count).to eq(1)
     charge = Charge.first
     expect(charge.owner).to eq(rental)
     expect(charge.stripe_charge_id).to_not eq(nil)
+
+    rental.line_items.each do |l|
+      expect(l.charge).to eq(charge)
+    end
 
     stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
     expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])

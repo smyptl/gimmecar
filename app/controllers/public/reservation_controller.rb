@@ -23,7 +23,7 @@ class Public::ReservationController < ApplicationController
       render status: 400, :json => args
     end
 
-    Actions::CreateReservation.new(params.require(:reservation)).execute(success, failure)
+    Actions::Public::CreateReservation.new(params.require(:reservation)).execute(success, failure)
   end
 
   private

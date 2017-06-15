@@ -3,6 +3,8 @@
 # Table name: rentals
 #
 #  id                                                   :integer          not null, primary key
+#  created_at                                           :datetime         not null
+#  updated_at                                           :datetime         not null
 #  number                                               :string
 #  source                                               :string
 #  status                                               :string
@@ -10,6 +12,7 @@
 #  driver_id                                            :integer
 #  additional_driver_id                                 :integer
 #  vehicle_id                                           :integer
+#  tax_rate_id                                          :integer
 #  vehicle_type                                         :string
 #  notes                                                :text
 #  pickup_location_id                                   :integer
@@ -29,6 +32,7 @@
 
 require 'factories/drivers'
 require 'factories/vehicles'
+require 'factories/tax_rates'
 
 FactoryGirl.define do
 
@@ -40,6 +44,7 @@ FactoryGirl.define do
 
     drop_off_location { pickup_location }
 
+    tax_rate { build(:tax_rate) }
     driver { create(:driver) }
     vehicle { create(:vehicle, location: pickup_location, original_location: pickup_location) }
   end

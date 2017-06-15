@@ -3,7 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   has_paper_trail
 
-  def self.build_readonly(*args, &block)
+  def self.build_mock(*args, &block)
     r = new(*args, &block)
     r.readonly!
     r
