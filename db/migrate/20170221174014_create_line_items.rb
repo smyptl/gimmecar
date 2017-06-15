@@ -1,14 +1,17 @@
-class CreateLineItems < ActiveRecord::Migration[5.0]
+class CreateLineItems < ActiveRecord::Migration[5.1]
   def change
     create_table :line_items do |t|
       t.timestamps
       t.references :invoice, polymorphic: true, index: true
+      t.references :item, polymorphic: true, index: true
+      t.belongs_to :charge, index: true
       t.json :details
-      t.string :item_type
       t.date :date
-      t.integer :charge_id, index: true
-      t.integer :tax_rate_id, index: true
+      t.integer :quantity
+      t.integer :total, limit: 8
       t.integer :amount, limit: 8
+      t.integer :discount, limit: 8
+      t.integer :sub_total, limit: 8
       t.integer :taxable_amount, limit: 8
       t.integer :tax_collectable, limit: 8
       t.integer :state_taxable_amount, limit: 8

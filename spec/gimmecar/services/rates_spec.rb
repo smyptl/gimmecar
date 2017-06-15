@@ -1,5 +1,6 @@
 require "spec_helper"
 require 'factories/locations'
+require 'factories/rates'
 require 'factories/tax_rates'
 require 'factories/rentals'
 
@@ -13,18 +14,23 @@ describe Services::Rates do
       location
       tax_rates
 
+      create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 1), :amount => 1000)
+      create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 2), :amount => 3000)
+      create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 3), :amount => 2000)
+
       rental = Services::Rates.fetch(:location => location,
                       :rental => double(:rental,
-                        :pickup   => DateTime.new(2011, 1, 1),
-                        :drop_off => DateTime.new(2011, 1, 4)))
+                        :vehicle_type   => 'compact',
+                        :pickup         => DateTime.new(2011, 1, 1),
+                        :drop_off       => DateTime.new(2011, 1, 4)))
 
-      expect(rental[:line_items].count).to eq(3)
-      expect(rental[:line_items].first.taxable_amount).to eq(3500)
-      expect(rental[:line_items].first.tax_collectable).to eq(272)
+      expect(rental[:rates].count).to eq(3)
+      expect(rental[:rates].first['taxable_amount']).to eq(1000)
+      expect(rental[:rates].first['tax_collectable']).to eq(78)
 
-      expect(rental[:total]).to eq(11316)
-      expect(rental[:sub_total]).to eq(10500)
-      expect(rental[:tax_collectable]).to eq(816)
+      expect(rental[:total]).to eq(6466)
+      expect(rental[:sub_total]).to eq(6000)
+      expect(rental[:tax_collectable]).to eq(466)
       expect(rental[:combined_tax_rate]).to eq(tax_rates.combined_tax_rate)
     end
 
@@ -33,14 +39,18 @@ describe Services::Rates do
         location
         tax_rates
 
+        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 1), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 2), :amount => 3500)
+
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
-                          :pickup   => DateTime.new(2011, 1, 1, 4, 0, 0),
-                          :drop_off => DateTime.new(2011, 1, 2, 7, 0, 0)))
+                          :vehicle_type => 'compact',
+                          :pickup       => DateTime.new(2011, 1, 1, 4, 0, 0),
+                          :drop_off     => DateTime.new(2011, 1, 2, 7, 0, 0)))
 
-        expect(rental[:line_items].count).to eq(2)
-        expect(rental[:line_items].first.taxable_amount).to eq(3500)
-        expect(rental[:line_items].first.tax_collectable).to eq(272)
+        expect(rental[:rates].count).to eq(2)
+        expect(rental[:rates].first['taxable_amount']).to eq(3500)
+        expect(rental[:rates].first['tax_collectable']).to eq(272)
 
         expect(rental[:total]).to eq(7544)
         expect(rental[:sub_total]).to eq(7000)
@@ -51,18 +61,22 @@ describe Services::Rates do
         location
         tax_rates
 
+        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 1), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 2), :amount => 3500)
+
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
-                          :pickup   => DateTime.new(2011, 1, 1, 4, 0, 0),
-                          :drop_off => DateTime.new(2011, 1, 2, 6, 0, 0)))
+                          :vehicle_type => 'compact',
+                          :pickup       => DateTime.new(2011, 1, 1, 4, 0, 0),
+                          :drop_off     => DateTime.new(2011, 1, 2, 6, 0, 0)))
 
-        expect(rental[:line_items].count).to eq(2)
-        expect(rental[:line_items].first.date).to eq(Date.new(2011, 1, 1))
-        expect(rental[:line_items].first.taxable_amount).to eq(3500)
-        expect(rental[:line_items].first.tax_collectable).to eq(272)
-        expect(rental[:line_items].second.date).to eq(Date.new(2011, 1, 2))
-        expect(rental[:line_items].second.taxable_amount).to eq(2334)
-        expect(rental[:line_items].second.tax_collectable).to eq(181)
+        expect(rental[:rates].count).to eq(2)
+        expect(rental[:rates].first['date']).to eq(Date.new(2011, 1, 1))
+        expect(rental[:rates].first['taxable_amount']).to eq(3500)
+        expect(rental[:rates].first['tax_collectable']).to eq(272)
+        expect(rental[:rates].second['date']).to eq(Date.new(2011, 1, 2))
+        expect(rental[:rates].second['taxable_amount']).to eq(2334)
+        expect(rental[:rates].second['tax_collectable']).to eq(181)
 
         expect(rental[:total]).to eq(6287)
         expect(rental[:sub_total]).to eq(5834)
@@ -73,30 +87,38 @@ describe Services::Rates do
         location
         tax_rates
 
+        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 1), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 2), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 3), :amount => 3500)
+
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
-                          :pickup   => DateTime.new(2011, 1, 1, 3, 0, 0),
-                          :drop_off => DateTime.new(2011, 1, 3, 4, 0, 0)))
+                          :vehicle_type => 'compact',
+                          :pickup       => DateTime.new(2011, 1, 1, 3, 0, 0),
+                          :drop_off     => DateTime.new(2011, 1, 3, 4, 0, 0)))
 
-        expect(rental[:line_items].count).to eq(3)
-        expect(rental[:line_items].first.taxable_amount).to eq(3500)
-        expect(rental[:line_items].first.tax_collectable).to eq(272)
-        expect(rental[:line_items].last.taxable_amount).to eq(1167)
-        expect(rental[:line_items].last.tax_collectable).to eq(91)
+        expect(rental[:rates].count).to eq(3)
+        expect(rental[:rates].first['taxable_amount']).to eq(3500)
+        expect(rental[:rates].first['tax_collectable']).to eq(272)
+        expect(rental[:rates].last['taxable_amount']).to eq(1167)
+        expect(rental[:rates].last['tax_collectable']).to eq(91)
       end
 
       it 'actual example' do
         location
         tax_rates
 
+        create(:rate, :default, location: location, vehicle_type: :compact, :amount => 3500)
+
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
-                          :pickup   => DateTime.new(2017, 1, 31, 10, 57, 0),
-                          :drop_off => DateTime.new(2017, 2, 5, 9, 57, 0)))
+                          :vehicle_type => 'compact',
+                          :pickup       => DateTime.new(2017, 1, 31, 10, 57, 0),
+                          :drop_off     => DateTime.new(2017, 2, 5, 9, 57, 0)))
 
-        expect(rental[:line_items].count).to eq(5)
-        expect(rental[:line_items].first.taxable_amount).to eq(3500)
-        expect(rental[:line_items].first.tax_collectable).to eq(272)
+        expect(rental[:rates].count).to eq(5)
+        expect(rental[:rates].first['taxable_amount']).to eq(3500)
+        expect(rental[:rates].first['tax_collectable']).to eq(272)
       end
     end
   end

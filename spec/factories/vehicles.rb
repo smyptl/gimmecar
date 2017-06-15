@@ -3,6 +3,8 @@
 # Table name: vehicles
 #
 #  id                   :integer          not null, primary key
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
 #  original_location_id :integer
 #  location_id          :integer
 #  vehicle_type         :string

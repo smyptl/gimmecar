@@ -3,6 +3,8 @@
 # Table name: tax_rates
 #
 #  id                :integer          not null, primary key
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #  location_id       :integer
 #  combined_tax_rate :decimal(14, 4)
 #  state_tax_rate    :decimal(14, 4)

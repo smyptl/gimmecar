@@ -20,6 +20,12 @@ location = Location.create({
 
 user.locations << location
 
+location.rates << Rate.create({
+  :default => true,
+  :amount => 3200,
+  :vehicle_type => :compact,
+})
+
 location.tax_rates << TaxRate.create({
   :combined_tax_rate => 0.07750,
   :state_tax_rate    => 0.06000,

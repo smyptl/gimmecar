@@ -310,7 +310,6 @@
 
     line-height: @height
     font-size: 1.25rem
-    font-weight: 700
     font-family: $mono-font
     cursor: pointer
     color: $gray
@@ -322,7 +321,6 @@
 
       text-align: center
       font-size: 1.25rem
-      font-weight: 700
 
   .clock-item.selected
     color: $black
@@ -348,7 +346,6 @@
 
     line-height: @height
     font-size: 1rem
-    font-weight: 700
     text-align: center
 
     a
@@ -386,7 +383,6 @@
 
     line-height: @height
     font-size: 0.6875rem
-    font-weight: 600
     color: $text-color-light
 
   .calendar-day
@@ -397,7 +393,6 @@
 
     line-height: @height
     font-size: 0.8125rem
-    font-weight: 700
     cursor: pointer
 
     &:hover

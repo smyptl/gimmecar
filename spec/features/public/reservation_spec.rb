@@ -1,7 +1,8 @@
 require 'spec_helper'
 
-require 'factories/tax_rates'
 require 'factories/locations'
+require 'factories/rates'
+require 'factories/tax_rates'
 
 feature "Reservations", js: true do
 
@@ -10,6 +11,7 @@ feature "Reservations", js: true do
 
     location = create(:location)
     create(:tax_rate, location: location)
+    create(:rate, :default, vehicle_type: :compact, location: location, amount: 3500)
 
     click_button "View Rates"
 

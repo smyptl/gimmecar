@@ -22,6 +22,10 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
     @rental_period ||= Lib::DateRange.new(pickup, drop_off)
   end
 
+  def vehicle_type
+    :compact
+  end
+
   private
 
   def failure_args
@@ -32,24 +36,20 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
 
   def success_args
     @success_args ||= {
-      :vehicle             => "Toyota Corolla",
-      :location            => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
       :first_name          => first_name,
       :last_name           => last_name,
       :email               => email,
       :phone_number        => phone_number,
       :confirmation_number => confirmation_number,
-      :pickup              => pickup,
-      :drop_off            => drop_off,
-    }.merge(calculate_rental.fetch)
+    }.merge(rates)
   end
 
   def confirmation_number
     @confirmation_number ||= SecureRandom.hex(3)
   end
 
-  def calculate_rental
-    Logic::CalculateRental.new(self)
+  def rates
+    @rates ||= Services::Rates.fetch(rental: self, location: Location.first)
   end
 
   def save
