@@ -71,10 +71,10 @@ describe Services::Rates do
                           :drop_off     => DateTime.new(2011, 1, 2, 6, 0, 0)))
 
         expect(rental[:rates].count).to eq(2)
-        expect(rental[:rates].first['date']).to eq(DateTime.new(2011, 1, 1, 4, 0, 0))
+        expect(rental[:rates].first['date']).to eq(Date.new(2011, 1, 1))
         expect(rental[:rates].first['taxable_amount']).to eq(3500)
         expect(rental[:rates].first['tax_collectable']).to eq(272)
-        expect(rental[:rates].second['date']).to eq(DateTime.new(2011, 1, 2, 4, 0, 0))
+        expect(rental[:rates].second['date']).to eq(Date.new(2011, 1, 2))
         expect(rental[:rates].second['taxable_amount']).to eq(2334)
         expect(rental[:rates].second['tax_collectable']).to eq(181)
 

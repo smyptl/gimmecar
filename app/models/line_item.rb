@@ -7,12 +7,16 @@
 #  updated_at              :datetime         not null
 #  invoice_type            :string
 #  invoice_id              :integer
-#  details                 :json
 #  item_type               :string
-#  date                    :date
+#  item_id                 :integer
 #  charge_id               :integer
-#  tax_rate_id             :integer
+#  details                 :json
+#  date                    :date
+#  quantity                :integer
+#  total                   :integer
 #  amount                  :integer
+#  discount                :integer
+#  sub_total               :integer
 #  taxable_amount          :integer
 #  tax_collectable         :integer
 #  state_taxable_amount    :integer
@@ -31,8 +35,8 @@ class LineItem < ApplicationRecord
   belongs_to :item, polymorphic: true
   belongs_to :charge
 
-  def self.calculate(amount:, discount: 0, quantity: 1, taxable_amount: nil, tax_rate:)
-    mock = self.build_mock(amount: amount, discount: discount, quantity: quantity)
+  def self.calculate(date:, amount:, discount: 0, quantity: 1, taxable_amount: nil, tax_rate:)
+    mock = self.build_mock(date: date, amount: amount, discount: discount, quantity: quantity)
 
     sub_total = amount
     taxable_amount ||= (amount - discount)
@@ -48,6 +52,7 @@ class LineItem < ApplicationRecord
 
   def calculations
     attributes.slice(
+      'date',
       'quantity',
       'total',
       'amount',
@@ -62,6 +67,6 @@ class LineItem < ApplicationRecord
       'city_taxable_amount',
       'city_amount',
       'district_taxable_amount',
-      'district_amount')
+      'district_amount').with_indifferent_access
   end
 end

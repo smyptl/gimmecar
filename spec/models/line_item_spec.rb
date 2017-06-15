@@ -1,3 +1,34 @@
+# == Schema Information
+#
+# Table name: line_items
+#
+#  id                      :integer          not null, primary key
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  invoice_type            :string
+#  invoice_id              :integer
+#  item_type               :string
+#  item_id                 :integer
+#  charge_id               :integer
+#  details                 :json
+#  date                    :date
+#  quantity                :integer
+#  total                   :integer
+#  amount                  :integer
+#  discount                :integer
+#  sub_total               :integer
+#  taxable_amount          :integer
+#  tax_collectable         :integer
+#  state_taxable_amount    :integer
+#  state_amount            :integer
+#  county_taxable_amount   :integer
+#  county_amount           :integer
+#  city_taxable_amount     :integer
+#  city_amount             :integer
+#  district_taxable_amount :integer
+#  district_amount         :integer
+#
+
 require 'spec_helper'
 require 'factories/tax_rates'
 
@@ -5,7 +36,7 @@ describe LineItem do
 
   describe '.calculate' do
     it 'no discount' do
-      calculations = LineItem.calculate(amount: 100, tax_rate: build(:tax_rate))
+      calculations = LineItem.calculate(date: nil, amount: 100, tax_rate: build(:tax_rate))
 
       expect(calculations['quantity']).to eq(1)
       expect(calculations['amount']).to eq(100)
@@ -16,7 +47,7 @@ describe LineItem do
     end
 
     it 'includes discount' do
-      calculations = LineItem.calculate(amount: 10000, discount: 1500, tax_rate: build(:tax_rate))
+      calculations = LineItem.calculate(date: nil, amount: 10000, discount: 1500, tax_rate: build(:tax_rate))
 
       expect(calculations['quantity']).to eq(1)
       expect(calculations['amount']).to eq(10000)
@@ -27,7 +58,7 @@ describe LineItem do
     end
 
     it 'no taxable_amount' do
-      calculations = LineItem.calculate(amount: 10000, taxable_amount: 0, tax_rate: build(:tax_rate))
+      calculations = LineItem.calculate(date: nil, amount: 10000, taxable_amount: 0, tax_rate: build(:tax_rate))
 
       expect(calculations['quantity']).to eq(1)
       expect(calculations['amount']).to eq(10000)

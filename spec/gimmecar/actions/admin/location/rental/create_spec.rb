@@ -96,6 +96,7 @@ describe Actions::Admin::Location::Rental::Create do
       expect(charge.amount).to eq(7544)
 
       expect(LineItem.count).to eq(2)
+      expect(RentalRate.count).to eq(2)
       expect(rental.line_items.count).to eq(2)
       rental.line_items.each do |l|
         expect(l.amount).to eq(3500)

@@ -65,7 +65,9 @@ class Services::Rates < Lib::Services::Base
     date = rental_period.start_date
 
     rental_period.days_apart.times do |x|
-      output << build_rate(amount: rate(date), date: date)
+      rate = rate(date)
+
+      output << build_rate(rate: rate, amount: rate, date: date)
       date += 1.day
     end
 
@@ -75,19 +77,19 @@ class Services::Rates < Lib::Services::Base
       rate = rate(date)
 
       if extra_hours < 3
-        rate = ((rate / BigDecimal.new(3, 1)) * extra_hours).ceil
+        amount = ((rate / BigDecimal.new(3, 1)) * extra_hours).ceil
+      else
+        amount = rate
       end
 
-      output << build_rate(amount: rate, date: date)
+      output << build_rate(rate: rate, amount: amount, date: date)
     end
 
     output
   end
 
-  def build_rate(amount:, discount: 0, date:)
-    attrs = LineItem.calculate(amount: amount, discount: discount, tax_rate: location.latest_tax_rate)
-    attrs['date'] = date
-    attrs
+  def build_rate(rate:, amount:, date:, discount: 0)
+    LineItem.calculate(date: date, amount: amount, discount: discount, tax_rate: location.latest_tax_rate).merge(rate: rate)
   end
 
   def rate(date)
