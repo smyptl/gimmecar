@@ -11,7 +11,7 @@ feature "Reservations", js: true do
 
     location = create(:location)
     create(:tax_rate, location: location)
-    create(:rate, :default, vehicle_type: :compact, location: location, amount: 3500)
+    create(:rate, :default, vehicle_type: :mid_size, location: location, amount: 3500)
 
     click_button "View Rates"
 

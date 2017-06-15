@@ -14,13 +14,13 @@ describe Services::Rates do
       location
       tax_rates
 
-      create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 1), :amount => 1000)
-      create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 2), :amount => 3000)
-      create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 3), :amount => 2000)
+      create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 1), :amount => 1000)
+      create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 2), :amount => 3000)
+      create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 3), :amount => 2000)
 
       rental = Services::Rates.fetch(:location => location,
                       :rental => double(:rental,
-                        :vehicle_type   => 'compact',
+                        :vehicle_type   => 'mid_size',
                         :pickup         => DateTime.new(2011, 1, 1),
                         :drop_off       => DateTime.new(2011, 1, 4)))
 
@@ -39,12 +39,12 @@ describe Services::Rates do
         location
         tax_rates
 
-        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 1), :amount => 3500)
-        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 2), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 1), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 2), :amount => 3500)
 
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
-                          :vehicle_type => 'compact',
+                          :vehicle_type => 'mid_size',
                           :pickup       => DateTime.new(2011, 1, 1, 4, 0, 0),
                           :drop_off     => DateTime.new(2011, 1, 2, 7, 0, 0)))
 
@@ -61,12 +61,12 @@ describe Services::Rates do
         location
         tax_rates
 
-        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 1), :amount => 3500)
-        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 2), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 1), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 2), :amount => 3500)
 
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
-                          :vehicle_type => 'compact',
+                          :vehicle_type => 'mid_size',
                           :pickup       => DateTime.new(2011, 1, 1, 4, 0, 0),
                           :drop_off     => DateTime.new(2011, 1, 2, 6, 0, 0)))
 
@@ -87,13 +87,13 @@ describe Services::Rates do
         location
         tax_rates
 
-        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 1), :amount => 3500)
-        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 2), :amount => 3500)
-        create(:rate, location: location, vehicle_type: :compact, date: Date.new(2011, 1, 3), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 1), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 2), :amount => 3500)
+        create(:rate, location: location, vehicle_type: :mid_size, date: Date.new(2011, 1, 3), :amount => 3500)
 
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
-                          :vehicle_type => 'compact',
+                          :vehicle_type => 'mid_size',
                           :pickup       => DateTime.new(2011, 1, 1, 3, 0, 0),
                           :drop_off     => DateTime.new(2011, 1, 3, 4, 0, 0)))
 
@@ -108,11 +108,11 @@ describe Services::Rates do
         location
         tax_rates
 
-        create(:rate, :default, location: location, vehicle_type: :compact, :amount => 3500)
+        create(:rate, :default, location: location, vehicle_type: :mid_size, :amount => 3500)
 
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
-                          :vehicle_type => 'compact',
+                          :vehicle_type => 'mid_size',
                           :pickup       => DateTime.new(2017, 1, 31, 10, 57, 0),
                           :drop_off     => DateTime.new(2017, 2, 5, 9, 57, 0)))
 

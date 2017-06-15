@@ -17,7 +17,7 @@ feature 'Login', js: true do
     tax_rate = create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, original_location: location, location: location)
 
-    create(:rate, :default, vehicle_type: :compact, location: location, amount: 3500)
+    create(:rate, :default, vehicle_type: :mid_size, location: location, amount: 3500)
 
     visit_admin location_rentals_new_path(:slug => location.slug)
 

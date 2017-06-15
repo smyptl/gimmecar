@@ -17,7 +17,7 @@ describe Actions::Admin::Location::Rental::Create do
       tax_rate = create(:tax_rate, location: location)
       vehicle = create(:vehicle, original_location: location, location: location)
 
-      create(:rate, :default, vehicle_type: 'compact', location: location, amount: 3500)
+      create(:rate, :default, vehicle_type: 'mid_size', location: location, amount: 3500)
 
       driver_attrs = attributes_for(:driver)
       driver_attrs[:insurance] = attributes_for(:insurance_policy)

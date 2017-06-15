@@ -58,7 +58,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
   end
 
   def vehicle_type
-    :compact
+    :mid_size
   end
 
   def location

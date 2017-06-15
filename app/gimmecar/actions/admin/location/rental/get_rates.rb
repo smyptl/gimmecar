@@ -16,7 +16,7 @@ class Actions::Admin::Location::Rental::GetRates < Lib::Forms::Base
   validate :valid_drop_off
 
   def vehicle_type
-    :compact
+    :mid_size
   end
 
   private

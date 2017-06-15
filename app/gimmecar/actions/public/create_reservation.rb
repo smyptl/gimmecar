@@ -23,7 +23,7 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
   end
 
   def vehicle_type
-    :compact
+    :mid_size
   end
 
   private
