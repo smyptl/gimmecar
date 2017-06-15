@@ -20,10 +20,22 @@
 
 require 'spec_helper'
 require 'factories/locations'
+require 'factories/tax_rates'
 require 'factories/rentals'
 require 'factories/vehicles'
 
 describe Location do
+
+  describe '#latest_tax_rate' do
+    it 'returns the currently rate' do
+      location = create(:location)
+      create(:tax_rate, location: location)
+      rate = create(:tax_rate, location: location)
+
+      expect(TaxRate.count).to eq(2)
+      expect(location.latest_tax_rate).to eq(rate)
+    end
+  end
 
   describe '#open_rentals' do
 
