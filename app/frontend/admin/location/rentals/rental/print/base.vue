@@ -35,7 +35,7 @@
 
     .whole.margin-top-default.rental-invoice-summary
       h4.invoice-one-line We appreicate your business!
-      p Thanks for being a customer. A detailed summary of your invoice is below. If you have any questions, we are happy to help. Email support@gimmecar.com or call 909.810.8639.
+      p Thanks for being a customer. A detailed summary of your invoice is below. If you have any questions, we are happy to help. Email support@gimmecar.com or call 909.318.0450.
       h4.invoice-one-line.margin-bottom-default
 
     rental-invoice.page-break(v-bind:summary='summary')

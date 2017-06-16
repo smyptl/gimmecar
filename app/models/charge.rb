@@ -17,12 +17,12 @@ class Charge < ApplicationRecord
   belongs_to :owner, polymorphic: true
   has_many :line_items
 
-  def execute(success, failure, create_customer: false, token: nil, customer_id: nil)
+  def execute(success, failure, token: nil, customer_id: nil)
     raise ArgumentError if amount.nil?
 
     begin
       case
-      when create_customer
+      when customer_id.blank?
         customer_id = Stripe::Customer.create({ :source => token })['id']
       when !token.blank?
         raise ArugmentError if customer_id.nil?

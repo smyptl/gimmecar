@@ -96,7 +96,7 @@ feature 'Login', js: true do
 
     expect(page).to have_content('Rental: Payment')
 
-    stripe_iframe = all('iframe[name=__privateStripeFrame4]').last
+    stripe_iframe = all('iframe[name=__privateStripeFrame3]').last
     puts stripe_iframe
     Capybara.within_frame stripe_iframe do
       find('input[name=cardnumber]').set(CARD_TYPE[:visa])
