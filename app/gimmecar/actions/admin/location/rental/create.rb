@@ -85,7 +85,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
         return false
       end
 
-      Charge.new({ :amount => rates.fetch(:total) }).execute(success, failure, create_customer: stripe_customer_id.blank?, token: stripe_token, customer_id: stripe_customer_id)
+      Charge.new({ :amount => rates.fetch(:total) }).execute(success, failure, token: stripe_token, customer_id: stripe_customer_id)
     end
   end
 
@@ -121,6 +121,13 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       rental_rate = RentalRate.create(:rental => @rental, :date => l.fetch('date'), :amount => l.fetch('rate'))
       @rental.line_items.create(l.except('rate').merge(charge: @charge, item: rental_rate))
     end
+  end
+
+  def failure_args
+    {
+      :errors             => errors,
+      :stripe_customer_id => stripe_customer_id,
+    }
   end
 
   def success_args

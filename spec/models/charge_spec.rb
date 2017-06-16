@@ -28,7 +28,7 @@ describe Charge do
 
       expect(success).to receive(:call)
 
-      charge.execute(success, failure, create_customer: true, token: create_valid_credit_card_token_id)
+      charge.execute(success, failure, token: create_valid_credit_card_token_id)
 
       expect(Charge.all.count).to eq(0)
     end
@@ -43,7 +43,7 @@ describe Charge do
 
       expect(failure).to receive(:call).with({ message: "Your card's security code is incorrect.", customer_id: nil })
 
-      charge.execute(success, failure, create_customer: true, token: create_invalid_credit_card_token_id(:cvc))
+      charge.execute(success, failure, token: create_invalid_credit_card_token_id(:cvc))
     end
 
     it 'calls failure, card attached to customer but no charge' do
@@ -56,7 +56,7 @@ describe Charge do
 
       expect(failure).to receive(:call).with(hash_including({ message: "Your card was declined." }))
 
-      charge.execute(success, failure, create_customer: true, token: create_invalid_credit_card_token_id(:charge_failure))
+      charge.execute(success, failure, token: create_invalid_credit_card_token_id(:charge_failure))
     end
   end
 end

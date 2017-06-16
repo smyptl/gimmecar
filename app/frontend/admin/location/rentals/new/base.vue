@@ -80,7 +80,6 @@
           stripe_token: '',
           stripe_customer_id: '',
         }),
-        card_error_message: '',
         current_step: 'Details',
         vehicles: [],
         summary: {},
@@ -166,7 +165,7 @@
       validatePayment () {
         stripe.createToken(window.card).then(result => {
           if (result.error) {
-            this.card_error_message = result.error.message
+            this.rental.errors.record({ card: [result.error.message] })
           } else {
             // Send the token to your server
             this.rental.stripe_token = result.token.id
@@ -184,6 +183,7 @@
         })
         .catch(error => {
           Shake(this.$refs.form)
+          this.rental.stripe_customer_id = error.response.data.stripe_customer_id
           this.rental.errors.record(error.response.data.errors)
         })
       },
@@ -292,8 +292,8 @@
           | Card Number
           .input-label-note.right DO NOT accept prepaid or debit cards. Only credit cards accepted.
         .input-block.whole
-          payment
-        p.input-error-message#stripe-card-errors
+          payment(v-error='rental.errors.has("card")' @click='rental.errors.clear("card")')
+        input-error-message(v-bind:errors='rental.errors.get("card")')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
