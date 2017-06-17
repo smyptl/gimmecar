@@ -10,6 +10,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     a.signature :additional_driver_signature
     a.signature :additional_driver_financial_responsibility_signature
 
+    a.string :vehicle_type
     a.integer :vehicle_id
     a.integer :pickup_odometer
     a.integer :pickup_fuel
@@ -31,6 +32,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     a.validates :additional_driver_financial_responsibility_signature, :additional_driver_signature,
       signature: true
   end
+
+  validates :vehicle_type,
+    presence: true
 
   validates :vehicle_id,
     inclusion: { in: :available_vehicle_ids, message: 'select a vehicle' }
@@ -55,10 +59,6 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   def rates
     @rates ||= Services::Rates.fetch(rental: self, location: location)
-  end
-
-  def vehicle_type
-    :mid_size
   end
 
   def location

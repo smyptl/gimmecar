@@ -18,6 +18,8 @@
       return {
         rental: new Form({
           drop_off: new Date().setDate(new Date().getDate() + 1),
+          vehicle_type: 'mid_size',
+          promo_code: null,
           driver_id: null,
           driver: {
             first_name: '',
@@ -165,8 +167,10 @@
       validatePayment () {
         stripe.createToken(window.card).then(result => {
           if (result.error) {
+            Shake(this.$refs.form)
             this.rental.errors.record({ card: [result.error.message] })
           } else {
+            this.rental.errors.clear
             // Send the token to your server
             this.rental.stripe_token = result.token.id
             this.createRental()
@@ -201,18 +205,40 @@
     template(v-if='current_step == "Details"')
       .input-row
         .input-container.one-half
-          label.input-label Pickup:
+          label.input-label Pickup *
           .input-block.whole
             input-date-time(v-model='pickup' disabled=true)
 
         .input-container.one-half
-          label.input-label Drop-off:
+          label.input-label Drop-off *
           .input-block.whole
             input-date-time(
               v-model='rental.drop_off'
               v-error='rental.errors.has("drop_off")'
               @input='rental.errors.clear("drop_off")')
           input-error-message(v-bind:errors='rental.errors.get("drop_off")')
+
+      .input-row
+        .input-container.two-thirds.fixed
+          label.input-label(for='vehicle_type') Vehicle Type *
+          .input-block.whole
+            select.input-field#vehicle_type(
+              v-model='rental.vehicle_type'
+              v-error='rental.errors.has("vehicle_type")'
+              @input='rental.errors.clear("vehicle_type")')
+
+              option(value='mid_size') Mid-Size (Toyota Corolla)
+          input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
+
+        .input-container.one-third.fixed
+          label.input-label(for='promo_code') Promo Code
+          .input-block.whole
+            input.input-field#promo_code(
+              type='text'
+              v-model='rental.promo_code'
+              v-error='rental.errors.has("promo_code")'
+              @input='rental.errors.clear("promo_code")')
+          input-error-message(v-bind:errors='rental.errors.get("promo_code")')
 
       .input-submit.input-block
         button.btn.btn-primary.right(@click.prevent='getRates()') Continue

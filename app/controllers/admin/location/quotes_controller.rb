@@ -9,7 +9,6 @@ class Admin::Location::QuotesController < Admin::Location::BaseController
     end
 
     failure = lambda do |args|
-      puts args
       render status: 400, :json => args
     end
 

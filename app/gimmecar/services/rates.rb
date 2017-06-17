@@ -7,7 +7,7 @@ class Services::Rates < Lib::Services::Base
 
   def fetch
     {
-      :vehicle           => "Toyota Corolla",
+      :vehicle           => ActiveSupport::Inflector.titleize(rental.vehicle_type),
       :location          => location.description,
       :pickup            => rental.pickup,
       :drop_off          => rental.drop_off,
