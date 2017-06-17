@@ -26,6 +26,7 @@
 FactoryGirl.define do
 
   factory :vehicle do
+    vehicle_type :mid_size
     make ['BMW', 'Toyota', 'Ford'].sample
     model '5 Series'
     year 2017

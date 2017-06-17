@@ -35,6 +35,7 @@ describe Actions::Admin::Location::Rental::Create do
         :driver_signature                          => 'test',
         :driver_financial_responsibility_signature => 'test',
         :add_additional_driver                     => false,
+        :vehicle_type                              => vehicle.vehicle_type,
         :vehicle_id                                => vehicle.id,
         :pickup_odometer                           => 1250,
         :pickup_fuel                               => 10,
@@ -83,7 +84,9 @@ describe Actions::Admin::Location::Rental::Create do
       expect(rental.additional_driver).to eq(nil)
       expect(rental.tax_rate).to eq(tax_rate)
       expect(rental.pickup).to_not eq(nil)
+      expect(rental.pickup_location).to eq(location)
       expect(rental.drop_off).to eq(drop_off)
+      expect(rental.drop_off_location).to eq(location)
       expect(rental.drop_off_odometer).to eq(nil)
       expect(rental.drop_off_fuel).to eq(nil)
       expect(rental.pickup_odometer).to eq(1250)

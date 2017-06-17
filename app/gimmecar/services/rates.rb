@@ -62,7 +62,7 @@ class Services::Rates < Lib::Services::Base
   def calculate_rate
     output = []
 
-    date = rental_period.start_date
+    date = location.convert_date_to_time_zone(rental_period.start_date)
 
     rental_period.days_apart.times do |x|
       rate = rate(date)

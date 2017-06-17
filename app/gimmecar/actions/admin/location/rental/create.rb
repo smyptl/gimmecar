@@ -10,7 +10,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     a.signature :additional_driver_signature
     a.signature :additional_driver_financial_responsibility_signature
 
-    a.string :vehicle_type
+    a.string  :vehicle_type
     a.integer :vehicle_id
     a.integer :pickup_odometer
     a.integer :pickup_fuel
@@ -66,7 +66,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
   end
 
   def available_vehicle_ids
-    location.available_vehicle_ids(rental_period)
+    location.available_vehicle_ids(vehicle_type: vehicle_type, date_range: rental_period)
   end
 
   def valid?

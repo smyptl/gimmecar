@@ -42,7 +42,8 @@ class Location < ApplicationRecord
   end
 
   def rates_for(vehicle_type:, date:)
-    rates.where(vehicle_type: vehicle_type, date: date.in_time_zone('Pacific Time (US & Canada)').to_date).first || default_rates.where(vehicle_type: vehicle_type).first
+    date = convert_date_to_time_zone(date) if date === DateTime
+    rates.where(vehicle_type: vehicle_type, date: date).first || default_rates.where(vehicle_type: vehicle_type).first
   end
 
   def latest_combined_tax_rate
@@ -53,12 +54,12 @@ class Location < ApplicationRecord
     open_rentals + future_rentals
   end
 
-  def available_vehicles(date_range)
-    vehicles.select { |v| !v.open_rental? }
+  def available_vehicles(vehicle_type:, date_range:)
+    vehicles.where(vehicle_type: vehicle_type).select { |v| !v.open_rental? }
   end
 
-  def available_vehicle_ids(date_range)
-    available_vehicles(date_range).pluck(:id)
+  def available_vehicle_ids(vehicle_type:, date_range:)
+    available_vehicles(vehicle_type: vehicle_type, date_range: date_range).pluck(:id)
   end
 
   def vehicle_ids
@@ -67,5 +68,9 @@ class Location < ApplicationRecord
 
   def rental_numbers
     rentals.pluck(:number)
+  end
+
+  def convert_date_to_time_zone(date_time)
+    date_time.in_time_zone('Pacific Time (US & Canada)').to_date
   end
 end

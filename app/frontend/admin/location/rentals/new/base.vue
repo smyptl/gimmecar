@@ -219,7 +219,7 @@
           input-error-message(v-bind:errors='rental.errors.get("drop_off")')
 
       .input-row
-        .input-container.two-thirds.fixed
+        .input-container.whole
           label.input-label(for='vehicle_type') Vehicle Type *
           .input-block.whole
             select.input-field#vehicle_type(
@@ -229,16 +229,6 @@
 
               option(value='mid_size') Mid-Size (Toyota Corolla)
           input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
-
-        .input-container.one-third.fixed
-          label.input-label(for='promo_code') Promo Code
-          .input-block.whole
-            input.input-field#promo_code(
-              type='text'
-              v-model='rental.promo_code'
-              v-error='rental.errors.has("promo_code")'
-              @input='rental.errors.clear("promo_code")')
-          input-error-message(v-bind:errors='rental.errors.get("promo_code")')
 
       .input-submit.input-block
         button.btn.btn-primary.right(@click.prevent='getRates()') Continue
