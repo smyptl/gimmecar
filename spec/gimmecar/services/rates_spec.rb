@@ -21,8 +21,8 @@ describe Services::Rates do
       rental = Services::Rates.fetch(:location => location,
                       :rental => double(:rental,
                         :vehicle_type   => 'mid_size',
-                        :pickup         => DateTime.new(2011, 1, 1),
-                        :drop_off       => DateTime.new(2011, 1, 4)))
+                        :pickup         => DateTime.new(2011, 1, 1, 0, 0, 0, '-08:00'),
+                        :drop_off       => DateTime.new(2011, 1, 4, 0, 0, 0, '-08:00')))
 
       expect(rental[:rates].count).to eq(3)
       expect(rental[:rates].first['taxable_amount']).to eq(1000)
@@ -45,8 +45,8 @@ describe Services::Rates do
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
                           :vehicle_type => 'mid_size',
-                          :pickup       => DateTime.new(2011, 1, 1, 4, 0, 0),
-                          :drop_off     => DateTime.new(2011, 1, 2, 7, 0, 0)))
+                          :pickup       => DateTime.new(2011, 1, 1, 4, 0, 0, '-07:00'),
+                          :drop_off     => DateTime.new(2011, 1, 2, 7, 0, 0, '-07:00')))
 
         expect(rental[:rates].count).to eq(2)
         expect(rental[:rates].first['taxable_amount']).to eq(3500)
@@ -67,8 +67,8 @@ describe Services::Rates do
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
                           :vehicle_type => 'mid_size',
-                          :pickup       => DateTime.new(2011, 1, 1, 4, 0, 0),
-                          :drop_off     => DateTime.new(2011, 1, 2, 6, 0, 0)))
+                          :pickup       => DateTime.new(2011, 1, 1, 4, 0, 0, '-07:00'),
+                          :drop_off     => DateTime.new(2011, 1, 2, 6, 0, 0, '-07:00')))
 
         expect(rental[:rates].count).to eq(2)
         expect(rental[:rates].first['date']).to eq(Date.new(2011, 1, 1))
@@ -94,8 +94,8 @@ describe Services::Rates do
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
                           :vehicle_type => 'mid_size',
-                          :pickup       => DateTime.new(2011, 1, 1, 3, 0, 0),
-                          :drop_off     => DateTime.new(2011, 1, 3, 4, 0, 0)))
+                          :pickup       => DateTime.new(2011, 1, 1, 3, 0, 0, '-07:00'),
+                          :drop_off     => DateTime.new(2011, 1, 3, 4, 0, 0, '-07:00')))
 
         expect(rental[:rates].count).to eq(3)
         expect(rental[:rates].first['taxable_amount']).to eq(3500)
@@ -113,8 +113,8 @@ describe Services::Rates do
         rental = Services::Rates.fetch(:location => location,
                         :rental => double(:rental,
                           :vehicle_type => 'mid_size',
-                          :pickup       => DateTime.new(2017, 1, 31, 10, 57, 0),
-                          :drop_off     => DateTime.new(2017, 2, 5, 9, 57, 0)))
+                          :pickup       => DateTime.new(2017, 1, 31, 10, 57, 0, '-07:00'),
+                          :drop_off     => DateTime.new(2017, 2, 5, 9, 57, 0, '-07:00')))
 
         expect(rental[:rates].count).to eq(5)
         expect(rental[:rates].first['taxable_amount']).to eq(3500)

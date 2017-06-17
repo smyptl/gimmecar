@@ -3,6 +3,7 @@ class Actions::Admin::Location::Rental::GetRates < Lib::Forms::Base
   attributes do |a|
     a.date_time :pickup
     a.date_time :drop_off
+    a.string    :vehicle_type
   end
 
   validates :pickup,
@@ -13,11 +14,10 @@ class Actions::Admin::Location::Rental::GetRates < Lib::Forms::Base
     presence: true,
     after_date: { with: -> { pickup }, allow_nil: true, message: 'must be after pickup' }
 
-  validate :valid_drop_off
+  validates :vehicle_type,
+    presence: true
 
-  def vehicle_type
-    :mid_size
-  end
+  validate :valid_drop_off
 
   private
 

@@ -42,7 +42,7 @@ class Location < ApplicationRecord
   end
 
   def rates_for(vehicle_type:, date:)
-    rates.where(vehicle_type: vehicle_type, date: date).first || default_rates.where(vehicle_type: vehicle_type).first
+    rates.where(vehicle_type: vehicle_type, date: date.in_time_zone('Pacific Time (US & Canada)').to_date).first || default_rates.where(vehicle_type: vehicle_type).first
   end
 
   def latest_combined_tax_rate

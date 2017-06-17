@@ -12,7 +12,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       render status: 400, :json => args
     end
 
-    Actions::Admin::Location::Rental::GetRates.new({ :pickup => DateTime.now, :drop_off => params[:rental].fetch(:drop_off) }).execute(success, failure, { :location => location })
+    Actions::Admin::Location::Rental::GetRates.new({ :pickup => DateTime.now, :drop_off => params[:rental].fetch(:drop_off), :vehicle_type => params[:rental].fetch(:vehicle_type) }).execute(success, failure, { :location => location })
   end
 
   def drivers

@@ -38,12 +38,12 @@
 
     .input-row.margin-top-default
       .input-container.two-fifths
-        label.input-label(for='pickup_odometer') Vehicle Odometer
+        label.input-label(for='pickup_odometer') Vehicle Odometer *
         .input-block.whole
           input.input-field#pickup_odometer(type='text' v-model='form.pickup_odometer')
       .input-container.three-fifths
         label.input-label(for='pickup_fuel')
-          | Fuel Level
+          | Fuel Level *
           .input-label-note.right {{ form.pickup_fuel * 10 }}%
         .input-block.whole
           input.input-range#pickup_fuel(type='range' v-model.number='form.pickup_fuel' min='0' max='10')
