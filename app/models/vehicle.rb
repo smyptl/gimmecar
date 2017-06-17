@@ -32,6 +32,10 @@ class Vehicle < ApplicationRecord
   belongs_to :original_location, class_name: 'Location'
   belongs_to :location
 
+  def available?
+    !open_rental?
+  end
+
   def open_rental?
     !open_rental.blank?
   end

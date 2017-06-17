@@ -5,5 +5,8 @@
 </script>
 
 <template lang='pug'>
-  h1 Vehicles
+  div
+    router-link(:to="{ name: 'vehicles' }")
+      h4.margin-bottom-default Vehicles
+    router-view
 </template>

@@ -55,7 +55,7 @@ class Location < ApplicationRecord
   end
 
   def available_vehicles(vehicle_type:, date_range:)
-    vehicles.where(vehicle_type: vehicle_type).select { |v| !v.open_rental? }
+    vehicles.where(vehicle_type: vehicle_type).select { |v| v.available? }
   end
 
   def available_vehicle_ids(vehicle_type:, date_range:)

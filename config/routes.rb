@@ -53,6 +53,8 @@ Rails.application.routes.draw do
         resources :insurance_policies
       end
       post 'drivers/search'
+
+      resources :vehicles, only: [:index, :show]
     end
   end
 
