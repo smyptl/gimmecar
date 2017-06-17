@@ -167,7 +167,7 @@ feature 'create rental', js: true do
   end
 
   scenario 'credit card fails' do
-    tax_rate = create(:tax_rate, location: location)
+    create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, original_location: location, location: location)
 
     create(:rate, :default, vehicle_type: :mid_size, location: location, amount: 3500)
