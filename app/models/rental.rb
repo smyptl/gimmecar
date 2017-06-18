@@ -72,6 +72,18 @@ class Rental < ApplicationRecord
     Lib::DateRange.new(pickup, drop_off)
   end
 
+  def combined_tax_rate
+    tax_rate.combined_tax_rate
+  end
+
+  def tax_collectable
+    line_items.sum(&:tax_collectable)
+  end
+
+  def sub_total
+    line_items.sum(&:sub_total)
+  end
+
   def total
     line_items.sum(&:total)
   end

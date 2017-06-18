@@ -14,12 +14,15 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
   def fetch
     {
       :vehicle                                              => rental.vehicle_make_model,
-      :location                                             => "Super 8 Redlands - 1160 Arizona St. Redlands, CA 92374",
+      :location                                             => rental.pickup_location_description,
       :name                                                 => rental.driver_name,
       :pickup                                               => rental.pickup,
       :drop_off                                             => rental.drop_off,
-      :line_items                                           => rental.line_items,
+      :rates                                                => rental.line_items.where(:item_type => "RentalRate"),
+      :sub_total                                            => rental.sub_total,
+      :tax_collectable                                      => rental.tax_collectable,
       :total                                                => rental.total,
+      :combined_tax_rate                                    => rental.combined_tax_rate,
       :additional_driver_name                               => rental.additional_driver_name,
       :driver_financial_responsibility_signature            => rental.driver_financial_responsibility_signature,
       :additional_driver_financial_responsibility_signature => rental.additional_driver_financial_responsibility_signature,
