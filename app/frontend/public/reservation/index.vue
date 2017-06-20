@@ -209,6 +209,10 @@
 
   #reservation-panel
     z-index: 2
+    padding: 0 $padding-default
+    background: #ffffff
+    border-radius: 0.25rem
+    border: 1px solid $border-color-light
 
   .input-field
     background-color: $background-color-app
