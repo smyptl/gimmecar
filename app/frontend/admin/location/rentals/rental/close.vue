@@ -51,13 +51,17 @@
         h3.panel-form-header Close - #12312313
 
         .input-row
-          label.input-label(for='drop_off') Drop Off
+          label.input-label(for='drop_off') Drop Off *
           .input-block.whole
-            input-date-time.input-contrast#drop_off(v-model='form.drop_off')
+            input-date-time.input-contrast#drop_off(
+              v-model='form.drop_off'
+              v-error='form.errors.has("drop_off")'
+              @input='form.errors.clear("drop_off")')
+          input-error-message(v-bind:errors='form.errors.get("drop_off")')
 
         .input-row
           .input-container.two-fifths
-            label.input-label(for='drop_off_odometer') Vehicle Odometer
+            label.input-label(for='drop_off_odometer') Vehicle Odometer *
             .input-block.whole
               input.input-field.input-contrast#drop_off_odometer(
                 type='text'
@@ -68,7 +72,7 @@
 
           .input-container.three-fifths
             label.input-label(for='drop_off_fuel')
-              | Fuel Level
+              | Fuel Level *
               .input-label-note.right {{ form.drop_off_fuel * 10 }}%
             .input-block.whole
               input.input-range#drop_off_fuel(
@@ -78,6 +82,7 @@
                 max='10'
                 v-error='form.errors.has("drop_off_fuel")'
                 @input='form.errors.clear("drop_off_fuel")')
+            input-error-message(v-bind:errors='form.errors.get("drop_off_fuel")')
 
         .input-submit.input-block
           button.btn.btn-primary.right(@click.prevent='closeRental()') Close

@@ -37,9 +37,7 @@
     },
     methods: {
       fetchData () {
-        console.log('fetching')
         this.$http.get(this.$route.path).then(response => {
-          console.log('fetched')
           this.rental = response.data
         })
       },
