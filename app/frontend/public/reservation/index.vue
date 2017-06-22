@@ -17,6 +17,7 @@
         form: new Form({
           pickup: new Date().setDate(new Date().getDate() + 1),
           drop_off: new Date().setDate(new Date().getDate() + 2),
+          vehicle_type: 'mid_size',
           first_name: '',
           last_name: '',
           email: '',
@@ -42,6 +43,7 @@
             params: {
               pickup: this.form.pickup,
               drop_off: this.form.drop_off,
+              vehicle_type: this.form.vehicle_type,
             },
           })
           .then(response => {
@@ -118,6 +120,18 @@
                 v-error='form.errors.has("drop_off")'
                 @input='form.errors.clear("drop_off")')
             input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
+
+          .input-container.whole
+            label.input-label.input-lg Vehicle Type
+            .input-block.whole
+              select.input-field#vehicle_type(
+                v-model='form.vehicle_type'
+                v-error='form.errors.has("vehicle_type")'
+                @input='form.errors.clear("vehicle_type")')
+
+                option(value='mid_size') Mid-Size (Toyota Corolla)
+                option(value='compact') Compact (Toyota Yaris iA)
+            input-error-message(v-bind:errors='form.errors.get("vehicle_type")')
 
           .input-submit
             .input-block.whole

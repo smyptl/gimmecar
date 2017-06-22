@@ -2,6 +2,7 @@ class Actions::Public::GetRates < Lib::Forms::Base
 
   attributes do |a|
     a.integer :location_id
+    a.string :vehicle_type
     a.date_time :pickup
     a.date_time :drop_off
   end
@@ -14,11 +15,11 @@ class Actions::Public::GetRates < Lib::Forms::Base
     presence: true,
     after_date: { with: -> { pickup }, allow_nil: true, message: 'must be after pickup' }
 
-  validate :valid_drop_off
+  validates :vehicle_type,
+    presence: true,
+    inclusion: { in: Vehicle::TYPES, message: "%{value} is not a valid vehicle type" }
 
-  def vehicle_type
-    :mid_size
-  end
+  validate :valid_drop_off
 
   private
 

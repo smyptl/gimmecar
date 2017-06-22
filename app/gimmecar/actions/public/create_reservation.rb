@@ -3,6 +3,7 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
   attributes do |a|
     a.date_time :pickup
     a.date_time :drop_off
+    a.string    :vehicle_type
     a.string    :first_name
     a.string    :last_name
     a.string    :email
@@ -20,10 +21,6 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
 
   def rental_period
     @rental_period ||= Lib::DateRange.new(pickup, drop_off)
-  end
-
-  def vehicle_type
-    :mid_size
   end
 
   private

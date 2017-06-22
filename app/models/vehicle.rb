@@ -25,6 +25,8 @@
 
 class Vehicle < ApplicationRecord
 
+  TYPES = ['mid_size', 'compact']
+
   has_many :rentals
   has_one :open_rental, -> { where(status: Rental::OPEN) }, class_name: 'Rental'
   has_one :last_rental, -> { past }, class_name: 'Rental'
