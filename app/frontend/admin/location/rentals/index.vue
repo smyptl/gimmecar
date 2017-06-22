@@ -1,5 +1,5 @@
 <script>
-  import FDateTime from 'Filters/date_time'
+  import Moment from 'moment'
 
   export default {
     name: 'index',
@@ -9,7 +9,13 @@
       }
     },
     filters: {
-      date_time: FDateTime,
+      date_time (val) {
+        var val = Moment(val)
+
+        if (val.isValid()) {
+          return val.format('M/D @ h:mm A')
+        }
+      },
     },
     created () {
       this.fetchData()
