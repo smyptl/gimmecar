@@ -33,11 +33,11 @@ Rails.application.routes.draw do
         get 'receipt/print', to: 'rentals/receipt#print'
         post 'receipt/email', to: 'rentals/receipt#email'
 
-        get 'close', to: 'close#index'
-        post 'close', to: 'close#create'
+        get 'close', to: 'rentals/close#index'
+        post 'close', to: 'rentals/close#create'
 
-        get 'extend',  to: 'extend#index'
-        post 'extend', to: 'extend#create'
+        get 'extend',  to: 'rentals/extend#index'
+        post 'extend', to: 'rentals/extend#create'
       end
 
       get  'rentals/new'                          => 'rentals/new#index'

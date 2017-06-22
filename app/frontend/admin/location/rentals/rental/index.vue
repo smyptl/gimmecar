@@ -37,16 +37,20 @@
     },
     methods: {
       fetchData () {
-        this.$http
-          .get(this.$route.path)
-          .then(response => {
-            this.rental = response.data
+        console.log('fetching')
+        this.$http.get(this.$route.path).then(response => {
+          console.log('fetched')
+          this.rental = response.data
         })
       },
       extendRental () {
       },
       closeRental () {
         this.close = true
+      },
+      rentalClosed () {
+        this.fetchData()
+        this.close = false
       },
       emailInvoice () {
       },
@@ -59,7 +63,7 @@
 
 <template lang='pug'>
   .panel.panel-base
-    close(v-on:close='close = false' v-if='close')
+    close(v-on:close='rentalClosed' v-if='close')
     .panel-base-header
       h2 {{ rental.number }}
       dropdown.flex-element.right
@@ -68,13 +72,9 @@
         .dropdown-menu.right(slot='dropdown-menu')
           ul
             li
-              a(@click='extendRental()') Extend Rental
+              button.link(@click='closeRental()') Close
             li
-              a(@click='closeRental()') Close
-            li
-              a(@click='emailInvoice') Email Invoice
-            li
-              a(@click='printInvoice') Print Invoice
+              button.link(@click='printInvoice') Print Invoice
 
     dl.panel-main-details
       dt Status

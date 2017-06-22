@@ -107,7 +107,8 @@
     li:last-of-type
       border-bottom: 0
 
-    a
+    a,
+    button
       float: left
       width: 100%
 

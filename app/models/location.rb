@@ -43,7 +43,7 @@ class Location < ApplicationRecord
 
   def rates_for(vehicle_type:, date:)
     date = convert_date_to_time_zone(date) if date === DateTime
-    rates.where(vehicle_type: vehicle_type, date: date).first || default_rates.where(vehicle_type: vehicle_type).first
+    rates.find_by(vehicle_type: vehicle_type, date: date) || default_rates.where(vehicle_type: vehicle_type).first
   end
 
   def latest_combined_tax_rate

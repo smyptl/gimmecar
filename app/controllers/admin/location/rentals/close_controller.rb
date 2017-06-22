@@ -1,4 +1,4 @@
-class Admin::Location::Rentals::NewController < Admin::Location::BaseController
+class Admin::Location::Rentals::CloseController < Admin::Location::Rentals::BaseController
 
   def index
   end
@@ -12,6 +12,6 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       render status: 400, :json => args
     end
 
-    Services::Admin::Location::Rental::Close.new(params.require(:close)).execute(success, failure, params)
+    Actions::Admin::Location::Rental::Close.new(params.require(:close)).execute(success, failure, params)
   end
 end

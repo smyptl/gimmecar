@@ -72,6 +72,14 @@ class Rental < ApplicationRecord
     Lib::DateRange.new(pickup, drop_off)
   end
 
+  def close(args)
+    update(args.merge(:status => CLOSED))
+  end
+
+  def closed?
+    status == CLOSED
+  end
+
   def combined_tax_rate
     tax_rate.combined_tax_rate
   end
