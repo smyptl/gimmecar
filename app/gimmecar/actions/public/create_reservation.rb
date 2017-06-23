@@ -36,6 +36,7 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
       :first_name          => first_name,
       :last_name           => last_name,
       :email               => email,
+      :vehicle_type        => vehicle_type,
       :phone_number        => phone_number,
       :confirmation_number => confirmation_number,
     }.merge(rates)

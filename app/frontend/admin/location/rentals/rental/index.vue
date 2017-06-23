@@ -37,9 +37,7 @@
     },
     methods: {
       fetchData () {
-        console.log('fetching')
         this.$http.get(this.$route.path).then(response => {
-          console.log('fetched')
           this.rental = response.data
         })
       },
@@ -71,7 +69,7 @@
           actions-icon.action-icon
         .dropdown-menu.right(slot='dropdown-menu')
           ul
-            li
+            li(v-if='rental.status == "open"')
               button.link(@click='closeRental()') Close
             li
               button.link(@click='printInvoice') Print Invoice
