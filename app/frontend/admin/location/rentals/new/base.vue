@@ -85,6 +85,7 @@
         current_step: 'Details',
         vehicles: [],
         summary: {},
+        disabled_button: false,
       }
     },
     components: {
@@ -165,10 +166,13 @@
         })
       },
       validatePayment () {
+        this.disabled_button = true
+
         stripe.createToken(window.card).then(result => {
           if (result.error) {
             Shake(this.$refs.form)
             this.rental.errors.record({ card: [result.error.message] })
+            this.disabled_button = false
           } else {
             this.rental.errors.clear
             // Send the token to your server
@@ -189,6 +193,7 @@
           Shake(this.$refs.form)
           this.rental.stripe_customer_id = error.response.data.stripe_customer_id
           this.rental.errors.record(error.response.data.errors)
+          this.disabled_button = false
         })
       },
     },
@@ -314,7 +319,7 @@
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validatePayment') Continue
+        button.btn.btn-primary.right(@click.prevent='validatePayment' v-bind:disabled='disabled_button') Continue
 
 </template>
 
