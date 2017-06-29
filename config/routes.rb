@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       get '/quotes', to: 'quotes#index'
       #post '/quotes', to: 'quotes#show'
 
-      resources :rates
+      get  '/rates', to: 'rates#index'
 
       get '/new', to: 'new#index'
 

@@ -14,10 +14,6 @@
 
 class Rate < ApplicationRecord
 
-  VEHICLE_TYPES = [
-    :mid_size
-  ]
-
   belongs_to :location
 
 end

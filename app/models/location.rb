@@ -41,9 +41,13 @@ class Location < ApplicationRecord
     "#{name} - #{address_1} #{city}, #{state} #{zip_code}"
   end
 
+  def default_rate_for(vehicle_type)
+    default_rates.find_by(vehicle_type: vehicle_type)
+  end
+
   def rates_for(vehicle_type:, date:)
     date = convert_date_to_time_zone(date) if date === DateTime
-    rates.find_by(vehicle_type: vehicle_type, date: date) || default_rates.find_by(vehicle_type: vehicle_type)
+    rates.find_by(vehicle_type: vehicle_type, date: date) || default_rate_for(vehicle_type)
   end
 
   def latest_combined_tax_rate
