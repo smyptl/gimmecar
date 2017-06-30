@@ -30,6 +30,7 @@
     "js-yaml": "^3.8.4",
     "lodash": "^4.17.3",
     "moment": "^2.17.1",
+    "moment-range": "^3.0.3",
     "moment-timezone": "^0.5.11",
     "path-complete-extname": "^0.1.0",
     "postcss-loader": "^2.0.5",

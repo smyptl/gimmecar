@@ -16,4 +16,7 @@ class Rate < ApplicationRecord
 
   belongs_to :location
 
+  def self.create_default(args)
+    create(args.merge(default: true))
+  end
 end
