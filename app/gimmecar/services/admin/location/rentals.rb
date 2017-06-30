@@ -1,4 +1,4 @@
-class Services::Admin::Rentals < Lib::Services::Base
+class Services::Admin::Location::Rentals < Lib::Services::Base
 
   def initialize(location_id)
     @location_id = location_id

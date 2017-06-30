@@ -20,11 +20,9 @@ location = Location.create({
 
 user.locations << location
 
-location.rates << Rate.create({
-  :default => true,
-  :amount => 3200,
-  :vehicle_type => :mid_size,
-})
+location.rates << Rate.create_default({ :amount => 3300, :vehicle_type => :mid_size })
+location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :compact })
+location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :pick_up })
 
 location.tax_rates << TaxRate.create({
   :combined_tax_rate => 0.07750,
@@ -36,7 +34,7 @@ location.tax_rates << TaxRate.create({
 
 location.vehicles << Vehicle.create({
   :original_location => location,
-  :vehicle_type      => 'mid_size',
+  :vehicle_type      => 'compact',
   :vin               => Faker::Vehicle.vin,
   :license_number    => '6TRJ244',
   :make              => 'Toyota',
