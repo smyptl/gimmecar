@@ -45,9 +45,13 @@ class Location < ApplicationRecord
     default_rates.find_by(vehicle_type: vehicle_type)
   end
 
-  def rates_for(vehicle_type:, date:)
+  def find_rate_by(vehicle_type:, date:)
     date = convert_date_to_time_zone(date) if date === DateTime
-    rates.find_by(vehicle_type: vehicle_type, date: date) || default_rate_for(vehicle_type)
+    rates.find_by(vehicle_type: vehicle_type, date: date)
+  end
+
+  def rates_for(vehicle_type:, date:)
+    find_rate_by(vehicle_type: vehicle_type, date: date) || default_rate_for(vehicle_type)
   end
 
   def latest_combined_tax_rate
