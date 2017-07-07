@@ -18,7 +18,7 @@ feature 'close rental', js: true do
     expect(page).to have_content(rental.number)
     find("a[data-toggle='dropdown']").trigger('click')
     click_button('Close')
-    expect(page).to have_content('Close - #')
+    expect(page).to have_content('Close')
     fill_in 'Vehicle Odometer', with: 1200
     within('div.popup') do
       click_button('Close')
