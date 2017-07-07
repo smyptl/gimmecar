@@ -69,15 +69,7 @@
               th.text-right(v-for='date in date_range') {{ date.format('M/D') }}
           tbody.alternate-color
             tr(v-for='rate in rates')
-<<<<<<< HEAD
               rate(v-for='date in date_range' :date='date' :rates='rate' @update='fetchData()')
-
-=======
-              td.text-right(v-for='date in date_range')
-                span(v-if='find_rate(rate.rates, date)') {{ find_rate(rate.rates, date) | currency }}
-                span.text-light(v-else) {{ rate.default_rate | currency }}
->>>>>>> master
-
 </template>
 
 <style lang='stylus' scoped>
