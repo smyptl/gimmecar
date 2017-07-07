@@ -24,19 +24,19 @@
     },
     methods: {
       closePopup () {
-        this.show = false
+        return this.show = false
       },
       afterLeave(el) {
-        this.$emit('closed');
+        this.$emit('closed')
       },
     },
   };
 </script>
 
 <template lang='pug'>
-  .popup-wrapper(role='dialog' tabindex='0' @keyup.esc='close($event)')
-    transition(name='popup' v-on:after-leave='afterLeave')
-      .popup(v-if='show')
+  transition(name='popup' v-on:after-leave='afterLeave')
+    .popup-wrapper(v-if='show' role='dialog' tabindex='0' @keyup.esc='close($event)')
+      .popup
         .popup-container
           .popup-content
             a.link-danger#cancel-button(@click='closePopup')
@@ -88,7 +88,8 @@
     text-align: left
 
   .popup-enter-active
-    opacity: 0
+    .popup
+      opacity: 0
 
     .popup-content
       opacity: 0

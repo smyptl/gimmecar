@@ -69,7 +69,7 @@
               th.text-right(v-for='date in date_range') {{ date.format('M/D') }}
           tbody.alternate-color
             tr(v-for='rate in rates')
-              rate(v-for='date in date_range' :date='date' :rates='rate' @update-rates='fetchData()')
+              rate(v-for='date in date_range' :date='date' :rates='rate' @update='fetchData()')
 
 
 </template>

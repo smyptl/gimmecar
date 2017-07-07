@@ -60,7 +60,7 @@
     methods: {
       close () {
         this.open = false
-        this.$emit('update-rates')
+        this.$emit('update')
       },
       editRate () {
         this.form.amount = this.rate
@@ -90,7 +90,7 @@
   td.text-right.clickable
     span(@click='editRate' v-bind:class="{ 'text-light': is_default_rate }") {{ rate | currency }}
 
-    popup(v-if='open' v-on:closed='close')
+    popup(v-if='open' @closed='close')
       .panel-popup-form
         .panel-form.panel-form-padding
           h3.panel-form-header Rate - {{ vehicle_type }}
