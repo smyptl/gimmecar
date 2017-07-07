@@ -8,7 +8,7 @@
   import ActionsIcon from 'Components/icons/actions'
   import RightArrowIcon from 'Components/icons/right_arrow'
 
-  import Close from './close'
+  import Close from './_close'
 
   export default {
     name: 'rental',

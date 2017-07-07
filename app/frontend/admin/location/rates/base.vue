@@ -1,15 +1,13 @@
 <script>
   import Form from 'Utils/form'
   import InputDate from 'Components/inputs/date'
+  import Rate from './_rate'
 
   import moment from 'moment'
   import { extendMoment } from 'moment-range';
   const Moment = extendMoment(moment);
 
-  import Find from 'lodash/find'
-
   import FDate from 'Filters/date'
-  import Currency from 'Filters/currency'
 
   export default {
     name: 'rates',
@@ -24,10 +22,10 @@
     },
     filters: {
       date: FDate,
-      Currency,
     },
     components: {
       InputDate,
+      Rate,
     },
     mounted () {
       this.fetchData()
@@ -48,17 +46,6 @@
             this.rates = response.data
         })
       },
-      find_rate (rates, date) {
-        let rate = Find(rates, function (r) {
-          return date.isSame(r.date, 'day')
-        })
-
-        if (rate) {
-          return rate.amount
-        }
-
-        return null
-      }
     },
   }
 </script>
@@ -82,9 +69,14 @@
               th.text-right(v-for='date in date_range') {{ date.format('M/D') }}
           tbody.alternate-color
             tr(v-for='rate in rates')
+<<<<<<< HEAD
+              rate(v-for='date in date_range' :date='date' :rates='rate' @update='fetchData()')
+
+=======
               td.text-right(v-for='date in date_range')
                 span(v-if='find_rate(rate.rates, date)') {{ find_rate(rate.rates, date) | currency }}
                 span.text-light(v-else) {{ rate.default_rate | currency }}
+>>>>>>> master
 
 </template>
 

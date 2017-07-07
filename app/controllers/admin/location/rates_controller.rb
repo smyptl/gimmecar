@@ -4,16 +4,15 @@ class Admin::Location::RatesController < Admin::Location::BaseController
     render status: 200, json: Services::Admin::Location::Rates.new(location.id).during_period(params[:start_date], params[:end_date]).fetch
   end
 
-  def show
-  end
+  def update
+    success = lambda do |args|
+      render status: 200, :json => args
+    end
 
-  private
+    failure = lambda do |args|
+      render status: 400, :json => args
+    end
 
-  def authorize_rental
-    raise Error404 unless @location.rental_numbers.include?(rental_number)
-  end
-
-  def rental_number
-    params[:id]
+    Actions::Admin::Location::Rates::Update.new(params.require(:edit)).execute(success, failure, { location: location })
   end
 end

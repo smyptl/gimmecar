@@ -48,7 +48,7 @@
   popup(v-if='open' v-on:closed='close')
     .panel-popup-form
       .panel-form.panel-form-padding
-        h3.panel-form-header Close - #12312313
+        h3.panel-form-header Close
 
         .input-row
           label.input-label(for='drop_off') Drop Off *
