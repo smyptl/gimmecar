@@ -1,6 +1,5 @@
 <script>
   import Moment from 'moment'
-  import MomentTimeZone from 'moment-timezone'
 
   export default {
     props: {
@@ -46,10 +45,12 @@
       formatDate () {
         if (this.current_date && this.current_date.isValid()) {
           this.date_formatted = this.current_date.format('M/D/YYYY')
+        } else {
+          this.date_formatted = null
         }
       },
       emitInput () {
-        this.$emit('input', this.current_date)
+        this.$emit('input', this.date_formatted)
       },
     },
   }
