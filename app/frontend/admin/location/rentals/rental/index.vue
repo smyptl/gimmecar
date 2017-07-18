@@ -60,33 +60,35 @@
 </script>
 
 <template lang='pug'>
-  .panel.panel-base
-    close(v-on:close='rentalClosed' v-if='close')
-    .panel-base-header
-      h2 {{ rental.number }}
-      dropdown.flex-element.right
-        a(data-toggle='dropdown')
-          actions-icon.action-icon
-        .dropdown-menu.right(slot='dropdown-menu')
-          ul
-            li(v-if='rental.status == "open"')
-              button.link(@click='closeRental()') Close
-            li
-              button.link(@click='printInvoice') Print Invoice
+  div
+    .panel.panel-base
+      close(v-on:close='rentalClosed' v-if='close')
+      .panel-base-header
+        h2 {{ rental.number }}
+        dropdown.flex-element.right
+          a(data-toggle='dropdown')
+            actions-icon.action-icon
+          .dropdown-menu.right(slot='dropdown-menu')
+            ul
+              li(v-if='rental.status == "open"')
+                button.link(@click='closeRental()') Close
+              li
+                button.link(@click='printInvoice') Print Invoice
 
-    dl.panel-main-details
-      dt Status
-      dd {{ rental.status | capitalize }}
-      dt Pickup
-      dd {{ rental.pickup | date_time }}
-      dt Drop Off
-      dd {{ rental.drop_off | date_time }}
+      dl.panel-main-details
+        dt Status
+        dd {{ rental.status | capitalize }}
+        dt Pickup
+        dd {{ rental.pickup | date_time }}
+        dt Drop Off
+        dd {{ rental.drop_off | date_time }}
 
-      a.panel-details-link(href='####')
+      dl.panel-details-link
         dt Driver
         dd {{ rental.driver.first_name }} {{ rental.driver.last_name }}
         right-arrow-icon
-      a.panel-details-link(href='####')
+
+      dl.panel-details-link
         dt Vehicle
         dd
           span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
