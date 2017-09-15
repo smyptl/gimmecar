@@ -234,6 +234,7 @@
 
               option(value='mid_size') Mid-Size (Toyota Corolla)
               option(value='compact') Compact (Toyota Yaris iA)
+              option(value='truck') Truck (Ford F-150)
           input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
 
       .input-submit.input-block

@@ -25,7 +25,7 @@
 
 class Vehicle < ApplicationRecord
 
-  TYPES = ['mid_size', 'compact']
+  TYPES = ['mid_size', 'compact', 'truck']
 
   has_many :rentals
   has_one :open_rental, -> { where(status: Rental::OPEN) }, class_name: 'Rental'
