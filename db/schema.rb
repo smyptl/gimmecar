@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529185319) do
+ActiveRecord::Schema.define(version: 20170920193803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,9 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.boolean "do_not_rent"
     t.string "stripe_id"
     t.text "notes"
+    t.string "name_first"
+    t.string "name_middle"
+    t.string "name_last"
   end
 
   create_table "insurance_policies", force: :cascade do |t|

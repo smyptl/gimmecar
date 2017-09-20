@@ -44,8 +44,9 @@ describe Actions::Admin::Location::Rental::Create do
 
       expect(Driver.count).to eq(1)
       driver = Driver.first
-      expect(driver.first_name).to eq(driver_attrs[:first_name])
-      expect(driver.last_name).to eq(driver_attrs[:last_name])
+      expect(driver.name_first).to eq(driver_attrs[:name_first])
+      expect(driver.name_middle).to eq(driver_attrs[:name_middle])
+      expect(driver.name_last).to eq(driver_attrs[:name_last])
       expect(driver.gender).to eq(driver_attrs[:gender])
       expect(driver.address_1).to eq(driver_attrs[:address_1])
       expect(driver.address_2).to eq(driver_attrs[:address_2])

@@ -132,7 +132,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
 
   def success_args
     {
-      message:       "Rental #{@rental.number} created for #{driver_first_name} #{driver_last_name}.",
+      message:       "Rental #{@rental.number} created for #{driver_name_first} #{driver_name_last}.",
       rental_number: @rental.number,
     }
   end

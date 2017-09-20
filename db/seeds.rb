@@ -70,8 +70,9 @@ rental_vehicle = Vehicle.create({
 })
 
 rental_driver = Driver.create({
-  :first_name              => Faker::Name.first_name,
-  :last_name               => Faker::Name.last_name,
+  :name_first              => Faker::Name.first_name,
+  :name_middle             => Faker::Name.first_name,
+  :name_last               => Faker::Name.last_name,
   :address_1               => Faker::Address.street_address,
   :address_2               => Faker::Address.secondary_address,
   :city                    => Faker::Address.city,

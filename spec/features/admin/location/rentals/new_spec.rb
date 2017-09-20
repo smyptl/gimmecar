@@ -33,8 +33,9 @@ feature 'create rental', js: true do
 
     driver_stub = build_stubbed(:driver)
 
-    fill_in 'driver_first_name',              with: driver_stub.first_name
-    fill_in 'driver_last_name',               with: driver_stub.last_name
+    fill_in 'driver_name_first',              with: driver_stub.name_first
+    fill_in 'driver_name_middle',             with: driver_stub.name_middle
+    fill_in 'driver_name_last',               with: driver_stub.name_last
 
     fill_in 'driver_license_number',          with: driver_stub.license_number
     fill_in 'driver_license_state',           with: driver_stub.license_state
@@ -85,13 +86,13 @@ feature 'create rental', js: true do
 
     expect(page).to have_content('Rental: Financial Responsibility')
     expect(page).to have_content('Notice About Your Financial Responibility')
-    expect(page).to have_content("#{driver_stub.first_name} #{driver_stub.last_name}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Terms & Conditions')
     expect(page).to have_content('Total:')
     expect(page).to have_content('Rental Agreement Terms and Conditions')
-    expect(page).to have_content("#{driver_stub.first_name} #{driver_stub.last_name}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Payment')
@@ -105,12 +106,13 @@ feature 'create rental', js: true do
     end
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.first_name} #{driver_stub.last_name}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
 
     expect(Driver.count).to eq(1)
     driver = Driver.first
-    expect(driver.first_name).to eq(driver_stub.first_name)
-    expect(driver.last_name).to eq(driver_stub.last_name)
+    expect(driver.name_first).to eq(driver_stub.name_first)
+    expect(driver.name_middle).to eq(driver_stub.name_middle)
+    expect(driver.name_last).to eq(driver_stub.name_last)
     expect(driver.gender).to eq(driver_stub.gender)
     expect(driver.address_1).to eq(driver_stub.address_1)
     expect(driver.address_2).to eq(driver_stub.address_2)
@@ -188,8 +190,8 @@ feature 'create rental', js: true do
 
     driver_stub = build_stubbed(:driver)
 
-    fill_in 'driver_first_name',              with: driver_stub.first_name
-    fill_in 'driver_last_name',               with: driver_stub.last_name
+    fill_in 'driver_name_first',              with: driver_stub.name_first
+    fill_in 'driver_name_last',               with: driver_stub.name_last
 
     fill_in 'driver_license_number',          with: driver_stub.license_number
     fill_in 'driver_license_state',           with: driver_stub.license_state
@@ -240,13 +242,13 @@ feature 'create rental', js: true do
 
     expect(page).to have_content('Rental: Financial Responsibility')
     expect(page).to have_content('Notice About Your Financial Responibility')
-    expect(page).to have_content("#{driver_stub.first_name} #{driver_stub.last_name}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Terms & Conditions')
     expect(page).to have_content('Total:')
     expect(page).to have_content('Rental Agreement Terms and Conditions')
-    expect(page).to have_content("#{driver_stub.first_name} #{driver_stub.last_name}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Payment')
@@ -274,6 +276,6 @@ feature 'create rental', js: true do
     end
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.first_name} #{driver_stub.last_name}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
   end
 end
