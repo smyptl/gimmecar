@@ -5,8 +5,6 @@
 #  id                      :integer          not null, primary key
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  first_name              :string
-#  last_name               :string
 #  gender                  :string
 #  address_1               :string
 #  address_2               :string
@@ -25,6 +23,9 @@
 #  do_not_rent             :boolean
 #  stripe_id               :string
 #  notes                   :text
+#  name_first              :string
+#  name_middle             :string
+#  name_last               :string
 #
 
 FactoryGirl.define do
