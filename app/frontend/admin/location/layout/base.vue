@@ -127,7 +127,7 @@
         fill: #9badb6
 
       &:hover svg
-        fill: $blue
+        fill: $purple
 
   content
     float: left

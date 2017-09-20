@@ -112,11 +112,10 @@ module Actions::Admin::Location::Rental::Concerns::Driver
       presence: true,
       after_date: { with: -> { drop_off }, allow_nil: true }
 
-    validates :driver_insurance_verified,
-      acceptance: true
-
-    validates :driver_insurance_verify_date, :driver_insurance_verify_agent, :driver_insurance_verify_call_center,
-      presence: true
+    with_options if: :driver_insurance_verified do |a|
+      validates :driver_insurance_verify_date, :driver_insurance_verify_agent, :driver_insurance_verify_call_center,
+        presence: true
+    end
 
     with_options if: :add_additional_driver do |a|
       a.validates :additional_driver_first_name, :additional_driver_last_name,
