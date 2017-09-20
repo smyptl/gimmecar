@@ -113,7 +113,7 @@ module Actions::Admin::Location::Rental::Concerns::Driver
       after_date: { with: -> { drop_off }, allow_nil: true }
 
     with_options if: :driver_insurance_verified do |a|
-      validates :driver_insurance_verify_date, :driver_insurance_verify_agent, :driver_insurance_verify_call_center,
+      a.validates :driver_insurance_verify_date, :driver_insurance_verify_agent, :driver_insurance_verify_call_center,
         presence: true
     end
 
