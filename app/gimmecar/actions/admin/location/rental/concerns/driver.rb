@@ -5,8 +5,9 @@ module Actions::Admin::Location::Rental::Concerns::Driver
     attributes do |a|
       a.integer :driver_id
       a.nested :driver do |n|
-        n.string  :first_name
-        n.string  :last_name
+        n.string  :name_first
+        n.string  :name_middle
+        n.string  :name_last
         n.string  :license_number
         n.string  :license_state
         n.string  :license_country
@@ -42,8 +43,9 @@ module Actions::Admin::Location::Rental::Concerns::Driver
 
       a.integer :additional_driver_id
       a.nested :additional_driver do |n|
-        n.string  :first_name
-        n.string  :last_name
+        n.string  :name_first
+        n.string  :name_middle
+        n.string  :name_last
         n.string  :license_number
         n.string  :license_state
         n.string  :license_country
@@ -62,7 +64,7 @@ module Actions::Admin::Location::Rental::Concerns::Driver
       end
     end
 
-    validates :driver_first_name, :driver_last_name,
+    validates :driver_name_first, :driver_name_last,
       presence: true
 
     validates :driver_license_number, :driver_license_state,
@@ -118,7 +120,7 @@ module Actions::Admin::Location::Rental::Concerns::Driver
     end
 
     with_options if: :add_additional_driver do |a|
-      a.validates :additional_driver_first_name, :additional_driver_last_name,
+      a.validates :additional_driver_name_first, :additional_driver_name_last,
         presence: true
 
       a.validates :additional_driver_license_number, :additional_driver_license_state,

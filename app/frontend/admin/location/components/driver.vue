@@ -18,29 +18,29 @@
 <template lang='pug'>
   div
     .input-row
-      label.input-label(for='driver_first_name')
+      label.input-label(for='driver_name_first')
         | Name
         a.right(href='') Search Driver
 
       .input-container.one-half.fixed
         .input-block.whole
-          input.input-field#driver_first_name(
+          input.input-field#driver_name_first(
             type='text'
             placeholder='First'
-            v-model='form.driver.first_name'
-            v-error='form.errors.has("driver_first_name")'
-            @input='form.errors.clear("driver_first_name")')
-        input-error-message(v-bind:errors='form.errors.get("driver_first_name")')
+            v-model='form.driver.name_first'
+            v-error='form.errors.has("driver_name_first")'
+            @input='form.errors.clear("driver_name_first")')
+        input-error-message(v-bind:errors='form.errors.get("driver_name_first")')
 
       .input-container.one-half.fixed
         .input-block.whole
-          input.input-field#driver_last_name(
+          input.input-field#driver_name_last(
             type='text'
             placeholder='Last'
-            v-model='form.driver.last_name'
-            v-error='form.errors.has("driver_last_name")'
-            @input='form.errors.clear("driver_last_name")')
-        input-error-message(v-bind:errors='form.errors.get("driver_last_name")')
+            v-model='form.driver.name_last'
+            v-error='form.errors.has("driver_name_last")'
+            @input='form.errors.clear("driver_name_last")')
+        input-error-message(v-bind:errors='form.errors.get("driver_name_last")')
 
     .input-row
       label.input-label(for='driver_license_number')
@@ -321,29 +321,29 @@
 
     template(v-if='form.add_additional_driver')
       .input-row
-        label.input-label(for='additional_driver_first_name')
+        label.input-label(for='additional_driver_name_first')
           | Name
           a.right(href='') Search Driver
 
         .input-container.one-half.fixed
           .input-block.whole
-            input.input-field#additional_driver_first_name(
+            input.input-field#additional_driver_name_first(
               type='text'
               placeholder='First'
-              v-model='form.additional_driver.first_name'
-              v-error='form.errors.has("additional_driver_first_name")'
-              @input='form.errors.clear("additional_driver_first_name")')
-          input-error-message(v-bind:errors='form.errors.get("additional_driver_first_name")')
+              v-model='form.additional_driver.name_first'
+              v-error='form.errors.has("additional_driver_name_first")'
+              @input='form.errors.clear("additional_driver_name_first")')
+          input-error-message(v-bind:errors='form.errors.get("additional_driver_name_first")')
 
         .input-container.one-half.fixed
           .input-block.whole
-            input.input-field#additional_driver_last_name(
+            input.input-field#additional_driver_name_last(
               type='text'
               placeholder='Last'
-              v-model='form.additional_driver.last_name'
-              v-error='form.errors.has("additional_driver_last_name")'
-              @input='form.errors.clear("additional_driver_last_name")')
-          input-error-message(v-bind:errors='form.errors.get("additional_driver_last_name")')
+              v-model='form.additional_driver.name_last'
+              v-error='form.errors.has("additional_driver_name_last")'
+              @input='form.errors.clear("additional_driver_name_last")')
+          input-error-message(v-bind:errors='form.errors.get("additional_driver_name_last")')
 
       .input-row
         label.input-label(for='additional_driver_license_number')

@@ -18,8 +18,8 @@
           pickup: new Date().setDate(new Date().getDate() + 1),
           drop_off: new Date().setDate(new Date().getDate() + 2),
           vehicle_type: 'mid_size',
-          first_name: '',
-          last_name: '',
+          name_first: '',
+          name_last: '',
           email: '',
           phone_number: '',
         }),
@@ -150,28 +150,28 @@
       #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
         form(@submit.prevent='createReservation')
           .input-row.margin-top-ex-sm
-            label.input-label(for='first_name') Name
+            label.input-label(for='name_first') Name
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field#first_name(
+                input.input-field#name_first(
                   type='text'
                   placeholder='Henry'
-                  v-model='form.first_name'
-                  v-error='form.errors.has("first_name")'
-                  @input='form.errors.clear("first_name")')
+                  v-model='form.name_first'
+                  v-error='form.errors.has("name_first")'
+                  @input='form.errors.clear("name_first")')
 
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("first_name")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("name_first")')
 
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field#last_name(
+                input.input-field#name_last(
                   type='text'
                   placeholder='Ford'
-                  v-model='form.last_name'
-                  v-error='form.errors.has("last_name")'
-                  @input='form.errors.clear("last_name")')
+                  v-model='form.name_last'
+                  v-error='form.errors.has("name_last")'
+                  @input='form.errors.clear("name_last")')
 
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("last_name")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("name_last")')
 
           .input-row
             label.input-label(for='input_email')
@@ -212,7 +212,7 @@
 
       #rental-confirmation(v-if="current_step == 'rental-confirmation'" key='confirmation')
         h2.emoji :]
-        p.text-center Thanks for choosing us, {{ form.first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
+        p.text-center Thanks for choosing us, {{ form.name_first }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 
         rates(:summary='summary')
 </template>

@@ -22,8 +22,8 @@
           promo_code: null,
           driver_id: null,
           driver: {
-            first_name: '',
-            last_name: '',
+            name_first: '',
+            name_last: '',
             license_number: '',
             license_state: 'California',
             license_country: 'United States',
@@ -57,8 +57,8 @@
           add_additional_driver: false,
           additional_driver_id: null,
           additional_driver: {
-            first_name: '',
-            last_name: '',
+            name_first: '',
+            name_last: '',
             license_number: '',
             license_state: 'California',
             license_country: 'United States',
@@ -277,12 +277,12 @@
       .input-block.margin-top-sm
         financial-responsibility
 
-      h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
+      h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
       .input-block.whole
         signature(v-model='rental.driver_financial_responsibility_signature')
 
       template(v-if='rental.add_additional_driver')
-        h6.input-label.margin-top-default {{ rental.additional_driver.first_name }} {{ rental.additional_driver.last_name }}
+        h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
         .input-block.whole
           signature(v-model='rental.additional_driver_financial_responsibility_signature')
 
@@ -295,12 +295,12 @@
       .input-block.margin-top-default
         terms-and-conditions
 
-      h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
+      h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
       .input-block.whole
         signature(v-model='rental.driver_signature')
 
       template(v-if='rental.add_additional_driver')
-        h6.input-label.margin-top-default {{ rental.additional_driver.first_name }} {{ rental.additional_driver.last_name }}
+        h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
         .input-block.whole
           signature(v-model='rental.additional_driver_signature')
 

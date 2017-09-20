@@ -30,11 +30,10 @@
 class Driver < ApplicationRecord
 
   has_many :rentals
-
-  has_one :current_insurance_policy
+  has_many :insurance_policies
 
   def name
-    "#{first_name} #{last_name}"
+    "#{name_first} #{name_last}"
   end
 
   def do_not_rent?

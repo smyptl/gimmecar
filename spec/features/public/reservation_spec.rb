@@ -25,8 +25,8 @@ feature "Reservations", js: true do
     within('#rental-reserve') do
       expect(page).to have_content('Name')
 
-      fill_in :first_name, with: 'John'
-      fill_in :last_name, with: 'Doe'
+      fill_in :name_first, with: 'John'
+      fill_in :name_last, with: 'Doe'
       fill_in 'Email', with: 'test@gmail.com'
       fill_in 'Phone #', with: 9012351234
     end

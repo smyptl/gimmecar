@@ -85,7 +85,7 @@
 
       dl.panel-details-link
         dt Driver
-        dd {{ rental.driver.first_name }} {{ rental.driver.last_name }}
+        dd {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
         right-arrow-icon
 
       dl.panel-details-link

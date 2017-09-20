@@ -1,4 +1,4 @@
-= "Hi #{@email.fetch(:first_name)},"
+= "Hi #{@email.fetch(:name_first)},"
 <br/>
 <br/>
 = "Thank you for making reservation with us. Your confirmation number is #{@email.fetch(:confirmation_number)} for your rental from #{format_date_time(@email.fetch(:pickup))} to #{format_date_time(@email.fetch(:drop_off))}."
