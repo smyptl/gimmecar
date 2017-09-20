@@ -22,17 +22,28 @@
         | Name
         a.right(href='') Search Driver
 
-      .input-container.one-half.fixed
-        .input-block.whole
-          input.input-field#driver_name_first(
-            type='text'
-            placeholder='First'
-            v-model='form.driver.name_first'
-            v-error='form.errors.has("driver_name_first")'
-            @input='form.errors.clear("driver_name_first")')
-        input-error-message(v-bind:errors='form.errors.get("driver_name_first")')
+      .input-container.three-fifths
+        .input-container.three-fifths.fixed
+          .input-block.whole
+            input.input-field#driver_name_first(
+              type='text'
+              placeholder='First'
+              v-model='form.driver.name_first'
+              v-error='form.errors.has("driver_name_first")'
+              @input='form.errors.clear("driver_name_first")')
+          input-error-message(v-bind:errors='form.errors.get("driver_name_first")')
 
-      .input-container.one-half.fixed
+        .input-container.two-fifths.fixed
+          .input-block.whole
+            input.input-field#driver_name_middle(
+              type='text'
+              placeholder='Middle'
+              v-model='form.driver.name_middle'
+              v-error='form.errors.has("driver_name_middle")'
+              @input='form.errors.clear("driver_name_middle")')
+          input-error-message(v-bind:errors='form.errors.get("driver_name_middle")')
+
+      .input-container.two-fifths
         .input-block.whole
           input.input-field#driver_name_last(
             type='text'

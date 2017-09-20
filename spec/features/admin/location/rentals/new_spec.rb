@@ -34,6 +34,7 @@ feature 'create rental', js: true do
     driver_stub = build_stubbed(:driver)
 
     fill_in 'driver_name_first',              with: driver_stub.name_first
+    fill_in 'driver_name_middle',             with: driver_stub.name_middle
     fill_in 'driver_name_last',               with: driver_stub.name_last
 
     fill_in 'driver_license_number',          with: driver_stub.license_number
@@ -105,11 +106,12 @@ feature 'create rental', js: true do
     end
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
 
     expect(Driver.count).to eq(1)
     driver = Driver.first
     expect(driver.name_first).to eq(driver_stub.name_first)
+    expect(driver.name_middle).to eq(driver_stub.name_middle)
     expect(driver.name_last).to eq(driver_stub.name_last)
     expect(driver.gender).to eq(driver_stub.gender)
     expect(driver.address_1).to eq(driver_stub.address_1)
