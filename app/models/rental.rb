@@ -32,8 +32,9 @@
 
 class Rental < ApplicationRecord
 
-  OPEN   = 'open'
-  CLOSED = 'closed'
+  OPEN     = 'open'
+  CLOSED   = 'closed'
+  RESERVED = 'reserved'
 
   belongs_to :driver
   belongs_to :additional_driver, class_name: 'Driver', required: false
@@ -49,7 +50,7 @@ class Rental < ApplicationRecord
   has_many :line_items, as: :invoice
   has_many :charges, as: :owner
 
-  scope :reserved,  -> { where(status: 'reserved') }
+  scope :reserved,  -> { where(status: RESERVED) }
   scope :cancelled, -> { where(status: 'cancelled') }
   scope :open,      -> { where(status: OPEN) }
   scope :closed,    -> { where(status: CLOSED) }
@@ -66,6 +67,10 @@ class Rental < ApplicationRecord
 
   def self.create_open(args)
     create(args.merge(:status => OPEN))
+  end
+
+  def self.create_reservation(args)
+    create(args.merge(:status => RESERVED))
   end
 
   def rental_period

@@ -102,3 +102,34 @@ Rental.create_open({
   :drop_off                => DateTime.now + 2.days,
   :collision_damage_waiver => false,
 })
+
+
+reservation_driver = Driver.create({
+  :name_first              => Faker::Name.first_name,
+  :name_middle             => Faker::Name.first_name,
+  :name_last               => Faker::Name.last_name,
+  :address_1               => Faker::Address.street_address,
+  :address_2               => Faker::Address.secondary_address,
+  :city                    => Faker::Address.city,
+  :state                   => 'California',
+  :zip_code                => Faker::Address.zip_code,
+  :country                 => 'United States',
+  :cell_phone_number       => "9091231234",
+  :home_phone_number       => "9091239021",
+  :gender                  => ['male', 'female'].sample,
+  :email                   => Faker::Internet.email,
+  :date_of_birth           => Date.today - 26.years,
+  :license_number          => '123JAS12',
+  :license_state           => 'California',
+  :license_country         => 'United States',
+  :license_expiration_date => Date.today + 1.year,
+})
+
+Rental.create_reservation({
+  :driver                  => reservation_driver,
+  :vehicle_type            => 'compact',
+  :pickup_location         => location,
+  :pickup                  => DateTime.now + 3.day,
+  :drop_off_location       => location,
+  :drop_off                => DateTime.now + 5.days,
+})

@@ -38,8 +38,13 @@ FactoryGirl.define do
 
   factory :rental do
 
+    factory :reservation do
+      status Rental::RESERVED
+      vehicle nil
+    end
+
     trait :open do
-      status 'open'
+      status Rental::OPEN
     end
 
     drop_off_location { pickup_location }

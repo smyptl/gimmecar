@@ -26,7 +26,7 @@ class Location < ApplicationRecord
   has_many :drop_off_rentals, class_name: 'Rental', foreign_key: 'drop_off_location_id'
 
   has_many :open_rentals, -> { where(status: Rental::OPEN) }, class_name: 'Rental', foreign_key: 'pickup_location_id'
-  has_many :future_rentals, -> { reserved }, class_name: 'Rental', foreign_key: 'pickup_location_id'
+  has_many :reservations, -> { reserved }, class_name: 'Rental', foreign_key: 'pickup_location_id'
 
   has_many :today_drop_offs, -> { drop_off_rentals.where(date: DateTime.now) }
 
@@ -59,7 +59,7 @@ class Location < ApplicationRecord
   end
 
   def calendar
-    open_rentals + future_rentals
+    open_rentals + reservations
   end
 
   def available_vehicles(vehicle_type:, date_range:)
