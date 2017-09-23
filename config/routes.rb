@@ -23,13 +23,6 @@ Rails.application.routes.draw do
 
       get '/new', to: 'new#index'
 
-      resources :reservations do
-        post 'email-confirmation', to: 'email_confirmation#index'
-
-        get 'verify-insurance',  to: 'verify_insurance#index'
-        post 'verify-insurance', to: 'verify_insurance#create'
-      end
-
       resources :rentals, except: [:new, :create] do
         get 'receipt/print', to: 'rentals/receipt#print'
         post 'receipt/email', to: 'rentals/receipt#email'
@@ -49,6 +42,14 @@ Rails.application.routes.draw do
       post 'rentals/new/financial-responsibility' => 'rentals/new#financial_responsibility'
       post 'rentals/new/terms-and-conditions'     => 'rentals/new#terms_and_conditions'
       post 'rentals/new'                          => 'rentals/new#create'
+
+      resources :reservations, except: [:new, :create] do
+        post 'email-confirmation', to: 'email_confirmation#index'
+
+        get 'verify-insurance',  to: 'verify_insurance#index'
+        post 'verify-insurance', to: 'verify_insurance#create'
+      end
+
 
       resources :drivers, only: [:show] do
         resources :insurance_policies
