@@ -39,9 +39,10 @@
       .popup
         .popup-container
           .popup-content
-            a.link-danger#cancel-button(@click='closePopup')
-              icon-cancel
-            slot
+            .popup-header
+              a.link-danger#cancel-button(@click='closePopup')
+                icon-cancel
+              slot
 
 </template>
 
@@ -106,10 +107,10 @@
 
   #cancel-button
     position: absolute
-    top: $margin-default + 0.0625rem
+    top: $margin-default + 0.0625rem + 0.125rem
     right: $margin-default
-    height: 1.25rem
-    width: 1.25rem
+    height: 1rem
+    width: 1rem
     z-index: 2
 
 </style>

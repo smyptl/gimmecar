@@ -46,14 +46,15 @@
 
 <template lang='pug'>
   popup(v-if='open' v-on:closed='close')
-    .panel-popup-form
+    .panel-form-popup
       .panel-form.panel-form-padding
-        h3.panel-form-header Close
+        h4.panel-form-popup-header Close
 
+      .panel-form.panel-form-padding.panel-popup-form-content
         .input-row
           label.input-label(for='drop_off') Drop Off *
           .input-block.whole
-            input-date-time.input-contrast#drop_off(
+            input-date-time#drop_off(
               v-model='form.drop_off'
               v-error='form.errors.has("drop_off")'
               @input='form.errors.clear("drop_off")')
@@ -63,7 +64,7 @@
           .input-container.two-fifths
             label.input-label(for='drop_off_odometer') Vehicle Odometer *
             .input-block.whole
-              input.input-field.input-contrast#drop_off_odometer(
+              input.input-field#drop_off_odometer(
                 type='text'
                 v-model='form.drop_off_odometer'
                 v-error='form.errors.has("drop_off_odometer")'
@@ -84,6 +85,8 @@
                 @input='form.errors.clear("drop_off_fuel")')
             input-error-message(v-bind:errors='form.errors.get("drop_off_fuel")')
 
+
+      .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
           button.btn.btn-primary.right(@click.prevent='closeRental()') Close
 </template>
