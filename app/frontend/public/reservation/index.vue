@@ -17,7 +17,7 @@
         form: new Form({
           pickup: new Date().setDate(new Date().getDate() + 1),
           drop_off: new Date().setDate(new Date().getDate() + 2),
-          vehicle_type: 'mid_size',
+          vehicle_type: '',
           name_first: '',
           name_last: '',
           email: '',
@@ -129,8 +129,9 @@
                 v-error='form.errors.has("vehicle_type")'
                 @input='form.errors.clear("vehicle_type")')
 
-                option(value='mid_size') Mid-Size (Toyota Corolla)
+                option(value='' disabled) Select Vehicle Type
                 option(value='compact') Compact (Toyota Yaris iA)
+                option(value='mid_size') Mid-Size (Toyota Corolla)
                 option(value='truck') Truck (Ford F-150)
             input-error-message(v-bind:errors='form.errors.get("vehicle_type")')
 
