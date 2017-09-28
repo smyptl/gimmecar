@@ -16,6 +16,7 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     a.integer :pickup_fuel
 
     a.string :promo_code
+    a.symbol :paid_by
 
     a.string :stripe_customer_id
     a.string :stripe_token
@@ -46,6 +47,10 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
   validates :pickup_fuel,
     presence: true,
     inclusion: { in: 0..10 }
+
+  validates :paid_by,
+    presence: true,
+    inclusion: { in: [:driver, :additional_driver] }
 
   def pickup
     DateTime.now
@@ -90,10 +95,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
   end
 
   def save
-    d = Driver.create(driver.except(:insurance).merge(:stripe_id => stripe_customer_id))
+    d = Driver.create(driver_attributes)
     InsurancePolicy.create(driver.fetch(:insurance).except(:verified).merge(:driver => d, :user_id => params.fetch(:user_id)))
-
-    ad = AdditionalDriver.create(additional_driver) if add_additional_driver
+    ad = Driver.create(additional_driver_attributes) if add_additional_driver
 
     @rental = Rental.create_open({
       :driver                                               => d,
@@ -109,9 +113,9 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       :drop_off                                             => drop_off,
       :collision_damage_waiver                              => false,
       :driver_financial_responsibility_signature            => driver_financial_responsibility_signature,
-      :additional_driver_financial_responsibility_signature => additional_driver_financial_responsibility_signature,
+      :additional_driver_financial_responsibility_signature => (additional_driver_financial_responsibility_signature if add_additional_driver),
       :driver_signature                                     => driver_signature,
-      :additional_driver_signature                          => additional_driver_signature,
+      :additional_driver_signature                          => (additional_driver_signature if add_additional_driver),
     })
 
     @charge.owner = @rental
@@ -121,6 +125,22 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
       rental_rate = RentalRate.create(:rental => @rental, :date => l.fetch('date'), :amount => l.fetch('rate'))
       @rental.line_items.create(l.except('rate').merge(charge: @charge, item: rental_rate))
     end
+  end
+
+  def driver_attributes
+    a = driver.except(:insurance)
+    a[:stripe_id] = stripe_customer_id if paid_by_driver?
+    a
+  end
+
+  def additional_driver_attributes
+    a = additional_driver
+    a[:stripe_id] = stripe_customer_id if !paid_by_driver?
+    a
+  end
+
+  def paid_by_driver?
+    !(add_additional_driver && paid_by == :additional_driver)
   end
 
   def failure_args

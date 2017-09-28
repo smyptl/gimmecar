@@ -55,6 +55,9 @@ export default class Form {
     return data
   }
 
+  populate(data) {
+  }
+
   reset() {
     for (let field in this.originalData) {
       this[field] = ''

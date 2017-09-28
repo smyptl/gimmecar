@@ -58,6 +58,7 @@
           additional_driver_id: null,
           additional_driver: {
             name_first: '',
+            name_middle: '',
             name_last: '',
             license_number: '',
             license_state: 'California',
@@ -79,6 +80,7 @@
           pickup_odometer: '',
           pickup_fuel: 10,
           promo_code: '',
+          paid_by: 'driver',
           stripe_token: '',
           stripe_customer_id: '',
         }),
@@ -310,6 +312,29 @@
 
 
     template(v-if='current_step == "Payment"')
+      .input-row
+        label.input-label(for='paid_by')
+          | Paid By
+          .input-label-note.right Insure it matches name on card.
+        .input-block.whole
+          template(v-if='rental.add_additional_driver')
+            select.input-field#paid_by(
+              v-model='rental.paid_by'
+              v-error='rental.errors.has("paid_by")'
+              @input='rental.errors.clear("paid_by")')
+
+              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
+              option(value='additional_driver') {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_middle }} {{ rental.additional_driver.name_last }}
+          template(v-else)
+            select.input-field#paid_by(
+              disabled
+              v-model='rental.paid_by'
+              v-error='rental.errors.has("paid_by")'
+              @input='rental.errors.clear("paid_by")')
+
+              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
+        input-error-message(v-bind:errors='rental.errors.get("paid_by")')
+
       .input-row
         label.input-label
           | Card Number
