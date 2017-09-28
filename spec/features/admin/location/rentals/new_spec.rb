@@ -13,7 +13,7 @@ require 'factories/tax_rates'
 feature 'create rental', js: true do
   include_context :login_user_and_select_location
 
-  scenario 'success' do
+  scenario 'success in creating a single driver' do
     tax_rate = create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, original_location: location, location: location)
 
@@ -277,5 +277,156 @@ feature 'create rental', js: true do
     click_on 'Continue'
 
     expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+  end
+
+  scenario 'success in creating a additional driver' do
+    tax_rate = create(:tax_rate, location: location)
+    vehicle_1 = create(:vehicle, original_location: location, location: location)
+
+    create(:rate, :default, vehicle_type: :mid_size, location: location, amount: 3500)
+
+    visit_admin location_rentals_new_path(:slug => location.slug)
+
+    expect(page).to have_content('Rental: Details')
+    click_on 'Continue'
+
+    expect(page).to have_content('Rental: Rates')
+    expect(page).to have_content('Rental Details')
+    expect(page).to have_content('Estimated Total:')
+    click_on 'Continue'
+
+    expect(page).to have_content('Rental: Drivers')
+
+    driver_stub = build_stubbed(:driver)
+    additional_driver_stub = build_stubbed(:driver)
+
+    fill_in 'driver_name_first',              with: driver_stub.name_first
+    fill_in 'driver_name_middle',             with: driver_stub.name_middle
+    fill_in 'driver_name_last',               with: driver_stub.name_last
+
+    fill_in 'driver_license_number',          with: driver_stub.license_number
+    fill_in 'driver_license_state',           with: driver_stub.license_state
+    fill_in 'driver_license_country',         with: driver_stub.license_country
+    fill_in 'driver_license_expiration_date', with: driver_stub.license_expiration_date.strftime('%m/%d/%Y')
+
+    fill_in 'driver_address_1',               with: driver_stub.address_1
+    fill_in 'driver_address_2',               with: driver_stub.address_2
+    fill_in 'driver_city',                    with: driver_stub.city
+    fill_in 'driver_state',                   with: driver_stub.state
+    fill_in 'driver_zip_code',                with: driver_stub.zip_code
+    fill_in 'driver_country',                 with: driver_stub.country
+
+    fill_in 'driver_date_of_birth',           with: driver_stub.date_of_birth.strftime('%m/%d/%Y')
+    select driver_stub.gender.capitalize, from: 'driver_gender'
+
+    fill_in 'driver_email',                   with: driver_stub.email
+    fill_in 'driver_cell_phone_number',       with: driver_stub.cell_phone_number
+    fill_in 'driver_home_phone_number',       with: driver_stub.home_phone_number
+
+    driver_insurance_stub = build_stubbed(:insurance_policy)
+
+    fill_in 'driver_insurance_company_name',       with: driver_insurance_stub.company_name
+    fill_in 'driver_insurance_policy_number',      with: driver_insurance_stub.policy_number
+    fill_in 'driver_insurance_effective_date',     with: driver_insurance_stub.effective_date.strftime('%m/%d/%Y')
+    fill_in 'driver_insurance_expiration_date',    with: driver_insurance_stub.expiration_date.strftime('%m/%d/%Y')
+    fill_in 'driver_insurance_agent',              with: driver_insurance_stub.agent
+    fill_in 'driver_insurance_phone_number',       with: driver_insurance_stub.phone_number
+
+    check 'Insurance Verified?'
+    fill_in 'driver_insurance_verify_agent',       with: driver_insurance_stub.verify_agent
+    fill_in 'driver_insurance_verify_call_center', with: driver_insurance_stub.verify_call_center
+    fill_in 'driver_insurance_verify_date',        with: driver_insurance_stub.verify_date.strftime('%m/%d/%Y')
+
+    find('h3', text: 'Add Additional Driver').click
+
+    fill_in 'additional_driver_name_first',              with: additional_driver_stub.name_first
+    fill_in 'additional_driver_name_middle',             with: additional_driver_stub.name_middle
+    fill_in 'additional_driver_name_last',               with: additional_driver_stub.name_last
+
+    fill_in 'additional_driver_license_number',          with: additional_driver_stub.license_number
+    fill_in 'additional_driver_license_state',           with: additional_driver_stub.license_state
+    fill_in 'additional_driver_license_country',         with: additional_driver_stub.license_country
+    fill_in 'additional_driver_license_expiration_date', with: additional_driver_stub.license_expiration_date.strftime('%m/%d/%Y')
+
+    fill_in 'additional_driver_address_1',               with: additional_driver_stub.address_1
+    fill_in 'additional_driver_address_2',               with: additional_driver_stub.address_2
+    fill_in 'additional_driver_city',                    with: additional_driver_stub.city
+    fill_in 'additional_driver_state',                   with: additional_driver_stub.state
+    fill_in 'additional_driver_zip_code',                with: additional_driver_stub.zip_code
+    fill_in 'additional_driver_country',                 with: additional_driver_stub.country
+
+    fill_in 'additional_driver_date_of_birth',           with: additional_driver_stub.date_of_birth.strftime('%m/%d/%Y')
+    select additional_driver_stub.gender.capitalize, from: 'additional_driver_gender'
+
+    fill_in 'additional_driver_email',                   with: additional_driver_stub.email
+    fill_in 'additional_driver_cell_phone_number',       with: additional_driver_stub.cell_phone_number
+    fill_in 'additional_driver_home_phone_number',       with: additional_driver_stub.home_phone_number
+
+    click_on 'Continue'
+
+    expect(page).to have_content('Rental: Vehicle')
+    expect(page).to have_content(vehicle_1.license_number)
+    find('td', text: vehicle_1.license_number).click
+    fill_in 'Vehicle Odometer', with: 40512
+    expect(page).to have_content('100%')
+    click_on 'Continue'
+
+    #expect(page).to have_content('Rental: Add-Ons')
+    #click_on 'Continue'
+
+    expect(page).to have_content('Rental: Financial Responsibility')
+    expect(page).to have_content('Notice About Your Financial Responibility')
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+    expect(page).to have_content("#{additional_driver_stub.name_first} #{additional_driver_stub.name_last}")
+    click_on 'Continue'
+
+    expect(page).to have_content('Rental: Terms & Conditions')
+    expect(page).to have_content('Total:')
+    expect(page).to have_content('Rental Agreement Terms and Conditions')
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+    expect(page).to have_content("#{additional_driver_stub.name_first} #{additional_driver_stub.name_last}")
+    click_on 'Continue'
+
+    expect(page).to have_content('Rental: Payment')
+    select "#{additional_driver_stub.name_first} #{additional_driver_stub.name_last}"
+    stripe_iframe = all('iframe[name=__privateStripeFrame3]').last
+    Capybara.within_frame stripe_iframe do
+      find('input[name=cardnumber]').set(CARD_TYPE[:visa])
+      find('input[name="exp-date"]').set('01/20')
+      find('input[name="cvc"]').set('123')
+      find('input[name="postal"]').set('90210')
+    end
+    click_on 'Continue'
+
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
+
+    expect(Driver.count).to eq(2)
+    driver = Driver.first
+
+    additional_driver = Driver.last
+    expect(additional_driver.name_first).to eq(additional_driver_stub.name_first)
+    expect(additional_driver.name_middle).to eq(additional_driver_stub.name_middle)
+    expect(additional_driver.name_last).to eq(additional_driver_stub.name_last)
+    expect(additional_driver.gender).to eq(additional_driver_stub.gender)
+    expect(additional_driver.address_1).to eq(additional_driver_stub.address_1)
+    expect(additional_driver.address_2).to eq(additional_driver_stub.address_2)
+    expect(additional_driver.city).to eq(additional_driver_stub.city)
+    expect(additional_driver.state).to eq(additional_driver_stub.state)
+    expect(additional_driver.zip_code).to eq(additional_driver_stub.zip_code)
+    expect(additional_driver.country).to eq(additional_driver_stub.country)
+    expect(additional_driver.home_phone_number).to eq(additional_driver_stub.home_phone_number)
+    expect(additional_driver.cell_phone_number).to eq(additional_driver_stub.cell_phone_number)
+    expect(additional_driver.email).to eq(additional_driver_stub.email)
+    expect(additional_driver.date_of_birth).to eq(additional_driver_stub.date_of_birth)
+    expect(additional_driver.license_number).to eq(additional_driver_stub.license_number)
+    expect(additional_driver.license_state).to eq(additional_driver_stub.license_state)
+    expect(additional_driver.license_country).to eq(additional_driver_stub.license_country)
+    expect(additional_driver.license_expiration_date).to eq(additional_driver_stub.license_expiration_date)
+    expect(additional_driver.stripe_id).to_not eq(nil)
+
+    expect(Rental.count).to eq(1)
+    rental = Rental.first
+    expect(rental.driver).to eq(driver)
+    expect(rental.additional_driver).to eq(additional_driver)
   end
 end

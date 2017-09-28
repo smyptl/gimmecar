@@ -326,9 +326,10 @@
                 @input='form.errors.clear("driver_insurance_verify_date")')
             input-error-message(v-bind:errors='form.errors.get("driver_insurance_verify_date")')
 
-    h3.panel-form-header
-      a.link-danger(v-if='form.add_additional_driver' @click='form.add_additional_driver = false') Remove Additional Driver
-      a(v-else @click='form.add_additional_driver = true') Add Additional Driver
+    a.link-danger(v-if='form.add_additional_driver' @click.prevent='form.add_additional_driver = false')
+      h3.panel-form-header Remove Additional Driver
+    a(v-else @click.prevent='form.add_additional_driver = true')
+      h3.panel-form-header Add Additional Driver
 
     template(v-if='form.add_additional_driver')
       .input-row
@@ -359,7 +360,7 @@
 
         .input-container.two-fifths
           .input-block.whole
-            input.input-field#driver_name_last(
+            input.input-field#additional_driver_name_last(
               type='text'
               placeholder='Last'
               v-model='form.additional_driver.name_last'

@@ -323,8 +323,8 @@
               v-error='rental.errors.has("paid_by")'
               @input='rental.errors.clear("paid_by")')
 
-              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
-              option(value='additional_driver') {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_middle }} {{ rental.additional_driver.name_last }}
+              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
+              option(value='additional_driver') {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
           template(v-else)
             select.input-field#paid_by(
               disabled
@@ -332,7 +332,7 @@
               v-error='rental.errors.has("paid_by")'
               @input='rental.errors.clear("paid_by")')
 
-              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
+              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
         input-error-message(v-bind:errors='rental.errors.get("paid_by")')
 
       .input-row
