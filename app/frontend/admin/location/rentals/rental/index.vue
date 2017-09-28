@@ -83,17 +83,23 @@
         dt Drop Off
         dd {{ rental.drop_off | date_time }}
 
-      dl.panel-details-link
-        dt Driver
+    .panel.panel-base.whole
+      h6.padding-top-sm.padding-left-default Driver
+      dl.panel-main-details
+        dt Name
         dd {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
-        right-arrow-icon
+        dt Cell Phone #
+        dd {{ rental.driver.cell_phone_number }}
+        dt Email
+        dd {{ rental.driver.email }}
 
-      dl.panel-details-link
+
+    .panel.panel-base.whole
+      dl.panel-main-details.panel-details-link
         dt Vehicle
         dd
           span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
           span.block.description License #: {{ rental.vehicle.license_number }}
-        right-arrow-icon
 
 </template>
 

@@ -17,7 +17,7 @@ class Services::Admin::Rental < Lib::Services::Base
     output[:number]                                               = rental.number
     output[:status]                                               = rental.status
     output[:driver]                                               = rental.driver
-    output[:additional_driver_id]                                 = rental.additional_driver_id
+    output[:additional_driver]                                    = rental.additional_driver
     output[:vehicle]                                              = rental.vehicle
     output[:vehicle_type]                                         = rental.vehicle_type
     output[:notes]                                                = rental.notes
