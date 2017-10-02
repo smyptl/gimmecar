@@ -56,6 +56,11 @@ export default class Form {
   }
 
   populate(data) {
+    for (let field in data) {
+      this[field] = data[field]
+    }
+
+    return data
   }
 
   reset() {
