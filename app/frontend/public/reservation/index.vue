@@ -129,7 +129,7 @@
                 v-error='form.errors.has("vehicle_type")'
                 @input='form.errors.clear("vehicle_type")')
 
-                option(value='' disabled) Select Vehicle Type
+                option(value='' disabled) -- Select Vehicle Type --
                 option(value='compact') Compact (Toyota Yaris iA)
                 option(value='mid_size') Mid-Size (Toyota Corolla)
                 option(value='truck') Truck (Ford F-150)
