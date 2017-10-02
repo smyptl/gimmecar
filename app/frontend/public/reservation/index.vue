@@ -104,7 +104,7 @@
 
         .input-row
           .input-container.one-half
-            label.input-label From:
+            label.input-label(for='#pickup') From:
             .input-block.whole
               input-date-time(
                 v-model='form.pickup'
@@ -113,16 +113,16 @@
             input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
 
           .input-container.one-half
-            label.input-label To:
+            label.input-label(for='#drop_off') To:
             .input-block.whole
-              input-date-time(
+              input-date-time#drop_off(
                 v-model='form.drop_off'
                 v-error='form.errors.has("drop_off")'
                 @input='form.errors.clear("drop_off")')
             input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
 
           .input-container.whole
-            label.input-label Vehicle Type
+            label.input-label(for='vehicle_type') Vehicle Type
             .input-block.whole
               select.input-field#vehicle_type(
                 v-model='form.vehicle_type'

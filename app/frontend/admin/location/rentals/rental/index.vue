@@ -82,18 +82,36 @@
         dd {{ rental.pickup | date_time }}
         dt Drop Off
         dd {{ rental.drop_off | date_time }}
-
-      dl.panel-details-link
-        dt Driver
-        dd {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
-        right-arrow-icon
-
-      dl.panel-details-link
         dt Vehicle
         dd
           span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
           span.block.description License #: {{ rental.vehicle.license_number }}
-        right-arrow-icon
+
+    .panel.panel-base.whole
+      h6.padding-top-sm.padding-left-default Driver
+      dl.panel-main-details
+        dt Name
+        dd {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
+        dt Email
+        dd {{ rental.driver.email }}
+        dt Cell Phone #
+        dd {{ rental.driver.cell_phone_number }}
+        template(v-if='rental.driver.home_phone_number')
+          dt Home Phone #
+          dd {{ rental.driver.home_phone_number }}
+
+    .panel.panel-base.whole(v-if='rental.additional_driver')
+      h6.padding-top-sm.padding-left-default Additional Driver
+      dl.panel-main-details
+        dt Name
+        dd {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_middle }} {{ rental.additional_driver.name_last }}
+        dt Email
+        dd {{ rental.additional_driver.email }}
+        dt Cell Phone #
+        dd {{ rental.additional_driver.cell_phone_number }}
+        template(v-if='rental.additional_driver.home_phone_number')
+          dt Home Phone #
+          dd {{ rental.driver.home_phone_number }}
 
 </template>
 

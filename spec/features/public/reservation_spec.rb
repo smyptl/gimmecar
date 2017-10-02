@@ -13,6 +13,8 @@ feature "Reservations", js: true do
     create(:tax_rate, location: location)
     create(:rate, :default, vehicle_type: :mid_size, location: location, amount: 3500)
 
+
+    select 'Mid-Size', from: 'Vehicle Type'
     click_button "View Rates"
 
     within("#rental-summary") do
