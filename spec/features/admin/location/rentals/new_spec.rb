@@ -10,18 +10,80 @@ require 'factories/insurance_policies'
 require 'factories/rates'
 require 'factories/tax_rates'
 
+def fill_in_driver(driver:, insurance: nil)
+  fill_in 'driver_name_first',              with: driver.name_first
+  fill_in 'driver_name_middle',             with: driver.name_middle
+  fill_in 'driver_name_last',               with: driver.name_last
+
+  fill_in 'driver_license_number',          with: driver.license_number
+  fill_in 'driver_license_state',           with: driver.license_state
+  fill_in 'driver_license_country',         with: driver.license_country
+  fill_in 'driver_license_expiration_date', with: driver.license_expiration_date.strftime('%m/%d/%Y')
+
+  fill_in 'driver_address_1',               with: driver.address_1
+  fill_in 'driver_address_2',               with: driver.address_2
+  fill_in 'driver_city',                    with: driver.city
+  fill_in 'driver_state',                   with: driver.state
+  fill_in 'driver_zip_code',                with: driver.zip_code
+  fill_in 'driver_country',                 with: driver.country
+
+  fill_in 'driver_date_of_birth',           with: driver.date_of_birth.strftime('%m/%d/%Y')
+  select driver.gender.capitalize, from: 'driver_gender'
+
+  fill_in 'driver_email',                   with: driver.email
+  fill_in 'driver_cell_phone_number',       with: driver.cell_phone_number
+  fill_in 'driver_home_phone_number',       with: driver.home_phone_number
+
+  if insurance
+    fill_in 'driver_insurance_company_name',       with: insurance.company_name
+    fill_in 'driver_insurance_policy_number',      with: insurance.policy_number
+    fill_in 'driver_insurance_effective_date',     with: insurance.effective_date.strftime('%m/%d/%Y')
+    fill_in 'driver_insurance_expiration_date',    with: insurance.expiration_date.strftime('%m/%d/%Y')
+    fill_in 'driver_insurance_agent',              with: insurance.agent
+    fill_in 'driver_insurance_phone_number',       with: insurance.phone_number
+
+    check 'Insurance Verified?'
+    fill_in 'driver_insurance_verify_agent',       with: insurance.verify_agent
+    fill_in 'driver_insurance_verify_call_center', with: insurance.verify_call_center
+    fill_in 'driver_insurance_verify_date',        with: insurance.verify_date.strftime('%m/%d/%Y')
+  end
+end
+
+def check_financial_responsibility(driver:, additional_driver: nil)
+  expect(page).to have_content('Rental: Financial Responsibility')
+  expect(page).to have_content('Notice About Your Financial Responibility')
+  expect(page).to have_content("#{driver.name_first} #{driver.name_last}")
+
+  if additional_driver
+    expect(page).to have_content("#{additional_driver.name_first} #{additional_driver.name_last}")
+  end
+end
+
+def check_rental_terms(driver:, additional_driver: nil)
+  expect(page).to have_content('Rental: Terms & Conditions')
+  expect(page).to have_content('Total:')
+  expect(page).to have_content('Rental Agreement Terms and Conditions')
+  expect(page).to have_content("#{driver.name_first} #{driver.name_last}")
+
+  if additional_driver
+    expect(page).to have_content("#{additional_driver.name_first} #{additional_driver.name_last}")
+  end
+end
+
 feature 'create rental', js: true do
   include_context :login_user_and_select_location
 
   scenario 'success in creating a single driver' do
     tax_rate = create(:tax_rate, location: location)
-    vehicle_1 = create(:vehicle, original_location: location, location: location)
+    vehicle_1 = create(:vehicle, vehicle_type: :mid_size, original_location: location, location: location)
+    create(:vehicle, vehicle_type: :mid_size, original_location: location, location: location)
 
-    create(:rate, :default, vehicle_type: :mid_size, location: location, amount: 3500)
+    create(:rate, :default, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
     visit_admin location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
+    select 'Mid-Size', from: 'vehicle_type'
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Rates')
@@ -30,45 +92,9 @@ feature 'create rental', js: true do
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Drivers')
-
     driver_stub = build_stubbed(:driver)
-
-    fill_in 'driver_name_first',              with: driver_stub.name_first
-    fill_in 'driver_name_middle',             with: driver_stub.name_middle
-    fill_in 'driver_name_last',               with: driver_stub.name_last
-
-    fill_in 'driver_license_number',          with: driver_stub.license_number
-    fill_in 'driver_license_state',           with: driver_stub.license_state
-    fill_in 'driver_license_country',         with: driver_stub.license_country
-    fill_in 'driver_license_expiration_date', with: driver_stub.license_expiration_date.strftime('%m/%d/%Y')
-
-    fill_in 'driver_address_1',               with: driver_stub.address_1
-    fill_in 'driver_address_2',               with: driver_stub.address_2
-    fill_in 'driver_city',                    with: driver_stub.city
-    fill_in 'driver_state',                   with: driver_stub.state
-    fill_in 'driver_zip_code',                with: driver_stub.zip_code
-    fill_in 'driver_country',                 with: driver_stub.country
-
-    fill_in 'driver_date_of_birth',           with: driver_stub.date_of_birth.strftime('%m/%d/%Y')
-    select driver_stub.gender.capitalize, from: 'driver_gender'
-
-    fill_in 'driver_email',                   with: driver_stub.email
-    fill_in 'driver_cell_phone_number',       with: driver_stub.cell_phone_number
-    fill_in 'driver_home_phone_number',       with: driver_stub.home_phone_number
-
     driver_insurance_stub = build_stubbed(:insurance_policy)
-
-    fill_in 'driver_insurance_company_name',       with: driver_insurance_stub.company_name
-    fill_in 'driver_insurance_policy_number',      with: driver_insurance_stub.policy_number
-    fill_in 'driver_insurance_effective_date',     with: driver_insurance_stub.effective_date.strftime('%m/%d/%Y')
-    fill_in 'driver_insurance_expiration_date',    with: driver_insurance_stub.expiration_date.strftime('%m/%d/%Y')
-    fill_in 'driver_insurance_agent',              with: driver_insurance_stub.agent
-    fill_in 'driver_insurance_phone_number',       with: driver_insurance_stub.phone_number
-
-    check 'Insurance Verified?'
-    fill_in 'driver_insurance_verify_agent',       with: driver_insurance_stub.verify_agent
-    fill_in 'driver_insurance_verify_call_center', with: driver_insurance_stub.verify_call_center
-    fill_in 'driver_insurance_verify_date',        with: driver_insurance_stub.verify_date.strftime('%m/%d/%Y')
+    fill_in_driver(driver: driver_stub, insurance: driver_insurance_stub)
 
     expect(page).to have_content('Add Additional Driver')
 
@@ -84,15 +110,10 @@ feature 'create rental', js: true do
     #expect(page).to have_content('Rental: Add-Ons')
     #click_on 'Continue'
 
-    expect(page).to have_content('Rental: Financial Responsibility')
-    expect(page).to have_content('Notice About Your Financial Responibility')
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+    check_financial_responsibility(driver: driver_stub)
     click_on 'Continue'
 
-    expect(page).to have_content('Rental: Terms & Conditions')
-    expect(page).to have_content('Total:')
-    expect(page).to have_content('Rental Agreement Terms and Conditions')
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+    check_rental_terms(driver: driver_stub)
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Payment')
@@ -177,7 +198,7 @@ feature 'create rental', js: true do
     visit_admin location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
-    select 'Compact (Toyota Yaris iA)', from: 'Vehicle Type'
+    select 'Compact', from: 'Vehicle Type'
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Rates')
@@ -187,46 +208,9 @@ feature 'create rental', js: true do
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Drivers')
-
     driver_stub = build_stubbed(:driver)
-
-    fill_in 'driver_name_first',              with: driver_stub.name_first
-    fill_in 'driver_name_last',               with: driver_stub.name_last
-
-    fill_in 'driver_license_number',          with: driver_stub.license_number
-    fill_in 'driver_license_state',           with: driver_stub.license_state
-    fill_in 'driver_license_country',         with: driver_stub.license_country
-    fill_in 'driver_license_expiration_date', with: driver_stub.license_expiration_date.strftime('%m/%d/%Y')
-
-    fill_in 'driver_address_1',               with: driver_stub.address_1
-    fill_in 'driver_address_2',               with: driver_stub.address_2
-    fill_in 'driver_city',                    with: driver_stub.city
-    fill_in 'driver_state',                   with: driver_stub.state
-    fill_in 'driver_zip_code',                with: driver_stub.zip_code
-    fill_in 'driver_country',                 with: driver_stub.country
-
-    fill_in 'driver_date_of_birth',           with: driver_stub.date_of_birth.strftime('%m/%d/%Y')
-    select driver_stub.gender.capitalize, from: 'driver_gender'
-
-    fill_in 'driver_email',                   with: driver_stub.email
-    fill_in 'driver_cell_phone_number',       with: driver_stub.cell_phone_number
-    fill_in 'driver_home_phone_number',       with: driver_stub.home_phone_number
-
     driver_insurance_stub = build_stubbed(:insurance_policy)
-
-    fill_in 'driver_insurance_company_name',       with: driver_insurance_stub.company_name
-    fill_in 'driver_insurance_policy_number',      with: driver_insurance_stub.policy_number
-    fill_in 'driver_insurance_effective_date',     with: driver_insurance_stub.effective_date.strftime('%m/%d/%Y')
-    fill_in 'driver_insurance_expiration_date',    with: driver_insurance_stub.expiration_date.strftime('%m/%d/%Y')
-    fill_in 'driver_insurance_agent',              with: driver_insurance_stub.agent
-    fill_in 'driver_insurance_phone_number',       with: driver_insurance_stub.phone_number
-
-    check 'Insurance Verified?'
-    fill_in 'driver_insurance_verify_agent',       with: driver_insurance_stub.verify_agent
-    fill_in 'driver_insurance_verify_call_center', with: driver_insurance_stub.verify_call_center
-    fill_in 'driver_insurance_verify_date',        with: driver_insurance_stub.verify_date.strftime('%m/%d/%Y')
-
-    expect(page).to have_content('Add Additional Driver')
+    fill_in_driver(driver: driver_stub, insurance: driver_insurance_stub)
 
     click_on 'Continue'
 
@@ -240,15 +224,10 @@ feature 'create rental', js: true do
     #expect(page).to have_content('Rental: Add-Ons')
     #click_on 'Continue'
 
-    expect(page).to have_content('Rental: Financial Responsibility')
-    expect(page).to have_content('Notice About Your Financial Responibility')
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+    check_financial_responsibility(driver: driver_stub)
     click_on 'Continue'
 
-    expect(page).to have_content('Rental: Terms & Conditions')
-    expect(page).to have_content('Total:')
-    expect(page).to have_content('Rental Agreement Terms and Conditions')
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+    check_rental_terms(driver: driver_stub)
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Payment')
@@ -276,18 +255,19 @@ feature 'create rental', js: true do
     end
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
   end
 
   scenario 'success in creating a additional driver' do
-    tax_rate = create(:tax_rate, location: location)
-    vehicle_1 = create(:vehicle, original_location: location, location: location)
+    create(:tax_rate, location: location)
+    vehicle_1 = create(:vehicle, vehicle_type: 'compact', original_location: location, location: location)
 
-    create(:rate, :default, vehicle_type: :mid_size, location: location, amount: 3500)
+    create(:rate, :default, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
     visit_admin location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
+    select 'Compact', from: 'Vehicle Type'
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Rates')
@@ -296,46 +276,11 @@ feature 'create rental', js: true do
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Drivers')
-
     driver_stub = build_stubbed(:driver)
-    additional_driver_stub = build_stubbed(:driver)
-
-    fill_in 'driver_name_first',              with: driver_stub.name_first
-    fill_in 'driver_name_middle',             with: driver_stub.name_middle
-    fill_in 'driver_name_last',               with: driver_stub.name_last
-
-    fill_in 'driver_license_number',          with: driver_stub.license_number
-    fill_in 'driver_license_state',           with: driver_stub.license_state
-    fill_in 'driver_license_country',         with: driver_stub.license_country
-    fill_in 'driver_license_expiration_date', with: driver_stub.license_expiration_date.strftime('%m/%d/%Y')
-
-    fill_in 'driver_address_1',               with: driver_stub.address_1
-    fill_in 'driver_address_2',               with: driver_stub.address_2
-    fill_in 'driver_city',                    with: driver_stub.city
-    fill_in 'driver_state',                   with: driver_stub.state
-    fill_in 'driver_zip_code',                with: driver_stub.zip_code
-    fill_in 'driver_country',                 with: driver_stub.country
-
-    fill_in 'driver_date_of_birth',           with: driver_stub.date_of_birth.strftime('%m/%d/%Y')
-    select driver_stub.gender.capitalize, from: 'driver_gender'
-
-    fill_in 'driver_email',                   with: driver_stub.email
-    fill_in 'driver_cell_phone_number',       with: driver_stub.cell_phone_number
-    fill_in 'driver_home_phone_number',       with: driver_stub.home_phone_number
-
     driver_insurance_stub = build_stubbed(:insurance_policy)
+    fill_in_driver(driver: driver_stub, insurance: driver_insurance_stub)
 
-    fill_in 'driver_insurance_company_name',       with: driver_insurance_stub.company_name
-    fill_in 'driver_insurance_policy_number',      with: driver_insurance_stub.policy_number
-    fill_in 'driver_insurance_effective_date',     with: driver_insurance_stub.effective_date.strftime('%m/%d/%Y')
-    fill_in 'driver_insurance_expiration_date',    with: driver_insurance_stub.expiration_date.strftime('%m/%d/%Y')
-    fill_in 'driver_insurance_agent',              with: driver_insurance_stub.agent
-    fill_in 'driver_insurance_phone_number',       with: driver_insurance_stub.phone_number
-
-    check 'Insurance Verified?'
-    fill_in 'driver_insurance_verify_agent',       with: driver_insurance_stub.verify_agent
-    fill_in 'driver_insurance_verify_call_center', with: driver_insurance_stub.verify_call_center
-    fill_in 'driver_insurance_verify_date',        with: driver_insurance_stub.verify_date.strftime('%m/%d/%Y')
+    additional_driver_stub = build_stubbed(:driver)
 
     find('h3', text: 'Add Additional Driver').click
 
@@ -374,17 +319,10 @@ feature 'create rental', js: true do
     #expect(page).to have_content('Rental: Add-Ons')
     #click_on 'Continue'
 
-    expect(page).to have_content('Rental: Financial Responsibility')
-    expect(page).to have_content('Notice About Your Financial Responibility')
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
-    expect(page).to have_content("#{additional_driver_stub.name_first} #{additional_driver_stub.name_last}")
+    check_financial_responsibility(driver: driver_stub, additional_driver: additional_driver_stub)
     click_on 'Continue'
 
-    expect(page).to have_content('Rental: Terms & Conditions')
-    expect(page).to have_content('Total:')
-    expect(page).to have_content('Rental Agreement Terms and Conditions')
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_last}")
-    expect(page).to have_content("#{additional_driver_stub.name_first} #{additional_driver_stub.name_last}")
+    check_rental_terms(driver: driver_stub, additional_driver: additional_driver_stub)
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Payment')

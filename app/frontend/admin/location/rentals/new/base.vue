@@ -18,7 +18,7 @@
       return {
         rental: new Form({
           drop_off: new Date().setDate(new Date().getDate() + 1),
-          vehicle_type: 'mid_size',
+          vehicle_type: '',
           promo_code: null,
           driver_id: null,
           driver: {
@@ -234,8 +234,9 @@
               v-error='rental.errors.has("vehicle_type")'
               @input='rental.errors.clear("vehicle_type")')
 
-              option(value='mid_size') Mid-Size (Toyota Corolla)
+              option(value='') -- Select Vehicle Type --
               option(value='compact') Compact (Toyota Yaris iA)
+              option(value='mid_size') Mid-Size (Toyota Corolla)
               option(value='truck') Truck (Ford F-150)
           input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
 
