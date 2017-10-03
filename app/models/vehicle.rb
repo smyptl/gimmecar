@@ -21,6 +21,7 @@
 #  fuel_grade           :string
 #  tank_size            :integer
 #  notes                :text
+#  status               :string
 #
 
 class Vehicle < ApplicationRecord
@@ -38,11 +39,20 @@ class Vehicle < ApplicationRecord
     !open_rental?
   end
 
+  def dirty?
+    status == 'dirty'
+  end
+
   def open_rental?
     !open_rental.blank?
   end
 
   def make_model
     "#{make} #{model}"
+  end
+
+  def status
+    return 'rented' if open_rental?
+    super
   end
 end

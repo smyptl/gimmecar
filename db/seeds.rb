@@ -41,6 +41,7 @@ location.vehicles << Vehicle.create({
   :model             => 'Corolla',
   :year              => 2017,
   :color             => 'white',
+  :status            => 'clean',
   :original_odometer => 12,
 })
 
@@ -53,6 +54,7 @@ location.vehicles << Vehicle.create({
   :model             => 'Corolla',
   :year              => 2017,
   :color             => 'black',
+  :status            => 'clean',
   :original_odometer => 52,
 })
 
@@ -66,6 +68,7 @@ rental_vehicle = Vehicle.create({
   :model             => 'Tundra',
   :year              => 2016,
   :color             => 'black',
+  :status            => 'clean',
   :original_odometer => 30,
 })
 
