@@ -1,6 +1,8 @@
 <script>
   import Moment from 'moment'
 
+  import SortBy from 'lodash/sortBy'
+
   export default {
     name: 'index',
     data () {
@@ -22,6 +24,11 @@
     },
     watch: {
       '$route': 'fetchData',
+    },
+    computed: {
+      sorted_rentals () {
+        return SortBy(this.rentals, ['pickup'])
+      }
     },
     methods: {
       fetchData () {
@@ -49,7 +56,7 @@
           th Pickup
           th Drop Off
       tbody.alternate-color
-        tr.clickable(v-for='rental in rentals' @click.prevent='viewRental(rental.number)')
+        tr.clickable(v-for='rental in sorted_rentals' @click.prevent='viewRental(rental.number)')
           td {{ rental.number }}
           td {{ rental.name }}
           td {{ rental.vehicle }}
