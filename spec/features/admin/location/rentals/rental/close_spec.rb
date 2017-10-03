@@ -30,5 +30,8 @@ feature 'close rental', js: true do
     expect(rental.closed?).to eq(true)
     expect(rental.drop_off_fuel).to eq(10)
     expect(rental.drop_off_odometer).to eq(1200)
+
+    vehicle = rental.vehicle
+    expect(vehicle.dirty?).to eq(true)
   end
 end

@@ -21,6 +21,7 @@
 #  fuel_grade           :string
 #  tank_size            :integer
 #  notes                :text
+#  status               :string
 #
 
 FactoryGirl.define do
