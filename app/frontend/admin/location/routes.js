@@ -20,7 +20,8 @@ module.exports = {
     { path: '/:location/rates', name: 'rates', component: require('./rates/base') },
     { path: '/:location/vehicles', component: require('./vehicles/base'),
       children: [
-        { path: '', name: 'vehicles', component: require('./vehicles/index') },
+        { path: '',     name: 'vehicles', component: require('./vehicles/index') },
+        { path: ':vin', name: 'vehicle',  component: require('./vehicles/vehicle/index') },
       ],
     },
   ],

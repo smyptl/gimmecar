@@ -91,15 +91,16 @@
     span(@click='editRate' v-bind:class="{ 'text-light': is_default_rate }") {{ rate | currency }}
 
     popup(v-if='open' @closed='close')
-      .panel-popup-form
+      .panel-form-popup
         .panel-form.panel-form-padding
-          h3.panel-form-header Rate - {{ vehicle_type }}
+          h4.panel-form-popup-header Rate - {{ vehicle_type }}
 
+        .panel-form.panel-form-padding.panel-popup-form-content
           .input-row
             .input-container.one-half.fixed
               label.input-label(for='date') Date
               .input-block.whole
-                input-date.input-contrast#date(
+                input-date#date(
                   v-model='form.date'
                   v-error='form.errors.has("date")'
                   @input='form.errors.clear("date")')
@@ -109,13 +110,14 @@
             .input-container.one-half.fixed
               label.input-label(for='amount') Amount
               .input-block.whole
-                input.input-field.input-contrast#amount(
+                input.input-field#amount(
                   type='text'
                   v-model='form.amount'
                   v-error='form.errors.has("amount")'
                   @input='form.errors.clear("amount")')
               input-error-message(v-bind:errors='form.errors.get("amount")')
 
+        .panel-form.panel-form-padding.panel-popup-form-footer
           .input-submit.input-block
             button.btn.btn-primary.right(@click.prevent='updateRate()') Update
 </template>

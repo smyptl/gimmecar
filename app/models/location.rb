@@ -74,6 +74,10 @@ class Location < ApplicationRecord
     vehicles.pluck(:id)
   end
 
+  def vehicle_vins
+    vehicles.pluck(:vin)
+  end
+
   def rental_numbers
     rentals.pluck(:number)
   end
