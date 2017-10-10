@@ -27,6 +27,9 @@
             this.vehicles = response.data
         })
       },
+      viewVehicle (vin) {
+        this.$router.push({ name: 'vehicle', params: { vin: vin }})
+      },
     },
   }
 </script>
@@ -41,7 +44,7 @@
           th License #
           th Status
       tbody.alternate-color
-        tr(v-for='vehicle in vehicles')
+        tr(v-for='vehicle in vehicles' @click.prevent='viewVehicle(vehicle.vin)')
           td {{ vehicle.make_model }}
           td {{ vehicle.vehicle_type }}
           td {{ vehicle.license_number }}
@@ -65,11 +68,7 @@
   .status
     vertical-align: center
 
-    span
-      float: left
-
-      font-size: 12
-
+  td
     svg
       float: left
       fill: none
