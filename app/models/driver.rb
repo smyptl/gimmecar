@@ -33,8 +33,14 @@ class Driver < ApplicationRecord
 
   has_one :current_insurance_policy
 
+  before_destroy { |record| !record.rentals? }
+
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def rentals?
+    rentals.any?
   end
 
   def do_not_rent?
