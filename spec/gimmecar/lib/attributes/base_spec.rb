@@ -9,8 +9,8 @@ describe Lib::Attributes::Base do
         attributes do |a|
           a.string :confirmation_number
           a.nested :driver do |d|
-            d.string :first_name
-            d.string :last_name
+            d.string :name_first
+            d.string :name_last
             d.nested :insurance do |i|
               i.string :policy_number
             end
@@ -35,17 +35,17 @@ describe Lib::Attributes::Base do
     it 'creates nested read method, and one write method' do
       form = test_form.new({
         :driver => {
-          :first_name => 'John',
+          :name_first => 'John',
           :insurance => {
             :policy_number => 'ASDF!@#$',
           },
         },
       })
 
-      expect(form.driver_first_name).to eq('John')
+      expect(form.driver_name_first).to eq('John')
       expect(form.driver_insurance_policy_number).to eq('ASDF!@#$')
       expect(form.driver).to eq({
-        'first_name' => 'John',
+        'name_first' => 'John',
         'insurance' => {
           'policy_number' => 'ASDF!@#$',
         },

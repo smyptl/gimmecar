@@ -67,6 +67,11 @@ class Lib::Attributes::TypeCast
       value.blank? ? nil : value
     end
 
+    def symbol(value)
+      value = string(value)
+      value.blank? ? nil : value.to_sym
+    end
+
     def signature(value)
       value
     end

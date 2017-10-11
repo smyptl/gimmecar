@@ -45,6 +45,10 @@ class Lib::Attributes::Parser
     @attributes[name] = { :type => :string, :options => options }
   end
 
+  def symbol(name, options = {})
+    @attributes[name] = { :type => :symbol, :options => options }
+  end
+
   def boolean(name, options = {})
     @attributes[name] = { :type => :boolean, :options => options }
   end

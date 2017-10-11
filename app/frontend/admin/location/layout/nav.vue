@@ -127,7 +127,7 @@
         font-size: 1.25rem
         font-weight: 700
         line-height: 2.75rem
-        fill: $blue
+        fill: $purple
 
         svg
           height: 1.75rem

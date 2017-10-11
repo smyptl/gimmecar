@@ -4,8 +4,7 @@
   import Currency from 'Filters/currency'
   import Percent from 'Filters/percent'
 
-  import Filter from 'lodash/filter'
-  import SumBy from 'lodash/sumBy'
+  import SortBy from 'lodash/sortBy'
 
   export default {
     props: {
@@ -26,7 +25,7 @@
     },
     computed: {
       rates () {
-        return this.summary.rates
+        return SortBy(this.summary.rates, ['date'])
       },
     },
   }

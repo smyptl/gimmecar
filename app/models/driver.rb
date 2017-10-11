@@ -5,8 +5,6 @@
 #  id                      :integer          not null, primary key
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  first_name              :string
-#  last_name               :string
 #  gender                  :string
 #  address_1               :string
 #  address_2               :string
@@ -25,18 +23,20 @@
 #  do_not_rent             :boolean
 #  stripe_id               :string
 #  notes                   :text
+#  name_first              :string
+#  name_middle             :string
+#  name_last               :string
 #
 
 class Driver < ApplicationRecord
 
   has_many :rentals
-
-  has_one :current_insurance_policy
+  has_many :insurance_policies
 
   before_destroy { |record| !record.rentals? }
 
   def name
-    "#{first_name} #{last_name}"
+    "#{name_first} #{name_last}"
   end
 
   def rentals?

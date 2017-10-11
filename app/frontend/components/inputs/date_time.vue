@@ -397,7 +397,7 @@
 
     &:hover
       background: $background-color-panel
-      color: $blue
+      color: $purple
 
   .calendar-day.disabled
     cursor: not-allowed

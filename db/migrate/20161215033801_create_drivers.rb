@@ -2,8 +2,6 @@ class CreateDrivers < ActiveRecord::Migration[5.1]
   def change
     create_table :drivers do |t|
       t.timestamps
-      t.string :first_name
-      t.string :last_name
       t.string :gender
       t.string :address_1
       t.string :address_2
@@ -22,6 +20,9 @@ class CreateDrivers < ActiveRecord::Migration[5.1]
       t.boolean :do_not_rent
       t.string :stripe_id
       t.text :notes
+      t.string :name_first
+      t.string :name_middle
+      t.string :name_last
     end
   end
 end

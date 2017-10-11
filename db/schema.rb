@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529185319) do
+ActiveRecord::Schema.define(version: 20171003220618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,6 @@ ActiveRecord::Schema.define(version: 20170529185319) do
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "first_name"
-    t.string "last_name"
     t.string "gender"
     t.string "address_1"
     t.string "address_2"
@@ -49,6 +47,9 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.boolean "do_not_rent"
     t.string "stripe_id"
     t.text "notes"
+    t.string "name_first"
+    t.string "name_middle"
+    t.string "name_last"
   end
 
   create_table "insurance_policies", force: :cascade do |t|
@@ -222,6 +223,7 @@ ActiveRecord::Schema.define(version: 20170529185319) do
     t.string "fuel_grade"
     t.integer "tank_size"
     t.text "notes"
+    t.string "status"
     t.index ["location_id"], name: "index_vehicles_on_location_id"
     t.index ["original_location_id"], name: "index_vehicles_on_original_location_id"
   end

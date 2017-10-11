@@ -4,13 +4,13 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
     a.date_time :pickup
     a.date_time :drop_off
     a.string    :vehicle_type
-    a.string    :first_name
-    a.string    :last_name
+    a.string    :name_first
+    a.string    :name_last
     a.string    :email
     a.integer   :phone_number
   end
 
-  validates :first_name, :last_name,
+  validates :name_first, :name_last,
     presence: true
 
   validates :email,
@@ -33,8 +33,8 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
 
   def success_args
     @success_args ||= {
-      :first_name          => first_name,
-      :last_name           => last_name,
+      :name_first          => name_first,
+      :name_last           => name_last,
       :email               => email,
       :vehicle_type        => vehicle_type,
       :phone_number        => phone_number,

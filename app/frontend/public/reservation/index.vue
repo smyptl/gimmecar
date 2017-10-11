@@ -17,9 +17,9 @@
         form: new Form({
           pickup: new Date().setDate(new Date().getDate() + 1),
           drop_off: new Date().setDate(new Date().getDate() + 2),
-          vehicle_type: 'mid_size',
-          first_name: '',
-          last_name: '',
+          vehicle_type: '',
+          name_first: '',
+          name_last: '',
           email: '',
           phone_number: '',
         }),
@@ -94,92 +94,93 @@
       v-on:leave='leave')
 
       #rental-details(v-if="current_step == 'rental-details'" key='details')
-        .input-row
-          label.input-label.input-lg Where:
+        .input-row.margin-top-ex-sm
+          label.input-label Where:
           .input-block.whole
-            select.input-field.input-lg
+            select.input-field
               option(value='' disabled) Current, our only location.
               option(value='') Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
           input-error-message(v-bind:errors='form.errors.get("location")')
 
         .input-row
           .input-container.one-half
-            label.input-label.input-lg From:
+            label.input-label(for='#pickup') From:
             .input-block.whole
-              input-date-time.input-lg(
+              input-date-time(
                 v-model='form.pickup'
                 v-error='form.errors.has("pickup")'
                 @input='form.errors.clear("pickup")')
             input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
 
           .input-container.one-half
-            label.input-label.input-lg To:
+            label.input-label(for='#drop_off') To:
             .input-block.whole
-              input-date-time.input-lg(
+              input-date-time#drop_off(
                 v-model='form.drop_off'
                 v-error='form.errors.has("drop_off")'
                 @input='form.errors.clear("drop_off")')
             input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
 
           .input-container.whole
-            label.input-label.input-lg Vehicle Type
+            label.input-label(for='vehicle_type') Vehicle Type
             .input-block.whole
               select.input-field#vehicle_type(
                 v-model='form.vehicle_type'
                 v-error='form.errors.has("vehicle_type")'
                 @input='form.errors.clear("vehicle_type")')
 
-                option(value='mid_size') Mid-Size (Toyota Corolla)
+                option(value='' disabled) -- Select Vehicle Type --
                 option(value='compact') Compact (Toyota Yaris iA)
+                option(value='mid_size') Mid-Size (Toyota Corolla)
                 option(value='truck') Truck (Ford F-150)
             input-error-message(v-bind:errors='form.errors.get("vehicle_type")')
 
           .input-submit
             .input-block.whole
-              input.btn.btn-full.btn-lg.btn-primary(@click.prevent='viewRates' type='submit' value='View Rates')
+              input.btn.btn-full.btn-primary(@click.prevent='viewRates' type='submit' value='View Rates')
 
       #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
         rates.input-block.margin-top-default(:summary='summary')
 
         .input-submit.input-flex-container
           .input-block.input-element-fixed
-            button.btn.btn-lg(@click="current_step = 'rental-details', transition_type = 'backward'") Go Back
+            button.btn(@click="current_step = 'rental-details', transition_type = 'backward'") Go Back
           .input-block.input-element-flex
-            button.btn.btn-lg.btn-full.btn-primary(@click='newReservation') Reserve
+            button.btn.btn-full.btn-primary(@click='newReservation') Reserve
 
       #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
         form(@submit.prevent='createReservation')
-          .input-row
-            label.input-label.input-lg(for='first_name') Name
+          .input-row.margin-top-ex-sm
+            label.input-label(for='name_first') Name
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field.input-lg#first_name(
+                input.input-field#name_first(
                   type='text'
                   placeholder='Henry'
-                  v-model='form.first_name'
-                  v-error='form.errors.has("first_name")'
-                  @input='form.errors.clear("first_name")')
+                  v-model='form.name_first'
+                  v-error='form.errors.has("name_first")'
+                  @input='form.errors.clear("name_first")')
 
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("first_name")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("name_first")')
 
             .input-container.one-half.fixed
               .input-block.whole
-                input.input-field.input-lg#last_name(
+                input.input-field#name_last(
                   type='text'
                   placeholder='Ford'
-                  v-model='form.last_name'
-                  v-error='form.errors.has("last_name")'
-                  @input='form.errors.clear("last_name")')
+                  v-model='form.name_last'
+                  v-error='form.errors.has("name_last")'
+                  @input='form.errors.clear("name_last")')
 
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("last_name")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("name_last")')
 
           .input-row
-            label.input-label.input-lg(for='input_email')
+            label.input-label(for='input_email')
               | Email
               span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
 
             .input-block.whole
-              input.input-field.input-lg#input_email(
+              input.input-field#input_email(
                 type='email'
                 placeholder='hford@gmail.com'
                 v-model='form.email'
@@ -189,12 +190,12 @@
             input-error-message.input-message-lg(v-bind:errors='form.errors.get("email")')
 
           .input-row
-            label.input-label.input-lg(for='input_phone_number')
+            label.input-label(for='input_phone_number')
               | Phone #
               span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
 
             .input-block.whole
-              input.input-field.input-lg#input_phone_number(
+              input.input-field#input_phone_number(
                 type='number'
                 placeholder='805-990-1234'
                 v-model='form.phone_number'
@@ -206,13 +207,13 @@
 
           .input-submit.input-flex-container
             .input-block.input-element-fixed
-              button.btn.btn-lg(@click.prevent="current_step = 'rental-summary', transition_type = 'backward'") Go Back
+              button.btn(@click.prevent="current_step = 'rental-summary', transition_type = 'backward'") Go Back
             .input-block.input-element-flex
-              input.btn.btn-lg.btn-full.btn-primary(type='submit' value='Reserve Car')
+              input.btn.btn-full.btn-primary(type='submit' value='Reserve Car')
 
       #rental-confirmation(v-if="current_step == 'rental-confirmation'" key='confirmation')
         h2.emoji :]
-        p.text-center Thanks for choosing us, {{ form.first_name }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
+        p.text-center Thanks for choosing us, {{ form.name_first }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 
         rates(:summary='summary')
 </template>

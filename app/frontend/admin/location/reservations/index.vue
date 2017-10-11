@@ -1,13 +1,11 @@
 <script>
   import Moment from 'moment'
 
-  import SortBy from 'lodash/sortBy'
-
   export default {
     name: 'index',
     data () {
       return {
-        rentals: [],
+        reservations: [],
       }
     },
     filters: {
@@ -25,17 +23,12 @@
     watch: {
       '$route': 'fetchData',
     },
-    computed: {
-      sorted_rentals () {
-        return SortBy(this.rentals, ['pickup'])
-      }
-    },
     methods: {
       fetchData () {
         this.$http
           .get(this.$route.path)
           .then(response => {
-            this.rentals = response.data
+            this.reservations = response.data
         })
       },
       viewRental (number) {
@@ -56,10 +49,10 @@
           th Pickup
           th Drop Off
       tbody.alternate-color
-        tr.clickable(v-for='rental in sorted_rentals' @click.prevent='viewRental(rental.number)')
-          td {{ rental.number }}
-          td {{ rental.name }}
-          td {{ rental.vehicle }}
-          td {{ rental.pickup | date_time }}
-          td {{ rental.drop_off | date_time }}
+        tr(v-for='reservation in reservations')
+          td {{ reservation.number }}
+          td {{ reservation.name }}
+          td {{ reservation.vehicle }}
+          td {{ reservation.pickup | date_time }}
+          td {{ reservation.drop_off | date_time }}
 </template>

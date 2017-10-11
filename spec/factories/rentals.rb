@@ -33,19 +33,26 @@
 require 'factories/drivers'
 require 'factories/vehicles'
 require 'factories/tax_rates'
+require 'factories/locations'
 
 FactoryGirl.define do
 
   factory :rental do
 
-    trait :open do
-      status 'open'
+    factory :reservation do
+      status Rental::RESERVED
+      vehicle nil
     end
 
+    trait :open do
+      status Rental::OPEN
+    end
+
+    pickup_location { create(:location) }
     drop_off_location { pickup_location }
 
     tax_rate { create(:tax_rate, location: pickup_location) }
-    driver { create(:driver) }
+    driver factory: :driver
     vehicle { create(:vehicle, location: pickup_location, original_location: pickup_location) }
   end
 end

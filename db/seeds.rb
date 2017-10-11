@@ -22,7 +22,7 @@ user.locations << location
 
 location.rates << Rate.create_default({ :amount => 3300, :vehicle_type => :mid_size })
 location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :compact })
-location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :pick_up })
+location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :truck })
 
 location.tax_rates << TaxRate.create({
   :combined_tax_rate => 0.07750,
@@ -41,6 +41,7 @@ location.vehicles << Vehicle.create({
   :model             => 'Corolla',
   :year              => 2017,
   :color             => 'white',
+  :status            => 'clean',
   :original_odometer => 12,
 })
 
@@ -53,25 +54,28 @@ location.vehicles << Vehicle.create({
   :model             => 'Corolla',
   :year              => 2017,
   :color             => 'black',
+  :status            => 'clean',
   :original_odometer => 52,
 })
 
 rental_vehicle = Vehicle.create({
   :location          => location,
   :original_location => location,
-  :vehicle_type      => 'pick_up',
+  :vehicle_type      => 'truck',
   :vin               => Faker::Vehicle.vin,
   :license_number    => '8ASJ123',
   :make              => 'Toyota',
   :model             => 'Tundra',
   :year              => 2016,
   :color             => 'black',
+  :status            => 'clean',
   :original_odometer => 30,
 })
 
 rental_driver = Driver.create({
-  :first_name              => Faker::Name.first_name,
-  :last_name               => Faker::Name.last_name,
+  :name_first              => Faker::Name.first_name,
+  :name_middle             => Faker::Name.first_name,
+  :name_last               => Faker::Name.last_name,
   :address_1               => Faker::Address.street_address,
   :address_2               => Faker::Address.secondary_address,
   :city                    => Faker::Address.city,
@@ -100,4 +104,35 @@ Rental.create_open({
   :drop_off_location       => location,
   :drop_off                => DateTime.now + 2.days,
   :collision_damage_waiver => false,
+})
+
+
+reservation_driver = Driver.create({
+  :name_first              => Faker::Name.first_name,
+  :name_middle             => Faker::Name.first_name,
+  :name_last               => Faker::Name.last_name,
+  :address_1               => Faker::Address.street_address,
+  :address_2               => Faker::Address.secondary_address,
+  :city                    => Faker::Address.city,
+  :state                   => 'California',
+  :zip_code                => Faker::Address.zip_code,
+  :country                 => 'United States',
+  :cell_phone_number       => "9091231234",
+  :home_phone_number       => "9091239021",
+  :gender                  => ['male', 'female'].sample,
+  :email                   => Faker::Internet.email,
+  :date_of_birth           => Date.today - 26.years,
+  :license_number          => '123JAS12',
+  :license_state           => 'California',
+  :license_country         => 'United States',
+  :license_expiration_date => Date.today + 1.year,
+})
+
+Rental.create_reservation({
+  :driver                  => reservation_driver,
+  :vehicle_type            => 'compact',
+  :pickup_location         => location,
+  :pickup                  => DateTime.now + 3.day,
+  :drop_off_location       => location,
+  :drop_off                => DateTime.now + 5.days,
 })

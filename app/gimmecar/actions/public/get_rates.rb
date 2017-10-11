@@ -16,8 +16,7 @@ class Actions::Public::GetRates < Lib::Forms::Base
     after_date: { with: -> { pickup }, allow_nil: true, message: 'must be after pickup' }
 
   validates :vehicle_type,
-    presence: true,
-    inclusion: { in: Vehicle::TYPES, message: "%{value} is not a valid vehicle type" }
+    inclusion: { in: Vehicle::TYPES, message: "must select a valid vehicle type" }
 
   validate :valid_drop_off
 

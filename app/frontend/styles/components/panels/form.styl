@@ -2,7 +2,7 @@
 @import '~Styles/global/layout'
 @import '~Styles/global/type'
 
-.panel-popup-form
+.panel-form-popup
   width: 30rem
   max-width: 100%
 
@@ -24,7 +24,7 @@
     display: block
     margin-bottom: $padding-default
 
-    background: $blue
+    background: $purple
 
 .panel-form-header
   width: 100%
@@ -33,3 +33,22 @@
   padding-left: $input-margin-x
   padding-right: $input-margin-x
   font-weight: 400
+
+.panel-form-popup-header
+  width: 100%
+  float: left
+  margin: $padding-default 0
+  padding-left: $input-margin-x
+  padding-right: $input-margin-x
+  font-weight: 400
+
+.panel-popup-form-content,
+.panel-popup-form-footer
+  background: $background-color-app
+
+.panel-popup-form-content
+  padding-top: $padding-sm
+  padding-bottom: $padding-default
+
+.panel-popup-form-footer
+  border-top: 0.125rem solid $white

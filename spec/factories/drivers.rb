@@ -5,8 +5,6 @@
 #  id                      :integer          not null, primary key
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  first_name              :string
-#  last_name               :string
 #  gender                  :string
 #  address_1               :string
 #  address_2               :string
@@ -25,22 +23,26 @@
 #  do_not_rent             :boolean
 #  stripe_id               :string
 #  notes                   :text
+#  name_first              :string
+#  name_middle             :string
+#  name_last               :string
 #
 
 FactoryGirl.define do
   factory :driver do
-    first_name Faker::Name.first_name
-    last_name Faker::Name.last_name
-    address_1 Faker::Address.street_address
-    address_2 Faker::Address.secondary_address
-    city Faker::Address.city
-    state Faker::Address.state
-    zip_code Faker::Address.zip_code
-    country Faker::Address.country
+    name_first { Faker::Name.first_name }
+    name_middle { Faker::Name.last_name }
+    name_last { Faker::Name.last_name }
+    address_1 { Faker::Address.street_address }
+    address_2 { Faker::Address.secondary_address }
+    city { Faker::Address.city }
+    state { Faker::Address.state }
+    zip_code { Faker::Address.zip_code }
+    country { Faker::Address.country }
     cell_phone_number "9091231234"
     home_phone_number "9091239021"
-    gender ['male', 'female'].sample
-    email Faker::Internet.email
+    gender { ['male', 'female'].sample }
+    email { Faker::Internet.email }
     date_of_birth Date.today - 26.years
     license_number '123JAS12'
     license_state { state }

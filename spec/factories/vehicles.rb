@@ -21,17 +21,18 @@
 #  fuel_grade           :string
 #  tank_size            :integer
 #  notes                :text
+#  status               :string
 #
 
 FactoryGirl.define do
 
   factory :vehicle do
     vehicle_type :mid_size
-    make ['BMW', 'Toyota', 'Ford'].sample
+    make { ['BMW', 'Toyota', 'Ford'].sample }
     model '5 Series'
     year 2017
-    color Faker::Color.color_name
-    vin Faker::Vehicle.vin
-    license_number SecureRandom.hex(4)
+    color { Faker::Color.color_name }
+    vin { Faker::Vehicle.vin }
+    license_number { SecureRandom.hex(4) }
   end
 end

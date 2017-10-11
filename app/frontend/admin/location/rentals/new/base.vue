@@ -18,12 +18,12 @@
       return {
         rental: new Form({
           drop_off: new Date().setDate(new Date().getDate() + 1),
-          vehicle_type: 'mid_size',
+          vehicle_type: '',
           promo_code: null,
           driver_id: null,
           driver: {
-            first_name: '',
-            last_name: '',
+            name_first: '',
+            name_last: '',
             license_number: '',
             license_state: 'California',
             license_country: 'United States',
@@ -57,8 +57,9 @@
           add_additional_driver: false,
           additional_driver_id: null,
           additional_driver: {
-            first_name: '',
-            last_name: '',
+            name_first: '',
+            name_middle: '',
+            name_last: '',
             license_number: '',
             license_state: 'California',
             license_country: 'United States',
@@ -79,6 +80,7 @@
           pickup_odometer: '',
           pickup_fuel: 10,
           promo_code: '',
+          paid_by: 'driver',
           stripe_token: '',
           stripe_customer_id: '',
         }),
@@ -232,8 +234,9 @@
               v-error='rental.errors.has("vehicle_type")'
               @input='rental.errors.clear("vehicle_type")')
 
-              option(value='mid_size') Mid-Size (Toyota Corolla)
+              option(value='' disabled) -- Select Vehicle Type --
               option(value='compact') Compact (Toyota Yaris iA)
+              option(value='mid_size') Mid-Size (Toyota Corolla)
               option(value='truck') Truck (Ford F-150)
           input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
 
@@ -277,12 +280,12 @@
       .input-block.margin-top-sm
         financial-responsibility
 
-      h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
+      h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
       .input-block.whole
         signature(v-model='rental.driver_financial_responsibility_signature')
 
       template(v-if='rental.add_additional_driver')
-        h6.input-label.margin-top-default {{ rental.additional_driver.first_name }} {{ rental.additional_driver.last_name }}
+        h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
         .input-block.whole
           signature(v-model='rental.additional_driver_financial_responsibility_signature')
 
@@ -295,12 +298,12 @@
       .input-block.margin-top-default
         terms-and-conditions
 
-      h6.input-label {{ rental.driver.first_name }} {{ rental.driver.last_name }}
+      h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
       .input-block.whole
         signature(v-model='rental.driver_signature')
 
       template(v-if='rental.add_additional_driver')
-        h6.input-label.margin-top-default {{ rental.additional_driver.first_name }} {{ rental.additional_driver.last_name }}
+        h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
         .input-block.whole
           signature(v-model='rental.additional_driver_signature')
 
@@ -310,6 +313,29 @@
 
 
     template(v-if='current_step == "Payment"')
+      .input-row
+        label.input-label(for='paid_by')
+          | Paid By
+          .input-label-note.right Insure it matches name on card.
+        .input-block.whole
+          template(v-if='rental.add_additional_driver')
+            select.input-field#paid_by(
+              v-model='rental.paid_by'
+              v-error='rental.errors.has("paid_by")'
+              @input='rental.errors.clear("paid_by")')
+
+              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
+              option(value='additional_driver') {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
+          template(v-else)
+            select.input-field#paid_by(
+              disabled
+              v-model='rental.paid_by'
+              v-error='rental.errors.has("paid_by")'
+              @input='rental.errors.clear("paid_by")')
+
+              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
+        input-error-message(v-bind:errors='rental.errors.get("paid_by")')
+
       .input-row
         label.input-label
           | Card Number
