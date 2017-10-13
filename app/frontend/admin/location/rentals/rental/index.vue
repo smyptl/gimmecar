@@ -62,7 +62,6 @@
 <template lang='pug'>
   div
     .panel.panel-base
-      close(v-on:close='rentalClosed' v-if='close')
       .panel-base-header
         h2 {{ rental.number }}
         dropdown.flex-element.right
@@ -112,6 +111,8 @@
         template(v-if='rental.additional_driver.home_phone_number')
           dt Home Phone #
           dd {{ rental.driver.home_phone_number }}
+
+    close(v-on:close='rentalClosed' v-if='close')
 
 </template>
 

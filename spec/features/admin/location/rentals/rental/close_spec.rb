@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'features/admin/helpers/path_helper'
 require 'features/admin/helpers/user_and_location'
 
-require 'helpers/stripe_helper'
-
 require 'factories/rentals'
 
 feature 'close rental', js: true do
