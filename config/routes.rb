@@ -56,7 +56,10 @@ Rails.application.routes.draw do
       end
       post 'drivers/search'
 
-      resources :vehicles, only: [:index, :show]
+      resources :vehicles, only: [:index, :show] do
+        get 'status', to: 'vehicles/status#index'
+        post 'status', to: 'vehicles/status#create'
+      end
     end
   end
 

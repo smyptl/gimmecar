@@ -98,8 +98,8 @@
           label.input-label Where:
           .input-block.whole
             select.input-field
-              option(value='' disabled) Current, our only location.
-              option(value='') Super 8 Redlands - 1160 Arizona St., Redlands, CA 92374
+              option(value='' disabled) -- Select Location --
+              option(value='') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
           input-error-message(v-bind:errors='form.errors.get("location")')
 
         .input-row

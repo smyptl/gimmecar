@@ -26,6 +26,7 @@
 
 class Vehicle < ApplicationRecord
 
+  STATUS = ['clean', 'dirty', 'service']
   TYPES = ['mid_size', 'compact', 'truck']
 
   has_many :rentals
