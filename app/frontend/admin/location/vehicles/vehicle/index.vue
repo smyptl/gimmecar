@@ -6,12 +6,16 @@
   import Dropdown from 'Components/dropdown'
 
   import ActionsIcon from 'Components/icons/actions'
+  import VehicleStatusIcons from 'Components/vehicles/status'
+
+  import VehicleStatus from './_status'
 
   export default {
     name: 'vehicle',
     data () {
       return {
         vehicle: {},
+        change_status: false,
       }
     },
     filters: {
@@ -22,6 +26,8 @@
     components: {
       ActionsIcon,
       Dropdown,
+      VehicleStatus,
+      VehicleStatusIcons,
     },
     created () {
       this.fetchData()
@@ -35,6 +41,13 @@
           this.vehicle = response.data
         })
       },
+      statusChanged () {
+        this.fetchData()
+        this.change_status = false
+      },
+      changeStatus () {
+        this.change_status = true
+      },
     },
   }
 </script>
@@ -44,15 +57,18 @@
     .panel.panel-base
       .panel-base-header
         h2 {{ vehicle.make }} {{ vehicle.model }}
-        <!--dropdown.flex-element.right-->
-          <!--a(data-toggle='dropdown')-->
-            <!--actions-icon.action-icon-->
-          <!--.dropdown-menu.right(slot='dropdown-menu')-->
-            <!--ul-->
-              <!--li-->
-                <!--button.link Print Invoice-->
+        dropdown.flex-element.right
+          a(data-toggle='dropdown')
+            actions-icon.action-icon
+          .dropdown-menu.right(slot='dropdown-menu')
+            ul
+              li
+                button.link(@click='changeStatus') Change Status
 
       dl.panel-main-details
+        dt Status
+        dd
+          vehicle-status-icons(:status='vehicle.status')
         dt Type
         dd {{ vehicle.vehicle_type }}
         template(v-if='vehicle.license_number')
@@ -64,6 +80,8 @@
         dd {{ vehicle.year }}
         dt Color
         dd {{ vehicle.color | capitalize }}
+
+    vehicle-status(v-on:close='statusChanged' v-if='change_status')
 
 </template>
 

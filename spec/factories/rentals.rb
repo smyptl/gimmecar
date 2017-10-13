@@ -33,6 +33,7 @@
 require 'factories/drivers'
 require 'factories/vehicles'
 require 'factories/tax_rates'
+require 'factories/locations'
 
 FactoryGirl.define do
 
@@ -47,6 +48,7 @@ FactoryGirl.define do
       status Rental::OPEN
     end
 
+    pickup_location { create(:location) }
     drop_off_location { pickup_location }
 
     tax_rate { create(:tax_rate, location: pickup_location) }
