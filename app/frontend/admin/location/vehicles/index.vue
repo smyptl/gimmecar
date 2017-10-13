@@ -2,7 +2,7 @@
   import X from 'Components/icons/cancel.vue'
   import C from 'Components/icons/check.vue'
 
-  import VehicleStatusIcons from 'Components/Vehicles/Status'
+  import VehicleStatusIcons from 'Components/vehicles/status'
 
   export default {
     name: 'index',
