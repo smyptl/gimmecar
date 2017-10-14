@@ -42,6 +42,7 @@
       viewRates() {
         this.$http.get('/reservation', {
             params: {
+              location_id: this.form.location_id,
               pickup: this.form.pickup,
               drop_off: this.form.drop_off,
               vehicle_type: this.form.vehicle_type,

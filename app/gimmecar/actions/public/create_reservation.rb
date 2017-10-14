@@ -1,6 +1,7 @@
 class Actions::Public::CreateReservation < Lib::Forms::Base
 
   attributes do |a|
+    a.integer   :location_id
     a.date_time :pickup
     a.date_time :drop_off
     a.string    :vehicle_type
@@ -47,7 +48,7 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
   end
 
   def rates
-    @rates ||= Services::Rates.fetch(rental: self, location: Location.first)
+    @rates ||= Services::Rates.fetch(rental: self, location: Location.find(location_id))
   end
 
   def save
