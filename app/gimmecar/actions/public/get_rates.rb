@@ -35,7 +35,7 @@ class Actions::Public::GetRates < Lib::Forms::Base
   end
 
   def location
-    Location.first
+    @location ||= Location.find(location_id)
   end
 
   def save

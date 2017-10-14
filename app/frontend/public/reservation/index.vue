@@ -17,6 +17,7 @@
         form: new Form({
           pickup: new Date().setDate(new Date().getDate() + 1),
           drop_off: new Date().setDate(new Date().getDate() + 2),
+          location_id: '',
           vehicle_type: '',
           name_first: '',
           name_last: '',
@@ -95,16 +96,20 @@
 
       #rental-details(v-if="current_step == 'rental-details'" key='details')
         .input-row.margin-top-ex-sm
-          label.input-label Where:
+          label.input-label(for='location_id') Where:
           .input-block.whole
-            select.input-field
+            select.input-field#location_id(
+                v-model='form.location_id'
+                v-error='form.errors.has("location_id")'
+                @input='form.errors.clear("location_id")')
               option(value='' disabled) -- Select Location --
-              option(value='') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
-          input-error-message(v-bind:errors='form.errors.get("location")')
+              option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
+              option(value='2') Adelanto, CA - California Inn - 11628 Bartlett Ave., Adelanto, CA 92301
+          input-error-message(v-bind:errors='form.errors.get("location_id")')
 
         .input-row
           .input-container.one-half
-            label.input-label(for='#pickup') From:
+            label.input-label(for='pickup') From:
             .input-block.whole
               input-date-time(
                 v-model='form.pickup'
@@ -113,7 +118,7 @@
             input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
 
           .input-container.one-half
-            label.input-label(for='#drop_off') To:
+            label.input-label(for='drop_off') To:
             .input-block.whole
               input-date-time#drop_off(
                 v-model='form.drop_off'
