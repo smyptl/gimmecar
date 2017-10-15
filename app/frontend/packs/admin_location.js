@@ -22,5 +22,5 @@ const router = new VueRouter(require('Admin/location/routes.js'))
 
 var vue = new Vue({
   router,
-  render: h => h(require('Admin/location/layout/base')),
+  render: h => h(require('Admin/location/base')),
 }).$mount('#gimmecar-app')
