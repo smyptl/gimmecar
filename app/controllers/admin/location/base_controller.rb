@@ -4,8 +4,6 @@ class Admin::Location::BaseController < ApplicationController
 
   before_action :authenticate_user, :authenticate_location, :authorize_api
 
-  helper_method :location
-
   layout 'admin'
 
   private

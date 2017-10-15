@@ -8,7 +8,7 @@ class Admin::LoginController < ApplicationController
 
   def index
     if current_user
-      redirect_to location_dashboard_path(:slug => current_user.locations.first.slug)
+      redirect_to locations_path
     else
       render 'admin/login'
     end

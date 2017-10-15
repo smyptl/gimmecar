@@ -19,7 +19,7 @@
             login: this.login.data()
           })
           .then(response => {
-            window.location = response.data.links.next
+            window.location = '/locations'
           })
           .catch(error => {
             Shake(document.getElementById('login-form'))
