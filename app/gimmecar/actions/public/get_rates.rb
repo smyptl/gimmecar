@@ -7,6 +7,9 @@ class Actions::Public::GetRates < Lib::Forms::Base
     a.date_time :drop_off
   end
 
+  validates :location_id,
+    presence: { message: 'must select a location' }
+
   validates :pickup,
     presence: true,
     after_date: { with: -> { DateTime.now - 59.minutes }, message: 'must be in the future' }

@@ -321,12 +321,20 @@
 
       h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
       .input-block.whole
-        signature(v-model='rental.driver_financial_responsibility_signature')
+        signature(
+          v-model='rental.driver_financial_responsibility_signature'
+          v-error='rental.errors.has("driver_financial_responsibility_signature")'
+          @input='rental.errors.clear("driver_financial_responsibility_signature")')
+      input-error-message(v-bind:errors='rental.errors.get("driver_financial_responsibility_signature")')
 
       template(v-if='rental.add_additional_driver')
         h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
         .input-block.whole
-          signature(v-model='rental.additional_driver_financial_responsibility_signature')
+          signature(
+            v-model='rental.additional_driver_financial_responsibility_signature'
+            v-error='rental.errors.has("additional_driver_financial_responsibility_signature")'
+            @input='rental.errors.clear("additional_driver_financial_responsibility_signature")')
+        input-error-message(v-bind:errors='rental.errors.get("additional_driver_financial_responsibility_signature")')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -339,12 +347,20 @@
 
       h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
       .input-block.whole
-        signature(v-model='rental.driver_signature')
+        signature(
+          v-model='rental.driver_signature'
+          v-error='rental.errors.has("driver_signature")'
+          @input='rental.errors.clear("driver_signature")')
+      input-error-message(v-bind:errors='rental.errors.get("driver_signature")')
 
       template(v-if='rental.add_additional_driver')
         h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
         .input-block.whole
-          signature(v-model='rental.additional_driver_signature')
+          signature(
+            v-model='rental.additional_driver_signature'
+            v-error='rental.errors.has("additional_driver_signature")'
+            @input='rental.errors.clear("additional_driver_signature")')
+        input-error-message(v-bind:errors='rental.errors.get("additional_driver_signature")')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back

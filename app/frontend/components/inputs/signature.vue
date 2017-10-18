@@ -69,7 +69,7 @@
 
 <template lang='pug'>
   .whole.left
-    canvas.left
+    canvas.input-signature.left
     button.btn.btn-sm.btn-danger-muted(@click.prevent='clearSignature') Clear
 </template>
 
@@ -80,9 +80,11 @@
   canvas
     width: 100%
     height: 12rem
-    margin: $margin-sm auto 0
+    margin: $margin-sm 0 $input-padding-y
 
-    border: 0.125rem dashed $border-color-input
+    border-width: 0.125rem
+    border-style: dashed
+    border-color: $border-color-input
     border-radius: 0.25rem
     background-color: rgba(255, 255, 255, 0.5)
 
