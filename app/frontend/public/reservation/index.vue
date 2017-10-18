@@ -136,9 +136,9 @@
                 @input='form.errors.clear("vehicle_type")')
 
                 option(value='' disabled) -- Select Vehicle Type --
-                option(value='compact') Compact (Toyota Yaris iA)
-                option(value='mid_size') Mid-Size (Toyota Corolla)
-                option(value='truck') Truck (Ford F-150)
+                option(value='subcompact') Subcompact (Toyota Yaris iA)
+                option(value='compact') Compact (Toyota Corolla)
+                option(value='mid_size') Mid-Size (Toyota Camry)
             input-error-message(v-bind:errors='form.errors.get("vehicle_type")')
 
           .input-submit

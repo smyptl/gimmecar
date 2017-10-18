@@ -29,9 +29,9 @@ FactoryGirl.define do
   factory :vehicle do
     original_location { location }
     vehicle_type :mid_size
-    make { ['BMW', 'Toyota', 'Ford'].sample }
+    make { ['BMW', 'Toyota', 'Ford', 'Porsche'].sample }
     model '5 Series'
-    year 2017
+    year { [2017, 2018].sample }
     color { Faker::Color.color_name }
     vin { Faker::Vehicle.vin }
     license_number { SecureRandom.hex(4) }

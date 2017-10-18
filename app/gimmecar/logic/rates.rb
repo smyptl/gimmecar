@@ -1,8 +1,6 @@
 class Logic::Rates < Lib::Services::Base
 
-  attributes do |a|
-    a.default :location
-    a.default :rental
+  def initialize(pickup:, drop_off:, vehicle_type:, location:, tax_calculator: LineItem)
   end
 
   private

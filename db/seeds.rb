@@ -20,9 +20,9 @@ location = Location.create({
 
 user.locations << location
 
-location.rates << Rate.create_default({ :amount => 3300, :vehicle_type => :mid_size })
-location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :compact })
-location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :truck })
+location.rates << Rate.create_default({ :amount => 3600, :vehicle_type => :mid_size })
+location.rates << Rate.create_default({ :amount => 3300, :vehicle_type => :compact })
+location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :subcompact })
 
 location.tax_rates << TaxRate.create({
   :combined_tax_rate => 0.07750,
@@ -30,6 +30,19 @@ location.tax_rates << TaxRate.create({
   :county_tax_rate   => 0.00250,
   :city_tax_rate     => 0.00000,
   :district_tax_rate => 0.01500,
+})
+
+location.vehicles << Vehicle.create({
+  :original_location => location,
+  :vehicle_type      => 'subcompact',
+  :vin               => Faker::Vehicle.vin,
+  :license_number    => '6TRJ244',
+  :make              => 'Toyota',
+  :model             => 'Yaris iA',
+  :year              => 2017,
+  :color             => 'white',
+  :status            => 'clean',
+  :original_odometer => 12,
 })
 
 location.vehicles << Vehicle.create({
@@ -51,25 +64,11 @@ location.vehicles << Vehicle.create({
   :vin               => Faker::Vehicle.vin,
   :license_number    => '8ASJ123',
   :make              => 'Toyota',
-  :model             => 'Corolla',
+  :model             => 'Camry',
   :year              => 2017,
   :color             => 'black',
   :status            => 'clean',
   :original_odometer => 52,
-})
-
-rental_vehicle = Vehicle.create({
-  :location          => location,
-  :original_location => location,
-  :vehicle_type      => 'truck',
-  :vin               => Faker::Vehicle.vin,
-  :license_number    => '8ASJ123',
-  :make              => 'Toyota',
-  :model             => 'Tundra',
-  :year              => 2016,
-  :color             => 'black',
-  :status            => 'clean',
-  :original_odometer => 30,
 })
 
 rental_driver = Driver.create({
