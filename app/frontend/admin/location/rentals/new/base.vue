@@ -144,7 +144,7 @@
         })
       },
       validateDrivers () {
-        this.$http.post(this.$route.path + '/drivers', {
+        this.$http.post(this.$route.path + '/validate-drivers', {
           rental: this.rental.data(),
         })
         .then(response => {
@@ -165,6 +165,45 @@
           this.nextStep()
         })
         .catch(error => {
+        })
+      },
+      validateVehicles () {
+        this.$http.post(this.$route.path + '/validate-vehicles', {
+          rental: this.rental.data(),
+        })
+        .then(response => {
+          this.rental.errors.clear
+          this.nextStep()
+        })
+        .catch(error => {
+          Shake(this.$refs.form)
+          this.rental.errors.record(error.response.data.errors)
+        })
+      },
+      validateFinancialResponsibility () {
+        this.$http.post(this.$route.path + '/validate-financial-responsibility', {
+          rental: this.rental.data(),
+        })
+        .then(response => {
+          this.rental.errors.clear
+          this.nextStep()
+        })
+        .catch(error => {
+          Shake(this.$refs.form)
+          this.rental.errors.record(error.response.data.errors)
+        })
+      },
+      validateTermsAndConditions () {
+        this.$http.post(this.$route.path + '/validate-terms-and-conditions', {
+          rental: this.rental.data(),
+        })
+        .then(response => {
+          this.rental.errors.clear
+          this.nextStep()
+        })
+        .catch(error => {
+          Shake(this.$refs.form)
+          this.rental.errors.record(error.response.data.errors)
         })
       },
       validatePayment () {
@@ -262,7 +301,7 @@
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+        button.btn.btn-primary.right(@click.prevent='validateVehicles()') Continue
 
     template(v-if='current_step == "Add-Ons"')
       .input-row
@@ -291,7 +330,7 @@
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+        button.btn.btn-primary.right(@click.prevent='validateFinancialResponsibility()') Continue
 
     template(v-if='current_step == "Terms & Conditions"')
       rental-invoice.input-block.margin-top-sm(v-bind:summary='summary')
@@ -309,7 +348,7 @@
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+        button.btn.btn-primary.right(@click.prevent='validateTermsAndConditions()') Continue
 
 
     template(v-if='current_step == "Payment"')
