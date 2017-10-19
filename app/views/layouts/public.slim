@@ -2,6 +2,7 @@ doctype html
 html
   head
     title GimmeCar - 24 / 7 Car Rental
+    meta(name='description' content='24 / 7 car rental serving the High Desert and Inland Empire')
     = stylesheet_link_tag 'application', :media => 'all'
     = stylesheet_link_tag 'public/landing'
     meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")
@@ -10,7 +11,7 @@ html
 
     = csrf_meta_tag
 
-  body
+  body(lang='en')
     header
       .container
         h1 GimmeCar
@@ -30,12 +31,14 @@ html
             h4 Locations
             dl
               dt Adelanto, CA - California Inn
-              dd 11628 Bartlett Ave.
-              dd Adelanto, CA 92301
+              address
+                dd 11628 Bartlett Ave.
+                dd Adelanto, CA 92301
             dl
               dt Redlands, CA - Super 8
-              dd 1160 Arizona St.
-              dd Redlands, CA 92374
+              address
+                dd 1160 Arizona St.
+                dd Redlands, CA 92374
 
         #footer-copyright
           h1.left Auto Guru Rental Systems, LLC.

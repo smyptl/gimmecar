@@ -69,7 +69,7 @@
 
 <template lang='pug'>
   .whole.left
-    canvas.input-signature.left
+    canvas.left
     button.btn.btn-sm.btn-danger-muted(@click.prevent='clearSignature') Clear
 </template>
 
