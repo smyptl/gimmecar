@@ -8,8 +8,8 @@
   import InputDateTime from 'Components/inputs/date_time'
   import Signature from 'Components/inputs/signature'
   import Payment from 'Components/inputs/payment'
-  import FinancialResponsibility from 'Components/financial_responsibility'
-  import TermsAndConditions from 'Components/terms_and_conditions'
+  import FinancialResponsibilitySignatures from 'Admin/location/components/financial_responsibility_signatures'
+  import TermsAndConditionsSignatures from 'Components/terms_and_conditions_signatures'
   import VehicleForm from './vehicles.vue'
 
   export default {
@@ -93,7 +93,7 @@
     components: {
       Driver,
       InputDateTime,
-      FinancialResponsibility,
+      FinancialResponsibilitySignatures,
       Payment,
       RentalInvoice,
       Signature,
@@ -316,25 +316,7 @@
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
     template(v-if='current_step == "Financial Responsibility"')
-      .input-block.margin-top-sm
-        financial-responsibility
-
-      h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
-      .input-block.whole
-        signature(
-          v-model='rental.driver_financial_responsibility_signature'
-          v-error='rental.errors.has("driver_financial_responsibility_signature")'
-          @input='rental.errors.clear("driver_financial_responsibility_signature")')
-      input-error-message(v-bind:errors='rental.errors.get("driver_financial_responsibility_signature")')
-
-      template(v-if='rental.add_additional_driver')
-        h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
-        .input-block.whole
-          signature(
-            v-model='rental.additional_driver_financial_responsibility_signature'
-            v-error='rental.errors.has("additional_driver_financial_responsibility_signature")'
-            @input='rental.errors.clear("additional_driver_financial_responsibility_signature")')
-        input-error-message(v-bind:errors='rental.errors.get("additional_driver_financial_responsibility_signature")')
+      financial-responsibility-signatures(v-bind:form='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -342,25 +324,7 @@
 
     template(v-if='current_step == "Terms & Conditions"')
       rental-invoice.input-block.margin-top-sm(v-bind:summary='summary')
-      .input-block.margin-top-default
-        terms-and-conditions
-
-      h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
-      .input-block.whole
-        signature(
-          v-model='rental.driver_signature'
-          v-error='rental.errors.has("driver_signature")'
-          @input='rental.errors.clear("driver_signature")')
-      input-error-message(v-bind:errors='rental.errors.get("driver_signature")')
-
-      template(v-if='rental.add_additional_driver')
-        h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
-        .input-block.whole
-          signature(
-            v-model='rental.additional_driver_signature'
-            v-error='rental.errors.has("additional_driver_signature")'
-            @input='rental.errors.clear("additional_driver_signature")')
-        input-error-message(v-bind:errors='rental.errors.get("additional_driver_signature")')
+      terms-and-conditions-signatures.margin-top-sm(v-bind:rental='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -394,7 +358,7 @@
       .input-row
         label.input-label
           | Card Number
-          .input-label-note.right DO NOT accept prepaid or debit cards. Only credit cards accepted.
+          .input-label-note.right DO NOT accept prepaid cards.
         .input-block.whole
           payment(v-error='rental.errors.has("card")' @click='rental.errors.clear("card")')
         input-error-message(v-bind:errors='rental.errors.get("card")')
