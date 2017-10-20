@@ -9,7 +9,7 @@
   import Signature from 'Components/inputs/signature'
   import Payment from 'Components/inputs/payment'
   import FinancialResponsibilitySignatures from 'Admin/location/components/financial_responsibility_signatures'
-  import TermsAndConditionsSignatures from 'Components/terms_and_conditions_signatures'
+  import TermsAndConditionsSignatures from 'Admin/location/components/terms_and_conditions_signatures'
   import VehicleForm from './vehicles.vue'
 
   export default {
@@ -97,7 +97,7 @@
       Payment,
       RentalInvoice,
       Signature,
-      TermsAndConditions,
+      TermsAndConditionsSignatures,
       VehicleForm,
     },
     computed: {
@@ -301,18 +301,6 @@
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateVehicles()') Continue
-
-    template(v-if='current_step == "Add-Ons"')
-      .input-row
-        .input-container.one-third
-          label.input-label Promo Code:
-          .input-block.whole
-            input.input-field#promo_code(type='text' placeholder='A912RED1' v-model='rental.promo_code')
-          input-error-message(v-bind:errors='rental.errors.get("drop_off")')
-
-      .input-submit.input-block
-        button.btn.left(@click.prevent='goBack()') Go Back
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
     template(v-if='current_step == "Financial Responsibility"')
@@ -324,7 +312,7 @@
 
     template(v-if='current_step == "Terms & Conditions"')
       rental-invoice.input-block.margin-top-sm(v-bind:summary='summary')
-      terms-and-conditions-signatures.margin-top-sm(v-bind:rental='rental')
+      terms-and-conditions-signatures.margin-top-sm(v-bind:form='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
