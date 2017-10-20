@@ -60,7 +60,7 @@ location.vehicles << Vehicle.create({
 
 location.vehicles << Vehicle.create({
   :original_location => location,
-  :vehicle_type      => 'mid_size',
+  :vehicle_type      => 'compact',
   :vin               => Faker::Vehicle.vin,
   :license_number    => '8ASJ123',
   :make              => 'Toyota',
@@ -70,6 +70,8 @@ location.vehicles << Vehicle.create({
   :status            => 'clean',
   :original_odometer => 52,
 })
+
+rental_vehicle = Vehicle.first
 
 rental_driver = Driver.create({
   :name_first              => Faker::Name.first_name,

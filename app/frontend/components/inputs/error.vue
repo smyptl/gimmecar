@@ -17,6 +17,6 @@
     },
     update(el, binding, vnode) {
       addRemoveClass(el, binding, vnode)
-    }
+    },
   }
 </script>
