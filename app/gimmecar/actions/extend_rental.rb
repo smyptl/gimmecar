@@ -12,7 +12,7 @@ class Actions::ExtendRental
       c.owner = @rental
       c.save
 
-      d = date
+      d = @date
 
       days.each do
         li = LineItem.calculate(amount: @amount, date: d, tax_rate: @rental.tax_rate)
@@ -24,7 +24,7 @@ class Actions::ExtendRental
         d += 1.day
       end
 
-      @rental.drop_off += days.days
+      @rental.drop_off += @days.days
       @rental.save
 
       puts 'complete'
