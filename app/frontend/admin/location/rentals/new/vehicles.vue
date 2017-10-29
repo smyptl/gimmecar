@@ -47,7 +47,11 @@
       .input-container.two-fifths
         label.input-label(for='pickup_odometer') Vehicle Odometer *
         .input-block.whole
-          input.input-field#pickup_odometer(type='text' v-model='form.pickup_odometer')
+          input.input-field#pickup_odometer(type='text'
+            v-model='form.pickup_odometer'
+            v-error='form.errors.has("pickup_odometer")'
+            @input='form.errors.clear("pickup_odometer")')
+        input-error-message(v-bind:errors='form.errors.get("pickup_odometer")')
       .input-container.three-fifths
         label.input-label(for='pickup_fuel')
           | Fuel Level *

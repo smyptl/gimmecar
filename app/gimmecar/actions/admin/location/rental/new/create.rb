@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
+class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
   include Actions::Admin::Location::Rental::Concerns::Driver
 
   attributes do |a|
@@ -7,8 +7,8 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
     a.signature :driver_financial_responsibility_signature
     a.signature :driver_signature
 
-    a.signature :additional_driver_signature
     a.signature :additional_driver_financial_responsibility_signature
+    a.signature :additional_driver_signature
 
     a.string  :vehicle_type
     a.integer :vehicle_id

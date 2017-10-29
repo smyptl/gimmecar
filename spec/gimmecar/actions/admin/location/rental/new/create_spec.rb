@@ -8,7 +8,7 @@ require 'factories/tax_rates'
 require 'factories/insurance_policies'
 require 'helpers/stripe_helper'
 
-describe Actions::Admin::Location::Rental::Create do
+describe Actions::Admin::Location::Rental::New::Create do
 
   describe '#save' do
     it 'saves driver, insurance policy, rental' do
@@ -29,7 +29,7 @@ describe Actions::Admin::Location::Rental::Create do
 
       drop_off = DateTime.now + 2.days
 
-      Actions::Admin::Location::Rental::Create.new({
+      Actions::Admin::Location::Rental::New::Create.new({
         :drop_off                                  => drop_off,
         :driver                                    => driver_attrs,
         :driver_signature                          => 'test',
@@ -134,7 +134,7 @@ describe Actions::Admin::Location::Rental::Create do
 
       drop_off = DateTime.now + 2.days
 
-      Actions::Admin::Location::Rental::Create.new({
+      Actions::Admin::Location::Rental::New::Create.new({
         :drop_off                                             => drop_off,
         :driver                                               => driver_attrs,
         :add_additional_driver                                => true,
@@ -201,7 +201,7 @@ describe Actions::Admin::Location::Rental::Create do
 
       drop_off = DateTime.now + 2.days
 
-      Actions::Admin::Location::Rental::Create.new({
+      Actions::Admin::Location::Rental::New::Create.new({
         :drop_off                                             => drop_off,
         :driver                                               => driver_attrs,
         :add_additional_driver                                => true,

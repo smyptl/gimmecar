@@ -8,8 +8,8 @@
   import InputDateTime from 'Components/inputs/date_time'
   import Signature from 'Components/inputs/signature'
   import Payment from 'Components/inputs/payment'
-  import FinancialResponsibility from 'Components/financial_responsibility'
-  import TermsAndConditions from 'Components/terms_and_conditions'
+  import FinancialResponsibilitySignatures from 'Admin/location/components/financial_responsibility_signatures'
+  import TermsAndConditionsSignatures from 'Admin/location/components/terms_and_conditions_signatures'
   import VehicleForm from './vehicles.vue'
 
   export default {
@@ -93,11 +93,11 @@
     components: {
       Driver,
       InputDateTime,
-      FinancialResponsibility,
+      FinancialResponsibilitySignatures,
       Payment,
       RentalInvoice,
       Signature,
-      TermsAndConditions,
+      TermsAndConditionsSignatures,
       VehicleForm,
     },
     computed: {
@@ -144,7 +144,7 @@
         })
       },
       validateDrivers () {
-        this.$http.post(this.$route.path + '/drivers', {
+        this.$http.post(this.$route.path + '/validate-drivers', {
           rental: this.rental.data(),
         })
         .then(response => {
@@ -165,6 +165,45 @@
           this.nextStep()
         })
         .catch(error => {
+        })
+      },
+      validateVehicles () {
+        this.$http.post(this.$route.path + '/validate-vehicles', {
+          rental: this.rental.data(),
+        })
+        .then(response => {
+          this.rental.errors.clear
+          this.nextStep()
+        })
+        .catch(error => {
+          Shake(this.$refs.form)
+          this.rental.errors.record(error.response.data.errors)
+        })
+      },
+      validateFinancialResponsibility () {
+        this.$http.post(this.$route.path + '/validate-financial-responsibility', {
+          rental: this.rental.data(),
+        })
+        .then(response => {
+          this.rental.errors.clear
+          this.nextStep()
+        })
+        .catch(error => {
+          Shake(this.$refs.form)
+          this.rental.errors.record(error.response.data.errors)
+        })
+      },
+      validateTermsAndConditions () {
+        this.$http.post(this.$route.path + '/validate-terms-and-conditions', {
+          rental: this.rental.data(),
+        })
+        .then(response => {
+          this.rental.errors.clear
+          this.nextStep()
+        })
+        .catch(error => {
+          Shake(this.$refs.form)
+          this.rental.errors.record(error.response.data.errors)
         })
       },
       validatePayment () {
@@ -264,52 +303,20 @@
         button.btn.left(@click.prevent='goBack()') Go Back
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
-    template(v-if='current_step == "Add-Ons"')
-      .input-row
-        .input-container.one-third
-          label.input-label Promo Code:
-          .input-block.whole
-            input.input-field#promo_code(type='text' placeholder='A912RED1' v-model='rental.promo_code')
-          input-error-message(v-bind:errors='rental.errors.get("drop_off")')
-
-      .input-submit.input-block
-        button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
-
     template(v-if='current_step == "Financial Responsibility"')
-      .input-block.margin-top-sm
-        financial-responsibility
-
-      h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
-      .input-block.whole
-        signature(v-model='rental.driver_financial_responsibility_signature')
-
-      template(v-if='rental.add_additional_driver')
-        h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
-        .input-block.whole
-          signature(v-model='rental.additional_driver_financial_responsibility_signature')
+      financial-responsibility-signatures(v-bind:form='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+        button.btn.btn-primary.right(@click.prevent='validateFinancialResponsibility()') Continue
 
     template(v-if='current_step == "Terms & Conditions"')
       rental-invoice.input-block.margin-top-sm(v-bind:summary='summary')
-      .input-block.margin-top-default
-        terms-and-conditions
-
-      h6.input-label {{ rental.driver.name_first }} {{ rental.driver.name_last }}
-      .input-block.whole
-        signature(v-model='rental.driver_signature')
-
-      template(v-if='rental.add_additional_driver')
-        h6.input-label.margin-top-default {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
-        .input-block.whole
-          signature(v-model='rental.additional_driver_signature')
+      terms-and-conditions-signatures.margin-top-sm(v-bind:form='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+        button.btn.btn-primary.right(@click.prevent='validateTermsAndConditions()') Continue
 
 
     template(v-if='current_step == "Payment"')
@@ -339,7 +346,7 @@
       .input-row
         label.input-label
           | Card Number
-          .input-label-note.right DO NOT accept prepaid or debit cards. Only credit cards accepted.
+          .input-label-note.right DO NOT accept prepaid cards.
         .input-block.whole
           payment(v-error='rental.errors.has("card")' @click='rental.errors.clear("card")')
         input-error-message(v-bind:errors='rental.errors.get("card")')
