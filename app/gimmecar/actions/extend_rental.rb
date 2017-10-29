@@ -9,7 +9,7 @@ class Actions::ExtendRental
 
     success = lambda do |args|
       c = args[:charge]
-      c.owner = r
+      c.owner = @rental
       c.save
 
       d = date
@@ -18,7 +18,7 @@ class Actions::ExtendRental
         li = LineItem.calculate(amount: @amount, date: d, tax_rate: @rental.tax_rate)
         li = LineItem.new(li)
         li.charge = c
-        li.invoice = r
+        li.invoice = @rental
         li.item = RentalRate.create(amount: amount, date: d, rental: @rental)
         li.save
         d += 1.day

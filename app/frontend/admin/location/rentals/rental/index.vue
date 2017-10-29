@@ -95,10 +95,12 @@
         dt Email
         dd {{ rental.driver.email }}
         dt Cell Phone #
-        dd {{ rental.driver.cell_phone_number }}
+        dd
+          a(href="#") {{ rental.driver.cell_phone_number }}
         template(v-if='rental.driver.home_phone_number')
           dt Home Phone #
-          dd {{ rental.driver.home_phone_number }}
+          dd
+            a(href="#") {{ rental.driver.home_phone_number }}
 
     .panel.panel-base.whole(v-if='rental.additional_driver')
       h6.padding-top-sm.padding-left-default Additional Driver
