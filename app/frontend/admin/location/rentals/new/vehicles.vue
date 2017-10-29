@@ -15,6 +15,11 @@
     filters: {
       Capitalize,
     },
+    methods: {
+      lastFive(vin) {
+        return vin.slice(-5)
+      }
+    }
   }
 </script>
 
@@ -34,7 +39,9 @@
               button.button-checkbox
             td {{ vehicle.make }} {{ vehicle.model }}
             td {{ vehicle.color | capitalize }}
-            td {{ vehicle.license_number }}
+            td(v-if='vehicle.license_number') {{ vehicle.license_number }}
+            td(v-else)
+              i VIN: {{ lastFive(vehicle.vin) }}
 
     .input-row.margin-top-default
       .input-container.two-fifths

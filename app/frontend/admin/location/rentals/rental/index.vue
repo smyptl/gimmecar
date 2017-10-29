@@ -84,7 +84,8 @@
         dt Vehicle
         dd
           span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
-          span.block.description License #: {{ rental.vehicle.license_number }}
+          span.block.description(v-if='rental.vehicle.license_number') License #: {{ rental.vehicle.license_number }}
+          span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
 
     .panel.panel-base.whole
       h6.padding-top-sm.padding-left-default Driver

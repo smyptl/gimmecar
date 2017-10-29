@@ -23,6 +23,9 @@
       '$route': 'fetchData',
     },
     methods: {
+      lastFive (vin) {
+        return vin.slice(-5)
+      },
       fetchData () {
         this.$http
           .get(this.$route.path)
@@ -50,7 +53,9 @@
         tr.clickable(v-for='vehicle in vehicles' @click.prevent='viewVehicle(vehicle.vin)')
           td {{ vehicle.make_model }}
           td {{ vehicle.vehicle_type }}
-          td {{ vehicle.license_number }}
+          td(v-if='vehicle.license_number') {{ vehicle.license_number }}
+          td(v-else)
+            i VIN: {{ lastFive(vehicle.vin) }}
           td.status
             vehicle-status-icons(:status='vehicle.status')
 </template>
