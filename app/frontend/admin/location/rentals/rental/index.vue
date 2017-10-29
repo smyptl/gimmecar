@@ -96,11 +96,11 @@
         dd {{ rental.driver.email }}
         dt Cell Phone #
         dd
-          a(href="#") {{ rental.driver.cell_phone_number }}
+          a(v-bind:href="'tel:' + rental.driver.cell_phone_number") {{ rental.driver.cell_phone_number }}
         template(v-if='rental.driver.home_phone_number')
           dt Home Phone #
           dd
-            a(href="#") {{ rental.driver.home_phone_number }}
+            a(v-bind:href="'tel:' + rental.driver.home_phone_number") {{ rental.driver.home_phone_number }}
 
     .panel.panel-base.whole(v-if='rental.additional_driver')
       h6.padding-top-sm.padding-left-default Additional Driver
@@ -110,10 +110,11 @@
         dt Email
         dd {{ rental.additional_driver.email }}
         dt Cell Phone #
-        dd {{ rental.additional_driver.cell_phone_number }}
+        dd
+          a(v-bind:href="'tel:' + rental.additional_driver.cell_phone_number") {{ rental.additional_driver.cell_phone_number }}
         template(v-if='rental.additional_driver.home_phone_number')
           dt Home Phone #
-          dd {{ rental.driver.home_phone_number }}
+          a(v-bind:href="'tel:' + rental.additional_driver.home_phone_number") {{ rental.additional_driver.home_phone_number }}
 
     close(v-on:close='rentalClosed' v-if='close')
 
