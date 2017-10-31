@@ -114,6 +114,7 @@
           a(v-bind:href="'tel:' + rental.additional_driver.cell_phone_number") {{ rental.additional_driver.cell_phone_number }}
         template(v-if='rental.additional_driver.home_phone_number')
           dt Home Phone #
+          dd
             a(v-bind:href="'tel:' + rental.additional_driver.home_phone_number") {{ rental.additional_driver.home_phone_number }}
 
     close(v-on:close='rentalClosed' v-if='close')
