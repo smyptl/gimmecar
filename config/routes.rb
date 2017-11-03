@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unacceptable'
   get '/500', to: 'errors#internal_error'
 
-  scope module: :admin, constraints: { subdomain: /^admin(\.|$)/ } do
+  scope module: :admin, as: :admin, constraints: { subdomain: /^admin(\.|$)/ } do
     get '/', to: 'login#index', as: :login
     post '/', to: 'login#create'
 
@@ -50,7 +50,6 @@ Rails.application.routes.draw do
         post 'verify-insurance', to: 'verify_insurance#create'
       end
 
-
       resources :drivers, only: [:show] do
         resources :insurance_policies
       end
@@ -61,6 +60,11 @@ Rails.application.routes.draw do
         post 'status', to: 'vehicles/status#create'
       end
     end
+  end
+
+  scope module: :command, as: :command, constraints: { subdomain: /^command(\.|$)/ } do
+    get '/', to: 'login#index', as: :login
+    post '/', to: 'login#create'
   end
 
   scope module: :public do

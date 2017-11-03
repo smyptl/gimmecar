@@ -12,7 +12,7 @@ feature 'view reservations', js: true do
   scenario 'loads correctly' do
     reservation = create(:reservation, pickup_location: location, vehicle_type: 'compact')
 
-    visit_admin location_reservations_path(:slug => location.slug)
+    visit_admin admin_location_reservations_path(:slug => location.slug)
 
     expect(page).to have_content(reservation.driver.name)
     expect(page).to have_content('Compact')
