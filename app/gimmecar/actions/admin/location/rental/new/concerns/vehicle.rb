@@ -14,7 +14,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Vehicle
       presence: true
 
     validates :vehicle_id,
-      inclusion: { in: :available_vehicle_ids, message: 'select a vehicle' }
+      inclusion: { in: :available_vehicle_ids, message: 'Select a vehicle.' }
 
     validates :pickup_odometer,
       presence: true,

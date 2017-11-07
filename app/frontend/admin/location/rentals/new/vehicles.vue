@@ -18,6 +18,11 @@
     methods: {
       lastFive(vin) {
         return vin.slice(-5)
+      },
+      selectVehicle(vehicle_id) {
+        this.form.vehicle_id = vehicle_id
+        this.form.errors.clear('vehicle_id')
+        return null
       }
     }
   }
@@ -25,6 +30,7 @@
 
 <template lang='pug'>
   div
+    input-error-message(v-bind:base='true' v-bind:errors='form.errors.get("vehicle_id")')
     .input-block.whole
       table.panel-table
         thead
@@ -34,9 +40,9 @@
             th Color
             th License #
         tbody
-          tr(v-for='vehicle in vehicles' @click.prevent='form.vehicle_id = vehicle.id' v-bind:class='{ selected: form.vehicle_id == vehicle.id }')
+          tr(v-for='vehicle in vehicles' @click.prevent='selectVehicle(vehicle.id)' v-bind:class='{ selected: form.vehicle_id == vehicle.id }')
             td.checkbox
-              button.button-checkbox
+              input.input-field(type='radio' id='form_vehicle_id' v-error='form.errors.has("vehicle_id")' v-bind:checked='form.vehicle_id == vehicle.id')
             td {{ vehicle.make }} {{ vehicle.model }}
             td {{ vehicle.color | capitalize }}
             td(v-if='vehicle.license_number') {{ vehicle.license_number }}
@@ -61,3 +67,9 @@
           input.input-range#pickup_fuel(type='range' v-model.number='form.pickup_fuel' min='0' max='10')
         input-error-message(v-bind:errors='form.errors.get("pickup_fuel")')
 </template>
+
+<style lang='stylus' scoped>
+  input[type=radio].input-field
+    margin: 0
+
+</style>
