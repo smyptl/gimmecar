@@ -22,7 +22,14 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
     render status: 200, json: Services::Admin::Vehicles::Available.new(location.id).for_vehicle_type(params[:rental].fetch(:vehicle_type)).during_period(DateTime.now, params[:rental].fetch(:drop_off)).fetch
   end
 
-  def validate_vehicles
+  def validate_vehicle
+    Actions::Admin::Location::Rental::New::ValidateVehicle.new({
+      :drop_off        => params[:rental][:drop_off],
+      :vehicle_type    => params[:rental][:vehicle_type],
+      :vehicle_id      => params[:rental][:vehicle_id],
+      :pickup_odometer => params[:rental][:pickup_odometer],
+      :pickup_fuel     => params[:rental][:pickup_fuel],
+    }).execute(success, failure, { location_id: location.id })
   end
 
   def validate_financial_responsibility

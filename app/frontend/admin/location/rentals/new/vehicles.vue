@@ -52,10 +52,12 @@
             v-error='form.errors.has("pickup_odometer")'
             @input='form.errors.clear("pickup_odometer")')
         input-error-message(v-bind:errors='form.errors.get("pickup_odometer")')
+
       .input-container.three-fifths
         label.input-label(for='pickup_fuel')
           | Fuel Level *
           .input-label-note.right {{ form.pickup_fuel * 10 }}%
         .input-block.whole
           input.input-range#pickup_fuel(type='range' v-model.number='form.pickup_fuel' min='0' max='10')
+        input-error-message(v-bind:errors='form.errors.get("pickup_fuel")')
 </template>

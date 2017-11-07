@@ -1,4 +1,4 @@
-module Actions::Admin::Location::Rental::Concerns::Driver
+module Actions::Admin::Location::Rental::New::Concerns::Driver
   extend ActiveSupport::Concern
 
   included do

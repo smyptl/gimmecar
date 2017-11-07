@@ -38,7 +38,7 @@ Rails.application.routes.draw do
       post 'rentals/new/rates'                             => 'rentals/new#rates'
       post 'rentals/new/validate-drivers'                  => 'rentals/new#validate_drivers'
       post 'rentals/new/vehicles'                          => 'rentals/new#vehicles'
-      post 'rentals/new/validate-vehicles'                 => 'rentals/new#validate_vehicles'
+      post 'rentals/new/validate-vehicle'                  => 'rentals/new#validate_vehicle'
       post 'rentals/new/validate-financial-responsibility' => 'rentals/new#validate_financial_responsibility'
       post 'rentals/new/validate-terms-and-conditions'     => 'rentals/new#validate_terms_and_conditions'
       post 'rentals/new'                                   => 'rentals/new#create'

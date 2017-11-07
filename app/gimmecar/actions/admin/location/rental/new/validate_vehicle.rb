@@ -1,25 +1,25 @@
 class Actions::Admin::Location::Rental::New::ValidateVehicle < Lib::Forms::Base
+  include Actions::Admin::Location::Rental::New::Concerns::Vehicle
 
-  attributes do |a|
-    a.integer :vehicle_type
-    a.integer :vehicle_id
-    a.integer :pickup_odometer
-    a.integer :pickup_fuel
+  private
+
+  def pickup
+    DateTime.now
   end
 
-  validates :vehicle_type,
-    presence: true
+  def rental_period
+    return unless pickup && drop_off
+    return unless pickup.before?(drop_off)
+    @rental_period ||= Lib::DateRange.new(pickup, drop_off)
+  end
 
-  validates :vehicle_id,
-    inclusion: { in: :available_vehicle_ids, message: 'select a vehicle' }
+  def available_vehicle_ids
+    location.available_vehicle_ids(vehicle_type: vehicle_type, date_range: rental_period)
+  end
 
-  validates :pickup_odometer,
-    presence: true,
-    numericality: { only_integer: true }
-
-  validates :pickup_fuel,
-    presence: true,
-    inclusion: { in: 0..10 }
+  def location
+    @location ||= Location.find(params.fetch(:location_id))
+  end
 
   def save
   end
