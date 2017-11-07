@@ -6,6 +6,10 @@
       errors: {
         required: true,
       },
+      base: {
+        type: Boolean,
+        default: false,
+      },
     },
     computed: {
       hasError() {
@@ -20,7 +24,7 @@
 </script>
 
 <template lang='pug'>
-  p.input-error-message
+  p.input-error-message(v-bind:class=" { 'error-message-base': base }")
     template(v-for='(error, index) in errors')
       | {{ error }}
       template(v-if='errors.length > 1 && (index + 1) != errors.length')

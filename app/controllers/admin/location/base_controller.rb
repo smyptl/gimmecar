@@ -1,6 +1,6 @@
 class Admin::Location::BaseController < ApplicationController
-  include Admin::Concerns::User
-  include Admin::Concerns::Api
+  include ::Admin::Concerns::User
+  include ::Concerns::Api
 
   before_action :authenticate_user, :authenticate_location, :authorize_api
 

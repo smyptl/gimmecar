@@ -90,7 +90,7 @@ feature 'create rental', js: true do
 
     create(:rate, :default, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
-    visit_admin location_rentals_new_path(:slug => location.slug)
+    visit_admin admin_location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
     select 'Mid-Size', from: 'vehicle_type'
@@ -199,7 +199,7 @@ feature 'create rental', js: true do
 
     create(:rate, :default, vehicle_type: :compact, location: location, amount: 3500)
 
-    visit_admin location_rentals_new_path(:slug => location.slug)
+    visit_admin admin_location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
     select 'Compact', from: 'Vehicle Type'
@@ -258,7 +258,7 @@ feature 'create rental', js: true do
 
     create(:rate, :default, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
-    visit_admin location_rentals_new_path(:slug => location.slug)
+    visit_admin admin_location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
     select 'Compact', from: 'Vehicle Type'

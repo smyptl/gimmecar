@@ -11,7 +11,7 @@ feature 'close rental', js: true do
     rental = create(:rental, :open, pickup_location: location, pickup: (DateTime.now - 1.day))
     expect(rental.closed?).to eq(false)
 
-    visit_admin location_rental_path(:slug => location.slug, id: rental.number)
+    visit_admin admin_location_rental_path(:slug => location.slug, id: rental.number)
 
     expect(page).to have_content(rental.number)
     find("a[data-toggle='dropdown']").trigger('click')

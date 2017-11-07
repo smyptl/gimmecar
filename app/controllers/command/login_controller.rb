@@ -1,8 +1,7 @@
 class Admin::LoginController < ApplicationController
-  include Admin::Concerns::User
-  include ::Concerns::Api
+  include Concerns::Api
 
-  layout 'admin'
+  layout 'command'
 
   before_action :authorize_api, only: :create
 

@@ -167,8 +167,8 @@
         .catch(error => {
         })
       },
-      validateVehicles () {
-        this.$http.post(this.$route.path + '/validate-vehicles', {
+      validateVehicle () {
+        this.$http.post(this.$route.path + '/validate-vehicle', {
           rental: this.rental.data(),
         })
         .then(response => {
@@ -301,7 +301,7 @@
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+        button.btn.btn-primary.right(@click.prevent='validateVehicle()') Continue
 
     template(v-if='current_step == "Financial Responsibility"')
       financial-responsibility-signatures(v-bind:form='rental')

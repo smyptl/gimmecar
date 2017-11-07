@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unacceptable'
   get '/500', to: 'errors#internal_error'
 
-  scope module: :admin, constraints: { subdomain: /^admin(\.|$)/ } do
+  scope module: :admin, as: :admin, constraints: { subdomain: /^admin(\.|$)/ } do
     get '/', to: 'login#index', as: :login
     post '/', to: 'login#create'
 
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
       post 'rentals/new/rates'                             => 'rentals/new#rates'
       post 'rentals/new/validate-drivers'                  => 'rentals/new#validate_drivers'
       post 'rentals/new/vehicles'                          => 'rentals/new#vehicles'
-      post 'rentals/new/validate-vehicles'                 => 'rentals/new#validate_vehicles'
+      post 'rentals/new/validate-vehicle'                  => 'rentals/new#validate_vehicle'
       post 'rentals/new/validate-financial-responsibility' => 'rentals/new#validate_financial_responsibility'
       post 'rentals/new/validate-terms-and-conditions'     => 'rentals/new#validate_terms_and_conditions'
       post 'rentals/new'                                   => 'rentals/new#create'
@@ -50,7 +50,6 @@ Rails.application.routes.draw do
         post 'verify-insurance', to: 'verify_insurance#create'
       end
 
-
       resources :drivers, only: [:show] do
         resources :insurance_policies
       end
@@ -61,6 +60,11 @@ Rails.application.routes.draw do
         post 'status', to: 'vehicles/status#create'
       end
     end
+  end
+
+  scope module: :command, as: :command, constraints: { subdomain: /^command(\.|$)/ } do
+    get '/', to: 'login#index', as: :login
+    post '/', to: 'login#create'
   end
 
   scope module: :public do

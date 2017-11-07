@@ -1,5 +1,5 @@
 class Actions::Admin::User::Login < Lib::Forms::Base
-  
+
   attr_reader :user, :auth_token
 
   attributes do |a|
@@ -35,9 +35,9 @@ class Actions::Admin::User::Login < Lib::Forms::Base
   def next_link
     case user.number_of_locations
     when 1
-      url_helper.location_dashboard_path(slug: user.locations.first.slug)
+      url_helper.admin_location_dashboard_path(slug: user.locations.first.slug)
     else
-      url_helper.locations_path
+      url_helper.admin_locations_path
     end
   end
 
