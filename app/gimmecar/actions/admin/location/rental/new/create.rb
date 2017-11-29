@@ -45,6 +45,8 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
   end
 
   def valid?
+    byebug
+
     valid = super
 
     if valid

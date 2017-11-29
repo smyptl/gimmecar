@@ -83,6 +83,10 @@ class Location < ApplicationRecord
   end
 
   def convert_date_to_time_zone(date_time)
-    date_time.in_time_zone('Pacific Time (US & Canada)').to_date
+    convert_date_time_to_time_zone(date_time).to_date
+  end
+
+  def convert_date_time_to_time_zone(date_time)
+    date_time.in_time_zone('Pacific Time (US & Canada)')
   end
 end

@@ -4,7 +4,11 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
   end
 
   def rates
-    Actions::Admin::Location::Rental::GetRates.new({ :pickup => DateTime.now, :drop_off => params[:rental].fetch(:drop_off), :vehicle_type => params[:rental].fetch(:vehicle_type) }).execute(success, failure, { :location => location })
+    Actions::Admin::Location::Rental::GetRates.new({
+      :pickup       => DateTime.now,
+      :drop_off     => params[:rental].fetch(:drop_off),
+      :vehicle_type => params[:rental].fetch(:vehicle_type)
+    }).execute(success, failure, { :location => location })
   end
 
   def validate_drivers
