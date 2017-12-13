@@ -38,8 +38,10 @@
         | GimmeCar
         small Admin
 
-      #login-form
+      #login-form.margin-top-sm
         form(@submit.prevent='loginUser()')
+          input-error-message(v-bind:errors='login.errors.get("base")' :base='true')
+
           .input-row
             label.input-label(for='email') Email:
             .input-block.whole
