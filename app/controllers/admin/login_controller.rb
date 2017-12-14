@@ -10,7 +10,7 @@ class Admin::LoginController < ApplicationController
     if current_user
       redirect_to admin_locations_path
     else
-      render 'admin/login'
+      render_layout
     end
   end
 

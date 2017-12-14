@@ -81,8 +81,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  # Include FactoryGirl
-  config.include FactoryGirl::Syntax::Methods
+  # Include FactoryBot
+  config.include FactoryBot::Syntax::Methods
 end
 
 # Javascript driver for capybara

@@ -1,6 +1,5 @@
 def visit_admin(path)
-  app_host = URI.join('http://admin.dev').to_s
-  using_app_host(app_host) do
+  using_app_host('http://admin.localhost:3000') do
     visit path
   end
 end
