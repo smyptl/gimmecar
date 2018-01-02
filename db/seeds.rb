@@ -6,6 +6,14 @@ user = User.create({
   :password_confirmation => '1234',
 })
 
+User.create({
+  :first_name            => Faker::Name.first_name,
+  :last_name             => Faker::Name.last_name,
+  :email                 => 'samay@gimmecar.com',
+  :password              => '1234',
+  :password_confirmation => '1234',
+})
+
 location = Location.create({
   :name      => 'Hotel California',
   :slug      => 'hotel-california',

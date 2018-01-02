@@ -8,6 +8,7 @@ class Command::LoginController < ApplicationController
 
   def index
     if current_user
+      redirect_to command_rentals_path
     else
       render_layout
     end
@@ -18,11 +19,11 @@ class Command::LoginController < ApplicationController
       cookies.encrypted[:token] = {
         :value    => args.fetch(:token),
         :secure   => Rails.env.production? || Rails.env.staging?,
-        :expires  => 1.year.from_now,
+        :expires  => 1.month.from_now,
         :httponly => true,
       }
 
-      render status: 200
+      render json: nil, status: 200
     end
 
     failure = lambda do |args|
@@ -39,6 +40,6 @@ class Command::LoginController < ApplicationController
   private
 
   def render_layout
-    render 'command/login'
+    render 'command/index'
   end
 end

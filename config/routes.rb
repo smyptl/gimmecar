@@ -65,6 +65,9 @@ Rails.application.routes.draw do
   scope module: :command, as: :command, constraints: { subdomain: /^command(\.|$)/ } do
     get '/', to: 'login#index', as: :login
     post '/', to: 'login#create'
+
+    get '/dashboard', to: 'dashboard#index'
+    get '/rentals',   to: 'rentals#index'
   end
 
   scope module: :public do
