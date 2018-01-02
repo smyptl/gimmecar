@@ -57,6 +57,7 @@ module.exports = {
       Utils:      resolve(settings.source_path, 'utils'),
       Styles:     resolve(settings.source_path, 'styles'),
       Admin:      resolve(settings.source_path, 'admin'),
+      Command:    resolve(settings.source_path, 'command'),
       Public:     resolve(settings.source_path, 'public'),
     },
   },

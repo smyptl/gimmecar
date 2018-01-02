@@ -18,7 +18,7 @@
 #  verify_call_center :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :insurance_policy do
     company_name Faker::Company.name
     agent Faker::Name.name

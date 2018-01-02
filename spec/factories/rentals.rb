@@ -35,7 +35,7 @@ require 'factories/vehicles'
 require 'factories/tax_rates'
 require 'factories/locations'
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :rental do
 

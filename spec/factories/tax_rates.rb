@@ -13,7 +13,7 @@
 #  district_tax_rate :decimal(14, 4)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :tax_rate do
     combined_tax_rate 0.07750

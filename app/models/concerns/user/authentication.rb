@@ -20,6 +20,19 @@ module Concerns::User::Authentication
         :persistence_token => payload.fetch('persistence_token')
       })
     end
+
+    def authenticate_command_by_token(token)
+      user = authenticate_by_token(token)
+      user && user.command? ? user : nil
+    end
+  end
+
+  def command?
+    if !Rails.env.development?
+      ['samay@gimmecar.com', 'jay@gimmecar.com'].include?(email)
+    else
+      true
+    end
   end
 
   def issue_token

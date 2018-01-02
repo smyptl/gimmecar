@@ -62,7 +62,7 @@ group :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'capybara-webkit'
-  gem 'factory_girl'
+  gem 'factory_bot'
   gem 'database_cleaner'
 end
 

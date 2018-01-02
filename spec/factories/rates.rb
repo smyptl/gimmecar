@@ -12,7 +12,7 @@
 #  vehicle_type :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :rate do
 
     trait :default do
