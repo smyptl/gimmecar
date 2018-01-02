@@ -1,5 +1,5 @@
 def visit_admin(path)
-  using_app_host('http://admin.localhost:3000') do
+  using_app_host('http://admin.dev.local') do
     visit path
   end
 end
