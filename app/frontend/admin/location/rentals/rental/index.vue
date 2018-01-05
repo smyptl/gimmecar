@@ -61,49 +61,48 @@
 
 <template lang='pug'>
   div
-    .panel.panel-base
-      .panel-base-header
-        h2 {{ rental.number }}
-        dropdown.flex-element.right
-          a(data-toggle='dropdown')
-            actions-icon.action-icon
-          .dropdown-menu.right(slot='dropdown-menu')
-            ul
-              li(v-if='rental.status == "open"')
-                button.link(@click='closeRental()') Close
-              li
-                button.link(@click='printInvoice') Print Invoice
+    .panel-base-header
+      h2 {{ rental.number }}
+      dropdown.flex-element.right
+        a(data-toggle='dropdown')
+          actions-icon.action-icon
+        .dropdown-menu.right(slot='dropdown-menu')
+          ul
+            li(v-if='rental.status == "open"')
+              button.link(@click='closeRental()') Close
+            li
+              button.link(@click='printInvoice') Print Invoice
 
-      dl.panel-main-details
-        dt Status
-        dd {{ rental.status | capitalize }}
-        dt Pickup
-        dd {{ rental.pickup | date_time }}
-        dt Drop Off
-        dd {{ rental.drop_off | date_time }}
-        dt Vehicle
-        dd
+    dl.panel-main-details
+      dt Status
+      dd {{ rental.status | capitalize }}
+      dt Pickup
+      dd {{ rental.pickup | date_time }}
+      dt Drop Off
+      dd {{ rental.drop_off | date_time }}
+      dt Vehicle
+      dd
+        router-link.right(:to="{ name: 'vehicle', params: { vin: rental.vehicle.vin } }")
           span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
           span.block.description(v-if='rental.vehicle.license_number') License #: {{ rental.vehicle.license_number }}
           span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
 
-    .panel.panel-base.whole
-      h6.padding-top-sm.padding-left-default Driver
-      dl.panel-main-details
-        dt Name
-        dd {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
-        dt Email
-        dd {{ rental.driver.email }}
-        dt Cell Phone #
+    h6.left.padding-top-default Driver
+    dl.panel-main-details
+      dt Name
+      dd {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
+      dt Email
+      dd {{ rental.driver.email }}
+      dt Cell Phone #
+      dd
+        a(v-bind:href="'tel:' + rental.driver.cell_phone_number") {{ rental.driver.cell_phone_number }}
+      template(v-if='rental.driver.home_phone_number')
+        dt Home Phone #
         dd
-          a(v-bind:href="'tel:' + rental.driver.cell_phone_number") {{ rental.driver.cell_phone_number }}
-        template(v-if='rental.driver.home_phone_number')
-          dt Home Phone #
-          dd
-            a(v-bind:href="'tel:' + rental.driver.home_phone_number") {{ rental.driver.home_phone_number }}
+          a(v-bind:href="'tel:' + rental.driver.home_phone_number") {{ rental.driver.home_phone_number }}
 
-    .panel.panel-base.whole(v-if='rental.additional_driver')
-      h6.padding-top-sm.padding-left-default Additional Driver
+    div(v-if='rental.additional_driver')
+      h6.left.padding-top-sm.padding-left-default Additional Driver
       dl.panel-main-details
         dt Name
         dd {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_middle }} {{ rental.additional_driver.name_last }}

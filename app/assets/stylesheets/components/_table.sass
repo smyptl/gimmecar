@@ -1,5 +1,6 @@
 .panel-table
   width: 100%
+  margin-bottom: $margin-default
   position: relative
   border-collapse: collapse
 
@@ -13,13 +14,15 @@
     padding: $padding-sm
 
   thead
-    color: $silver
-    font-size: 0.75rem
+    background: $white-dark
+    color: $black-ex-light
+    font-size: 0.6875rem
     text-transform: uppercase
+    border-top: 1px solid $border-color-light
     border-bottom: 1px solid $border-color-light
 
     th
-      font-weight: 400
+      font-weight: 600
 
   tbody
     td.checkbox

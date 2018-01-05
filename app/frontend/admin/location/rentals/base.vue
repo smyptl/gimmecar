@@ -5,8 +5,6 @@
 </script>
 
 <template lang='pug'>
-  div
-    router-link(:to="{ name: 'rentals' }")
-      h4.margin-bottom-default Rentals
+  .gimmecar-app-container
     router-view
 </template>

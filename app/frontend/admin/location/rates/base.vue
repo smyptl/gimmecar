@@ -51,23 +51,23 @@
 </script>
 
 <template lang='pug'>
-  .panel.panel-base.whole
+  .gimmecar-app-container
     .table-rates
       .table-vehicle-type
-        table.panel-table.left
+        table.panel-table.margin-top-default
           thead
             tr
               th Type
-          tbody.alternate-color
+          tbody
             tr(v-for='rate in rates')
               td {{ rate.vehicle_type }}
 
       .table-rates
-        table.panel-table.left
+        table.panel-table.left.margin-top-default
           thead
             tr
               th.text-right(v-for='date in date_range') {{ date.format('M/D') }}
-          tbody.alternate-color
+          tbody
             tr(v-for='rate in rates')
               rate(v-for='date in date_range' :date='date' :rates='rate' @update='fetchData()')
 </template>

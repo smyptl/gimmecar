@@ -41,15 +41,15 @@
 </script>
 
 <template lang='pug'>
-  .panel.panel-base.whole
-    table.panel-table
+  .gimmecar-app-container
+    table.panel-table.margin-top-default
       thead
         tr
           th Vehicle
           th Type
           th License #
           th Status
-      tbody.alternate-color
+      tbody
         tr.clickable(v-for='vehicle in vehicles' @click.prevent='viewVehicle(vehicle.vin)')
           td {{ vehicle.make_model }}
           td {{ vehicle.vehicle_type }}
