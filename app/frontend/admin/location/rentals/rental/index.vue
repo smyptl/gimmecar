@@ -100,6 +100,12 @@
         dt Home Phone #
         dd
           a(v-bind:href="'tel:' + rental.driver.home_phone_number") {{ rental.driver.home_phone_number }}
+      dt Address
+      dd
+        address
+          .block {{ rental.driver.address_1 }}
+          .block(v-if='rental.driver.address_2') {{ rental.driver.address_2 }}
+          .block {{ rental.driver.city }}, {{ rental.driver.state }} {{ rental.driver.zip_code }}
 
     div(v-if='rental.additional_driver')
       h6.left.padding-top-sm.padding-left-default Additional Driver
@@ -115,6 +121,11 @@
           dt Home Phone #
           dd
             a(v-bind:href="'tel:' + rental.additional_driver.home_phone_number") {{ rental.additional_driver.home_phone_number }}
+        dd
+          address
+            .block {{ rental.additional_driver.address_1 }}
+            .block(v-if='rental.additional_driver.address_2') {{ rental.additional_driver.address_2 }}
+            .block {{ rental.additional_driver.city }}, {{ rental.additional_driver.state }} {{ rental.additional_driver.zip_code }}
 
     close(v-on:close='rentalClosed' v-if='close')
 

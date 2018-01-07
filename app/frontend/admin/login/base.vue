@@ -73,8 +73,10 @@
 
 <style lang='stylus' scoped>
   @import '~Styles/global/layout'
+  @import '~Styles/global/colors'
 
   #login
+    background-color: $background-color-header
     height: 100vh
     display: flex
 

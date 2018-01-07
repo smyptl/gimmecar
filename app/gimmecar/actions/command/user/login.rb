@@ -7,8 +7,8 @@ class Actions::Command::User::Login < Lib::Forms::Base
     a.string :password
   end
 
-  validates :email,
-    inclusion: { in: ['jay@gimmecar.com', 'samay@gimmecar.com'], message: 'invalid email' }
+  # validates :email,
+    # inclusion: { in: ['jay@gimmecar.com', 'samay@gimmecar.com'], message: 'invalid email' }
 
   validates :password,
     presence: true

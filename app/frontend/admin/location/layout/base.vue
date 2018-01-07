@@ -49,7 +49,7 @@
 
     nav.left
       .gimmecar-app-container
-        ul.list-horizontal
+        ul#navigation.list-horizontal
           li
             router-link(:to="{ name: 'dashboard' }") Dashboard
           li
@@ -59,13 +59,13 @@
           li
             router-link(:to="{ name: 'vehicles' }") Vehicles
 
-      <!--ul#short-cuts.list-horizontal-->
-        <!--li.nav-link#add-link-->
-          <!--a(@click='toggleAdd()')-->
-            <!--svg(xlmns='http://www.w3.org/2000/svg' viewBox='-25 200 625 625' preserveAspectRatio='xMinYMin')-->
-              <!--path(d='M550 450q30 0 30 50t-30 50l-210 0l0 210q0 30 -50 30t-50 -30l0 -210l-210 0q-30 0 -30 -50t30 -50l210 0l0 -210q0 -30 50 -30t50 30l0 210l210 0z')-->
+        ul#short-cuts.list-horizontal
+          li.nav-link#add-link
+            a(@click='toggleAdd()')
+              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-25 200 625 625' preserveAspectRatio='xMinYMin')
+                path(d='M550 450q30 0 30 50t-30 50l-210 0l0 210q0 30 -50 30t-50 -30l0 -210l-210 0q-30 0 -30 -50t30 -50l210 0l0 -210q0 -30 50 -30t50 30l0 210l210 0z')
 
-          <!--add(v-if='add' @close-add='closeAdd')-->
+            add(v-if='add' @close-add='closeAdd')
 
         <!--li.nav-link-->
           <!--a(@click='search()')-->
@@ -105,6 +105,9 @@
     width: 100%
     border-bottom: 2px solid $border-color-light
 
+  #navigation
+    float: left
+
     li:first-of-type
       padding-left: 0
 
@@ -116,6 +119,7 @@
         float: left
         padding: 0 0 $padding-sm
 
+        line-height: 1.875rem - $padding-sm
         font-size: 0.925rem
         font-weight: 700
 
@@ -129,9 +133,6 @@
     align-self: center
     display: inline-block
     text-align: left
-
-  #navigation
-    float: left
 
   #short-cuts
     list-style: none
@@ -151,8 +152,8 @@
 
       svg
         float: left
-        height: 1.25rem
-        width: 1.25rem
+        height: 1.125rem
+        width: 1.125rem
         fill: #9badb6
 
       &:hover svg
