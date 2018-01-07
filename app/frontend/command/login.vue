@@ -72,10 +72,13 @@
 
 <style lang='stylus' scoped>
   @import '~Styles/global/layout'
+  @import '~Styles/global/colors'
 
   #login
     height: 100vh
     display: flex
+
+    background-color: $background-color-header
 
   #login-container
     width: 20rem

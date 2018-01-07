@@ -10,5 +10,6 @@
 </script>
 
 <template lang='pug'>
-  h1 Dashboard
+  .gimmecar-app-container
+    h1.margin-top-default Dashboard
 </template>

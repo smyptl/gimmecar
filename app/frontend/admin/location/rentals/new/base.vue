@@ -243,120 +243,121 @@
 </script>
 
 <template lang='pug'>
-  .panel-form(ref='form')
-    h3.panel-form-header.panel-form-header-first
-      | Rental: {{ current_step }}
-      small.right {{ current_step_number }} of {{ number_of_steps }}
+  .gimmecar-app-container
+    .panel-form(ref='form')
+      h3.panel-form-header
+        | Rental: {{ current_step }}
+        small.right {{ current_step_number }} of {{ number_of_steps }}
 
-    template(v-if='current_step == "Details"')
-      .input-row
-        .input-container.one-half
-          label.input-label Pickup *
+      template(v-if='current_step == "Details"')
+        .input-row
+          .input-container.one-half
+            label.input-label Pickup *
+            .input-block.whole
+              input-date-time(v-model='pickup' disabled=true)
+
+          .input-container.one-half
+            label.input-label Drop-off *
+            .input-block.whole
+              input-date-time(
+                v-model='rental.drop_off'
+                v-error='rental.errors.has("drop_off")'
+                @input='rental.errors.clear("drop_off")')
+            input-error-message(v-bind:errors='rental.errors.get("drop_off")')
+
+        .input-row
+          .input-container.whole
+            label.input-label(for='vehicle_type') Vehicle Type *
+            .input-block.whole
+              select.input-field#vehicle_type(
+                v-model='rental.vehicle_type'
+                v-error='rental.errors.has("vehicle_type")'
+                @input='rental.errors.clear("vehicle_type")')
+
+                option(value='' disabled) -- Select Vehicle Type --
+                option(value='subcompact') Subcompact (Toyota Yaris iA)
+                option(value='compact') Compact (Toyota Corolla)
+                option(value='mid_size') Mid-Size (Toyota Camry)
+            input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
+
+        .input-submit.input-block
+          button.btn.btn-primary.right(@click.prevent='getRates()') Continue
+
+      template(v-if='current_step == "Rates"')
+        rental-invoice.input-block.margin-top-sm(v-bind:summary='summary' v-bind:estimated='true')
+
+        .input-submit.input-block
+          button.btn.left(@click.prevent='goBack()') Go Back
+          button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
+
+      template(v-if='current_step == "Drivers"')
+        driver(v-bind:form='rental')
+
+        .input-submit.input-block
+          button.btn.left(@click.prevent='goBack()') Go Back
+          button.btn.btn-primary.right(@click.prevent='validateDrivers()') Continue
+
+      template(v-if='current_step == "Vehicle"')
+        vehicle-form(v-bind:form='rental' v-bind:vehicles='vehicles')
+
+        .input-submit.input-block
+          button.btn.left(@click.prevent='goBack()') Go Back
+          button.btn.btn-primary.right(@click.prevent='validateVehicle()') Continue
+
+      template(v-if='current_step == "Financial Responsibility"')
+        financial-responsibility-signatures(v-bind:form='rental')
+
+        .input-block.input-submit
+          button.btn.left(@click.prevent='goBack()') Go Back
+          button.btn.btn-primary.right(@click.prevent='validateFinancialResponsibility()') Continue
+
+      template(v-if='current_step == "Terms & Conditions"')
+        rental-invoice.input-block.margin-top-sm(v-bind:summary='summary')
+        terms-and-conditions-signatures.margin-top-sm(v-bind:form='rental')
+
+        .input-block.input-submit
+          button.btn.left(@click.prevent='goBack()') Go Back
+          button.btn.btn-primary.right(@click.prevent='validateTermsAndConditions()') Continue
+
+      template(v-if='current_step == "Payment"')
+        .input-row
+          label.input-label(for='paid_by')
+            | Paid By
+            .input-label-note.right Insure it matches name on card.
           .input-block.whole
-            input-date-time(v-model='pickup' disabled=true)
+            template(v-if='rental.add_additional_driver')
+              select.input-field#paid_by(
+                v-model='rental.paid_by'
+                v-error='rental.errors.has("paid_by")'
+                @input='rental.errors.clear("paid_by")')
 
-        .input-container.one-half
-          label.input-label Drop-off *
+                option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
+                option(value='additional_driver') {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
+            template(v-else)
+              select.input-field#paid_by(
+                disabled
+                v-model='rental.paid_by'
+                v-error='rental.errors.has("paid_by")'
+                @input='rental.errors.clear("paid_by")')
+
+                option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
+          input-error-message(v-bind:errors='rental.errors.get("paid_by")')
+
+        .input-row
+          label.input-label
+            | Card Number
+            .input-label-note.right DO NOT accept prepaid cards.
           .input-block.whole
-            input-date-time(
-              v-model='rental.drop_off'
-              v-error='rental.errors.has("drop_off")'
-              @input='rental.errors.clear("drop_off")')
-          input-error-message(v-bind:errors='rental.errors.get("drop_off")')
+            payment(v-error='rental.errors.has("card")' @click='rental.errors.clear("card")')
+          input-error-message(v-bind:errors='rental.errors.get("card")')
 
-      .input-row
-        .input-container.whole
-          label.input-label(for='vehicle_type') Vehicle Type *
-          .input-block.whole
-            select.input-field#vehicle_type(
-              v-model='rental.vehicle_type'
-              v-error='rental.errors.has("vehicle_type")'
-              @input='rental.errors.clear("vehicle_type")')
-
-              option(value='' disabled) -- Select Vehicle Type --
-              option(value='subcompact') Subcompact (Toyota Yaris iA)
-              option(value='compact') Compact (Toyota Corolla)
-              option(value='mid_size') Mid-Size (Toyota Camry)
-          input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
-
-      .input-submit.input-block
-        button.btn.btn-primary.right(@click.prevent='getRates()') Continue
-
-    template(v-if='current_step == "Rates"')
-      rental-invoice.input-block.margin-top-sm(v-bind:summary='summary' v-bind:estimated='true')
-
-      .input-submit.input-block
-        button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
-
-    template(v-if='current_step == "Drivers"')
-      driver(v-bind:form='rental')
-
-      .input-submit.input-block
-        button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateDrivers()') Continue
-
-    template(v-if='current_step == "Vehicle"')
-      vehicle-form(v-bind:form='rental' v-bind:vehicles='vehicles')
-
-      .input-submit.input-block
-        button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateVehicle()') Continue
-
-    template(v-if='current_step == "Financial Responsibility"')
-      financial-responsibility-signatures(v-bind:form='rental')
-
-      .input-block.input-submit
-        button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateFinancialResponsibility()') Continue
-
-    template(v-if='current_step == "Terms & Conditions"')
-      rental-invoice.input-block.margin-top-sm(v-bind:summary='summary')
-      terms-and-conditions-signatures.margin-top-sm(v-bind:form='rental')
-
-      .input-block.input-submit
-        button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateTermsAndConditions()') Continue
-
-
-    template(v-if='current_step == "Payment"')
-      .input-row
-        label.input-label(for='paid_by')
-          | Paid By
-          .input-label-note.right Insure it matches name on card.
-        .input-block.whole
-          template(v-if='rental.add_additional_driver')
-            select.input-field#paid_by(
-              v-model='rental.paid_by'
-              v-error='rental.errors.has("paid_by")'
-              @input='rental.errors.clear("paid_by")')
-
-              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
-              option(value='additional_driver') {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_last }}
-          template(v-else)
-            select.input-field#paid_by(
-              disabled
-              v-model='rental.paid_by'
-              v-error='rental.errors.has("paid_by")'
-              @input='rental.errors.clear("paid_by")')
-
-              option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
-        input-error-message(v-bind:errors='rental.errors.get("paid_by")')
-
-      .input-row
-        label.input-label
-          | Card Number
-          .input-label-note.right DO NOT accept prepaid cards.
-        .input-block.whole
-          payment(v-error='rental.errors.has("card")' @click='rental.errors.clear("card")')
-        input-error-message(v-bind:errors='rental.errors.get("card")')
-
-      .input-block.input-submit
-        button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validatePayment' v-bind:disabled='disabled_button') Continue
+        .input-block.input-submit
+          button.btn.left(@click.prevent='goBack()') Go Back
+          button.btn.btn-primary.right(@click.prevent='validatePayment' v-bind:disabled='disabled_button') Continue
 
 </template>
 
 <style lang='stylus'>
   @import '~Styles/components/panels/form'
+
 </style>

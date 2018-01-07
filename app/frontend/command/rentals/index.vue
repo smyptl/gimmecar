@@ -46,8 +46,8 @@
 </script>
 
 <template lang='pug'>
-  .panel.panel-base.whole
-    table.panel-table
+  .gimmecar-app-container
+    table.panel-table.margin-top-default
       thead
         tr
           th #
@@ -56,7 +56,7 @@
           th Vehicle
           th Pickup
           th Drop Off
-      tbody.alternate-color
+      tbody
         tr.clickable(v-for='rental in sorted_rentals' @click.prevent='viewRental(rental.number)')
           td {{ rental.number }}
           td {{ rental.name }}

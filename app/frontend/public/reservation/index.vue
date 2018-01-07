@@ -237,5 +237,5 @@
     border: 1px solid $border-color-light
 
   .input-field
-    background-color: $background-color-app
+    background-color: $background-color-header
 </style>
