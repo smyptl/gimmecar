@@ -107,8 +107,8 @@
           .block(v-if='rental.driver.address_2') {{ rental.driver.address_2 }}
           .block {{ rental.driver.city }}, {{ rental.driver.state }} {{ rental.driver.zip_code }}
 
-    div(v-if='rental.additional_driver')
-      h6.left.padding-top-sm.padding-left-default Additional Driver
+    template(v-if='rental.additional_driver')
+      h6.left.padding-top-default Additional Driver
       dl.panel-main-details
         dt Name
         dd {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_middle }} {{ rental.additional_driver.name_last }}
@@ -121,6 +121,7 @@
           dt Home Phone #
           dd
             a(v-bind:href="'tel:' + rental.additional_driver.home_phone_number") {{ rental.additional_driver.home_phone_number }}
+        dt Address
         dd
           address
             .block {{ rental.additional_driver.address_1 }}
