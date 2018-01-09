@@ -1,6 +1,6 @@
 class Admin::Location::BaseController < ApplicationController
-  include Admin::Concerns::User
-  include Admin::Concerns::Api
+  include ::Admin::Concerns::User
+  include ::Concerns::Api
 
   before_action :authenticate_user, :authenticate_location, :authorize_api
 
@@ -24,5 +24,17 @@ class Admin::Location::BaseController < ApplicationController
 
   def location
     @location ||= current_user.locations.try(:find_by, slug: params[:slug]) if current_user
+  end
+
+  def success
+    lambda do |args|
+      render status: 200, :json => args
+    end
+  end
+
+  def failure
+    lambda do |args|
+      render status: 400, :json => args
+    end
   end
 end

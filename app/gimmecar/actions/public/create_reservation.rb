@@ -38,6 +38,7 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
       :name_last           => name_last,
       :email               => email,
       :vehicle_type        => vehicle_type,
+      :location            => location.description,
       :phone_number        => phone_number,
       :confirmation_number => confirmation_number,
     }.merge(rates)
@@ -47,8 +48,12 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
     @confirmation_number ||= SecureRandom.hex(3)
   end
 
+  def location
+    @location ||= Location.find(location_id)
+  end
+
   def rates
-    @rates ||= Services::Rates.fetch(rental: self, location: Location.find(location_id))
+    @rates ||= Services::Rates.fetch(rental: self, location: location)
   end
 
   def save

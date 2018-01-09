@@ -1,6 +1,6 @@
 class Admin::LoginController < ApplicationController
   include Admin::Concerns::User
-  include Admin::Concerns::Api
+  include ::Concerns::Api
 
   layout 'admin'
 
@@ -8,9 +8,9 @@ class Admin::LoginController < ApplicationController
 
   def index
     if current_user
-      redirect_to locations_path
+      redirect_to admin_locations_path
     else
-      render 'admin/login'
+      render_layout
     end
   end
 
@@ -19,7 +19,7 @@ class Admin::LoginController < ApplicationController
       cookies.encrypted[:token] = {
         :value    => args.fetch(:token),
         :secure   => Rails.env.production? || Rails.env.staging?,
-        :expires  => 1.year.from_now,
+        :expires  => 1.month.from_now,
         :httponly => true,
       }
 

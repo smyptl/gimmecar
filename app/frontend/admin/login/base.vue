@@ -38,8 +38,10 @@
         | GimmeCar
         small Admin
 
-      #login-form
+      #login-form.margin-top-sm
         form(@submit.prevent='loginUser()')
+          input-error-message(v-bind:errors='login.errors.get("base")' :base='true')
+
           .input-row
             label.input-label(for='email') Email:
             .input-block.whole
@@ -71,8 +73,10 @@
 
 <style lang='stylus' scoped>
   @import '~Styles/global/layout'
+  @import '~Styles/global/colors'
 
   #login
+    background-color: $background-color-header
     height: 100vh
     display: flex
 

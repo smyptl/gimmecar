@@ -1,19 +1,11 @@
-class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
-  include Actions::Admin::Location::Rental::Concerns::Driver
+class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
+  include Actions::Admin::Location::Rental::New::Concerns::Driver
+  include Actions::Admin::Location::Rental::New::Concerns::Vehicle
+  include Actions::Admin::Location::Rental::New::Concerns::FinancialResponsibility
+  include Actions::Admin::Location::Rental::New::Concerns::TermsAndConditions
 
   attributes do |a|
     a.date_time :drop_off
-
-    a.signature :driver_financial_responsibility_signature
-    a.signature :driver_signature
-
-    a.signature :additional_driver_signature
-    a.signature :additional_driver_financial_responsibility_signature
-
-    a.string  :vehicle_type
-    a.integer :vehicle_id
-    a.integer :pickup_odometer
-    a.integer :pickup_fuel
 
     a.string :promo_code
     a.symbol :paid_by
@@ -25,28 +17,6 @@ class Actions::Admin::Location::Rental::Create < Lib::Forms::Base
   validates :drop_off,
     presence: true,
     after_date: { with: -> { pickup }, message: 'must be after pickup', allow_nil: true }
-
-  validates :driver_financial_responsibility_signature, :driver_signature,
-    signature: true
-
-  with_options if: :add_additional_driver do |a|
-    a.validates :additional_driver_financial_responsibility_signature, :additional_driver_signature,
-      signature: true
-  end
-
-  validates :vehicle_type,
-    presence: true
-
-  validates :vehicle_id,
-    inclusion: { in: :available_vehicle_ids, message: 'select a vehicle' }
-
-  validates :pickup_odometer,
-    presence: true,
-    numericality: { only_integer: true }
-
-  validates :pickup_fuel,
-    presence: true,
-    inclusion: { in: 0..10 }
 
   validates :paid_by,
     presence: true,

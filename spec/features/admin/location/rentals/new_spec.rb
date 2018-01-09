@@ -70,6 +70,16 @@ def check_rental_terms(driver:, additional_driver: nil)
   end
 end
 
+def fill_in_payment(number: CARD_TYPE[:visa], expiration_date: '01/20', cvc: '123', zip_code: '90210')
+  stripe_iframe = all('iframe[name=__privateStripeFrame3]').last
+  Capybara.within_frame stripe_iframe do
+    find('input[name=cardnumber]').set(number)
+    find('input[name="exp-date"]').set(expiration_date)
+    find('input[name="cvc"]').set(cvc)
+    find('input[name="postal"]').set(zip_code)
+  end
+end
+
 feature 'create rental', js: true do
   include_context :login_user_and_select_location
 
@@ -80,7 +90,7 @@ feature 'create rental', js: true do
 
     create(:rate, :default, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
-    visit_admin location_rentals_new_path(:slug => location.slug)
+    visit_admin admin_location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
     select 'Mid-Size', from: 'vehicle_type'
@@ -118,13 +128,7 @@ feature 'create rental', js: true do
 
     expect(page).to have_content('Rental: Payment')
 
-    stripe_iframe = all('iframe[name=__privateStripeFrame3]').last
-    Capybara.within_frame stripe_iframe do
-      find('input[name=cardnumber]').set(CARD_TYPE[:visa])
-      find('input[name="exp-date"]').set('01/20')
-      find('input[name="cvc"]').set('123')
-      find('input[name="postal"]').set('90210')
-    end
+    fill_in_payment
     click_on 'Continue'
 
     expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
@@ -195,7 +199,7 @@ feature 'create rental', js: true do
 
     create(:rate, :default, vehicle_type: :compact, location: location, amount: 3500)
 
-    visit_admin location_rentals_new_path(:slug => location.slug)
+    visit_admin admin_location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
     select 'Compact', from: 'Vehicle Type'
@@ -232,27 +236,17 @@ feature 'create rental', js: true do
 
     expect(page).to have_content('Rental: Payment')
 
-    stripe_iframe = all('iframe[name=__privateStripeFrame3]').last
-    Capybara.within_frame stripe_iframe do
-      find('input[name=cardnumber]').set(INVALID_CREDIT_CARD_REASONS[:zip_code])
-      find('input[name="exp-date"]').set('01/10')
-      find('input[name="cvc"]').set('123')
-      find('input[name="postal"]').set('90210')
-    end
+    fill_in_payment(number: INVALID_CREDIT_CARD_REASONS[:zip_code], expiration_date: '01/10')
     click_on 'Continue'
 
     expect(page).to have_content("Your card's expiration year is in the past.")
 
-    Capybara.within_frame stripe_iframe do
-      find('input[name="exp-date"]').set('01/20')
-    end
+    fill_in_payment(number: INVALID_CREDIT_CARD_REASONS[:zip_code])
     click_on 'Continue'
     expect(page).to_not have_content("Your card's expiration year is in the past.")
     expect(page).to have_content("The zip code you supplied failed validation.")
 
-    Capybara.within_frame stripe_iframe do
-      find('input[name="cardnumber"]').set(CARD_TYPE[:visa])
-    end
+    fill_in_payment
     click_on 'Continue'
 
     expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
@@ -264,7 +258,7 @@ feature 'create rental', js: true do
 
     create(:rate, :default, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
-    visit_admin location_rentals_new_path(:slug => location.slug)
+    visit_admin admin_location_rentals_new_path(:slug => location.slug)
 
     expect(page).to have_content('Rental: Details')
     select 'Compact', from: 'Vehicle Type'
@@ -327,13 +321,8 @@ feature 'create rental', js: true do
 
     expect(page).to have_content('Rental: Payment')
     select "#{additional_driver_stub.name_first} #{additional_driver_stub.name_last}"
-    stripe_iframe = all('iframe[name=__privateStripeFrame3]').last
-    Capybara.within_frame stripe_iframe do
-      find('input[name=cardnumber]').set(CARD_TYPE[:visa])
-      find('input[name="exp-date"]').set('01/20')
-      find('input[name="cvc"]').set('123')
-      find('input[name="postal"]').set('90210')
-    end
+
+    fill_in_payment
     click_on 'Continue'
 
     expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")

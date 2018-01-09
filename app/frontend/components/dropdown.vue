@@ -114,4 +114,6 @@
 
       padding: $padding-sm + $padding-ex-sm
 
+      text-align: left
+
 </style>

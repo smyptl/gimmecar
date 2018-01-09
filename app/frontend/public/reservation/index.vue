@@ -104,8 +104,8 @@
                 v-error='form.errors.has("location_id")'
                 @input='form.errors.clear("location_id")')
               option(value='' disabled) -- Select Location --
-              option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
               option(value='2') Adelanto, CA - California Inn - 11628 Bartlett Ave., Adelanto, CA 92301
+              option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
           input-error-message(v-bind:errors='form.errors.get("location_id")')
 
         .input-row
@@ -237,5 +237,5 @@
     border: 1px solid $border-color-light
 
   .input-field
-    background-color: $background-color-app
+    background-color: $background-color-header
 </style>

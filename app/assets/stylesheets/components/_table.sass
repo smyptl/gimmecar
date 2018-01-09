@@ -1,9 +1,10 @@
 .panel-table
   width: 100%
+  margin-bottom: $margin-default
   position: relative
   border-collapse: collapse
 
-  font-size: 0.875rem
+  font-size: 0.8125rem
   text-align: left
   font-weight: 400
 
@@ -13,13 +14,15 @@
     padding: $padding-sm
 
   thead
-    color: $silver
-    font-size: 0.75rem
+    background: $white-dark
+    color: $black-ex-light
+    font-size: 0.6875rem
     text-transform: uppercase
+    border-top: 1px solid $border-color-light
     border-bottom: 1px solid $border-color-light
 
     th
-      font-weight: 400
+      font-weight: 600
 
   tbody
     td.checkbox
@@ -52,23 +55,6 @@
 
     tr:nth-child(even)
       background: $background-color-panel
-
-
-  .button-checkbox
-    width: 1rem
-    height: 1rem
-    padding: 0
-    margin: 0
-    float: left
-
-    background: $white
-    border: 0.0625rem solid $border-color-input
-    border-radius: 0.125rem
-
-  tr.selected .button-checkbox,
-  .button-checkbox.selected
-    border: 0.25rem solid $purple
-    background: $purple
 
 .panel-table.panel-table-key-pair
   table-layout: fixed

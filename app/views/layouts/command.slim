@@ -1,0 +1,25 @@
+doctype html
+html#bg-app
+  head
+    title GimmeCar | Command
+    = stylesheet_link_tag 'application', :media => 'all'
+    = stylesheet_link_tag 'admin'
+    meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
+    meta(name='apple-touch-icon' content='apple-touch-icon.png')
+    meta(name='apple-mobile-web-app-title' content='GimmeCar')
+    meta(name='apple-mobile-web-app-capable' content='yes')
+
+    <!-- Chrome, Firefox OS and Opera -->
+    meta(name='theme-color' content='#f5f7f9')
+    <!-- Windows Phone -->
+    meta(name='msapplication-navbutton-color' content='#f5f7f9')
+    <!-- iOS Safari -->
+    meta(name='apple-mobile-web-app-status-bar-style' content='#f5f7f9')
+    link(href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet')
+    link(href='//cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css' rel='stylesheet')
+
+    = csrf_meta_tag
+
+  body(lang='en')
+    #gimmecar-app
+    == yield

@@ -9,7 +9,7 @@ class Services::Admin::Location::Rates < Lib::Services::Base
   def fetch
     output = []
 
-    Vehicle::TYPES.each do |vehicle_type|
+    ::Vehicle::TYPES.each do |vehicle_type|
       output << {
         :vehicle_type => vehicle_type,
         :default_rate => location.default_rate_for(vehicle_type).amount,

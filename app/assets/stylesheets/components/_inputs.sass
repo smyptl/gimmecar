@@ -149,7 +149,8 @@ select.input-field
   option:disabled
     color: $text-color-placeholder
 
-input[type=checkbox].input-field
+input[type=checkbox].input-field,
+input[type=radio].input-field
   height: $input-height - 1rem
   width: $input-height - 1rem
   margin: ($input-margin-x + 0.5rem) 0
@@ -202,6 +203,9 @@ input.input-range
     -webkit-appearance: none
 
 .input-field.input-field-error,
+.input-field[type='checkbox'].input-field-error,
+.input-field[type='radio'].input-field-error,
+.input-field-error .input-signature,
 .input-field-error .input-field,
 .StripeElement--invalid,
 .input-field.input-field-error.input-contrast,
@@ -212,6 +216,8 @@ input.input-range
   box-shadow: 0 0 0 0
 
 .input-field.input-field-error:focus,
+.input-field[type='checkbox'].input-field-error:focus,
+.input-field[type='radio'].input-field-error:focus,
 .input-field-error .input-field:focus,
 .StripeElement--invalid.StripeElement--focus,
 .input-field.input-field-error.input-contrast:focus,
@@ -242,3 +248,17 @@ input.input-range
 .input-error-message.input-lg
   font-size: $font-size-default
   padding: $padding-ex-sm
+
+.input-error-message.error-message-base
+  float: left
+  width: 100%
+  margin: 0
+  padding: $padding-ex-sm
+
+  border: 0
+  border-radius: 0.125rem
+  background-color: $red
+
+  font-size: $font-size-default
+  font-weight: 600
+  color: #ffffff

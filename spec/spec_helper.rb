@@ -81,8 +81,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  # Include FactoryGirl
-  config.include FactoryGirl::Syntax::Methods
+  # Include FactoryBot
+  config.include FactoryBot::Syntax::Methods
 end
 
 # Javascript driver for capybara
@@ -98,7 +98,7 @@ Capybara::Webkit.configure do |config|
 
   # Silently return an empty 200 response for any requests to unknown URLs.
   config.block_unknown_urls
-  config.allow_url('*.dev')
+  config.allow_url('*.local')
   config.allow_url('*.stripe.com')
 
   # Timeout if requests take longer than 5 seconds

@@ -1,9 +1,9 @@
 <script>
   export default {
-    name: 'content',
+    name: 'dashboard',
   }
 </script>
 
 <template lang='pug'>
-  router-view
+  h1 Dashboard
 </template>

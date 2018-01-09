@@ -1,4 +1,4 @@
-module Admin::Concerns::Api
+module Concerns::Api
 
   private
 

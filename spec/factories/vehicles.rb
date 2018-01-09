@@ -24,7 +24,7 @@
 #  status               :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :vehicle do
     original_location { location }

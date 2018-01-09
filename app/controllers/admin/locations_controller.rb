@@ -1,6 +1,6 @@
 class Admin::LocationsController < ApplicationController
   include Admin::Concerns::User
-  include Admin::Concerns::Api
+  include Concerns::Api
 
   layout 'admin'
 

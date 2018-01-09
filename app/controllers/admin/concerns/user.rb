@@ -8,7 +8,7 @@ module Admin::Concerns::User
     if api?
       head 401
     else
-      redirect_to login_path
+      redirect_to admin_login_path
     end
   end
 

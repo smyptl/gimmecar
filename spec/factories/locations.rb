@@ -18,7 +18,7 @@
 #  phone_number :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :location do
     name 'Hotel California'

@@ -4,27 +4,15 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
   end
 
   def rates
-    success = lambda do |args|
-      render status: 200, :json => args
-    end
-
-    failure = lambda do |args|
-      render status: 400, :json => args
-    end
-
-    Actions::Admin::Location::Rental::GetRates.new({ :pickup => DateTime.now, :drop_off => params[:rental].fetch(:drop_off), :vehicle_type => params[:rental].fetch(:vehicle_type) }).execute(success, failure, { :location => location })
+    Actions::Admin::Location::Rental::GetRates.new({
+      :pickup       => DateTime.now,
+      :drop_off     => params[:rental].fetch(:drop_off),
+      :vehicle_type => params[:rental].fetch(:vehicle_type)
+    }).execute(success, failure, { :location => location })
   end
 
-  def drivers
-    success = lambda do |args|
-      render status: 200, :json => args
-    end
-
-    failure = lambda do |args|
-      render status: 400, :json => args
-    end
-
-    Actions::Admin::Location::Rental::ValidateDrivers.new({
+  def validate_drivers
+    Actions::Admin::Location::Rental::New::ValidateDrivers.new({
       :drop_off              => params[:rental][:drop_off],
       :driver_id             => params[:rental][:driver_id],
       :driver                => params[:rental][:driver],
@@ -38,24 +26,33 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
     render status: 200, json: Services::Admin::Vehicles::Available.new(location.id).for_vehicle_type(params[:rental].fetch(:vehicle_type)).during_period(DateTime.now, params[:rental].fetch(:drop_off)).fetch
   end
 
-  def add_ons
+  def validate_vehicle
+    Actions::Admin::Location::Rental::New::ValidateVehicle.new({
+      :drop_off        => params[:rental][:drop_off],
+      :vehicle_type    => params[:rental][:vehicle_type],
+      :vehicle_id      => params[:rental][:vehicle_id],
+      :pickup_odometer => params[:rental][:pickup_odometer],
+      :pickup_fuel     => params[:rental][:pickup_fuel],
+    }).execute(success, failure, { location_id: location.id })
   end
 
-  def financial_responsibility
+  def validate_financial_responsibility
+    Actions::Admin::Location::Rental::New::ValidateFinancialResponsibility.new({
+      :add_additional_driver                                => params[:rental][:add_additional_driver],
+      :driver_financial_responsibility_signature            => params[:rental][:driver_financial_responsibility_signature],
+      :additional_driver_financial_responsibility_signature => params[:rental][:additional_driver_financial_responsibility_signature],
+    }).execute(success, failure, params)
   end
 
-  def terms_and_conditions
+  def validate_terms_and_conditions
+    Actions::Admin::Location::Rental::New::ValidateTermsAndConditions.new({
+      :add_additional_driver       => params[:rental][:add_additional_driver],
+      :driver_signature            => params[:rental][:driver_signature],
+      :additional_driver_signature => params[:rental][:additional_driver_signature],
+    }).execute(success, failure, params)
   end
 
   def create
-    success = lambda do |args|
-      render status: 200, :json => args
-    end
-
-    failure = lambda do |args|
-      render status: 400, :json => args
-    end
-
-    Actions::Admin::Location::Rental::Create.new(params.require(:rental)).execute(success, failure, { location_id: location.id, user_id: current_user.id })
+    Actions::Admin::Location::Rental::New::Create.new(params.require(:rental)).execute(success, failure, { location_id: location.id, user_id: current_user.id })
   end
 end

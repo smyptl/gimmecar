@@ -9,7 +9,9 @@
 <br/>
 = "#: #{@email.fetch(:phone_number)}"
 <br>
-= "#: #{@email.fetch(:vehicle_type)}"
+= "Vehicle Type: #{@email.fetch(:vehicle_type)}"
+<br>
+= "Location: #{@email.fetch(:location)}"
 <br/>
 = "Pickup: #{format_date_time(@email.fetch(:pickup))}"
 <br/>

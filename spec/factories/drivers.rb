@@ -28,7 +28,7 @@
 #  name_last               :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :driver do
     name_first { Faker::Name.first_name }
     name_middle { Faker::Name.last_name }
