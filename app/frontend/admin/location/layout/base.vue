@@ -85,22 +85,13 @@
   @import '~Styles/global/layout'
 
   header
-    width: 100%
-    position: fixed
-
     background: $background-color-header
-
     border-bottom: 2px solid $border-color-light
 
     .gimmecar-app-container
-      width: 100%
       margin: 0 auto
 
-      z-index: 10
-
   .logo
-    display: inline-block
-
     padding-top: $padding-default
     padding-bottom: $padding-default
 
@@ -168,20 +159,13 @@
         fill: $purple
 
   content
-    margin-top: 7.1875rem
     float: left
     width: 100%
     flex-grow: 2
     align-self: auto
 
     .gimmecar-app-content
-      display: flex
-      flex-direction: row
-      flex: auto
       overflow-y: auto
-
-      :first-child
-        flex: auto
 
   footer
     float: left
