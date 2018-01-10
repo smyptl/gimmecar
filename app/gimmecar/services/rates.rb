@@ -60,39 +60,10 @@ class Services::Rates < Lib::Services::Base
   end
 
   def calculate_rate
-    output = []
-
-    date = location.convert_date_to_time_zone(rental_period.start_date)
-
-    rental_period.days_apart.times do |x|
-      rate = rate(date)
-
-      output << build_rate(rate: rate, amount: rate, date: date)
-      date += 1.day
-    end
-
-    extra_hours = rental_period.hours_apart % 24
-
-    if extra_hours > 0
-      rate = rate(date)
-
-      if extra_hours < 3
-        amount = ((rate / BigDecimal.new(3, 1)) * extra_hours).ceil
-      else
-        amount = rate
-      end
-
-      output << build_rate(rate: rate, amount: amount, date: date)
-    end
-
-    output
+    Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: location.latest_tax_rate).fetch
   end
 
-  def build_rate(rate:, amount:, date:, discount: 0)
-    LineItem.calculate(date: date, amount: amount, discount: discount, tax_rate: location.latest_tax_rate).merge(rate: rate)
-  end
-
-  def rate(date)
-    location.rates_for(vehicle_type: rental.vehicle_type, date: date).amount
+  def rate
+    location.rates_for(vehicle_type: rental.vehicle_type, date: rental_period.start_date).amount
   end
 end

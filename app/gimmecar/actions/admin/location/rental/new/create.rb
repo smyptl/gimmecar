@@ -92,8 +92,8 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
     @charge.save
 
     rates.fetch(:rates).each do |l|
-      rental_rate = RentalRate.create(:rental => @rental, :date => l.fetch('date'), :amount => l.fetch('rate'))
-      @rental.line_items.create(l.except('rate').merge(charge: @charge, item: rental_rate))
+      rental_rate = RentalRate.create(:rental => @rental, :date => l.fetch('date'), :amount => l.fetch('amount'))
+      @rental.line_items.create(l.merge(charge: @charge, item: rental_rate))
     end
   end
 

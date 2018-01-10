@@ -73,8 +73,7 @@
 
     content
       .gimmecar-app-container
-        .gimmecar-app-content
-          router-view
+        router-view
 
     <!--footer-->
 
@@ -159,12 +158,9 @@
         fill: $purple
 
   content
-    float: left
-    width: 100%
     flex-grow: 2
-    align-self: auto
 
-    .gimmecar-app-content
+    .gimmecar-app-vertical-scroll
       overflow-y: auto
 
   footer
