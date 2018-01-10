@@ -53,7 +53,7 @@
 </script>
 
 <template lang='pug'>
-  .gimmecar-app-container
+  div
     .panel-base-header
       h2 {{ vehicle.make }} {{ vehicle.model }}
       dropdown.flex-element.right

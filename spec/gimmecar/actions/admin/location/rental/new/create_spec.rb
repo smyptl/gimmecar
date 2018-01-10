@@ -99,20 +99,19 @@ describe Actions::Admin::Location::Rental::New::Create do
       charge = Charge.first
       expect(charge.owner).to eq(rental)
       expect(charge.stripe_charge_id).to_not eq(nil)
-      expect(charge.amount).to eq(7544)
 
       expect(LineItem.count).to eq(2)
       expect(RentalRate.count).to eq(2)
       expect(rental.line_items.count).to eq(2)
       rental.line_items.each do |l|
-        expect(l.amount).to eq(3500)
-        expect(l.total).to eq(3772)
+        expect(l.amount).to_not eq(nil)
+        expect(l.total).to_not eq(nil)
         expect(l.charge).to eq(charge)
       end
 
       stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
       expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])
-      expect(stripe_charge['amount']).to eq(7544)
+      expect(stripe_charge['amount']).to eq(charge.amount)
     end
 
     it 'saves additional driver' do

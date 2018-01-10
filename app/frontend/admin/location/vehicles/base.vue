@@ -5,5 +5,6 @@
 </script>
 
 <template lang='pug'>
-  router-view
+  .gimmecar-app-vertical-scroll
+    router-view
 </template>

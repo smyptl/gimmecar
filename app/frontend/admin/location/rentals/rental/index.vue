@@ -74,59 +74,71 @@
               button.link(@click='printInvoice') Print Invoice
 
     dl.panel-main-details
-      dt Status
-      dd {{ rental.status | capitalize }}
-      dt Pickup
-      dd {{ rental.pickup | date_time }}
-      dt Drop Off
-      dd {{ rental.drop_off | date_time }}
-      dt Vehicle
-      dd
-        router-link.right(:to="{ name: 'vehicle', params: { vin: rental.vehicle.vin } }")
-          span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
-          span.block.description(v-if='rental.vehicle.license_number') License #: {{ rental.vehicle.license_number }}
-          span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
+      .panel-main-detail
+        dt Status
+        dd {{ rental.status | capitalize }}
+      .panel-main-detail
+        dt Pickup
+        dd {{ rental.pickup | date_time }}
+      .panel-main-detail
+        dt Drop Off
+        dd {{ rental.drop_off | date_time }}
+      .panel-main-detail
+        dt Vehicle
+        dd
+          router-link.right(:to="{ name: 'vehicle', params: { vin: rental.vehicle.vin } }")
+            span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
+            span.block.description(v-if='rental.vehicle.license_number') License #: {{ rental.vehicle.license_number }}
+            span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
 
     h6.left.padding-top-default Driver
     dl.panel-main-details
-      dt Name
-      dd {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
-      dt Email
-      dd {{ rental.driver.email }}
-      dt Cell Phone #
-      dd
-        a(v-bind:href="'tel:' + rental.driver.cell_phone_number") {{ rental.driver.cell_phone_number }}
-      template(v-if='rental.driver.home_phone_number')
+      .panel-main-detail
+        dt Name
+        dd {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
+      .panel-main-detail
+        dt Email
+        dd {{ rental.driver.email }}
+      .panel-main-detail
+        dt Cell Phone #
+        dd
+          a(v-bind:href="'tel:' + rental.driver.cell_phone_number") {{ rental.driver.cell_phone_number }}
+      .panel-main-detail(v-if='rental.driver.home_phone_number')
         dt Home Phone #
         dd
           a(v-bind:href="'tel:' + rental.driver.home_phone_number") {{ rental.driver.home_phone_number }}
-      dt Address
-      dd
-        address
-          .block {{ rental.driver.address_1 }}
-          .block(v-if='rental.driver.address_2') {{ rental.driver.address_2 }}
-          .block {{ rental.driver.city }}, {{ rental.driver.state }} {{ rental.driver.zip_code }}
+      .panel-main-detail
+        dt Address
+        dd
+          address
+            .block {{ rental.driver.address_1 }}
+            .block(v-if='rental.driver.address_2') {{ rental.driver.address_2 }}
+            .block {{ rental.driver.city }}, {{ rental.driver.state }} {{ rental.driver.zip_code }}
 
     template(v-if='rental.additional_driver')
       h6.left.padding-top-default Additional Driver
       dl.panel-main-details
-        dt Name
-        dd {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_middle }} {{ rental.additional_driver.name_last }}
-        dt Email
-        dd {{ rental.additional_driver.email }}
-        dt Cell Phone #
-        dd
-          a(v-bind:href="'tel:' + rental.additional_driver.cell_phone_number") {{ rental.additional_driver.cell_phone_number }}
-        template(v-if='rental.additional_driver.home_phone_number')
+        .panel-main-detail
+          dt Name
+          dd {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_middle }} {{ rental.additional_driver.name_last }}
+        .panel-main-detail
+          dt Email
+          dd {{ rental.additional_driver.email }}
+        .panel-main-detail
+          dt Cell Phone #
+          dd
+            a(v-bind:href="'tel:' + rental.additional_driver.cell_phone_number") {{ rental.additional_driver.cell_phone_number }}
+        .panel-main-detail(v-if='rental.additional_driver.home_phone_number')
           dt Home Phone #
           dd
             a(v-bind:href="'tel:' + rental.additional_driver.home_phone_number") {{ rental.additional_driver.home_phone_number }}
-        dt Address
-        dd
-          address
-            .block {{ rental.additional_driver.address_1 }}
-            .block(v-if='rental.additional_driver.address_2') {{ rental.additional_driver.address_2 }}
-            .block {{ rental.additional_driver.city }}, {{ rental.additional_driver.state }} {{ rental.additional_driver.zip_code }}
+        .panel-main-detail
+          dt Address
+          dd
+            address
+              .block {{ rental.additional_driver.address_1 }}
+              .block(v-if='rental.additional_driver.address_2') {{ rental.additional_driver.address_2 }}
+              .block {{ rental.additional_driver.city }}, {{ rental.additional_driver.state }} {{ rental.additional_driver.zip_code }}
 
     close(v-on:close='rentalClosed' v-if='close')
 

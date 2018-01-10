@@ -1,5 +1,4 @@
 <script>
-  import Navigation from './nav'
   import Add from './add'
 
   export default {
@@ -11,7 +10,6 @@
       }
     },
     components: {
-      Navigation,
       Add,
     },
     computed: {
@@ -40,80 +38,85 @@
 
 <template lang='pug'>
   #gimmecar-app
-    header.left
+    header
       .gimmecar-app-container
-        h1.logo.root-link
+        h1.logo
           | GimmeCar
           small {{ location_name }}
 
 
-    nav.left
-      .gimmecar-app-container
-        ul#navigation.list-horizontal
-          li
-            router-link(:to="{ name: 'dashboard' }") Dashboard
-          li
-            router-link(:to="{ name: 'rentals' }") Rentals
-          li
-            router-link(:to="{ name: 'rates' }") Rates
-          li
-            router-link(:to="{ name: 'vehicles' }") Vehicles
+        nav.left
+          #navigation
+            ul.list-horizontal
+              li
+                router-link(:to="{ name: 'dashboard' }") Dashboard
+              li
+                router-link(:to="{ name: 'rentals' }") Rentals
+              li
+                router-link(:to="{ name: 'rates' }") Rates
+              li
+                router-link(:to="{ name: 'vehicles' }") Vehicles
 
-        ul#short-cuts.list-horizontal
-          li.nav-link#add-link
-            a(@click='toggleAdd()')
-              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-25 200 625 625' preserveAspectRatio='xMinYMin')
-                path(d='M550 450q30 0 30 50t-30 50l-210 0l0 210q0 30 -50 30t-50 -30l0 -210l-210 0q-30 0 -30 -50t30 -50l210 0l0 -210q0 -30 50 -30t50 30l0 210l210 0z')
+          ul#short-cuts.list-horizontal
+            li.nav-link#add-link
+              a(@click='toggleAdd()')
+                svg(xlmns='http://www.w3.org/2000/svg' viewBox='-25 200 625 625' preserveAspectRatio='xMinYMin')
+                  path(d='M550 450q30 0 30 50t-30 50l-210 0l0 210q0 30 -50 30t-50 -30l0 -210l-210 0q-30 0 -30 -50t30 -50l210 0l0 -210q0 -30 50 -30t50 30l0 210l210 0z')
 
-            add(v-if='add' @close-add='closeAdd')
+              add(v-if='add' @close-add='closeAdd')
 
-        <!--li.nav-link-->
-          <!--a(@click='search()')-->
-            <!--svg(xlmns='http://www.w3.org/2000/svg' viewBox='-50 40 1000 1000' preserveAspectRatio='xMinYMin')-->
-              <!--path(d='M642.9 464.3q0 -103.3 -73.4 -176.6T392.9 214.3t-176.7 73.4 -73.3 176.6 73.3 176.6 176.7 73.4 176.6 -73.4 73.4 -176.6zm285.7 464.3q0 29 -21.2 50.2t-50.3 21.2q-30.1 0 -50.2 -21.2L615.5 787.9q-99.9 69.2 -222.6 69.2 -79.8 0 -152.7 -30.9T114.7 742.5 31 616.9 0 464.3 31 311.7t83.7 -125.6 125.5 -83.7 152.7 -31 152.6 31T671 186.1t83.7 125.6 31 152.6q0 122.8 -69.2 222.6l191.4 191.4q20.7 20.7 20.7 50.3z')-->
+          <!--li.nav-link-->
+            <!--a(@click='search()')-->
+              <!--svg(xlmns='http://www.w3.org/2000/svg' viewBox='-50 40 1000 1000' preserveAspectRatio='xMinYMin')-->
+                <!--path(d='M642.9 464.3q0 -103.3 -73.4 -176.6T392.9 214.3t-176.7 73.4 -73.3 176.6 73.3 176.6 176.7 73.4 176.6 -73.4 73.4 -176.6zm285.7 464.3q0 29 -21.2 50.2t-50.3 21.2q-30.1 0 -50.2 -21.2L615.5 787.9q-99.9 69.2 -222.6 69.2 -79.8 0 -152.7 -30.9T114.7 742.5 31 616.9 0 464.3 31 311.7t83.7 -125.6 125.5 -83.7 152.7 -31 152.6 31T671 186.1t83.7 125.6 31 152.6q0 122.8 -69.2 222.6l191.4 191.4q20.7 20.7 20.7 50.3z')-->
 
 
     content
-      router-view
+      .gimmecar-app-container
+        router-view
 
     <!--footer-->
 
 </template>
 
-<style lang='stylus' scoped>
+<style lang='stylus'>
   @import '~Styles/global/colors'
   @import '~Styles/global/layout'
 
   header
-    width: 100%
-    display: flex
-    padding-bottom: $padding-default
-    padding-top: $padding-default
-
-    .gimmecar-app-container
-      float: left
-      width: 100%
-      flex-direction: row
-      z-index: 10
-
-  header
-  nav
-    flex: none
     background: $background-color-header
-
-  nav
-    width: 100%
     border-bottom: 2px solid $border-color-light
 
+    .gimmecar-app-container
+      margin: 0 auto
+
+  .logo
+    padding-top: $padding-default
+    padding-bottom: $padding-default
+
+    text-align: left
+
+
+  nav
+    width: 100%
+
+    display: flex
+    flex-direction: row
+
   #navigation
-    float: left
+    flex: auto
+    overflow-x: scroll
+    overflow-y: visible
+
+    ul
+      width: 1000rem
+      list-style: none
 
     li:first-of-type
       padding-left: 0
 
     li
       padding: 0 $padding-sm
-      list-style: none
 
       a
         float: left
@@ -128,13 +131,8 @@
         border-bottom: 0.125rem solid $silver-light
         margin-bottom: -0.125rem
 
-  .logo
-    flex: 1
-    align-self: center
-    display: inline-block
-    text-align: left
-
   #short-cuts
+    flex: auto
     list-style: none
 
     .nav-link
@@ -160,10 +158,10 @@
         fill: $purple
 
   content
-    float: left
-    width: 100%
     flex-grow: 2
-    align-self: auto
+
+    .gimmecar-app-vertical-scroll
+      overflow-y: auto
 
   footer
     float: left
