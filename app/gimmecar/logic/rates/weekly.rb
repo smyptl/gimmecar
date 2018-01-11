@@ -1,6 +1,6 @@
 class Logic::Rates::Weekly < Logic::Rates::Base
 
-  WEEKLY_DISCOUNT = 0.10
+  WEEKLY_DISCOUNT = 0.075
 
   def calculate
     discount = WEEKLY_DISCOUNT

@@ -75,6 +75,6 @@
 
     p.left.whole
       span.left Deposit
-      span.right $100.00
+      span.right $200.00
 
 </template>

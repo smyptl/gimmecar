@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003220618) do
+ActiveRecord::Schema.define(version: 20180111211231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20171003220618) do
     t.bigint "city_amount"
     t.bigint "district_taxable_amount"
     t.bigint "district_amount"
+    t.text "description"
     t.index ["charge_id"], name: "index_line_items_on_charge_id"
     t.index ["invoice_type", "invoice_id"], name: "index_line_items_on_invoice_type_and_invoice_id"
     t.index ["item_type", "item_id"], name: "index_line_items_on_item_type_and_item_id"

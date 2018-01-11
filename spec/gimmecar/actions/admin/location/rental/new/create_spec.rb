@@ -101,12 +101,13 @@ describe Actions::Admin::Location::Rental::New::Create do
       expect(charge.stripe_charge_id).to_not eq(nil)
 
       expect(LineItem.count).to eq(2)
-      expect(RentalRate.count).to eq(2)
       expect(rental.line_items.count).to eq(2)
       rental.line_items.each do |l|
+        expect(l.item_type).to eq('rental_rate')
+        expect(l.invoice).to eq(rental)
+        expect(l.charge).to eq(charge)
         expect(l.amount).to_not eq(nil)
         expect(l.total).to_not eq(nil)
-        expect(l.charge).to eq(charge)
       end
 
       stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
