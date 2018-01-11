@@ -6,7 +6,7 @@ gem 'rails', '5.1.0'
 gem 'jbuilder'
 
 # Use postgres as the database for Active Record
-gem 'pg'
+gem 'pg', '~> 0.21'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
@@ -61,7 +61,7 @@ end
 group :test do
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', '~> 1.14.0'
   gem 'factory_bot'
   gem 'database_cleaner'
 end

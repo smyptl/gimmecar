@@ -32,7 +32,7 @@
 class LineItem < ApplicationRecord
 
   belongs_to :invoice, polymorphic: true
-  belongs_to :item, polymorphic: true
+  belongs_to :item, polymorphic: true, optional: true
   belongs_to :charge
 
   def self.calculate(date:, amount:, discount: 0, quantity: 1, taxable_amount: nil, tax_rate:)

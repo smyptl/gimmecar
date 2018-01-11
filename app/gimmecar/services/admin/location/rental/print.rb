@@ -2,13 +2,8 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
 
   attr_reader :rental
 
-  def initialize(rental_number: nil, rental_id: nil)
-    case
-    when rental_number
-      @rental = ::Rental.find_by(number: rental_number)
-    when rental_id
-      @rental = ::Rental.find_by(id: id)
-    end
+  def initialize(rental_number: nil)
+    @rental = ::Rental.find_by(number: rental_number)
   end
 
   def fetch
@@ -18,7 +13,7 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
       :name                                                 => rental.driver_name,
       :pickup                                               => rental.pickup,
       :drop_off                                             => rental.drop_off,
-      :rates                                                => rental.line_items.where(:item_type => "RentalRate"),
+      :rates                                                => rental.line_items.where(:item_type => 'rental_rate'),
       :sub_total                                            => rental.sub_total,
       :tax_collectable                                      => rental.tax_collectable,
       :total                                                => rental.total,
