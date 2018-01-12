@@ -60,7 +60,9 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
         return false
       end
 
-      Charge.new({ :amount => rates.fetch(:total) }).execute(success, failure, token: stripe_token, customer_id: stripe_customer_id)
+      charge_amount = rates.fetch(:total) + Rental::DEPOSIT_AMOUNT
+
+      Charge.new({ :amount => charge_amount }).execute(success, failure, token: stripe_token, customer_id: stripe_customer_id)
     end
   end
 
@@ -94,6 +96,9 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
     rates.fetch(:rates).each do |l|
       @rental.line_items.create(l.merge(charge: @charge, item_type: 'rental_rate'))
     end
+
+    deposit = LineItem.calculate(date: pickup, amount: Rental::DEPOSIT_AMOUNT, taxable_amount: 0, tax_rate: location.latest_tax_rate)
+    @rental.line_items.create(deposit.merge(charge: @charge, item_type: 'deposit'))
   end
 
   def driver_attributes

@@ -100,10 +100,11 @@ describe Actions::Admin::Location::Rental::New::Create do
       expect(charge.owner).to eq(rental)
       expect(charge.stripe_charge_id).to_not eq(nil)
 
-      expect(LineItem.count).to eq(2)
-      expect(rental.line_items.count).to eq(2)
+      expect(LineItem.count).to eq(3)
+      expect(rental.line_items.rental_rates.count).to eq(2)
+      expect(rental.line_items.deposits.count).to eq(1)
+
       rental.line_items.each do |l|
-        expect(l.item_type).to eq('rental_rate')
         expect(l.invoice).to eq(rental)
         expect(l.charge).to eq(charge)
         expect(l.amount).to_not eq(nil)

@@ -190,7 +190,7 @@ feature 'create rental', js: true do
 
     stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
     expect(driver.stripe_id).to eq(stripe_charge['source']['customer'])
-    expect(stripe_charge['amount']).to eq(3772)
+    expect(stripe_charge['amount']).to eq(charge.amount)
   end
 
   scenario 'credit card fails' do
@@ -207,7 +207,7 @@ feature 'create rental', js: true do
 
     expect(page).to have_content('Rental: Rates')
     expect(page).to have_content('Rental Details')
-    expect(page).to have_content('$35.00')
+    expect(page).to have_content('$200.00')
     expect(page).to have_content('Estimated Total:')
     click_on 'Continue'
 

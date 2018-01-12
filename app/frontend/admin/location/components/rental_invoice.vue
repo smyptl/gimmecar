@@ -73,8 +73,8 @@
         | Total:
       span.right {{ summary.total | currency }}
 
-    p.left.whole
+    p.left.whole(v-if='summary.deposit')
       span.left Deposit
-      span.right $200.00
+      span.right {{ summary.deposit.total | currency }}
 
 </template>
