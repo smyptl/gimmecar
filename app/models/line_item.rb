@@ -33,8 +33,10 @@
 class LineItem < ApplicationRecord
 
   belongs_to :invoice, polymorphic: true
-  belongs_to :item, polymorphic: true, optional: true
   belongs_to :charge
+
+  scope 'rental_rates', -> { where(item_type: 'rental_rate') }
+  scope 'deposits',     -> { where(item_type: 'deposit') }
 
   def self.calculate(date:, amount:, discount: 0, quantity: 1, taxable_amount: nil, tax_rate:)
     mock = self.build_mock(date: date, amount: amount, discount: discount, quantity: quantity)

@@ -12,6 +12,7 @@ class Services::Rates < Lib::Services::Base
       :pickup            => rental.pickup,
       :drop_off          => rental.drop_off,
       :rates             => rates,
+      :deposit           => deposit,
       :add_ons           => add_ons,
       :discount          => discount,
       :sub_total         => sub_total,
@@ -29,6 +30,10 @@ class Services::Rates < Lib::Services::Base
 
   def rates
     @rates ||= calculate_rate
+  end
+
+  def deposit
+    @deposit ||= LineItem.calculate(amount: Rental::DEPOSIT_AMOUNT, taxable_amount: 0, date: nil, tax_rate: tax_rate)
   end
 
   def add_ons
@@ -59,8 +64,12 @@ class Services::Rates < Lib::Services::Base
     rates + add_ons
   end
 
+  def tax_rate
+    @tax_rate ||= location.latest_tax_rate
+  end
+
   def calculate_rate
-    Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: location.latest_tax_rate).fetch
+    Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: tax_rate).fetch
   end
 
   def rate

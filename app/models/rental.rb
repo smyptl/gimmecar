@@ -32,6 +32,8 @@
 
 class Rental < ApplicationRecord
 
+  DEPOSIT_AMOUNT = 20000
+
   OPEN     = 'open'
   CLOSED   = 'closed'
   RESERVED = 'reserved'
@@ -46,8 +48,10 @@ class Rental < ApplicationRecord
   belongs_to :tax_rate
   has_one :latest_tax_rate, through: :pickup_location
 
-  has_many :rental_rates
   has_many :line_items, as: :invoice
+  has_many :rates, -> { rental_rates }, class_name: 'LineItem', as: :invoice
+  has_one :deposit, -> { deposits }, class_name: 'LineItem', as: :invoice
+
   has_many :charges, as: :owner
 
   scope :reserved,  -> { where(status: RESERVED) }
@@ -90,15 +94,15 @@ class Rental < ApplicationRecord
   end
 
   def tax_collectable
-    line_items.sum(&:tax_collectable)
+    rates.sum(&:tax_collectable)
   end
 
   def sub_total
-    line_items.sum(&:sub_total)
+    rates.sum(&:sub_total)
   end
 
   def total
-    line_items.sum(&:total)
+    rates.sum(&:total)
   end
 
   private
