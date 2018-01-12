@@ -28,9 +28,9 @@ tax_rate = TaxRate.create({
   district_tax_rate: 0.0,
 })
 
-location.rates << Rate.create_default({ :amount => 3600, :vehicle_type => :mid_size })
-location.rates << Rate.create_default({ :amount => 3300, :vehicle_type => :compact })
-location.rates << Rate.create_default({ :amount => 3000, :vehicle_type => :subcompact })
+location.rates << Rate.create({ :amount => 3600, :vehicle_type => :mid_size })
+location.rates << Rate.create({ :amount => 3300, :vehicle_type => :compact })
+location.rates << Rate.create({ :amount => 3000, :vehicle_type => :subcompact })
 
 location.tax_rates << TaxRate.create({
   :combined_tax_rate => 0.07750,

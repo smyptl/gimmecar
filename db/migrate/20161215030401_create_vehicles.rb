@@ -18,6 +18,7 @@ class CreateVehicles < ActiveRecord::Migration[5.1]
       t.string :fuel_grade
       t.integer :tank_size
       t.text :notes
+      t.string :status
     end
   end
 end

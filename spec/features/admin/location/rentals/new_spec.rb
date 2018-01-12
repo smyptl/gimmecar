@@ -88,7 +88,7 @@ feature 'create rental', js: true do
     vehicle_1 = create(:vehicle, vehicle_type: :mid_size, original_location: location, location: location)
     create(:vehicle, vehicle_type: :mid_size, original_location: location, location: location)
 
-    create(:rate, :default, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
+    create(:rate, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
     visit_admin admin_location_rentals_new_path(:slug => location.slug)
 
@@ -197,7 +197,7 @@ feature 'create rental', js: true do
     create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, vehicle_type: :compact, original_location: location, location: location)
 
-    create(:rate, :default, vehicle_type: :compact, location: location, amount: 3500)
+    create(:rate, vehicle_type: :compact, location: location, amount: 3500)
 
     visit_admin admin_location_rentals_new_path(:slug => location.slug)
 
@@ -256,7 +256,7 @@ feature 'create rental', js: true do
     create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, vehicle_type: 'compact', original_location: location, location: location)
 
-    create(:rate, :default, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
+    create(:rate, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
     visit_admin admin_location_rentals_new_path(:slug => location.slug)
 

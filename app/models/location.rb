@@ -32,8 +32,7 @@ class Location < ApplicationRecord
 
   has_many :vehicles
 
-  has_many :rates, -> { where(default: false) }
-  has_many :default_rates, -> { where(default: true) }, class_name: 'Rate'
+  has_many :rates
   has_many :tax_rates
   has_one :latest_tax_rate, -> { order(created_at: :desc) }, class_name: 'TaxRate'
 
@@ -41,17 +40,8 @@ class Location < ApplicationRecord
     "#{name} - #{address_1} #{city}, #{state} #{zip_code}"
   end
 
-  def default_rate_for(vehicle_type)
-    default_rates.find_by(vehicle_type: vehicle_type)
-  end
-
-  def find_rate_by(vehicle_type:, date:)
-    date = convert_date_to_time_zone(date) if date === DateTime
-    rates.find_by(vehicle_type: vehicle_type, date: date)
-  end
-
-  def rates_for(vehicle_type:, date:)
-    find_rate_by(vehicle_type: vehicle_type, date: date) || default_rate_for(vehicle_type)
+  def rate_for(vehicle_type)
+    rates.find_by(vehicle_type: vehicle_type)
   end
 
   def latest_combined_tax_rate

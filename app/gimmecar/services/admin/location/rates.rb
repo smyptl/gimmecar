@@ -12,8 +12,7 @@ class Services::Admin::Location::Rates < Lib::Services::Base
     ::Vehicle::TYPES.each do |vehicle_type|
       output << {
         :vehicle_type => vehicle_type,
-        :default_rate => location.default_rate_for(vehicle_type).amount,
-        :rates        => location.rates.where(vehicle_type: vehicle_type, date: period.range).map { |r| { date: r.date, amount: r.amount }}
+        :rate         => location.rate_for(vehicle_type).amount,
       }
     end
 

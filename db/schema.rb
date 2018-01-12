@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111211231) do
+ActiveRecord::Schema.define(version: 20180112175234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,20 +130,9 @@ ActiveRecord::Schema.define(version: 20180111211231) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "location_id"
-    t.boolean "default", default: false
-    t.date "date"
     t.bigint "amount"
     t.string "vehicle_type"
     t.index ["location_id"], name: "index_rates_on_location_id"
-  end
-
-  create_table "rental_rates", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "rental_id"
-    t.date "date"
-    t.bigint "amount"
-    t.index ["rental_id"], name: "index_rental_rates_on_rental_id"
   end
 
   create_table "rentals", force: :cascade do |t|

@@ -64,6 +64,6 @@ class Services::Rates < Lib::Services::Base
   end
 
   def rate
-    location.rates_for(vehicle_type: rental.vehicle_type, date: rental_period.start_date).amount
+    location.rate_for(rental.vehicle_type).amount
   end
 end

@@ -3,12 +3,11 @@ class Actions::Admin::Location::Rates::Update < Lib::Forms::Base
   attr_reader :location
 
   attributes do |a|
-    a.date :date
     a.integer :amount
     a.string :vehicle_type
   end
 
-  validates :date, :amount,
+  validates :amount,
     presence: true
 
   validates :vehicle_type,

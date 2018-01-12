@@ -27,6 +27,7 @@
 #  city_amount             :integer
 #  district_taxable_amount :integer
 #  district_amount         :integer
+#  description             :text
 #
 
 class LineItem < ApplicationRecord
