@@ -105,6 +105,7 @@
                 @input='form.errors.clear("location_id")')
               option(value='' disabled) -- Select Location --
               option(value='2') Adelanto, CA - California Inn - 11628 Bartlett Ave., Adelanto, CA 92301
+              option(value='3') Hesperia, CA - Day & Night Inn - 14865 Bear Valley Rd., Hesperia, CA 92345
               option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
           input-error-message(v-bind:errors='form.errors.get("location_id")')
 
