@@ -5,23 +5,30 @@ class Actions::ReturnDeposit
   end
 
   def execute
-    deposit = @rental.deposit
+    if deposit
+      charge = deposit.charge
 
-    return unless deposit
+      Stripe::Refund.create(
+        :charge => charge.stripe_charge_id,
+        :amount => amount,
+      )
 
-    charge = deposit.charge
+      deposit.destroy
 
-    Stripe::Refund.create(
-      :charge => charge.stripe_charge_id,
-      :amount => amount,
-    )
+      charge.amount -= amount
+      charge.save
 
-    deposit.destroy
+      puts 'success'
+    end
   end
 
   private
 
   def amount
     @amount || deposit.amount
+  end
+
+  def deposit
+    @deposit ||= @rental.deposit
   end
 end
