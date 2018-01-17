@@ -15,6 +15,8 @@ class Actions::ExtendRental
       :charge => charge.stripe_charge_id,
       :amount => amount,
     )
+
+    deposit.destroy
   end
 
   private
