@@ -1,11 +1,11 @@
 class Actions::ReturnDeposit
 
-  def initialize(rental:, amount:)
+  def initialize(rental:, amount: nil)
     @rental, @amount = rental, amount
   end
 
   def execute
-    deposit = rental.deposit
+    deposit = @rental.deposit
 
     return unless deposit
 
