@@ -1,4 +1,4 @@
-class Actions::ExtendRental
+class Actions::ReturnDeposit
 
   def initialize(rental:, amount:)
     @rental, @amount = rental, amount
