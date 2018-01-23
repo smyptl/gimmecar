@@ -68,6 +68,8 @@ Rails.application.routes.draw do
 
     get '/dashboard', to: 'dashboard#index'
     get '/rentals',   to: 'rentals#index'
+
+    get '/reports',   to: 'reports#index'
   end
 
   scope module: :public do
