@@ -4,6 +4,8 @@ class Services::Command::Reports::Revenue
     spreadsheet = Lib::Spreadsheet::Base.new('Revenue')
 
     Location.all.each do |location|
+      return if line_items(location).empty?
+
       spreadsheet.add_sheet(location.name) do |s|
         s.show_grid_lines = false
 
@@ -95,9 +97,5 @@ class Services::Command::Reports::Revenue
 
   def line_items(location)
     location.line_items.where(date: Date.new(2017, 10, 1)..Date.new(2017, 12, 31))
-  end
-
-  def location
-    @location = Location.find(location_id)
   end
 end
