@@ -112,6 +112,7 @@ class Lib::Spreadsheet::Compiler::Spreadsheet
       raise ArgumentError, "#{sheet.fetch(:id)} already set" if processed_sheets.has_key?(sheet.fetch(:id))
       process_sheet(sheet)
     end
+
   end
 
   def process_sheet(sheet)

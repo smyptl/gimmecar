@@ -31,9 +31,9 @@ class Lib::Spreadsheet::Sheet
   end
 
   def row_for_each_with_index(items, options = {})
-    items.each_with_index do |item, index|
+    items.each_with_index do |item, item_index|
       row = new_row(options)
-      yield row, item, index if block_given?
+      yield row, item, item_index if block_given?
       add_row(row.fetch)
     end
   end

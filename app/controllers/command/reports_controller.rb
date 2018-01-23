@@ -1,8 +1,8 @@
 class Command::ReportsController < ApplicationController
 
   def index
-    @report = Services::Command::Reports::Revenue.new.fetch
+    @report = Services::Command::Reports::Revenue.fetch
 
-    render xlsx: 'Revenue', template: 'command/reports/revenue.axlsx'
+    render xlsx: @report.file_name, template: 'command/excel.axlsx'
   end
 end

@@ -2,10 +2,11 @@ class Lib::Spreadsheet::Base
 
   def initialize(name)
     @name = name
+    yield(self) if block_given?
   end
 
-  def add_sheet(name, id = nil, options = {})
-    sheet = Lib::Spreadsheet::Sheet.new(name, id, options)
+  def add_sheet(name, id = nil)
+    sheet = Lib::Spreadsheet::Sheet.new(name, id)
     yield sheet
     sheets << sheet.fetch
   end
@@ -18,6 +19,10 @@ class Lib::Spreadsheet::Base
 
   def compile(workbook)
     Lib::Spreadsheet::Compiler::Base.new(workbook).fetch(fetch)
+  end
+
+  def file_name
+    @name.to_slug
   end
 
   private

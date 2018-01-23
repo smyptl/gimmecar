@@ -7,7 +7,7 @@ class Lib::Spreadsheet::Compiler::Height
       case name
       when nil
         nil
-      when Lib::Attributes::TypeCast.integer(name)
+      when Lib::TypeCast::Integer.type_cast(name)
         name
       else
         const_get(name.to_s.upcase)

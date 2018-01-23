@@ -10,6 +10,10 @@ class Lib::Spreadsheet::Row
   end
 
   def formula(formula, options = {})
+    if formula.is_a?(Proc)
+      formula = formula.call(Lib::Spreadsheet::Formula)
+    end
+
     add_cell({ :formula => formula }.merge(merge_default_options(options)))
   end
 
