@@ -51,7 +51,7 @@ class Lib::Services::Base < Lib::Attributes::Base
   end
 
   def include?(key)
-    Lib::TypeCast::Boolean.type_cast(include_hash[key]) || false
+    Lib::Attributes::TypeCast.boolean(include_hash[key]) || false
   end
 
   def generated_on
