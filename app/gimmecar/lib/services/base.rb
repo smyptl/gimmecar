@@ -75,8 +75,4 @@ class Lib::Services::Base < Lib::Attributes::Base
   def period
     @period || (raise Lib::Errors::NotImplemented)
   end
-
-  def url_helpers
-    Rails.application.routes.url_helpers
-  end
 end

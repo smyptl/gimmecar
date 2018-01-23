@@ -38,6 +38,8 @@ class LineItem < ApplicationRecord
   scope 'rental_rates', -> { where(item_type: 'rental_rate') }
   scope 'deposits',     -> { where(item_type: 'deposit') }
 
+  delegate :number, to: :invoice, prefix: true
+
   def self.calculate(date:, amount:, discount: 0, quantity: 1, taxable_amount: nil, tax_rate:)
     mock = self.build_mock(date: date, amount: amount, discount: discount, quantity: quantity)
 

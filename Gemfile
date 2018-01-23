@@ -20,6 +20,11 @@ gem 'autoprefixer-rails'
 gem 'slim'
 gem 'slim-rails'
 
+# Excel generator
+gem 'rubyzip'
+gem 'axlsx'
+gem 'axlsx_rails'
+
 # Webpack
 gem 'webpacker'
 
@@ -75,4 +80,4 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-ruby '2.4.0'
+ruby '2.4.3'
