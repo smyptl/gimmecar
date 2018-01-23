@@ -3,9 +3,7 @@ class Services::Command::Reports::Revenue
   def fetch
     spreadsheet = Lib::Spreadsheet::Base.new('Revenue')
 
-    Location.all.each do |location|
-      return if line_items(location).empty?
-
+    Location.first(2).each do |location|
       spreadsheet.add_sheet(location.name) do |s|
         s.show_grid_lines = false
 
@@ -66,7 +64,6 @@ class Services::Command::Reports::Revenue
           r.value      "Total"
           r.formula    f.sum([f.range(rows: :line_items, column: :current)])
           r.blank_cell 4
-          r.formula    f.sum([f.range(rows: :line_items, column: :current)])
           r.formula    f.sum([f.range(rows: :line_items, column: :current)])
           r.formula    f.sum([f.range(rows: :line_items, column: :current)])
           r.formula    f.sum([f.range(rows: :line_items, column: :current)])
