@@ -40,6 +40,8 @@
         ul#navigation.list-horizontal
           li
             router-link(:to="{ name: 'rentals' }") Rentals
+          li
+            router-link(:to="{ name: 'vehicles' }") Vehicles
 
     content
       router-view

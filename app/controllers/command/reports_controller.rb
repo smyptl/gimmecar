@@ -1,4 +1,4 @@
-class Command::ReportsController < ApplicationController
+class Command::ReportsController < Command::BaseController
 
   def index
     @report = Services::Command::Reports::Revenue.fetch

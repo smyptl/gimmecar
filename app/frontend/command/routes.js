@@ -9,6 +9,7 @@ module.exports = {
       children: [
         { path: '/dashboard', name: 'dashboard', component: require('./dashboard/base') },
         { path: '/rentals',   name: 'rentals',   component: require('./rentals/index') },
+        { path: '/vehicles',  name: 'vehicles',  component: require('./vehicles/index') },
       ],
     },
   ],
