@@ -51,7 +51,7 @@ class Lib::Services::Base < Lib::Attributes::Base
   end
 
   def include?(key)
-    Lib::TypeCast::Boolean.type_cast(include_hash[key]) || false
+    Lib::Attributes::TypeCast.boolean(include_hash[key]) || false
   end
 
   def generated_on
@@ -74,9 +74,5 @@ class Lib::Services::Base < Lib::Attributes::Base
 
   def period
     @period || (raise Lib::Errors::NotImplemented)
-  end
-
-  def url_helpers
-    Rails.application.routes.url_helpers
   end
 end

@@ -39,7 +39,7 @@
         })
       },
       viewRental (number) {
-        // this.$router.push({ name: 'rental', params: { number: number }})
+        this.$router.push({ name: 'rental', params: { number: number }})
       },
     },
   }

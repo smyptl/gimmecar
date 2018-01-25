@@ -31,7 +31,7 @@ describe Actions::ReturnDeposit do
     charge = Charge.first
     expect(charge.amount).to eq(charge_amount)
 
-    expect(LineItem.count).to eq(0)
+    expect(LineItem.deposits.count).to eq(0)
 
     stripe_charge = Stripe::Charge.retrieve(charge.stripe_charge_id)
     expect(stripe_charge['amount']).to eq(charge_amount + deposit_amount)
