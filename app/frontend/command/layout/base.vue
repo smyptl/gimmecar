@@ -34,7 +34,6 @@
           | GimmeCar
           small {{ location_name }}
 
-
         nav.left
           #navigation
             ul.list-horizontal
@@ -42,7 +41,6 @@
                 router-link(:to="{ name: 'rentals' }") Rentals
               li
                 router-link(:to="{ name: 'vehicles' }") Vehicles
-
 
     content
       .gimmecar-app-container#gimmecar-app-command
