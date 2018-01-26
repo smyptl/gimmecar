@@ -53,7 +53,7 @@
 </script>
 
 <template lang='pug'>
-  div
+  .panel.panel-base
     .panel-base-header
       h2 {{ vehicle.make }} {{ vehicle.model }}
       dropdown.flex-element.right
