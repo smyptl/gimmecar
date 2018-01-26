@@ -84,7 +84,6 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
       presence: true
 
     validates :driver_gender,
-      presence: true,
       inclusion: { in: ['male', 'female'], message: "%{value} is not a valid gender" }
 
     validates :driver_date_of_birth,
@@ -140,7 +139,6 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         presence: true
 
       a.validates :additional_driver_gender,
-        presence: true,
         inclusion: { in: %w(male female), message: "%{value} is not a valid gender" }
 
       a.validates :additional_driver_date_of_birth,

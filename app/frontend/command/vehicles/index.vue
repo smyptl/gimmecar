@@ -36,7 +36,7 @@
 </script>
 
 <template lang='pug'>
-  .gimmecar-app-container
+  .gimmecar-app-vertical-scroll
     table.panel-table.margin-top-default
       thead
         tr

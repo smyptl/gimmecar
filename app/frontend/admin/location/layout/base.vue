@@ -87,9 +87,6 @@
     background: $background-color-header
     border-bottom: 2px solid $border-color-light
 
-    .gimmecar-app-container
-      margin: 0 auto
-
   .logo
     padding-top: $padding-default
     padding-bottom: $padding-default

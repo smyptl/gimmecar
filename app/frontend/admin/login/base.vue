@@ -76,7 +76,7 @@
   @import '~Styles/global/colors'
 
   #login
-    background-color: $background-color-header
+    background-color: $background-color-contrast
     height: 100vh
     display: flex
 

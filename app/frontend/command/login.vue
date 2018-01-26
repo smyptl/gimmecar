@@ -78,7 +78,7 @@
     height: 100vh
     display: flex
 
-    background-color: $background-color-header
+    background-color: $background-color-contrast
 
   #login-container
     width: 20rem
