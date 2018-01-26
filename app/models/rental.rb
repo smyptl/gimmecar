@@ -59,6 +59,7 @@ class Rental < ApplicationRecord
   scope :open,      -> { where(status: OPEN) }
   scope :closed,    -> { where(status: CLOSED) }
 
+  scope :in_between, -> (date) { where('pickup <= :date and drop_off >= :date', date: date) }
   scope :past, -> { where('drop_off < ?', Date.today) }
 
   before_create :create_number

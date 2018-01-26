@@ -3,14 +3,14 @@ class Services::Command::Reports::Revenue < Lib::Services::Base
   def fetch
     spreadsheet = Lib::Spreadsheet::Base.new('Revenue') do |ss|
 
-      Location.first(2).each do |location|
+      Location.all.each do |location|
 
         ss.add_sheet(location.name) do |s|
 
           s.show_grid_lines = false
 
           s.row(style: :head_title) do |r|
-            r.value "#{location.name} - Revenue"
+            r.value "#{location.name} - Revenue", merge_cells: :to_end
           end
           s.blank_row 1, style: :head, merge_cells: :to_end
 
@@ -64,8 +64,7 @@ class Services::Command::Reports::Revenue < Lib::Services::Base
 
           s.row(style: [:total, :total_border, :bold], height: :default) do |r|
             r.value      "Total"
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.blank_cell 4
+            r.blank_cell 5
             r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
             r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
             r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }

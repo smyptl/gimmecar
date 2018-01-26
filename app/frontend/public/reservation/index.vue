@@ -238,5 +238,5 @@
     border: 1px solid $border-color-light
 
   .input-field
-    background-color: $background-color-header
+    background-color: $background-color-contrast
 </style>

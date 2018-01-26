@@ -28,116 +28,112 @@
 
 <template lang='pug'>
   #gimmecar-app
-    header.left
-      .gimmecar-app-container
-        h1.logo.root-link
+    header
+      .gimmecar-app-container#gimmecar-app-command
+        h1.logo
           | GimmeCar
           small {{ location_name }}
 
-
-    nav.left
-      .gimmecar-app-container
-        ul#navigation.list-horizontal
-          li
-            router-link(:to="{ name: 'rentals' }") Rentals
-          li
-            router-link(:to="{ name: 'vehicles' }") Vehicles
+        nav.left
+          #navigation
+            ul.list-horizontal
+              li
+                router-link(:to="{ name: 'rentals' }") Rentals
+              li
+                router-link(:to="{ name: 'vehicles' }") Vehicles
 
     content
-      router-view
+      .gimmecar-app-container#gimmecar-app-command
+        router-view
 
     <!--footer-->
 
 </template>
 
 <style lang='stylus' scoped>
-  @import '~Styles/global/colors'
-  @import '~Styles/global/layout'
+@import '~Styles/global/colors'
+@import '~Styles/global/layout'
 
-  header
-    width: 100%
-    display: flex
-    padding-bottom: $padding-default
-    padding-top: $padding-default
+header
+  background: $background-color-header
+  border-bottom: 2px solid $border-color-light
 
-    .gimmecar-app-container
-      float: left
-      width: 100%
-      flex-direction: row
-      z-index: 10
+.logo
+  padding-top: $padding-default
+  padding-bottom: $padding-default
 
-  header
-  nav
-    flex: none
-    background: $background-color-header
+  text-align: left
 
-  nav
-    width: 100%
-    border-bottom: 2px solid $border-color-light
 
-  #navigation
-    float: left
+nav
+  width: 100%
 
-    li:first-of-type
-      padding-left: 0
+  display: flex
+  flex-direction: row
 
-    li
-      padding: 0 $padding-sm
-      list-style: none
+#navigation
+  flex: auto
+  overflow-x: scroll
+  overflow-y: visible
 
-      a
-        float: left
-        padding: 0 0 $padding-sm
-
-        line-height: 1.875rem - $padding-sm
-        font-size: 0.925rem
-        font-weight: 700
-
-      a.active
-        color: $black-ex-light
-        border-bottom: 0.125rem solid $silver-light
-        margin-bottom: -0.125rem
-
-  .logo
-    flex: 1
-    align-self: center
-    display: inline-block
-    text-align: left
-
-  #short-cuts
+  ul
+    width: 1000rem
     list-style: none
 
-    .nav-link
-      position: relative
-      float: right
+  li:first-of-type
+    padding-left: 0
 
-    .nav-link > a
-      margin-left: $padding-default
+  li
+    padding: 0 $padding-sm
 
-  .nav-link
-    > a
+    a
       float: left
-      font-size: 0.8125rem
+      padding: 0 0 $padding-sm
+
+      line-height: 1.875rem - $padding-sm
+      font-size: 0.925rem
       font-weight: 700
 
-      svg
-        float: left
-        height: 1.125rem
-        width: 1.125rem
-        fill: #9badb6
+    a.active
+      color: $black-ex-light
+      border-bottom: 0.125rem solid $silver-light
+      margin-bottom: -0.125rem
 
-      &:hover svg
-        fill: $purple
+#short-cuts
+  flex: auto
+  list-style: none
 
-  content
+  .nav-link
+    position: relative
+    float: right
+
+  .nav-link > a
+    margin-left: $padding-default
+
+.nav-link
+  > a
     float: left
-    width: 100%
-    flex-grow: 2
-    align-self: auto
+    font-size: 0.8125rem
+    font-weight: 700
 
-  footer
-    float: left
-    margin: $margin-default 0
-    align-self: flex-end
+    svg
+      float: left
+      height: 1.125rem
+      width: 1.125rem
+      fill: #9badb6
+
+    &:hover svg
+      fill: $purple
+
+content
+  flex-grow: 2
+
+  .gimmecar-app-vertical-scroll
+    overflow-y: auto
+
+footer
+  float: left
+  margin: $margin-default 0
+  align-self: flex-end
 
 </style>
