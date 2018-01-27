@@ -71,6 +71,18 @@
         .panel-main-detail
           dt Drop Off
           dd {{ rental.drop_off | date_time }}
+        template(v-if="rental.pickup_location_id == rental.drop_off_location_id")
+          .panel-main-detail
+            dt Location
+            dd {{ rental.pickup_location_name }}
+        template(v-else)
+          .panel-main-detail
+            dt Pick Up Location
+            dd {{ rental.pickup_location_name }}
+          .panel-main-detail
+            dt Drop Off Location
+            dd {{ rental.drop_off_location_name }}
+
         .panel-main-detail
           dt Vehicle
           dd
