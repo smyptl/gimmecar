@@ -69,6 +69,7 @@ class Rental < ApplicationRecord
   delegate :make_model, to: :vehicle, prefix: true
 
   delegate :description, :name, to: :pickup_location, prefix: true
+  delegate :name, to: :drop_off_location, prefix: true
 
   def self.create_open(args)
     create(args.merge(:status => OPEN))

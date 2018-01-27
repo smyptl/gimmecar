@@ -1,5 +1,7 @@
 class Admin::Location::VehiclesController < Admin::Location::BaseController
 
+  before_action :authorize_vehicle, except: :index
+
   def index
     render status: 200, json: Services::Admin::Vehicles.fetch(location.id)
   end
@@ -11,7 +13,7 @@ class Admin::Location::VehiclesController < Admin::Location::BaseController
   private
 
   def authorize_vehicle
-    raise Error404 unless @location.vehicle_vins.include?(vin)
+    raise Error404 unless @location.vehicles.exists?(vin: vin)
   end
 
   def vin

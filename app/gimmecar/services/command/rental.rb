@@ -1,4 +1,4 @@
-class Services::Admin::Rental < Lib::Services::Base
+class Services::Command::Rental < Lib::Services::Base
 
   attr_reader :rental
 
@@ -22,10 +22,12 @@ class Services::Admin::Rental < Lib::Services::Base
     output[:vehicle_type]                                         = rental.vehicle_type
     output[:notes]                                                = rental.notes
     output[:pickup_location_id]                                   = rental.pickup_location_id
+    output[:pickup_location_name]                                 = rental.pickup_location_name
     output[:pickup]                                               = rental.pickup
     output[:pickup_odometer]                                      = rental.pickup_odometer
     output[:pickup_fuel]                                          = rental.pickup_fuel
     output[:drop_off_location_id]                                 = rental.drop_off_location_id
+    output[:drop_off_location_name]                               = rental.drop_off_location_name
     output[:drop_off]                                             = rental.drop_off
     output[:drop_off_odometer]                                    = rental.drop_off_odometer
     output[:drop_off_fuel]                                        = rental.drop_off_fuel

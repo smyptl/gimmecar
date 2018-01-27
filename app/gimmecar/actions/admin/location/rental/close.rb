@@ -25,7 +25,7 @@ class Actions::Admin::Location::Rental::Close < Lib::Forms::Base
 
   def success_args
     {
-      rental_number: rental.number,
+      number: rental.number,
     }
   end
 end

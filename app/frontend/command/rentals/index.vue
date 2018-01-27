@@ -46,22 +46,23 @@
 </script>
 
 <template lang='pug'>
-  .gimmecar-app-vertical-scroll
-    table.panel-table.margin-top-default
-      thead
-        tr
-          th #
-          th Name
-          th Location
-          th Vehicle
-          th Pickup
-          th Drop Off
-      tbody
-        tr.clickable(v-for='rental in sorted_rentals' @click.prevent='viewRental(rental.number)')
-          td {{ rental.number }}
-          td {{ rental.name }}
-          td {{ rental.pickup_location_name }}
-          td {{ rental.vehicle }}
-          td {{ rental.pickup | date_time }}
-          td {{ rental.drop_off | date_time }}
+  .panel.panel-base
+    .gimmecar-app-vertical-scroll
+      table.panel-table
+        thead
+          tr
+            th #
+            th Name
+            th Location
+            th Vehicle
+            th Pickup
+            th Drop Off
+        tbody
+          tr.clickable(v-for='rental in sorted_rentals' @click.prevent='viewRental(rental.number)')
+            td {{ rental.number }}
+            td {{ rental.name }}
+            td {{ rental.pickup_location_name }}
+            td {{ rental.vehicle }}
+            td {{ rental.pickup | date_time }}
+            td {{ rental.drop_off | date_time }}
 </template>
