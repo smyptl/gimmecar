@@ -6,6 +6,8 @@ if (!window.Promise) {
 }
 
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 
 import Axios from 'Utils/axios'
 Vue.prototype.$http = Axios
@@ -16,6 +18,9 @@ Vue.directive('error', InputError)
 import InputErrorMessage from 'Components/inputs/error_message'
 Vue.component('input-error-message', InputErrorMessage)
 
+const router = new VueRouter(require('Admin/routes.js'))
+
 var vue = new Vue({
-  render: h => h(require('Admin/login/base')),
+  router,
+  render: h => h(require('Admin/base')),
 }).$mount('#gimmecar-app')

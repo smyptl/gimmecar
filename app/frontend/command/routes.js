@@ -2,7 +2,7 @@ module.exports = {
   mode: 'history',
   linkActiveClass: 'active',
   routes: [
-    { path: '/', name: 'login', component: require('./login.vue') },
+    { path: '/', name: 'login', component: require('./login') },
     {
       path: '/',
       component: require('./layout/base'),

@@ -1,6 +1,5 @@
 <script>
   import Form from 'Utils/form'
-
   import Shake from 'Utils/transitions/shake'
 
   export default {
@@ -19,7 +18,7 @@
             login: this.login.data()
           })
           .then(response => {
-            window.location = '/locations'
+            this.$router.push({ name: 'locations' })
           })
           .catch(error => {
             Shake(document.getElementById('login-form'))
@@ -76,7 +75,6 @@
   @import '~Styles/global/colors'
 
   #login
-    background-color: $background-color-contrast
     height: 100vh
     display: flex
 

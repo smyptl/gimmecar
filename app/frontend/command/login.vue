@@ -78,8 +78,6 @@
     height: 100vh
     display: flex
 
-    background-color: $background-color-contrast
-
   #login-container
     width: 20rem
     margin: 0 auto 5rem

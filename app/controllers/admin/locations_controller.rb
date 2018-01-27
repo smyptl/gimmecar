@@ -1,6 +1,6 @@
 class Admin::LocationsController < ApplicationController
-  include Admin::Concerns::User
-  include Concerns::Api
+  include ::Admin::Concerns::User
+  include ::Concerns::Api
 
   layout 'admin'
 
@@ -13,6 +13,6 @@ class Admin::LocationsController < ApplicationController
   private
 
   def render_layout
-    render 'admin/location'
+    render 'admin/index'
   end
 end

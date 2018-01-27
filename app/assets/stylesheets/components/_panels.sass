@@ -3,6 +3,7 @@
 
 .panel
   float: left
+  width: 100%
   margin-bottom: $margin-default
 
   border: 1px solid $border-color-panel
@@ -10,7 +11,7 @@
   background-color: $background-color-panel
 
 .panel-base
-  box-shadow: 0 0.25rem 1rem 0 rgba(0, 0, 0, 0.03), 0 0 0.5rem 0.0625rem rgba(0, 0, 0, 0.02), 0 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.02)
+  box-shadow: 0 0.125rem 0.5rem 0 rgba(146, 146, 146, 0.1)
   border: 0
 
 .panel-padding
@@ -37,10 +38,13 @@
   padding: $padding-default 0
 
   h2
-    margin: 0
+    margin: 0 0 0 $margin-default
     float: left
     font-size: 1.25rem
     font-weight: 400
+
+  .flex-element
+    margin: 0 $margin-default 0 0
 
   h2,
   .flex-element

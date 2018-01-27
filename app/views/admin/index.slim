@@ -1,12 +1,3 @@
-
-- if @location
-  javascript:
-    var LOCATION_NAME = "#{@location.name}";
-
-- else
-  javascript:
-    var LOCATION_NAME = null;
-
 script(src='https://js.stripe.com/v3/')
 
 javascript:
@@ -25,4 +16,4 @@ javascript:
       }
     });
 
-= javascript_pack_tag 'admin_location'
+= javascript_pack_tag 'admin'
