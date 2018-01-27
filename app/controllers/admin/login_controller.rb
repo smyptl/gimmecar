@@ -1,5 +1,5 @@
 class Admin::LoginController < ApplicationController
-  include Admin::Concerns::User
+  include ::Admin::Concerns::User
   include ::Concerns::Api
 
   layout 'admin'
@@ -40,6 +40,6 @@ class Admin::LoginController < ApplicationController
   private
 
   def render_layout
-    render 'admin/login'
+    render 'admin/index'
   end
 end

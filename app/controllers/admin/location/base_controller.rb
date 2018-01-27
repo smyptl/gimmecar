@@ -9,7 +9,7 @@ class Admin::Location::BaseController < ApplicationController
   private
 
   def render_layout
-    render 'admin/location'
+    render 'admin/index'
   end
 
   def authenticate_location

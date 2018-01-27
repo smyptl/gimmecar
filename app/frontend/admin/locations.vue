@@ -28,7 +28,7 @@
           })
       },
       selectLocation (location) {
-        LOCATION_NAME = location.name
+        window.location_name = location.name
         this.$router.push({ name: 'dashboard', params: { location: location.slug } })
       },
     },

@@ -14,7 +14,7 @@
     },
     computed: {
       location_name () {
-        return LOCATION_NAME
+        return window.location_name
       },
     },
     methods: {
@@ -52,8 +52,6 @@
                 router-link(:to="{ name: 'dashboard' }") Dashboard
               li
                 router-link(:to="{ name: 'rentals' }") Rentals
-              li
-                router-link(:to="{ name: 'rates' }") Rates
               li
                 router-link(:to="{ name: 'vehicles' }") Vehicles
 

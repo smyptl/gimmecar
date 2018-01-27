@@ -93,7 +93,7 @@
               span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
 
     .panel.panel-base
-      h6.left.padding-top-sm.padding-left-sm Driver
+      h6.left.padding-top-sm.padding-left-default Driver
       dl.panel-main-details
         .panel-main-detail
           dt Name

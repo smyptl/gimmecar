@@ -10,5 +10,5 @@
 </script>
 
 <template lang='pug'>
-  h1.margin-top-default Dashboard
+  h1 Dashboard
 </template>
