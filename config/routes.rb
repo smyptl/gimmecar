@@ -67,8 +67,8 @@ Rails.application.routes.draw do
     post '/', to: 'login#create'
 
     get '/dashboard', to: 'dashboard#index'
-    get '/rentals',   to: 'rentals#index'
-    get '/vehicles',  to: 'vehicles#index'
+    resources :rentals, only: [:index, :show]
+    resources :vehicles, only: [:index, :show]
 
     #get '/reports',   to: 'reports#index'
   end

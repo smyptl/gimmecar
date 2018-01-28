@@ -65,14 +65,6 @@ class Location < ApplicationRecord
     vehicles.pluck(:id)
   end
 
-  def vehicle_vins
-    vehicles.pluck(:vin)
-  end
-
-  def rental_numbers
-    rentals.pluck(:number)
-  end
-
   def convert_date_to_time_zone(date_time)
     convert_date_time_to_time_zone(date_time).to_date
   end

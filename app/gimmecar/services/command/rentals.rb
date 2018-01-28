@@ -4,7 +4,7 @@ class Services::Command::Rentals < Lib::Services::Base
   end
 
   def fetch
-    Rental.open.map do |r|
+    ::Rental.open.map do |r|
       {
         :status               => r.status,
         :number               => r.number,

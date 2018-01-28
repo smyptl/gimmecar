@@ -3,7 +3,7 @@ class Admin::Location::Vehicles::BaseController < Admin::Location::BaseControlle
   before_action :authorize_vehicle
 
   def authorize_vehicle
-    raise Error404 unless @location.vehicle_vins.include?(vin)
+    raise Error404 unless @location.vehicles.exists?(vin: vin)
   end
 
   def vin

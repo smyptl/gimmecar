@@ -8,14 +8,11 @@
   import ActionsIcon from 'Components/icons/actions'
   import RightArrowIcon from 'Components/icons/right_arrow'
 
-  import Close from './_close'
-
   export default {
     name: 'rental',
     data () {
       return {
         rental: {},
-        close: false,
       }
     },
     filters: {
@@ -25,7 +22,6 @@
     },
     components: {
       ActionsIcon,
-      Close,
       Dropdown,
       RightArrowIcon,
     },
@@ -42,13 +38,6 @@
         })
       },
       extendRental () {
-      },
-      closeRental () {
-        this.close = true
-      },
-      rentalClosed () {
-        this.fetchData()
-        this.close = false
       },
       emailInvoice () {
       },
@@ -69,8 +58,6 @@
             actions-icon.action-icon
           .dropdown-menu.right(slot='dropdown-menu')
             ul
-              li(v-if='rental.status == "open"')
-                button.link(@click='closeRental()') Close
               li
                 button.link(@click='printInvoice') Print Invoice
 
@@ -84,6 +71,18 @@
         .panel-main-detail
           dt Drop Off
           dd {{ rental.drop_off | date_time }}
+        template(v-if="rental.pickup_location_id == rental.drop_off_location_id")
+          .panel-main-detail
+            dt Location
+            dd {{ rental.pickup_location_name }}
+        template(v-else)
+          .panel-main-detail
+            dt Pick Up Location
+            dd {{ rental.pickup_location_name }}
+          .panel-main-detail
+            dt Drop Off Location
+            dd {{ rental.drop_off_location_name }}
+
         .panel-main-detail
           dt Vehicle
           dd
@@ -141,8 +140,6 @@
               .block {{ rental.additional_driver.address_1 }}
               .block(v-if='rental.additional_driver.address_2') {{ rental.additional_driver.address_2 }}
               .block {{ rental.additional_driver.city }}, {{ rental.additional_driver.state }} {{ rental.additional_driver.zip_code }}
-
-    close(v-on:close='rentalClosed' v-if='close')
 
 </template>
 

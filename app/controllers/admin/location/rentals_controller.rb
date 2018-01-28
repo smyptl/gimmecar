@@ -7,16 +7,16 @@ class Admin::Location::RentalsController < Admin::Location::BaseController
   end
 
   def show
-    render status: 200, json: Services::Admin::Rental.fetch(rental_number: rental_number)
+    render status: 200, json: Services::Admin::Rental.fetch(number: number)
   end
 
   private
 
   def authorize_rental
-    raise Error404 unless @location.rental_numbers.include?(rental_number)
+    raise Error404 unless @location.rentals.exists?(number: number)
   end
 
-  def rental_number
+  def number
     params[:id]
   end
 end

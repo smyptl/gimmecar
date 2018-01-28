@@ -32,7 +32,7 @@
       .gimmecar-app-container#gimmecar-app-command
         h1.logo
           | GimmeCar
-          small {{ location_name }}
+          small Command
 
         nav.left
           #navigation

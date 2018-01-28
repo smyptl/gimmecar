@@ -2,8 +2,8 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
 
   attr_reader :rental
 
-  def initialize(rental_number: nil)
-    @rental = ::Rental.find_by(number: rental_number)
+  def initialize(number: nil)
+    @rental = ::Rental.find_by(number: number)
   end
 
   def fetch
