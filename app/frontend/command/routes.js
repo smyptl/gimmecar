@@ -21,7 +21,7 @@ module.exports = {
           ],
         },
         {
-          part: '/rates', name: 'rates', component: require('./rates/index'),
+          path: '/rates', name: 'rates', component: require('./rates/index'),
         },
         { path: '/drivers', component: require('./base'),
           children: [

@@ -57,6 +57,8 @@
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/components/panels/table'
+
   .status
     vertical-align: center
 </style>

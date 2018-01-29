@@ -8,6 +8,8 @@
   import ActionsIcon from 'Components/icons/actions'
   import RightArrowIcon from 'Components/icons/right_arrow'
 
+  import DriverInfo from 'Components/driver/information'
+
   import Close from './rental/_close'
 
   export default {
@@ -26,6 +28,7 @@
     components: {
       ActionsIcon,
       Close,
+      DriverInfo,
       Dropdown,
       RightArrowIcon,
     },
@@ -96,62 +99,18 @@
 
     .panel.panel-base
       h6.left.padding-top-sm.padding-left-default Driver
-      table.panel-table.panel-table-key-pair
-        tbody
-          tr
-            td Name
-            td {{ rental.driver.name_first }} {{ rental.driver.name_middle }} {{ rental.driver.name_last }}
-          tr
-            td Email
-            td {{ rental.driver.email }}
-          tr
-            td Cell Phone #
-            td
-              a(v-bind:href="'tel:' + rental.driver.cell_phone_number") {{ rental.driver.cell_phone_number }}
-          tr(v-if='rental.driver.home_phone_number')
-            td Home Phone #
-            td
-              a(v-bind:href="'tel:' + rental.driver.home_phone_number") {{ rental.driver.home_phone_number }}
-          tr
-            td Address
-            td
-              address
-                .block {{ rental.driver.address_1 }}
-                .block(v-if='rental.driver.address_2') {{ rental.driver.address_2 }}
-                .block {{ rental.driver.city }}, {{ rental.driver.state }} {{ rental.driver.zip_code }}
+      driver-info(v-bind:driver='rental.driver')
 
     .panel.panel-base(v-if='rental.additional_driver')
       h6.left.padding-top-sm.padding-left-default Additional Driver
-      table.panel-table.panel-table-key-pair
-        tbody
-          tr
-            td Name
-            td {{ rental.additional_driver.name_first }} {{ rental.additional_driver.name_middle }} {{ rental.additional_driver.name_last }}
-          tr
-            td Email
-            td {{ rental.additional_driver.email }}
-          tr
-            td Cell Phone #
-            td
-              a(v-bind:href="'tel:' + rental.additional_driver.cell_phone_number") {{ rental.additional_driver.cell_phone_number }}
-          tr(v-if='rental.additional_driver.home_phone_number')
-            td Home Phone #
-            td
-              a(v-bind:href="'tel:' + rental.additional_driver.home_phone_number") {{ rental.additional_driver.home_phone_number }}
-          tr
-            td Address
-            td
-              address
-                .block {{ rental.additional_driver.address_1 }}
-                .block(v-if='rental.additional_driver.address_2') {{ rental.additional_driver.address_2 }}
-                .block {{ rental.additional_driver.city }}, {{ rental.additional_driver.state }} {{ rental.additional_driver.zip_code }}
+      driver-info(v-bind:driver='rental.additional_driver')
 
     close(v-on:close='rentalClosed' v-if='close')
 
 </template>
 
 <style lang='stylus' scoped>
-  @import '~Styles/components/panels/details'
+  @import '~Styles/components/panels/table'
 
   .action-icon
     float: right

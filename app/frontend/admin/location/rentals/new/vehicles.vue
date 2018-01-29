@@ -69,7 +69,8 @@
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/components/panels/table'
+
   input[type=radio].input-field
     margin: 0
-
 </style>

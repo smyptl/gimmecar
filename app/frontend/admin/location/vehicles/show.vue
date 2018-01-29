@@ -73,7 +73,7 @@
         tr
           td Type
           td {{ vehicle.vehicle_type }}
-        tr
+        tr(v-if='vehicle.license_number')
           td License Number
           td {{ vehicle.license_number }}
         tr
@@ -91,7 +91,7 @@
 </template>
 
 <style lang='stylus' scoped>
-  @import '~Styles/components/panels/details'
+  @import '~Styles/components/panels/table'
 
   .action-icon
     float: right

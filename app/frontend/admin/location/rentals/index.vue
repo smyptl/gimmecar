@@ -64,3 +64,8 @@
             td {{ rental.pickup | date_time }}
             td {{ rental.drop_off | date_time }}
 </template>
+
+<style lang='stylus' scoped>
+  @import '~Styles/components/panels/table'
+
+</style>
