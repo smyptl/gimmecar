@@ -4,7 +4,7 @@
   import SortBy from 'lodash/sortBy'
 
   export default {
-    name: 'index',
+    name: 'rentals',
     data () {
       return {
         rentals: [],
@@ -66,3 +66,8 @@
             td {{ rental.pickup | date_time }}
             td {{ rental.drop_off | date_time }}
 </template>
+
+<style lang='stylus' scoped>
+  @import '~Styles/components/panels/table'
+
+</style>

@@ -52,7 +52,7 @@ FactoryBot.define do
     drop_off_location { pickup_location }
 
     tax_rate { create(:tax_rate, location: pickup_location) }
-    driver factory: :driver
+    driver { create(:driver) }
     vehicle { create(:vehicle, location: pickup_location, original_location: pickup_location) }
   end
 end

@@ -4,6 +4,7 @@
   import TermsAndConditions from 'Components/terms_and_conditions'
 
   export default {
+    name: 'print',
     data () {
       return {
         summary: {}

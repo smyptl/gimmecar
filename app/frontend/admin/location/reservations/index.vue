@@ -56,3 +56,8 @@
           td {{ reservation.pickup | date_time }}
           td {{ reservation.drop_off | date_time }}
 </template>
+
+<style lang='stylus' scoped>
+  @import '~Styles/components/panels/table'
+
+</style>

@@ -1,5 +1,5 @@
 <script>
-  import VehicleStatusIcons from 'Components/vehicles/status'
+  import VehicleStatusIcons from 'Components/vehicle/status'
 
   export default {
     name: 'index',
@@ -59,6 +59,8 @@
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/components/panels/table'
+
   .status
     vertical-align: center
 </style>

@@ -1,14 +1,13 @@
 <script>
   import FDate from 'Filters/date'
   import FDateTime from 'Filters/date_time'
-  import Capitalize from 'lodash/capitalize'
 
   import Dropdown from 'Components/dropdown'
 
   import ActionsIcon from 'Components/icons/actions'
-  import VehicleStatusIcons from 'Components/vehicles/status'
+  import VehicleInformation from 'Components/vehicle/information'
 
-  import VehicleStatus from './_status'
+  import VehicleStatus from './vehicle/_status'
 
   export default {
     name: 'vehicle',
@@ -21,13 +20,12 @@
     filters: {
       date: FDate,
       date_time: FDateTime,
-      Capitalize,
     },
     components: {
       ActionsIcon,
       Dropdown,
+      VehicleInformation,
       VehicleStatus,
-      VehicleStatusIcons,
     },
     created () {
       this.fetchData()
@@ -64,33 +62,12 @@
             li
               button.link(@click='changeStatus') Change Status
 
-    dl.panel-main-details
-      .panel-main-detail
-        dt Status
-        dd
-          vehicle-status-icons.right(:status='vehicle.status')
-      .panel-main-detail
-        dt Type
-        dd {{ vehicle.vehicle_type }}
-      .panel-main-detail(v-if='vehicle.license_number')
-        dt License Number
-        dd {{ vehicle.license_number }}
-      .panel-main-detail
-        dt Vin
-        dd {{ vehicle.vin }}
-      .panel-main-detail
-        dt Year
-        dd {{ vehicle.year }}
-      .panel-main-detail
-        dt Color
-        dd {{ vehicle.color | capitalize }}
-
+    vehicle-information(v-bind:vehicle='vehicle')
     vehicle-status(v-on:close='statusChanged' v-if='change_status')
 
 </template>
 
 <style lang='stylus' scoped>
-  @import '~Styles/components/panels/details'
 
   .action-icon
     float: right

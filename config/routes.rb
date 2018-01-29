@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       #post '/quotes', to: 'quotes#show'
 
       get  '/rates', to: 'rates#index'
-      post '/rates', to: 'rates#update'
+      post '/rates', to: 'rates#show'
 
       get '/new', to: 'new#index'
 
@@ -67,8 +67,9 @@ Rails.application.routes.draw do
     post '/', to: 'login#create'
 
     get '/dashboard', to: 'dashboard#index'
-    resources :rentals, only: [:index, :show]
+    resources :rentals,  only: [:index, :show]
     resources :vehicles, only: [:index, :show]
+    resources :drivers,  only: [:index, :show]
 
     #get '/reports',   to: 'reports#index'
   end

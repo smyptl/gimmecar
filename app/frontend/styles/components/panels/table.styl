@@ -1,3 +1,7 @@
+@import '~Styles/global/colors'
+@import '~Styles/global/layout'
+@import '~Styles/global/type'
+
 .panel-table
   width: 100%
   position: relative
@@ -6,6 +10,14 @@
   font-size: 0.8125rem
   text-align: left
   font-weight: 400
+
+  td:first-of-type,
+  th:first-of-type
+    padding-left: $padding-default
+
+  td:last-of-type,
+  th:last-of-type
+    padding-right: $padding-default
 
   td,
   th
@@ -31,7 +43,6 @@
     tr
       background: $background-color-panel
       border-top: 1px solid $border-color-light
-      border-bottom: 1px solid $border-color-light
 
       vertical-align: middle
       color: $black-light
@@ -57,13 +68,17 @@
 
 .panel-table.panel-table-key-pair
   table-layout: fixed
-  margin-top: $padding-sm
-  margin-bottom: $padding-sm
+  margin-top: 0
+  margin-bottom: 0
+
+  tr
+    border-top: 1px solid $border-color-light
+    vertical-align: top
 
   td,
   th
-    padding-top: $padding-ex-sm
-    padding-bottom: $padding-ex-sm
+    padding-top: $padding-sm
+    padding-bottom: $padding-sm
 
   td:first-of-type,
   th:first-of-type
@@ -72,15 +87,17 @@
 
     width: 35%
     font-weight: 400
-    text-align: right
-    color: $silver
+    text-align: left
+    color: $black-light
 
   td:nth-of-type(2),
   th:nth-of-type(2)
     padding-right: $padding-default
     padding-left: $padding-sm
 
-  tr
-    border-top: 0
-    border-bottom: 0
-    vertical-align: top
+    text-align: right
+    color: $black
+
+  span.description
+    font-size: $font-size-default - 0.0625rem
+    color: $silver

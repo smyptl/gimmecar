@@ -1,35 +1,24 @@
 <script>
-  import VehicleStatusIcons from 'Components/vehicle/status'
-
   export default {
-    name: 'vehicles',
+    name: 'drivers',
     data () {
       return {
-        vehicles: [],
+        drivers: [],
       }
     },
     created () {
       this.fetchData()
     },
-    components: {
-      VehicleStatusIcons,
-    },
     watch: {
       '$route': 'fetchData',
     },
     methods: {
-      lastFive (vin) {
-        return vin.slice(-5)
-      },
       fetchData () {
         this.$http
           .get(this.$route.path)
           .then(response => {
-            this.vehicles = response.data
+            this.data = response.data
         })
-      },
-      viewVehicle (vin) {
-        this.$router.push({ name: 'vehicle', params: { vin: vin }})
       },
     },
   }
@@ -41,14 +30,20 @@
       table.panel-table
         thead
           tr
-            th Vehicle
+            th Name
             th Type
+            th Location
             th License #
             th Status
         tbody
-          tr.clickable(v-for='vehicle in vehicles' @click.prevent='viewVehicle(vehicle.vin)')
+          tr.clickable(
+            v-for='driver in data'
+            :key='driver.id'
+            @click.prevent='viewDriver(driver.id)'
+          )
             td {{ vehicle.make_model }}
             td {{ vehicle.vehicle_type }}
+            td {{ vehicle.location_name }}
             td(v-if='vehicle.license_number') {{ vehicle.license_number }}
             td(v-else)
               i VIN: {{ lastFive(vehicle.vin) }}
