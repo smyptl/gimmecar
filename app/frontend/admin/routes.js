@@ -10,24 +10,24 @@ module.exports = {
       children: [
         { path: '/:location/dashboard',   name: 'dashboard',  component: require('./location/dashboard/base') },
         { path: '/:location/rentals/new', name: 'new_rental', component: require('./location/rentals/new/base') },
-        { path: '/:location/rentals', component: require('./location/rentals/base'),
+        { path: '/:location/rentals', component: require('./base'),
           children: [
             { path: '',        name: 'rentals', component: require('./location/rentals/index') },
-            { path: ':number', name: 'rental',  component: require('./location/rentals/rental/index') },
+            { path: ':number', name: 'rental',  component: require('./location/rentals/show') },
           ],
         },
-        { path: '/:location/reservations/new', name: 'new_reservation', component: require('./location/reservations/new/base') },
+        { path: '/:location/reservations/new', name: 'new_reservation', component: require('./base') },
         {
-          path: '/:location/reservations', component: require('./location/reservations/base'),
+          path: '/:location/reservations', component: require('./base'),
           children: [
             { path: '',    name: 'reservations',    component: require('./location/reservations/index') },
           ]
         },
-        { path: '/:location/rates', name: 'rates', component: require('./location/rates/base') },
-        { path: '/:location/vehicles', component: require('./location/vehicles/base'),
+        { path: '/:location/rates', name: 'rates', component: require('./location/rates/index') },
+        { path: '/:location/vehicles', component: require('./base'),
           children: [
             { path: '',     name: 'vehicles', component: require('./location/vehicles/index') },
-            { path: ':vin', name: 'vehicle',  component: require('./location/vehicles/vehicle/index') },
+            { path: ':vin', name: 'vehicle',  component: require('./location/vehicles/show') },
           ],
         },
       ],

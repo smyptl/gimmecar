@@ -8,7 +8,7 @@
   import ActionsIcon from 'Components/icons/actions'
   import VehicleStatusIcons from 'Components/vehicles/status'
 
-  import VehicleStatus from './_status'
+  import VehicleStatus from './vehicle/_status'
 
   export default {
     name: 'vehicle',

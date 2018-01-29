@@ -4,7 +4,7 @@
   import SortBy from 'lodash/sortBy'
 
   export default {
-    name: 'index',
+    name: 'rentals',
     data () {
       return {
         rentals: [],

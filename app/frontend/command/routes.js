@@ -11,13 +11,21 @@ module.exports = {
         { path: '/rentals', component: require('./base'),
           children: [
             { path: '',        name: 'rentals', component: require('./rentals/index') },
-            { path: ':number', name: 'rental',  component: require('./rentals/rental/index') },
+            { path: ':number', name: 'rental',  component: require('./rentals/show') },
           ],
         },
         { path: '/vehicles', component: require('./base'),
           children: [
             { path: '',     name: 'vehicles', component: require('./vehicles/index') },
-            { path: ':vin', name: 'vehicle',  component: require('./vehicles/vehicle/index') },
+            { path: ':vin', name: 'vehicle',  component: require('./vehicles/show') },
+          ],
+        },
+        {
+          part: '/rates', name: 'rates', component: require('./rates/index'),
+        },
+        { path: '/drivers', component: require('./base'),
+          children: [
+            { path: '',     name: 'drivers', component: require('./drivers/index') },
           ],
         },
       ],

@@ -33,7 +33,7 @@ class Driver < ApplicationRecord
   has_many :rentals
   has_many :insurance_policies
 
-  before_destroy { |record| !record.rentals? }
+  before_destroy { |record| throw :abort if record.rentals? }
 
   def name
     "#{name_first} #{name_last}"

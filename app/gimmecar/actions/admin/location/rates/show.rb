@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Rental::GetRates < Lib::Forms::Base
+class Actions::Admin::Location::Rates::Show < Lib::Forms::Base
 
   attributes do |a|
     a.date_time :pickup
