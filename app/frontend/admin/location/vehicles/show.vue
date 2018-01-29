@@ -64,26 +64,27 @@
             li
               button.link(@click='changeStatus') Change Status
 
-    dl.panel-main-details
-      .panel-main-detail
-        dt Status
-        dd
-          vehicle-status-icons.right(:status='vehicle.status')
-      .panel-main-detail
-        dt Type
-        dd {{ vehicle.vehicle_type }}
-      .panel-main-detail(v-if='vehicle.license_number')
-        dt License Number
-        dd {{ vehicle.license_number }}
-      .panel-main-detail
-        dt Vin
-        dd {{ vehicle.vin }}
-      .panel-main-detail
-        dt Year
-        dd {{ vehicle.year }}
-      .panel-main-detail
-        dt Color
-        dd {{ vehicle.color | capitalize }}
+    table.panel-table.panel-table-key-pair
+      tbody
+        tr
+          td Status
+          td
+            vehicle-status-icons.right(:status='vehicle.status')
+        tr
+          td Type
+          td {{ vehicle.vehicle_type }}
+        tr
+          td License Number
+          td {{ vehicle.license_number }}
+        tr
+          td Vin
+          td {{ vehicle.vin }}
+        tr
+          td Year
+          td {{ vehicle.year }}
+        tr
+          td Color
+          td {{ vehicle.color | capitalize }}
 
     vehicle-status(v-on:close='statusChanged' v-if='change_status')
 
