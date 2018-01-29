@@ -23,7 +23,7 @@ module.exports = {
             { path: '',    name: 'reservations',    component: require('./location/reservations/index') },
           ]
         },
-        { path: '/:location/rates', name: 'rates', component: require('./location/rates/index') },
+        { path: '/:location/quote', name: 'quote', component: require('./location/quote/index') },
         { path: '/:location/vehicles', component: require('./base'),
           children: [
             { path: '',     name: 'vehicles', component: require('./location/vehicles/index') },

@@ -57,11 +57,8 @@
 <template lang='pug'>
   transition(v-on:enter="addEnter" v-on:leave="addLeave")
     #add-container(@click='closeAdd')
-      router-link(:to="{ name: 'new_rental' }")
-        svg(xlmns='http://www.w3.org/2000/svg' viewBox='-35 -15 1050 1050' preserveAspectRatio='xMinYMin')
-          path(d='M464.3 285.7q0 -44.6 -31.3 -75.9t-75.9 -31.2 -75.8 31.2T250 285.7q0 23.5 10.6 46.3 -22.9 -10.6 -46.3 -10.6 -44.7 0 -75.9 31.3t-31.3 75.9 31.3 75.9 75.9 31.2 75.9 -31.2 31.2 -75.9q0 -23.5 -10.6 -46.3 22.9 10.6 46.3 10.6 44.7 0 75.9 -31.3t31.3 -75.9zm474.9 392.9q0 9.5 -27.4 36.8T875 742.7q-5 0 -15.9 -8.9t-20.4 -18.4 -21.5 -22.3 -13.6 -14.5L750 732.1l122.8 122.8q15.6 15.6 15.6 38 0 23.4 -21.8 45.2t-45.2 21.7q-22.3 0 -37.9 -15.6L409 569.8q-98.2 73.1 -203.6 73.1 -91 0 -148.2 -57.2T0 437.5Q0 348.2 53 262.8T191.4 124.4t174.7 -53q90.9 0 148.1 57.2t57.2 148.2q0 105.5 -73.1 203.7l198.1 198.1L750 625q-1.7 -1.7 -14.5 -13.7t-22.3 -21.5 -18.4 -20.3 -9 -15.9q0 -9.5 27.4 -36.9T750 489.4q7.3 0 12.8 5.6 3.4 3.3 25.7 24.8t45.8 44.4 48.2 48 40.8 43.5 15.9 22.9z')
-
-        span Rental
+      router-link.link(:to="{ name: 'new_rental' }") Rental
+      router-link.link(:to="{ name: 'quote' }") Quote
 
       <!--router-link(:to="{ name: 'new_reservation' }")-->
         <!--svg(xlmns='http://www.w3.org/2000/svg' viewBox='-50 -50 1100 1100' preserveAspectRatio='xMinYMin')-->
@@ -89,10 +86,11 @@
 
   a
     display: block
-
     padding: $padding-default
 
     text-align: center
+    font-size: 1.125rem
+    font-weight: 700
 
   a:not(:last-of-type)
     border-bottom: 0.125rem solid $border-color-light
