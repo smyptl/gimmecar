@@ -1,5 +1,5 @@
 <script>
-  import VehicleStatusIcons from 'Components/vehicles/status'
+  import VehicleStatusIcons from 'Components/vehicle/status'
 
   export default {
     name: 'index',

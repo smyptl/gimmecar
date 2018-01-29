@@ -1,12 +1,10 @@
 <script>
   import FDate from 'Filters/date'
   import FDateTime from 'Filters/date_time'
-  import Capitalize from 'lodash/capitalize'
 
   import Dropdown from 'Components/dropdown'
-
   import ActionsIcon from 'Components/icons/actions'
-  import VehicleStatusIcons from 'Components/vehicles/status'
+  import VehicleInformation from 'Components/vehicle/information'
 
   export default {
     name: 'vehicle',
@@ -18,12 +16,11 @@
     filters: {
       date: FDate,
       date_time: FDateTime,
-      Capitalize,
     },
     components: {
       ActionsIcon,
       Dropdown,
-      VehicleStatusIcons,
+      VehicleInformation,
     },
     created () {
       this.fetchData()
@@ -53,35 +50,11 @@
             <!--li-->
               <!--button.link(@click='changeStatus') Change Status-->
 
-    table.panel-table.panel-table-key-pair
-      tbody
-      tr
-        td Status
-        td
-          vehicle-status-icons.right(:status='vehicle.status')
-      tr
-        td Type
-        td {{ vehicle.vehicle_type }}
-      tr
-        td Location
-        td {{ vehicle.location_name }}
-      tr(v-if='vehicle.license_number')
-        td License Number
-        td {{ vehicle.license_number }}
-      tr
-        td Vin
-        td {{ vehicle.vin }}
-      tr
-        td Year
-        td {{ vehicle.year }}
-      tr
-        td Color
-        td {{ vehicle.color | capitalize }}
+    vehicle-information(v-bind:vehicle='vehicle')
 
 </template>
 
 <style lang='stylus' scoped>
-  @import '~Styles/components/panels/table'
 
   .action-icon
     float: right
