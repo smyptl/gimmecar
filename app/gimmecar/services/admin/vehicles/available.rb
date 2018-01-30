@@ -14,12 +14,12 @@ class Services::Admin::Vehicles::Available < Lib::Services::Base
   def fetch
     Location.find(@location_id).available_vehicles(vehicle_type: vehicle_type, date_range: period).map do |v|
       {
-        :id             => v.id,
-        :vin            => v.vin,
+        :id => v.id,
+        :vin => v.vin,
         :license_number => v.license_number,
-        :make           => v.make,
-        :model          => v.model,
-        :color          => v.color
+        :make => v.make,
+        :model => v.model,
+        :color => v.color,
       }
     end
   end
