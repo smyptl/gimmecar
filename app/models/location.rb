@@ -62,7 +62,7 @@ class Location < ApplicationRecord
   end
 
   def vehicle_ids
-    vehicles.pluck(:id)
+    vehicles.ids
   end
 
   def convert_date_to_time_zone(date_time)

@@ -39,6 +39,10 @@ class Driver < ApplicationRecord
     "#{name_first} #{name_last}"
   end
 
+  def name_full
+    "#{name_first} #{name_middle} #{name_last}"
+  end
+
   def rentals?
     rentals.any?
   end

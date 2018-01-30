@@ -15,11 +15,8 @@ Rails.application.routes.draw do
       get '/search', to: 'search#index'
       get '/vehicles', to: 'vehicles#index'
 
-      get '/quotes', to: 'quotes#index'
-      #post '/quotes', to: 'quotes#show'
-
-      get  '/rates', to: 'rates#index'
-      post '/rates', to: 'rates#show'
+      get  '/quote', to: 'quote#index'
+      post '/quote', to: 'quote#show'
 
       get '/new', to: 'new#index'
 

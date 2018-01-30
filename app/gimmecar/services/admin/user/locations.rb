@@ -5,11 +5,6 @@ class Services::Admin::User::Locations < Lib::Services::Base
   end
 
   def fetch
-    user.locations.map do |l|
-      {
-        :name => l.name,
-        :slug => l.slug,
-      }
-    end
+    user.locations.select(:name, :slug)
   end
 end
