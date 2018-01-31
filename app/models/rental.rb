@@ -83,6 +83,10 @@ class Rental < ApplicationRecord
     Lib::DateRange.new(pickup, drop_off)
   end
 
+  def days_apart
+    rental_period.days_apart
+  end
+
   def close(args)
     update(args.merge(:status => CLOSED))
   end

@@ -1,4 +1,4 @@
-class Actions::ReturnDeposit
+class Actions::UpdateStripe
 
   def initialize()
   end

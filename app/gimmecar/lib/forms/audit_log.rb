@@ -9,7 +9,7 @@ module Lib::Forms::AuditLog
   private
 
   def log
-    log! unless attribute_changes.blank? || company.onboarding?
+    log! unless attribute_changes.blank?
   end
 
   def log!

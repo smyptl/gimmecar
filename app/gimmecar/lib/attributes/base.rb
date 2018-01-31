@@ -40,7 +40,7 @@ class Lib::Attributes::Base
     def attributes
       attributes = Lib::Attributes::Parser.new
       yield attributes
-      _form_attributes.merge!(attributes.fetch)
+      _form_attributes.deep_merge!(attributes.fetch)
       define_attribute_read_and_write_methods
     end
 

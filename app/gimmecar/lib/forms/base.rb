@@ -36,8 +36,8 @@ class Lib::Forms::Base < Lib::Attributes::Base
   end
 
   def execute!(params = {})
-    success = lambda { |_| return true }
-    failure = lambda { |_| return false }
+    success = lambda { |_| true }
+    failure = lambda { |_| false }
     execute(success, failure, params)
   end
 
@@ -68,9 +68,5 @@ class Lib::Forms::Base < Lib::Attributes::Base
     {
       :errors => errors,
     }
-  end
-
-  def url_helper
-    Rails.application.routes.url_helpers
   end
 end

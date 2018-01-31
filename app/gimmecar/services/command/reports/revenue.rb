@@ -38,48 +38,52 @@ class Services::Command::Reports::Revenue < Lib::Services::Base
             r.column "Description", :description, style: :align_right
           end
 
-          s.row_for_each(line_items(location), group: :line_items, style: [:default, :border_bottom_light], height: :default) do |r, li|
-            r.value li.invoice_number
-            r.value li.item_type
-            r.value li.charge_id
-            r.value li.details
-            r.value li.date, style: :date
-            r.value li.quantity
-            r.value li.total
-            r.value li.amount
-            r.value li.discount
-            r.value li.sub_total
-            r.value li.taxable_amount
-            r.value li.tax_collectable
-            r.value li.state_taxable_amount
-            r.value li.state_amount
-            r.value li.county_taxable_amount
-            r.value li.county_amount
-            r.value li.city_taxable_amount
-            r.value li.city_amount
-            r.value li.district_taxable_amount
-            r.value li.district_amount
-            r.value li.description
-          end
+          line_items = line_items(location)
 
-          s.row(style: [:total, :total_border, :bold], height: :default) do |r|
-            r.value      "Total"
-            r.blank_cell 5
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
-            r.blank_cell
+          if line_items.any?
+            s.row_for_each(line_items, group: :line_items, style: [:default, :border_bottom_light], height: :default) do |r, li|
+              r.value li.invoice_number
+              r.value li.item_type
+              r.value li.charge_id
+              r.value li.details
+              r.value li.date, style: :date
+              r.value li.quantity
+              r.value li.total
+              r.value li.amount
+              r.value li.discount
+              r.value li.sub_total
+              r.value li.taxable_amount
+              r.value li.tax_collectable
+              r.value li.state_taxable_amount
+              r.value li.state_amount
+              r.value li.county_taxable_amount
+              r.value li.county_amount
+              r.value li.city_taxable_amount
+              r.value li.city_amount
+              r.value li.district_taxable_amount
+              r.value li.district_amount
+              r.value li.description
+            end
+
+            s.row(style: [:total, :total_border, :bold], height: :default) do |r|
+              r.value      "Total"
+              r.blank_cell 5
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.formula    -> (f) { f.sum([f.range(rows: :line_items, column: :current)]) }
+              r.blank_cell
+            end
           end
         end
       end
