@@ -41,6 +41,9 @@ class Lib::Attributes::Parser
     @attributes = ActiveSupport::HashWithIndifferentAccess.new
   end
 
+  def component(klass)
+  end
+
   def string(name, options = {})
     @attributes[name] = { :type => :string, :options => options }
   end

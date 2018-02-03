@@ -39,10 +39,9 @@
       .popup
         .popup-container
           .popup-content
-            .popup-header
-              a.link-danger#cancel-button(@click='closePopup')
-                icon-cancel
-              slot
+            a.link-danger#cancel-button(@click='closePopup')
+              icon-cancel
+            slot
 
 </template>
 

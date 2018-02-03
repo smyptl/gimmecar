@@ -13,8 +13,6 @@ class Lib::Services::Base < Lib::Attributes::Base
 
   class << self
     def inherited(subclass)
-      subclass._output = self._output
-
       subclass.class_eval do
         def self.method_added(name)
           if Lib::Services::Base::PROHIBITED_METHODS.include?(name.to_sym)
@@ -34,8 +32,8 @@ class Lib::Services::Base < Lib::Attributes::Base
     end
 
     def output(&block)
-      generator = Lib::Services::Generator.new
-      self._output = generator.instance_exec(&block).fetch
+      generator = Lib::Services::Generator
+      self._output = generator.class_eval(&block)
     end
   end
 
@@ -58,7 +56,8 @@ class Lib::Services::Base < Lib::Attributes::Base
   end
 
   def output
-    _output
+    _output || raise Lib::Errors::NotImplemented
+    Lib::Services::Generator.new(rules: _output, query: query).fetch
   end
 
   private

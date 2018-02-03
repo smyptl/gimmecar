@@ -1,30 +1,30 @@
 class Services::Command::Drivers < Lib::Services::Base
 
   output do
-    object :driver do |o|
+    object :driver, logic: Logic::Driver do |o|
       o.id :id
 
-      #values :name_first,
-              #:name_middle,
-              #:name_last
+      o.values :name_first,
+                :name_middle,
+                :name_last
 
-      #component Services::Components::DriverInformation
+      o.component Services::Components::DriverInformation
 
-      #value :do_not_rent, as: :do_not_rent?
-      #value :rentals_count, as: -> (d) { d.rentals.count }
+      o.value :do_not_rent, as: :do_not_rent?
+      o.value :rentals_count, output: -> (d) { d.rentals.count }, if: -> (d) { d.rentals.any? }
 
+      o.collection :randoms, output: Services::Components::Random do |c|
+        c.value :add_extra
+      end
 
-      #collection :randoms, as: Services::Components::Random
+      o.collection :rentals, as: :another_name do |c|
+        c.id :number
 
-      #collection :rentals do |c|
-        #object :rental
-        #id :number
-
-
-        #value :number
-      #end
+        c.value :number
+      end
     end
   end
+
 
   private
 
