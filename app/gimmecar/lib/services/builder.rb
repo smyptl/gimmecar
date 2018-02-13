@@ -36,15 +36,15 @@ class Lib::Services::Builder
   end
 
   def object(name, options = {})
-    generator = output[:output] || Lib::Services::Generator.new
+    generator = output[:output] || Lib::Services::Builder.new
     yield generator if block_given?
-    add_attributes(name, { :type => :object, :options => options, :attributes => generator.fetch })
+    add_attribute(name, { :name => name, :type => :object, :options => options, :attributes => generator.fetch })
   end
 
   def collection(name, options = {})
-    generator = options[:output] || Lib::Services::Generator.new
+    generator = options[:output] || Lib::Services::Builder.new
     yield generator if block_given?
-    add_attributes(name, { :type => :collection, :options => options, :attributes => generator.fetch })
+    add_attribute(name, { :name => name, :type => :collection, :options => options, :attributes => generator.fetch })
   end
 
   def component(klass, options = {})
@@ -58,11 +58,11 @@ class Lib::Services::Builder
   end
 
   def value(name, options = {})
-    add_attribute(name, { :type => :value, :options => options })
+    add_attribute(name, { :name => name, :type => :value, :options => options })
   end
 
   def id(as = nil)
-    add_attribute(:id, { :type => :value, :options => { :as => as }})
+    add_attribute(:id, { :name => :id, :type => :value, :options => { :as => as }})
   end
 
   def fetch

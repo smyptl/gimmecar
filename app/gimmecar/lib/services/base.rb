@@ -11,6 +11,8 @@ class Lib::Services::Base < Lib::Attributes::Base
   class_attribute :_output
   self._output = nil
 
+  define_callbacks :fetch
+
   class << self
     def inherited(subclass)
       subclass.class_eval do
@@ -32,8 +34,8 @@ class Lib::Services::Base < Lib::Attributes::Base
     end
 
     def output(&block)
-      generator = Lib::Services::Generator
-      self._output = generator.class_eval(&block)
+      builder = Lib::Services::Builder
+      self._output = builder.class_eval(&block)
     end
   end
 
@@ -56,7 +58,7 @@ class Lib::Services::Base < Lib::Attributes::Base
   end
 
   def output
-    _output || raise Lib::Errors::NotImplemented
+    _output || (raise Lib::Errors::NotImplemented)
     Lib::Services::Generator.new(rules: _output, query: query).fetch
   end
 

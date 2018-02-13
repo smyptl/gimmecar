@@ -14,19 +14,23 @@ class Lib::Services::Generator
   private
 
   def create(rules:, query:)
-    send("send_#{rules.fetch(:type)}", rules: rules, query: query)
+    send("create_#{rules.fetch(:type)}", rules: rules, query: query)
   end
 
   def create_object(rules:, query:)
     output = {}
-    output[:id]     = id(rules, query)
-    output[:object] = name(rules)
+    output['object'] = name(rules)
+    output['id']     = id(rules, query)
 
-    rules.fetch(:attributes).each do |name, rule|
-      q = query.send(query_name(name, r))
-
-      #if rule[:options][:if] && rule[:options][:if].call(q)
-      output[name] = create(rules: r, query: q)
+    rules.except('id').fetch(:attributes).each do |_, rule|
+      if rule.fetch(:type) == :value
+        if (rule[:options][:if] && rule[:options][:if].call(query)) || rule[:options][:if].blank?
+          output[name(rule)] = value(rules: rule, query: query)
+        end
+      else
+        q = query.send(query_name(rules: rule))
+        output[name(rule)] = create(rules: rule, query: q)
+      end
     end
 
     output
@@ -34,25 +38,31 @@ class Lib::Services::Generator
 
   def create_collection(rules:, query:)
     output = {}
-    output[:object] = :list
+    output['object'] = :list
+    output['count']  = query.count
 
-    output[:data] = []
-    query.send(query_name(name(rules), rules)).each do |q|
-      output[:data] << create_object(rules: rules.fetch(:attributes), query: q)
+    output['data'] = []
+    query.each do |q|
+      output['data'] << create_object(rules: rules, query: q)
     end
 
     output
   end
 
-  def create_value(rules:, query:)
+  def value(rules:, query:)
+    if rules[:options][:output]
+      rules[:options][:output].call(query)
+    else
+      query.send(query_name(rules: rules))
+    end
   end
 
-  def query_name(name, rules)
-    rules[:options][:as] || name
+  def query_name(rules:)
+    rules[:options][:as] || rules[:name]
   end
 
   def name(rules)
-    rules[:name].singularize
+    rules[:name].to_s.singularize
   end
 
   def id(rules, query)

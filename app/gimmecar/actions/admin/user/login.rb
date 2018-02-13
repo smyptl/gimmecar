@@ -26,19 +26,7 @@ class Actions::Admin::User::Login < Lib::Forms::Base
     {
       :token => auth_token,
       :user  => { :name => user.name },
-      :links => {
-        :next => next_link,
-      },
     }
-  end
-
-  def next_link
-    case user.number_of_locations
-    when 1
-      url_helper.admin_location_dashboard_path(slug: user.locations.first.slug)
-    else
-      url_helper.admin_locations_path
-    end
   end
 
   def save
