@@ -1,8 +1,9 @@
 class Lib::Services::Generator
 
-  attr_reader :rules, :query
+  attr_reader :klass, :rules, :query
 
-  def initialize(rules:, query:)
+  def initialize(klass:, rules:, query:)
+    @klass = klass
     @rules = rules
     @query = query
   end
@@ -27,7 +28,7 @@ class Lib::Services::Generator
 
     rules.except(:id).fetch(:attributes).each do |_, rule|
       if rule.fetch(:type) == :value
-        if (rule[:options][:if] && rule[:options][:if].call(query)) || rule[:options][:if].blank?
+        if (rule[:options][:if] && run(rule[:options][:if], query)) || rule[:options][:if].blank?
           output[rule[:name].to_sym] = value(rules: rule, query: query)
         end
       else
@@ -54,7 +55,7 @@ class Lib::Services::Generator
 
   def value(rules:, query:)
     if rules[:options][:output]
-      rules[:options][:output].call(query)
+      run(rules[:options][:output], query)
     else
       query.send(query_name(rules: rules))
     end
@@ -70,5 +71,9 @@ class Lib::Services::Generator
 
   def id(rules, query)
     query.send(rules.dig(:attributes, :id, :options, :as) || :id)
+  end
+
+  def run(method, query)
+    klass.instance_exec(query, &method)
   end
 end

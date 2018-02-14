@@ -1,13 +1,15 @@
-class Services::Builders::VehicleTable < Lib::Services::Builder
+class Services::Builders::Vehicle < Lib::Services::Builder
 
   component do |c|
-    c.id
-
     c.values [
-      :make_model,
+      :status,
       :vin,
       :license_number,
-      :status
+      :make,
+      :model,
+      :year,
+      :color,
+      :location_name
     ]
 
     c.value :vehicle_type, output: -> (v) { ActiveSupport::Inflector.titleize(v.vehicle_type) }

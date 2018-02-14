@@ -27,7 +27,7 @@
     },
     computed: {
       sorted_rentals () {
-        return SortBy(this.rentals, ['pickup'])
+        return SortBy(this.rentals.data, ['pickup'])
       }
     },
     methods: {

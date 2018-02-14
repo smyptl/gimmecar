@@ -1,7 +1,7 @@
 class Services::Admin::Vehicles < Lib::Services::Base
 
   output do
-    collection :vehicles, component: Services::Builders::VehicleTable
+    collection :vehicles, component: Services::Builders::VehiclesTable
   end
 
   private

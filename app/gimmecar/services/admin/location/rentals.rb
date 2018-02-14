@@ -1,20 +1,10 @@
 class Services::Admin::Location::Rentals < Lib::Services::Base
 
   output do
-    collection :rentals do |c|
-      c.values [
-        :number,
-        :driver_name,
-        :vehicle_make_model,
-        :pickup,
-        :drop_off
-      ]
-    end
+    collection :rental, component: Services::Builders::RentalsTable
   end
 
-  private
-
   def query
-    Location.includes(open_rentals: :vehicle).find(params.fetch(:location_id)).open_rentals
+    Location.includes(open_rentals: [:vehicle, :driver]).find(params.fetch(:location_id)).open_rentals
   end
 end

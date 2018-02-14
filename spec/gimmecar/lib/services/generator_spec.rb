@@ -25,7 +25,7 @@ describe Lib::Services::Generator do
         c.value :address_2, if: -> (d) { d.address_2.present? }
       end
 
-      results = Lib::Services::Generator.new(rules: rules, query: [driver]).fetch
+      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: [driver]).fetch
 
       expect(results[:object]).to eq(:list)
       expect(results[:count]).to eq(1)
@@ -50,7 +50,7 @@ describe Lib::Services::Generator do
         o.value :middle_name, output: -> (d) { d.name_middle.upcase }
       end
 
-      results = Lib::Services::Generator.new(rules: rules, query: driver).fetch
+      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: driver).fetch
 
       expect(results[:object]).to eq('driver')
       expect(results[:id]).to eq(driver.id)
@@ -60,7 +60,7 @@ describe Lib::Services::Generator do
       expect(results[:middle_name]).to eq(driver.name_middle.upcase)
     end
 
-    it 'object is nil, returns key with nil value' do
+    it 'if object is nil, returns key with nil value' do
       rules = Lib::Services::Builder.object(:driver) do |o|
         o.object :license do |o|
           o.value :license_number
@@ -71,7 +71,7 @@ describe Lib::Services::Generator do
         end
       end
 
-      results = Lib::Services::Generator.new(rules: rules, query: driver).fetch
+      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: driver).fetch
 
       expect(results[:object]).to eq('driver')
       expect(results[:id]).to eq(driver.id)
@@ -80,6 +80,24 @@ describe Lib::Services::Generator do
       expect(results[:rentals][:data].count).to eq(1)
       expect(results[:rentals][:data].first.keys).to eq([:object, :id])
       expect(results[:rentals][:data].first[:id]).to eq(rental.number)
+    end
+
+    it 'uses a method from the klass' do
+      rules = Lib::Services::Builder.object(:driver) do |o|
+        o.value :can_edit, output: -> (d) { can_edit?(d) }
+        o.value :can_destroy, if: -> (d) { can_edit?(d) }
+      end
+
+      klass = Class.new do
+        def can_edit?(d)
+          false
+        end
+      end
+
+      results = Lib::Services::Generator.new(klass: klass.new, rules: rules, query: driver).fetch
+
+      expect(results[:can_edit]).to eq(false)
+      expect(results.keys).to_not include(:can_destroy)
     end
   end
 end

@@ -22,6 +22,6 @@ class Services::Builders::Rental < Lib::Services::Builder
 
     c.object :driver,            component: Services::Builders::Driver
     c.object :additional_driver, component: Services::Builders::Driver
-    c.object :vehicle,           component: Services::Builders::VehicleTable
+    c.object :vehicle,           component: Services::Builders::VehiclesTable
   end
 end
