@@ -1,10 +1,9 @@
 class Services::Admin::Location::Rentals < Lib::Services::Base
 
   output do
-    collection :rentals do |o|
-      c.id :number
-
+    collection :rentals do |c|
       c.values [
+        :number,
         :driver_name,
         :vehicle_make_model,
         :pickup,
@@ -16,6 +15,6 @@ class Services::Admin::Location::Rentals < Lib::Services::Base
   private
 
   def query
-    Location.includes(open_rentals: :vehicle).find(params[:location_id])
+    Location.includes(open_rentals: :vehicle).find(params.fetch(:location_id)).open_rentals
   end
 end

@@ -1,4 +1,4 @@
-class Actions::Public::GetRates < Lib::Forms::Base
+class Services::Public::GetRates < Lib::Services::Base
 
   attributes do |a|
     a.integer :location_id
@@ -33,8 +33,8 @@ class Actions::Public::GetRates < Lib::Forms::Base
     end
   end
 
-  def success_args
-    Services::Rates.fetch(rental: self, location: location)
+  def output
+    Services::Rates.new(rental: self, location: location).fetch!
   end
 
   def location

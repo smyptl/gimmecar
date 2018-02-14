@@ -69,7 +69,7 @@ class Lib::Services::Base < Lib::Attributes::Base
   end
 
   def include(hash)
-    include_hash = hash.with_indifferent_access
+    include_hash = hash
     self
   end
 

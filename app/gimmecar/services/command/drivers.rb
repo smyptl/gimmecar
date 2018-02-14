@@ -1,8 +1,8 @@
 class Services::Command::Drivers < Lib::Services::Base
 
   output do
-    collection :drivers do |o| #, logic: Logic::Driver do |o|
-      o.component Services::Builders::DriverInformation
+    collection :drivers, component: Services::Builders::Driver do |o| #, logic: Logic::Driver do |o|
+      #o.component Services::Builders::Driver
 
       #o.value :rentals_count, output: -> (d) { d.rentals.count }, if: -> (d) { d.rentals.any? }
       o.value :rentals_count, output: -> (d) { d.rentals.count }

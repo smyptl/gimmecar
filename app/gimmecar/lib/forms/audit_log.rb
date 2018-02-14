@@ -40,7 +40,7 @@ module Lib::Forms::AuditLog
     return @attribute_changes if @attribute_changes
     return @attribute_changes = new_attributes unless old_attributes
 
-    @attribute_changes = ActiveSupport::HashWithIndifferentAccess.new
+    @attribute_changes = {}
     self._form_attributes.each do |attr_name, type|
       old_attribute = old_attributes[attr_name.to_sym]
       new_attribute = new_attributes[attr_name.to_sym]
@@ -50,7 +50,7 @@ module Lib::Forms::AuditLog
   end
 
   def retrieve_attributes(model)
-    attrs = ActiveSupport::HashWithIndifferentAccess.new
+    attrs = {}
     self._form_attributes.each do |attribute, setting|
       value = model.public_send(attribute)
       case setting[:type]

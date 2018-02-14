@@ -1,8 +1,8 @@
 class Services::Rates < Lib::Services::Base
 
   attributes do |a|
-    a.default :location
-    a.default :rental
+    a.value :location
+    a.value :rental
   end
 
   private

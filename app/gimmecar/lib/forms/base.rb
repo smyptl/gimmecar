@@ -46,7 +46,7 @@ class Lib::Forms::Base < Lib::Attributes::Base
       data = send(:data, id)
     end
 
-    self._form_attributes.each { |key, _| send("#{key.to_s}=", data.send(key)) } if data
+    self._form_attributes.each { |key, _| send("#{key}=", data.send(key)) } if data
     self
   end
 

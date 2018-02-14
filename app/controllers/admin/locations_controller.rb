@@ -7,7 +7,7 @@ class Admin::LocationsController < ApplicationController
   before_action :authenticate_user, :authorize_api
 
   def index
-    render json: Services::Admin::User::Locations.fetch(current_user), status: 200
+    Services::Admin::User::Locations.fetch(success, failure, user: current_user)
   end
 
   private

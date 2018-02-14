@@ -3,11 +3,11 @@ class Admin::Location::RentalsController < Admin::Location::BaseController
   before_action :authorize_rental, except: [:index]
 
   def index
-    render status: 200, json: Services::Admin::Location::Rentals.fetch(location.id)
+    Services::Admin::Location::Rentals.fetch(success, failure, location_id: location.id)
   end
 
   def show
-    render status: 200, json: Services::Admin::Rental.fetch(number: number)
+    Services::Admin::Rental.new(number: number).fetch(success, failure)
   end
 
   private

@@ -3,11 +3,11 @@ class Admin::Location::VehiclesController < Admin::Location::BaseController
   before_action :authorize_vehicle, except: :index
 
   def index
-    render status: 200, json: Services::Admin::Vehicles.fetch(location.id)
+    Services::Admin::Vehicles.fetch(success, failure, location_id: location.id)
   end
 
   def show
-    render status: 200, json: Services::Admin::Vehicle.fetch(vin: vin)
+    Services::Admin::Vehicle.new(vin: vin).fetch(success, failure)
   end
 
   private

@@ -3,11 +3,11 @@ class Command::DriversController < Command::BaseController
   before_action :authorize_driver, except: :index
 
   def index
-    render status: 200, json: Services::Command::Drivers.fetch
+    Services::Command::Drivers.fetch(success, failure)
   end
 
   def show
-    render status: 200, json: Services::Command::Driver.fetch(id: id)
+    Services::Command::Driver.new(id: id).fetch(success, failure)
   end
 
   private

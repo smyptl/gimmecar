@@ -11,7 +11,7 @@ class Lib::Spreadsheet::Sheet
   def column(name, id = nil, options = {})
     id = name.to_slug.underscore.to_sym unless id
     id = id.to_sym
-    raise ArgumentError, "#{id.to_s} already taken." if column_ids.include?(id)
+    raise ArgumentError, "#{id} already taken." if column_ids.include?(id)
 
     columns << {:name => name, :id => id, group: options[:group], :options => options}
   end

@@ -41,6 +41,7 @@
     methods: {
       fetchData () {
         this.$http.get(this.$route.path).then(response => {
+          console.log(response.data)
           this.rental = response.data
         })
       },

@@ -3,11 +3,11 @@ class Command::RentalsController < Command::BaseController
   before_action :authorize_rental, except: :index
 
   def index
-    render status: 200, json: Services::Command::Rentals.fetch
+    Services::Command::Rentals.fetch(success, failure)
   end
 
   def show
-    render status: 200, json: Services::Command::Rental.fetch(number: number)
+    Services::Command::Rental.new(number: number).fetch(success, failure)
   end
 
   private

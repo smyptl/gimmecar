@@ -33,6 +33,6 @@ describe Lib::Attributes::Parser do
     a = Lib::Attributes::Parser.new
     a.string('email')
 
-    expect(a.fetch).to eq({ "email" => { "type"=>:string, "options"=>{} } })
+    expect(a.fetch).to eq({ 'email' => { 'type' => :string, 'options' => {} } })
   end
 end

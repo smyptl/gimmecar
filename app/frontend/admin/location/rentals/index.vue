@@ -27,7 +27,7 @@
     },
     computed: {
       sorted_rentals () {
-        return SortBy(this.rentals, ['pickup'])
+        return SortBy(this.rentals.data, ['pickup'])
       }
     },
     methods: {
@@ -59,8 +59,8 @@
         tbody
           tr.clickable(v-for='rental in sorted_rentals' @click.prevent='viewRental(rental.number)')
             td {{ rental.number }}
-            td {{ rental.name }}
-            td {{ rental.vehicle }}
+            td {{ rental.driver_name }}
+            td {{ rental.vehicle_make_model }}
             td {{ rental.pickup | date_time }}
             td {{ rental.drop_off | date_time }}
 </template>

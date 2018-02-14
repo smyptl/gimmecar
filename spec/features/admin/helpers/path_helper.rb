@@ -1,5 +1,5 @@
 def visit_admin(path)
-  using_app_host('http://admin.gimmecar.local') do
+  using_app_host('http://admin.gc.local') do
     visit path
   end
 end

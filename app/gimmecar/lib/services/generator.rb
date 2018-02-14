@@ -18,18 +18,21 @@ class Lib::Services::Generator
   end
 
   def create_object(rules:, query:)
-    output = {}
-    output['object'] = name(rules)
-    output['id']     = id(rules, query)
+    return nil if query.nil?
 
-    rules.except('id').fetch(:attributes).each do |_, rule|
+    output = {}
+
+    output[:object] = name(rules)
+    output[:id]     = id(rules, query)
+
+    rules.except(:id).fetch(:attributes).each do |_, rule|
       if rule.fetch(:type) == :value
         if (rule[:options][:if] && rule[:options][:if].call(query)) || rule[:options][:if].blank?
-          output[name(rule)] = value(rules: rule, query: query)
+          output[rule[:name].to_sym] = value(rules: rule, query: query)
         end
       else
         q = query.send(query_name(rules: rule))
-        output[name(rule)] = create(rules: rule, query: q)
+        output[rule[:name].to_sym] = create(rules: rule, query: q)
       end
     end
 
@@ -38,12 +41,12 @@ class Lib::Services::Generator
 
   def create_collection(rules:, query:)
     output = {}
-    output['object'] = :list
-    output['count']  = query.count
+    output[:object] = :list
+    output[:count]  = query.count
 
-    output['data'] = []
+    output[:data] = []
     query.each do |q|
-      output['data'] << create_object(rules: rules, query: q)
+      output[:data] << create_object(rules: rules, query: q)
     end
 
     output
@@ -66,6 +69,6 @@ class Lib::Services::Generator
   end
 
   def id(rules, query)
-    query.send(rules[:as] || :id)
+    query.send(rules.dig(:attributes, :id, :options, :as) || :id)
   end
 end

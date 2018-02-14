@@ -41,9 +41,6 @@ class Lib::Attributes::Parser
     @attributes = ActiveSupport::HashWithIndifferentAccess.new
   end
 
-  def component(klass)
-  end
-
   def string(name, options = {})
     @attributes[name] = { :type => :string, :options => options }
   end
@@ -72,8 +69,8 @@ class Lib::Attributes::Parser
     @attributes[name] = { :type => :signature, :options => options }
   end
 
-  def default(name, options = {})
-    @attributes[name] = { :type => :default, :options => options }
+  def value(name, options = {})
+    @attributes[name] = { :type => :value, :options => options }
   end
 
   def nested(name, options = {})

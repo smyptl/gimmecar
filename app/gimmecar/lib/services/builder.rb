@@ -4,50 +4,54 @@ class Lib::Services::Builder
   self._output = nil
 
   class << self
-    def output
-      n = self.new
+    def component
+      n = self.new(type: :component, name: nil, options: {})
       yield n
-      self._output = n.fetch[:attributes]
+      self._output = n.fetch
     end
 
     def fetch
-      self._output
+      self._output.fetch(:attributes)
     end
 
     def object(name, options = {})
       n = self.new(type: :object, name: name, options: options)
-      yield n
+      yield n if block_given?
       n.fetch
     end
 
     def collection(name, options = {})
       n = self.new(type: :collection, name: name, options: options)
-      yield n
+      yield n if block_given?
       n.fetch
     end
   end
 
   def initialize(type: nil, name: nil, options: {})
-    @_output = ActiveSupport::HashWithIndifferentAccess.new
+    @_output = {}
     @_output[:type]       = type
     @_output[:name]       = name
     @_output[:options]    = options
     @_output[:attributes] = {}
+
+    component(options[:component]) if options[:component]
   end
 
   def object(name, options = {})
-    generator = output[:output] || Lib::Services::Builder.new
+    generator = Lib::Services::Builder.new
+    generator.component(options[:component]) if options[:component]
     yield generator if block_given?
-    add_attribute(name, { :name => name, :type => :object, :options => options, :attributes => generator.fetch })
+    add_attribute(name, { name: name, type: :object, options: options, attributes: generator.fetch[:attributes] })
   end
 
   def collection(name, options = {})
-    generator = options[:output] || Lib::Services::Builder.new
+    generator = Lib::Services::Builder.new
+    generator.component(options[:component]) if options[:component]
     yield generator if block_given?
-    add_attribute(name, { :name => name, :type => :collection, :options => options, :attributes => generator.fetch })
+    add_attribute(name, { name: name, type: :collection, options: options, attributes: generator.fetch[:attributes] })
   end
 
-  def component(klass, options = {})
+  def component(klass)
     @_output[:attributes] = klass.fetch.deep_merge(@_output[:attributes])
   end
 
