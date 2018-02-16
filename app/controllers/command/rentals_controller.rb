@@ -3,11 +3,11 @@ class Command::RentalsController < Command::BaseController
   before_action :authorize_rental, except: :index
 
   def index
-    Services::Command::Rentals.fetch(success, failure)
+    Services::Command::Rentals.retrieve(success, failure)
   end
 
   def show
-    Services::Command::Rental.new(number: number).fetch(success, failure)
+    Services::Command::Rental.new(number: number).retrieve(success, failure)
   end
 
   private

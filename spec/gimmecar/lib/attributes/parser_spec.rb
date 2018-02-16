@@ -7,7 +7,7 @@ describe Lib::Attributes::Parser do
       a = Lib::Attributes::Parser.new
       a.integer('zip_code')
 
-      expect(Lib::Attributes::Parser.parse('1234', a.fetch[:zip_code])).to eq(1234)
+      expect(Lib::Attributes::Parser.parse('1234', a.retrieve[:zip_code])).to eq(1234)
     end
 
     describe 'array' do
@@ -15,14 +15,14 @@ describe Lib::Attributes::Parser do
         a = Lib::Attributes::Parser.new
         a.integer('zip_code', array: true)
 
-        expect(Lib::Attributes::Parser.parse(['1234', '123'], a.fetch[:zip_code])).to eq([1234, 123])
+        expect(Lib::Attributes::Parser.parse(['1234', '123'], a.retrieve[:zip_code])).to eq([1234, 123])
       end
 
       it 'removes blank items' do
         a = Lib::Attributes::Parser.new
         a.integer('zip_code', array: true)
 
-        expect(Lib::Attributes::Parser.parse(['1234', ''], a.fetch[:zip_code])).to eq([1234])
+        expect(Lib::Attributes::Parser.parse(['1234', ''], a.retrieve[:zip_code])).to eq([1234])
       end
     end
 
@@ -33,6 +33,6 @@ describe Lib::Attributes::Parser do
     a = Lib::Attributes::Parser.new
     a.string('email')
 
-    expect(a.fetch).to eq({ 'email' => { 'type' => :string, 'options' => {} } })
+    expect(a.retrieve).to eq({ 'email' => { 'type' => :string, 'options' => {} } })
   end
 end

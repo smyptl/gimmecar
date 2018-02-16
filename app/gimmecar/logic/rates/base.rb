@@ -9,7 +9,7 @@ class Logic::Rates::Base
     @tax_rate      = tax_rate
   end
 
-  def fetch
+  def retrieve
     output = []
 
     date = start_date

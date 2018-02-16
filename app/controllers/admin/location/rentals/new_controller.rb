@@ -26,7 +26,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
     Services::Admin::Vehicles::Available.new({
       :location_id  => location.id,
       :vehicle_type => params[:rental].fetch(:vehicle_type)
-    }).fetch(success, failure)
+    }).retrieve(success, failure)
   end
 
   def validate_vehicle

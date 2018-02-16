@@ -1,6 +1,6 @@
 class Services::Command::Reports::Revenue < Lib::Services::Base
 
-  def fetch
+  def output
     spreadsheet = Lib::Spreadsheet::Base.new('Revenue') do |ss|
 
       Location.all.each do |location|

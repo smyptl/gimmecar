@@ -19,7 +19,7 @@ describe Services::Rates do
                       :rental => double(:rental,
                         :vehicle_type   => 'mid_size',
                         :pickup         => DateTime.new(2011, 1, 1, 0, 0, 0, '-08:00'),
-                        :drop_off       => DateTime.new(2011, 1, 4, 0, 0, 0, '-08:00'))).fetch!
+                        :drop_off       => DateTime.new(2011, 1, 4, 0, 0, 0, '-08:00'))).retrieve!
 
       expect(rental[:rates].count).to eq(3)
       expect(rental[:combined_tax_rate]).to eq(tax_rates.combined_tax_rate)
@@ -35,7 +35,7 @@ describe Services::Rates do
                         :rental => double(:rental,
                           :vehicle_type => 'mid_size',
                           :pickup       => DateTime.new(2017, 1, 31, 10, 57, 0, '-07:00'),
-                          :drop_off     => DateTime.new(2017, 2, 5, 9, 57, 0, '-07:00'))).fetch!
+                          :drop_off     => DateTime.new(2017, 2, 5, 9, 57, 0, '-07:00'))).retrieve!
 
         expect(rental[:rates].count).to eq(5)
       end

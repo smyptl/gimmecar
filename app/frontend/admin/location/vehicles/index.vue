@@ -9,13 +9,13 @@
       }
     },
     created () {
-      this.fetchData()
+      this.getData()
     },
     components: {
       VehicleStatusIcons,
     },
     watch: {
-      '$route': 'fetchData',
+      '$route': 'getData',
     },
     computed: {
       sorted_vehicles () {
@@ -26,7 +26,7 @@
       lastFive (vin) {
         return vin.slice(-5)
       },
-      fetchData () {
+      getData () {
         this.$http
           .get(this.$route.path)
           .then(response => {

@@ -3,7 +3,7 @@ require 'factories/drivers'
 
 describe Lib::Services::Base do
 
-  describe '#fetch' do
+  describe '#retrieve' do
 
     it 'returns appropriate hash' do
       test_service = Class.new(Lib::Services::Base) do
@@ -19,7 +19,7 @@ describe Lib::Services::Base do
 
       driver = create(:driver)
 
-      results = test_service.fetch!
+      results = test_service.retrieve!
 
       expect(results[:object]).to eq(:list)
       expect(results[:count]).to eq(1)

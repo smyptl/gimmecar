@@ -69,7 +69,7 @@ class Services::Rates < Lib::Services::Base
   end
 
   def calculate_rate
-    Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: tax_rate).fetch
+    Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: tax_rate).retrieve
   end
 
   def rate

@@ -76,10 +76,10 @@ class Lib::Attributes::Parser
   def nested(name, options = {})
     form = Lib::Attributes::Parser.new
     yield form
-    @attributes[name] = { :type => :nested, :options => options, :attributes => form.fetch }
+    @attributes[name] = { :type => :nested, :options => options, :attributes => form.retrieve }
   end
 
-  def fetch
+  def retrieve
     attributes
   end
 end

@@ -7,23 +7,23 @@ class Lib::Services::Builder
     def component
       n = self.new(type: :component, name: nil, options: {})
       yield n
-      self._output = n.fetch
+      self._output = n.retrieve
     end
 
-    def fetch
+    def retrieve
       self._output.fetch(:attributes)
     end
 
     def object(name, options = {})
       n = self.new(type: :object, name: name, options: options)
       yield n if block_given?
-      n.fetch
+      n.retrieve
     end
 
     def collection(name, options = {})
       n = self.new(type: :collection, name: name, options: options)
       yield n if block_given?
-      n.fetch
+      n.retrieve
     end
   end
 
@@ -41,18 +41,18 @@ class Lib::Services::Builder
     generator = Lib::Services::Builder.new
     generator.component(options[:component]) if options[:component]
     yield generator if block_given?
-    add_attribute(name, { name: name, type: :object, options: options, attributes: generator.fetch[:attributes] })
+    add_attribute(name, { name: name, type: :object, options: options, attributes: generator.retrieve.fetch(:attributes) })
   end
 
   def collection(name, options = {})
     generator = Lib::Services::Builder.new
     generator.component(options[:component]) if options[:component]
     yield generator if block_given?
-    add_attribute(name, { name: name, type: :collection, options: options, attributes: generator.fetch[:attributes] })
+    add_attribute(name, { name: name, type: :collection, options: options, attributes: generator.retrieve.fetch(:attributes) })
   end
 
   def component(klass)
-    @_output[:attributes] = klass.fetch.deep_merge(@_output[:attributes])
+    @_output[:attributes] = klass.retrieve.deep_merge(@_output[:attributes])
   end
 
   def values(args, options = {})
@@ -69,13 +69,13 @@ class Lib::Services::Builder
     add_attribute(:id, { :name => :id, :type => :value, :options => { :as => as }})
   end
 
-  def fetch
+  def retrieve
     @_output
   end
 
   private
 
   def add_attribute(name, options)
-    @_output[:attributes][name.to_sym] = options
+    @_output.fetch(:attributes)[name.to_sym] = options
   end
 end

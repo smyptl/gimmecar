@@ -8,7 +8,7 @@ class Lib::Services::Generator
     @query = query
   end
 
-  def fetch
+  def retrieve
     create(rules: @rules, query: @query)
   end
 

@@ -7,7 +7,7 @@ class Admin::LocationsController < ApplicationController
   before_action :authenticate_user, :authorize_api
 
   def index
-    Services::Admin::User::Locations.fetch(success, failure, user: current_user)
+    Services::Admin::User::Locations.retrieve(success, failure, user: current_user)
   end
 
   private

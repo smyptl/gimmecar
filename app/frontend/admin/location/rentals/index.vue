@@ -20,10 +20,10 @@
       },
     },
     created () {
-      this.fetchData()
+      this.getData()
     },
     watch: {
-      '$route': 'fetchData',
+      '$route': 'getData',
     },
     computed: {
       sorted_rentals () {
@@ -31,7 +31,7 @@
       }
     },
     methods: {
-      fetchData () {
+      getData () {
         this.$http
           .get(this.$route.path)
           .then(response => {

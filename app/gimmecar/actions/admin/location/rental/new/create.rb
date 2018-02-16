@@ -33,7 +33,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
   end
 
   def rates
-    @rates ||= Services::Rates.new(rental: self, location: location).fetch!
+    @rates ||= Services::Rates.new(rental: self, location: location).retrieve!
   end
 
   def location

@@ -3,7 +3,7 @@ require 'factories/drivers'
 
 describe Lib::Services::Generator do
 
-  describe '#fetch' do
+  describe '#retrieve' do
 
     let(:rental) { double(:rental, number: Faker::Number.number(6)) }
 
@@ -25,7 +25,7 @@ describe Lib::Services::Generator do
         c.value :address_2, if: -> (d) { d.address_2.present? }
       end
 
-      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: [driver]).fetch
+      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: [driver]).retrieve
 
       expect(results[:object]).to eq(:list)
       expect(results[:count]).to eq(1)
@@ -50,7 +50,7 @@ describe Lib::Services::Generator do
         o.value :middle_name, output: -> (d) { d.name_middle.upcase }
       end
 
-      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: driver).fetch
+      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: driver).retrieve
 
       expect(results[:object]).to eq('driver')
       expect(results[:id]).to eq(driver.id)
@@ -71,7 +71,7 @@ describe Lib::Services::Generator do
         end
       end
 
-      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: driver).fetch
+      results = Lib::Services::Generator.new(klass: nil, rules: rules, query: driver).retrieve
 
       expect(results[:object]).to eq('driver')
       expect(results[:id]).to eq(driver.id)
@@ -94,7 +94,7 @@ describe Lib::Services::Generator do
         end
       end
 
-      results = Lib::Services::Generator.new(klass: klass.new, rules: rules, query: driver).fetch
+      results = Lib::Services::Generator.new(klass: klass.new, rules: rules, query: driver).retrieve
 
       expect(results[:can_edit]).to eq(false)
       expect(results.keys).to_not include(:can_destroy)

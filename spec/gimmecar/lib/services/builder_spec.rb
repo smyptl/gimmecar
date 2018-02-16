@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Lib::Services::Builder do
 
   describe '.output' do
-    it 'fetches a id accurately' do
+    it 'retrieves a id accurately' do
       output = Lib::Services::Builder.component do |o|
         o.id(:number)
       end
@@ -17,7 +17,7 @@ describe Lib::Services::Builder do
       })
     end
 
-    it 'fetches values accurately' do
+    it 'retrieves values accurately' do
       output = Lib::Services::Builder.component do |o|
         o.values [:one, :two], if: -> (f) { f.test }
       end

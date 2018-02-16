@@ -3,7 +3,7 @@ class Public::ReservationController < ApplicationController
   before_action :authorize_api
 
   def index
-    Services::Public::GetRates.new(params.permit(:location_id, :vehicle_type, :pickup, :drop_off)).fetch(success, failure)
+    Services::Public::GetRates.new(params.permit(:location_id, :vehicle_type, :pickup, :drop_off)).retrieve(success, failure)
   end
 
   def create

@@ -34,7 +34,7 @@ class Services::Public::GetRates < Lib::Services::Base
   end
 
   def output
-    Services::Rates.new(rental: self, location: location).fetch!
+    Services::Rates.new(rental: self, location: location).retrieve!
   end
 
   def location

@@ -7,7 +7,7 @@ describe Logic::Rates::Base do
   let(:location) { create(:location) }
   let(:tax_rate) { create(:tax_rate, location: location) }
 
-  describe '#fetch' do
+  describe '#retrieve' do
 
     it 'returns array of rates for each day' do
 
@@ -17,7 +17,7 @@ describe Logic::Rates::Base do
           DateTime.new(2018, 1, 4, 0, 0, 0, '-08:00')),
         location: location,
         base_rate: 3000,
-        tax_rate: tax_rate).fetch
+        tax_rate: tax_rate).retrieve
 
       expect(results.count).to eq(3)
       expect(results[0][:date]).to eq(Date.new(2018, 1, 1))
@@ -34,7 +34,7 @@ describe Logic::Rates::Base do
             DateTime.new(2018, 1, 3, 7, 0, 0, '-08:00')),
           location: location,
           base_rate: 3000,
-          tax_rate: tax_rate).fetch
+          tax_rate: tax_rate).retrieve
 
         expect(results.count).to eq(3)
         expect(results[0][:date]).to eq(Date.new(2018, 1, 1))
@@ -49,7 +49,7 @@ describe Logic::Rates::Base do
             DateTime.new(2018, 1, 1, 7, 0, 0, '-08:00')),
           location: location,
           base_rate: 3000,
-          tax_rate: tax_rate).fetch
+          tax_rate: tax_rate).retrieve
 
         expect(results.count).to eq(1)
         expect(results[0][:date]).to eq(Date.new(2018, 1, 1))

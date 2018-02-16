@@ -3,11 +3,11 @@ class Admin::Location::RentalsController < Admin::Location::BaseController
   before_action :authorize_rental, except: [:index]
 
   def index
-    Services::Admin::Location::Rentals.fetch(success, failure, location_id: location.id)
+    Services::Admin::Location::Rentals.retrieve(success, failure, location_id: location.id)
   end
 
   def show
-    Services::Admin::Rental.new(number: number).fetch(success, failure)
+    Services::Admin::Rental.new(number: number).retrieve(success, failure)
   end
 
   private

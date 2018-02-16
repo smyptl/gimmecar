@@ -11,7 +11,7 @@ class Lib::Services::Base < Lib::Attributes::Base
   class_attribute :_output
   self._output = nil
 
-  define_callbacks :fetch
+  define_callbacks :retrieve
 
   class << self
     def inherited(subclass)
@@ -25,12 +25,12 @@ class Lib::Services::Base < Lib::Attributes::Base
       end
     end
 
-    def fetch(success, failure, params = {})
-      self.new().fetch(success, failure, params)
+    def retrieve(success, failure, params = {})
+      self.new().retrieve(success, failure, params)
     end
 
-    def fetch!(params = {})
-      self.new().fetch!(params)
+    def retrieve!(params = {})
+      self.new().retrieve!(params)
     end
 
     def output(&block)
@@ -39,10 +39,10 @@ class Lib::Services::Base < Lib::Attributes::Base
     end
   end
 
-  def fetch(success, failure, params = {})
+  def retrieve(success, failure, params = {})
     @params = params
 
-    run_callbacks :fetch do
+    run_callbacks :retrieve do
       if valid?
         success.call(output)
       else
@@ -51,15 +51,15 @@ class Lib::Services::Base < Lib::Attributes::Base
     end
   end
 
-  def fetch!(params = {})
+  def retrieve!(params = {})
     success = lambda { |args| args }
     failure = lambda { |_| false }
-    fetch(success, failure, params)
+    retrieve(success, failure, params)
   end
 
   def output
     _output || (raise Lib::Errors::NotImplemented)
-    Lib::Services::Generator.new(klass: self, rules: _output, query: query).fetch
+    Lib::Services::Generator.new(klass: self, rules: _output, query: query).retrieve
   end
 
   private
