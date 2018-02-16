@@ -28,7 +28,6 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
   end
 
   def rental
-
     @rental ||= ::Rental.find_by(number: number)
   end
 end

@@ -21,16 +21,7 @@ class Charge < ApplicationRecord
     raise ArgumentError if amount.nil?
 
     begin
-      case
-      when customer_id.blank?
-        customer_id = Stripe::Customer.create({ :source => token })['id']
-      when !token.blank?
-        raise ArugmentError if customer_id.nil?
-
-        customer = Stripe::Customer.retrieve(customer_id)
-        customer.source = token
-        customer.save
-      end
+      customer_id = find_or_create_customer(token: token, customer_id: customer_id)
 
       unless amount == 0
         charge = Stripe::Charge.create({
@@ -46,6 +37,26 @@ class Charge < ApplicationRecord
 
     rescue Stripe::CardError => e
       failure.call(message: e.message, customer_id: customer_id)
+    end
+  end
+
+  private
+
+  def find_or_create_customer(token:, customer_id:)
+    case
+    when customer_id.blank? && token.blank?
+      raise ArugmentError
+    when customer_id.blank? && token.present?
+      Stripe::Customer.create({ :source => token })['id']
+    when customer_id.present? && token.present?
+      customer = Stripe::Customer.retrieve(customer_id)
+      customer.source = token
+      customer.save
+      customer.id
+    when customer_id.present? && token.blank?
+      customer_id
+    else
+      raise Lib::Errors::NotImplemented
     end
   end
 end

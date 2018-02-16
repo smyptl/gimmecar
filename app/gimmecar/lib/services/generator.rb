@@ -1,11 +1,11 @@
 class Lib::Services::Generator
 
-  attr_reader :klass, :rules, :query
+  attr_reader :record, :rules, :query
 
-  def initialize(klass:, rules:, query:)
-    @klass = klass
-    @rules = rules
-    @query = query
+  def initialize(record:, rules:, query:)
+    @record = record
+    @rules  = rules
+    @query  = query
   end
 
   def retrieve
@@ -74,6 +74,6 @@ class Lib::Services::Generator
   end
 
   def run(method, query)
-    klass.instance_exec(query, &method)
+    record.instance_exec(query, &method)
   end
 end

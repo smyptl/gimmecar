@@ -59,7 +59,7 @@ class Lib::Services::Base < Lib::Attributes::Base
 
   def output
     _output || (raise Lib::Errors::NotImplemented)
-    Lib::Services::Generator.new(klass: self, rules: _output, query: query).retrieve
+    Lib::Services::Generator.new(record: self, rules: _output, query: query).retrieve
   end
 
   private
