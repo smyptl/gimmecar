@@ -9,10 +9,10 @@
       }
     },
     created () {
-      this.fetchData()
+      this.getData()
     },
     watch: {
-      '$route': 'fetchData',
+      '$route': 'getData',
     },
     components: {
       VehicleStatusIcons,
@@ -21,7 +21,7 @@
       lastFive (vin) {
         return vin.slice(-5)
       },
-      fetchData () {
+      getData () {
         this.$http
           .get(this.$route.path)
           .then(response => {
@@ -51,9 +51,10 @@
             td {{ vehicle.make_model }}
             td {{ vehicle.vehicle_type }}
             td {{ vehicle.location_name }}
-            td(v-if='vehicle.license_number') {{ vehicle.license_number }}
-            td(v-else)
-              i VIN: {{ lastFive(vehicle.vin) }}
+            td
+              template(v-if='vehicle.license_number') {{ vehicle.license_number }}
+              template(v-else)
+                i VIN: {{ lastFive(vehicle.vin) }}
             td.status
               vehicle-status-icons(:status='vehicle.status')
 </template>

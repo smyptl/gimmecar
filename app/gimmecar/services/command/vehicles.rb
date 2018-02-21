@@ -1,19 +1,15 @@
 class Services::Command::Vehicles < Lib::Services::Base
 
-  def initialize()
+  output do
+    collection :vehicles do |c|
+      c.component Services::Builders::VehiclesTable
+      c.attribute :location_name
+    end
   end
 
-  def fetch
-    Vehicle.all.map do |v|
-      {
-        :id             => v.id,
-        :make_model     => v.make_model,
-        :vehicle_type   => ActiveSupport::Inflector.titleize(v.vehicle_type),
-        :location_name  => v.location_name,
-        :license_number => v.license_number,
-        :vin            => v.vin,
-        :status         => v.status,
-      }
-    end
+  private
+
+  def query
+    Vehicle.includes(:pickup_location).all
   end
 end

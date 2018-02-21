@@ -3,11 +3,11 @@ class Command::VehiclesController < Command::BaseController
   before_action :authorize_vehicle, except: :index
 
   def index
-    render status: 200, json: Services::Command::Vehicles.fetch
+    Services::Command::Vehicles.retrieve(success, failure)
   end
 
   def show
-    render status: 200, json: Services::Command::Vehicle.fetch(vin: vin)
+    Services::Command::Vehicle.new(vin: vin).retrieve(success, failure)
   end
 
   private

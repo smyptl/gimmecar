@@ -150,7 +150,7 @@ class Lib::Spreadsheet::Compiler::Spreadsheet
       id.each { |i| add_rows(type, i, index, sheet_id) }
     else
       sheet = processed_sheets.dig(sheet_id, type)
-      raise ArgumentError, "#{id.to_s} already set"  if sheet.has_key?(id)
+      raise ArgumentError, "#{id} already set"  if sheet.has_key?(id)
       sheet[id] = index
     end
   end

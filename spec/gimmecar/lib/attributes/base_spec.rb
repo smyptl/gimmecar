@@ -34,10 +34,10 @@ describe Lib::Attributes::Base do
 
     it 'creates nested read method, and one write method' do
       form = test_form.new({
-        :driver => {
-          :name_first => 'John',
-          :insurance => {
-            :policy_number => 'ASDF!@#$',
+        'driver' => {
+          'name_first' => 'John',
+          'insurance' => {
+            'policy_number' => 'ASDF!@#$',
           },
         },
       })
@@ -46,7 +46,7 @@ describe Lib::Attributes::Base do
       expect(form.driver_insurance_policy_number).to eq('ASDF!@#$')
       expect(form.driver).to eq({
         'name_first' => 'John',
-        'insurance' => {
+        'insurance'  => {
           'policy_number' => 'ASDF!@#$',
         },
       })

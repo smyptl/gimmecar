@@ -29,13 +29,13 @@
       DriverInfo,
     },
     created () {
-      this.fetchData()
+      this.getData()
     },
     watch: {
-      '$route': 'fetchData',
+      '$route': 'getData',
     },
     methods: {
-      fetchData () {
+      getData () {
         this.$http.get(this.$route.path).then(response => {
           this.rental = response.data
         })

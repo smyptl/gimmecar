@@ -1,11 +1,13 @@
 class Services::Rates < Lib::Services::Base
 
   attributes do |a|
-    a.default :location
-    a.default :rental
+    a.value :location
+    a.value :rental
   end
 
-  def fetch
+  private
+
+  def output
     {
       :vehicle           => ActiveSupport::Inflector.titleize(rental.vehicle_type),
       :location          => location.description,
@@ -21,8 +23,6 @@ class Services::Rates < Lib::Services::Base
       :total             => total,
     }
   end
-
-  private
 
   def rental_period
     @rental_period ||= Lib::DateRange.new(rental.pickup, rental.drop_off)
@@ -69,7 +69,7 @@ class Services::Rates < Lib::Services::Base
   end
 
   def calculate_rate
-    Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: tax_rate).fetch
+    Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: tax_rate).retrieve
   end
 
   def rate

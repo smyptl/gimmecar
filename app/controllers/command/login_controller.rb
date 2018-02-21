@@ -26,10 +26,6 @@ class Command::LoginController < ApplicationController
       render json: nil, status: 200
     end
 
-    failure = lambda do |args|
-      render json: args, status: 404
-    end
-
     Actions::Command::User::Login.new(params.require(:login)).execute(success, failure)
   end
 

@@ -8,17 +8,11 @@ class Lib::Spreadsheet::Base
   def add_sheet(name, id = nil)
     sheet = Lib::Spreadsheet::Sheet.new(name, id)
     yield sheet
-    sheets << sheet.fetch
-  end
-
-  def fetch
-    {
-      :sheets => sheets
-    }
+    sheets << sheet.retrieve
   end
 
   def compile(workbook)
-    Lib::Spreadsheet::Compiler::Base.new(workbook).fetch(fetch)
+    Lib::Spreadsheet::Compiler::Base.new(workbook).retrieve(sheets: sheets)
   end
 
   def file_name

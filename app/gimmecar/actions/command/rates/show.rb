@@ -34,7 +34,7 @@ class Actions::Command::Quote < Lib::Forms::Base
   end
 
   def success_args
-    Services::Rates.fetch(rental: self, location: location)
+    Services::Rates.new(rental: self, location: location).retrieve!
   end
 
   def location

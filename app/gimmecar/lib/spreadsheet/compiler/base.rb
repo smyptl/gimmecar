@@ -4,7 +4,7 @@ class Lib::Spreadsheet::Compiler::Base
     @workbook = workbook
   end
 
-  def fetch(inputs)
+  def retrieve(inputs)
     @sheets = inputs.fetch(:sheets)
     compile
   end

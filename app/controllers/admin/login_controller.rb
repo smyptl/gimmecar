@@ -23,11 +23,7 @@ class Admin::LoginController < ApplicationController
         :httponly => true,
       }
 
-      render json: { links: args.fetch(:links) }, status: 200
-    end
-
-    failure = lambda do |args|
-      render json: args, status: 404
+      render json: {}, status: 200
     end
 
     Actions::Admin::User::Login.new(params.require(:login)).execute(success, failure)

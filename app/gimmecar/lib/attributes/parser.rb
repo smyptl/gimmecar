@@ -69,17 +69,17 @@ class Lib::Attributes::Parser
     @attributes[name] = { :type => :signature, :options => options }
   end
 
-  def default(name, options = {})
-    @attributes[name] = { :type => :default, :options => options }
+  def value(name, options = {})
+    @attributes[name] = { :type => :value, :options => options }
   end
 
   def nested(name, options = {})
     form = Lib::Attributes::Parser.new
     yield form
-    @attributes[name] = { :type => :nested, :options => options, :attributes => form.fetch }
+    @attributes[name] = { :type => :nested, :options => options, :attributes => form.retrieve }
   end
 
-  def fetch
+  def retrieve
     attributes
   end
 end

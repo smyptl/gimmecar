@@ -53,7 +53,7 @@ class Actions::Public::CreateReservation < Lib::Forms::Base
   end
 
   def rates
-    @rates ||= Services::Rates.fetch(rental: self, location: location)
+    @rates ||= Services::Rates.new(rental: self, location: location).retrieve!
   end
 
   def save

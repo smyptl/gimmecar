@@ -33,7 +33,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
   end
 
   def rates
-    @rates ||= Services::Rates.fetch(rental: self, location: location)
+    @rates ||= Services::Rates.new(rental: self, location: location).retrieve!
   end
 
   def location
@@ -41,7 +41,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
   end
 
   def available_vehicle_ids
-    location.available_vehicle_ids(vehicle_type: vehicle_type, date_range: rental_period)
+    location.available_vehicle_ids(vehicle_type: vehicle_type)
   end
 
   def valid?

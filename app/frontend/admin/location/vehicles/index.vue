@@ -9,19 +9,24 @@
       }
     },
     created () {
-      this.fetchData()
+      this.getData()
     },
     components: {
       VehicleStatusIcons,
     },
     watch: {
-      '$route': 'fetchData',
+      '$route': 'getData',
+    },
+    computed: {
+      sorted_vehicles () {
+        return this.vehicles.data
+      },
     },
     methods: {
       lastFive (vin) {
         return vin.slice(-5)
       },
-      fetchData () {
+      getData () {
         this.$http
           .get(this.$route.path)
           .then(response => {
@@ -46,12 +51,13 @@
             th License #
             th Status
         tbody
-          tr.clickable(v-for='vehicle in vehicles' @click.prevent='viewVehicle(vehicle.vin)')
+          tr.clickable(v-for='vehicle in sorted_vehicles' @click.prevent='viewVehicle(vehicle.vin)')
             td {{ vehicle.make_model }}
             td {{ vehicle.vehicle_type }}
-            td(v-if='vehicle.license_number') {{ vehicle.license_number }}
-            td(v-else)
-              i VIN: {{ lastFive(vehicle.vin) }}
+            td
+              template(v-if='vehicle.license_number') {{ vehicle.license_number }}
+              template(v-else)
+                i VIN: {{ lastFive(vehicle.vin) }}
             td.status
               vehicle-status-icons(:status='vehicle.status')
 </template>

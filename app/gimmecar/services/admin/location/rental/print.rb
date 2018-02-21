@@ -2,11 +2,11 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
 
   attr_reader :rental
 
-  def initialize(number: nil)
-    @rental = ::Rental.find_by(number: number)
+  attributes do |a|
+    a.string :number
   end
 
-  def fetch
+  def output
     {
       :vehicle                                              => rental.vehicle_make_model,
       :location                                             => rental.pickup_location_description,
@@ -25,5 +25,9 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
       :driver_signature                                     => rental.driver_signature,
       :additional_driver_signature                          => rental.additional_driver_signature,
     }
+  end
+
+  def rental
+    @rental ||= ::Rental.find_by(number: number)
   end
 end

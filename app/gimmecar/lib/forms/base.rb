@@ -36,8 +36,8 @@ class Lib::Forms::Base < Lib::Attributes::Base
   end
 
   def execute!(params = {})
-    success = lambda { |_| return true }
-    failure = lambda { |_| return false }
+    success = lambda { |_| true }
+    failure = lambda { |_| false }
     execute(success, failure, params)
   end
 
@@ -46,7 +46,7 @@ class Lib::Forms::Base < Lib::Attributes::Base
       data = send(:data, id)
     end
 
-    self._form_attributes.each { |key, _| send("#{key.to_s}=", data.send(key)) } if data
+    self._form_attributes.each { |key, _| send("#{key}=", data.send(key)) } if data
     self
   end
 
@@ -68,9 +68,5 @@ class Lib::Forms::Base < Lib::Attributes::Base
     {
       :errors => errors,
     }
-  end
-
-  def url_helper
-    Rails.application.routes.url_helpers
   end
 end

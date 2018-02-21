@@ -46,7 +46,7 @@ class Lib::Attributes::TypeCast
       end
     end
 
-    def default(value)
+    def value(value)
       value
     end
 

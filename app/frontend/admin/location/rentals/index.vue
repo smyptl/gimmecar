@@ -20,18 +20,18 @@
       },
     },
     created () {
-      this.fetchData()
+      this.getData()
     },
     watch: {
-      '$route': 'fetchData',
+      '$route': 'getData',
     },
     computed: {
       sorted_rentals () {
-        return SortBy(this.rentals, ['pickup'])
+        return SortBy(this.rentals.data, ['pickup'])
       }
     },
     methods: {
-      fetchData () {
+      getData () {
         this.$http
           .get(this.$route.path)
           .then(response => {
@@ -59,8 +59,8 @@
         tbody
           tr.clickable(v-for='rental in sorted_rentals' @click.prevent='viewRental(rental.number)')
             td {{ rental.number }}
-            td {{ rental.name }}
-            td {{ rental.vehicle }}
+            td {{ rental.driver_name }}
+            td {{ rental.vehicle_make_model }}
             td {{ rental.pickup | date_time }}
             td {{ rental.drop_off | date_time }}
 </template>

@@ -4,13 +4,14 @@ class Lib::Services::Base < Lib::Attributes::Base
     :include,
     :include_hash,
     :include?,
-    :generated_on,
-    :as_of,
-    :date,
-    :during_period,
-    :period,
-    :uri_helpers
   ]
+
+  attr_reader :params
+
+  class_attribute :_output
+  self._output = nil
+
+  define_callbacks :retrieve
 
   class << self
     def inherited(subclass)
@@ -24,25 +25,51 @@ class Lib::Services::Base < Lib::Attributes::Base
       end
     end
 
-    def fetch(*args)
-      new(*args).fetch
+    def retrieve(success, failure, params = {})
+      self.new().retrieve(success, failure, params)
     end
 
-    def wrap(collection)
-      collection.map { |c| fetch(c) }
+    def retrieve!(params = {})
+      self.new().retrieve!(params)
+    end
+
+    def output(&block)
+      builder = Lib::Services::Builder
+      self._output = builder.class_eval(&block)
     end
   end
 
-  def fetch
-    raise MethodNotImplemented
+  def retrieve(success, failure, params = {})
+    @params = params
+
+    run_callbacks :retrieve do
+      if valid?
+        success.call(output)
+      else
+        failure.call(failure_args)
+      end
+    end
   end
 
-  def user
-    @user || (raise Lib::Errors::NotImplemented)
+  def retrieve!(params = {})
+    success = lambda { |args| args }
+    failure = lambda { |_| false }
+    retrieve(success, failure, params)
+  end
+
+  def output
+    _output || (raise Lib::Errors::NotImplemented)
+    Lib::Services::Generator.new(record: self, rules: _output, query: query).retrieve
+  end
+
+  private
+
+  def query
+    raise Lib::Errors::NotImplemented
   end
 
   def include(hash)
-    @include_hash = hash.with_indifferent_access
+    include_hash = hash
     self
   end
 
@@ -54,25 +81,9 @@ class Lib::Services::Base < Lib::Attributes::Base
     Lib::Attributes::TypeCast.boolean(include_hash[key]) || false
   end
 
-  def generated_on
-    @generated_on ||= DateTime.now
-  end
-
-  def as_of(date)
-    @date = Lib::Attributes::TypeCast.date_time(date)
-    self
-  end
-
-  def date
-    @date || (raise Lib::Errors::NotImplemented)
-  end
-
-  def during_period(start_date, end_date)
-    @period = Lib::DateRange.new(Lib::Attributes::TypeCast.date_time(start_date), Lib::Attributes::TypeCast.date_time(end_date))
-    self
-  end
-
-  def period
-    @period || (raise Lib::Errors::NotImplemented)
+  def failure_args
+    {
+      :errors => errors,
+    }
   end
 end

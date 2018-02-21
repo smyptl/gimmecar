@@ -53,12 +53,12 @@ class Location < ApplicationRecord
     open_rentals + reservations
   end
 
-  def available_vehicles(vehicle_type:, date_range:)
+  def available_vehicles(vehicle_type:)
     vehicles.where(vehicle_type: vehicle_type).select { |v| v.available? }
   end
 
-  def available_vehicle_ids(vehicle_type:, date_range:)
-    available_vehicles(vehicle_type: vehicle_type, date_range: date_range).pluck(:id)
+  def available_vehicle_ids(vehicle_type:)
+    available_vehicles(vehicle_type: vehicle_type).pluck(:id)
   end
 
   def vehicle_ids

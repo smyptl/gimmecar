@@ -20,18 +20,18 @@
       },
     },
     created () {
-      this.fetchData()
+      this.getData()
     },
     watch: {
-      '$route': 'fetchData',
+      '$route': 'getData',
     },
     computed: {
       sorted_rentals () {
-        return SortBy(this.rentals, ['pickup'])
+        return SortBy(this.rentals.data, ['pickup'])
       }
     },
     methods: {
-      fetchData () {
+      getData () {
         this.$http
           .get(this.$route.path)
           .then(response => {
