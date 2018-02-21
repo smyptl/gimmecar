@@ -5,7 +5,7 @@ class Services::Command::Rental < Lib::Services::Base
   end
 
   output do
-    object :rental, component: Services::Builder::Rental
+    object :rental, component: Services::Builders::Rental
   end
 
   private
