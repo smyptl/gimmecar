@@ -16,13 +16,13 @@ class Lib::Services::Builder
     def object(name, **options)
       n = self.new(type: :object, name: name, **options)
       yield n if block_given?
-      n.retrieve
+      self._output = n.retrieve
     end
 
     def collection(name, **options)
       n = self.new(type: :collection, name: name, **options)
       yield n if block_given?
-      n.retrieve
+      self._output = n.retrieve
     end
   end
 
@@ -58,9 +58,6 @@ class Lib::Services::Builder
     })
   end
 
-  def links
-  end
-
   def component(klass)
     output[:attributes] = klass.retrieve_attributes.deep_merge(retrieve_attributes)
   end
@@ -72,11 +69,13 @@ class Lib::Services::Builder
   end
 
   def attribute(name, **options)
+    name = name.to_sym
+
     add_attribute(name, { name: name, type: :attribute, options: options })
   end
 
   def id(as = nil)
-    add_attribute(:id, { name: :id, type: :attribute, options: { as: as }})
+    add_attribute(:id, { name: :id, type: :attribute, options: { as: as.to_sym }})
   end
 
   def retrieve
@@ -92,7 +91,9 @@ class Lib::Services::Builder
   def new_builder(options, &block)
     builder = Lib::Services::Builder.new
     builder.component(options[:component]) if options[:component]
+
     yield builder if block_given?
+
     builder
   end
 

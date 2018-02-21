@@ -17,7 +17,7 @@ describe Lib::Services::Generator do
                           rentals: [rental],
                           license: nil) }
 
-    it 'returns appropriate hash' do
+    it 'returns collection hash' do
       rules = Lib::Services::Builder.collection :drivers do |c|
         c.attribute :name_first
         c.attribute :name_last, output: -> (d) { d.name_last.upcase }
@@ -98,6 +98,17 @@ describe Lib::Services::Generator do
 
       expect(results[:can_edit]).to eq(false)
       expect(results.keys).to_not include(:can_destroy)
+    end
+
+    it 'overrides a previous attribute, can be a string or symbol' do
+      rules = Lib::Services::Builder.object(:driver) do |o|
+        o.attribute :name_first
+        o.attribute 'name_first', output: -> (d) { d.name_first.upcase }
+      end
+
+      results = Lib::Services::Generator.new(record: nil, rules: rules, query: driver).retrieve
+
+      expect(results[:name_first]).to eq(driver.name_first.upcase)
     end
   end
 end
