@@ -75,7 +75,7 @@ class Lib::Services::Builder
   end
 
   def id(as = nil)
-    add_attribute(:id, { name: :id, type: :attribute, options: { as: as.to_sym }})
+    add_attribute(:id, { name: :id, type: :attribute, options: { as: as }})
   end
 
   def retrieve
