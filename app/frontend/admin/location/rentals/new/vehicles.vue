@@ -48,7 +48,7 @@
           tr(v-for='vehicle in sorted_vehicles' @click.prevent='selectVehicle(vehicle.id)' v-bind:class='{ selected: form.vehicle_id == vehicle.id }')
             td.checkbox
               input.input-field(type='radio' id='form_vehicle_id' v-error='form.errors.has("vehicle_id")' v-bind:checked='form.vehicle_id == vehicle.id')
-            td {{ vehicle.make }} {{ vehicle.model }}
+            td {{ vehicle.make_model }}
             td {{ vehicle.color | capitalize }}
             td(v-if='vehicle.license_number') {{ vehicle.license_number }}
             td(v-else)

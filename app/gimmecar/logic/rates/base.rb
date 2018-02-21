@@ -20,9 +20,9 @@ class Logic::Rates::Base
       date += 1.day
     end
 
-    extra_hours = rental_period.hours_apart % 24
+    extra_hours = hours_apart % 24
 
-    if output.empty? || (2..23).include?(extra_hours)
+    if output.empty? || extra_hours >= 2
       output << build_rate(amount: rate, date: date)
     end
 

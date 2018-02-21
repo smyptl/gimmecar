@@ -17,8 +17,6 @@ class Actions::ReturnDeposit
 
       charge.amount -= amount
       charge.save
-
-      puts 'success'
     end
   end
 

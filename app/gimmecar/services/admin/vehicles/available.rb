@@ -6,7 +6,9 @@ class Services::Admin::Vehicles::Available < Lib::Services::Base
   end
 
   output do
-    collection :vehicles, component: Services::Builders::VehiclesTable
+    collection :vehicles, component: Services::Builders::VehiclesTable do |c|
+      c.value :color
+    end
   end
 
   private

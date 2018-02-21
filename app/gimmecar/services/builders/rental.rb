@@ -1,8 +1,7 @@
 class Services::Builders::Rental < Lib::Services::Builder
 
   component do |c|
-    c.values [
-      :number,
+    c.values :number,
       :status,
       :notes,
       :pickup_location_id,
@@ -17,8 +16,7 @@ class Services::Builders::Rental < Lib::Services::Builder
       :driver_financial_responsibility_signature,
       :additional_driver_financial_responsibility_signature,
       :driver_signature,
-      :additional_driver_signature,
-    ]
+      :additional_driver_signature
 
     c.object :driver,            component: Services::Builders::Driver
     c.object :additional_driver, component: Services::Builders::Driver

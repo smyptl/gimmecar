@@ -1,8 +1,7 @@
 class Services::Builders::Driver < Lib::Services::Builder
 
   component do |c|
-    c.values [
-      :gender,
+    c.values :gender,
       :address_1,
       :address_2,
       :city,
@@ -21,8 +20,8 @@ class Services::Builders::Driver < Lib::Services::Builder
       :notes,
       :name_first,
       :name_middle,
-      :name_last,
-    ]
+      :name_last
+
     c.value :do_not_rent, as: :do_not_rent?
   end
 end

@@ -8,7 +8,7 @@ describe Lib::Services::Builder do
         o.id(:number)
       end
 
-      expect(output[:attributes]).to eq({
+      expect(output).to eq({
         :id => {
           :name    => :id,
           :type    => :value,
@@ -19,10 +19,8 @@ describe Lib::Services::Builder do
 
     it 'retrieves values accurately' do
       output = Lib::Services::Builder.component do |o|
-        o.values [:one, :two], if: -> (f) { f.test }
+        o.values :one, :two, if: -> (f) { f.test }
       end
-
-      output = output[:attributes]
 
       expect(output).to have_key(:one)
       expect(output).to have_key(:two)

@@ -25,8 +25,6 @@ class Actions::ExtendRental
 
       @rental.drop_off += @days.days
       @rental.save
-
-      puts 'complete'
     end
 
     failure = lambda do |args|
