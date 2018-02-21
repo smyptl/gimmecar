@@ -5,7 +5,7 @@ describe Lib::Services::Generator do
 
   describe '#retrieve' do
 
-    let(:rental) { double(:rental, number: Faker::Number.number(6)) }
+    let(:rental) { double(:rental, id: Faker::Number.number(2), number: Faker::Number.number(6)) }
 
     let(:driver) { double(:driver,
                           id: Faker::Number.number(5),
@@ -109,6 +109,22 @@ describe Lib::Services::Generator do
       results = Lib::Services::Generator.new(record: nil, rules: rules, query: driver).retrieve
 
       expect(results[:name_first]).to eq(driver.name_first.upcase)
+    end
+
+    it 'creates a nested hash' do
+      rules = Lib::Services::Builder.object(:driver) do |o|
+        o.nested :name do |n|
+          n.attribute :first, as: :name_first
+          n.attribute :last,  as: :name_last
+        end
+
+        o.collection :rentals
+      end
+
+      results = Lib::Services::Generator.new(record: nil, rules: rules, query: driver).retrieve
+
+      expect(results[:name][:first]).to eq(driver.name_first)
+      expect(results[:name][:last]).to eq(driver.name_last)
     end
   end
 end

@@ -17,19 +17,19 @@ class ApplicationController < ActionController::Base
   private
 
   def render_error(status)
-    render :template => 'errors/error', :layout => false, :status => status
+    render template: 'errors/error', layout: false, status: status
     return
   end
 
   def success
     lambda do |args|
-      render status: 200, :json => args
+      render status: 200, json: args
     end
   end
 
   def failure
     lambda do |args|
-      render status: 400, :json => args
+      render status: 400, json: args
     end
   end
 end

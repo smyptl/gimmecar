@@ -12,6 +12,11 @@
     watch: {
       '$route': 'getData',
     },
+    computed: {
+      sorted_drivers () {
+        return this.drivers.data
+      },
+    },
     methods: {
       getData () {
         this.$http
@@ -41,6 +46,7 @@
             :key='driver.id'
             @click.prevent='viewDriver(driver.id)'
           )
+
             td {{ vehicle.make_model }}
             td {{ vehicle.vehicle_type }}
             td {{ vehicle.location_name }}

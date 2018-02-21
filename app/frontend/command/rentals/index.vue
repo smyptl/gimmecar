@@ -58,7 +58,12 @@
             th Pickup
             th Drop Off
         tbody
-          tr.clickable(v-for='rental in sorted_rentals' @click.prevent='viewRental(rental.number)')
+          tr.clickable(
+            v-for='rental in sorted_rentals'
+            :key='rental.id'
+            @click.prevent='viewRental(rental.number)'
+          )
+
             td {{ rental.number }}
             td {{ rental.name }}
             td {{ rental.pickup_location_name }}

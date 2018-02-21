@@ -25,11 +25,11 @@ class Lib::Services::Base < Lib::Attributes::Base
       end
     end
 
-    def retrieve(success, failure, params = {})
+    def retrieve(success, failure, **params)
       self.new().retrieve(success, failure, params)
     end
 
-    def retrieve!(params = {})
+    def retrieve!(**params)
       self.new().retrieve!(params)
     end
 
@@ -39,7 +39,7 @@ class Lib::Services::Base < Lib::Attributes::Base
     end
   end
 
-  def retrieve(success, failure, params = {})
+  def retrieve(success, failure, **params)
     @params = params
 
     run_callbacks :retrieve do
@@ -51,26 +51,26 @@ class Lib::Services::Base < Lib::Attributes::Base
     end
   end
 
-  def retrieve!(params = {})
+  def retrieve!(**params)
     success = lambda { |args| args }
     failure = lambda { |_| false }
     retrieve(success, failure, params)
   end
+
+  def include(hash)
+    include_hash = hash
+    self
+  end
+
+  private
 
   def output
     _output || (raise Lib::Errors::NotImplemented)
     Lib::Services::Generator.new(record: self, rules: _output, query: query).retrieve
   end
 
-  private
-
   def query
     raise Lib::Errors::NotImplemented
-  end
-
-  def include(hash)
-    include_hash = hash
-    self
   end
 
   def include_hash
