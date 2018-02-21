@@ -27,9 +27,9 @@ class Lib::Services::Generator
     output[:id]     = id(rules, query)
 
     rules.except(:id).fetch(:attributes).each do |_, rule|
-      if rule.fetch(:type) == :value
+      if rule.fetch(:type) == :attribute
         if (rule[:options][:if] && run(rule[:options][:if], query)) || rule[:options][:if].blank?
-          output[rule[:name].to_sym] = value(rules: rule, query: query)
+          output[rule[:name].to_sym] = attribute(rules: rule, query: query)
         end
       else
         q = query.send(query_name(rules: rule))
@@ -53,7 +53,7 @@ class Lib::Services::Generator
     output
   end
 
-  def value(rules:, query:)
+  def attribute(rules:, query:)
     if rules[:options][:output]
       run(rules[:options][:output], query)
     else

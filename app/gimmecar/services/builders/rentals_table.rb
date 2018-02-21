@@ -1,7 +1,7 @@
 class Services::Builders::RentalsTable < Lib::Services::Builder
 
   component do |c|
-    c.values :status,
+    c.attributes :status,
       :number,
       :driver_name,
       :vehicle_make_model,

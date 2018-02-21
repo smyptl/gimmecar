@@ -19,10 +19,10 @@ describe Lib::Services::Generator do
 
     it 'returns appropriate hash' do
       rules = Lib::Services::Builder.collection :drivers do |c|
-        c.value :name_first
-        c.value :name_last, output: -> (d) { d.name_last.upcase }
-        c.value :middle_name, as: :name_middle
-        c.value :address_2, if: -> (d) { d.address_2.present? }
+        c.attribute :name_first
+        c.attribute :name_last, output: -> (d) { d.name_last.upcase }
+        c.attribute :middle_name, as: :name_middle
+        c.attribute :address_2, if: -> (d) { d.address_2.present? }
       end
 
       results = Lib::Services::Generator.new(record: nil, rules: rules, query: [driver]).retrieve
@@ -41,13 +41,13 @@ describe Lib::Services::Generator do
     it 'returns component hash' do
       output_rules = Lib::Services::Builder
       output_rules.component do |o|
-        o.value :name_first
-        o.value :middle_name
+        o.attribute :name_first
+        o.attribute :middle_name
       end
 
       rules = Lib::Services::Builder.object(:driver, component: output_rules) do |o|
-        o.value :name_last
-        o.value :middle_name, output: -> (d) { d.name_middle.upcase }
+        o.attribute :name_last
+        o.attribute :middle_name, output: -> (d) { d.name_middle.upcase }
       end
 
       results = Lib::Services::Generator.new(record: nil, rules: rules, query: driver).retrieve
@@ -60,10 +60,10 @@ describe Lib::Services::Generator do
       expect(results[:middle_name]).to eq(driver.name_middle.upcase)
     end
 
-    it 'if object is nil, returns key with nil value' do
+    it 'if object is nil, returns key with nil attribute' do
       rules = Lib::Services::Builder.object(:driver) do |o|
         o.object :license do |o|
-          o.value :license_number
+          o.attribute :license_number
         end
 
         o.collection :rentals do |c|
@@ -84,8 +84,8 @@ describe Lib::Services::Generator do
 
     it 'uses a method from the record' do
       rules = Lib::Services::Builder.object(:driver) do |o|
-        o.value :can_edit, output: -> (d) { can_edit?(d) }
-        o.value :can_destroy, if: -> (d) { can_edit?(d) }
+        o.attribute :can_edit, output: -> (d) { can_edit?(d) }
+        o.attribute :can_destroy, if: -> (d) { can_edit?(d) }
       end
 
       record = Class.new do

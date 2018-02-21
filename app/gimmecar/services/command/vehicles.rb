@@ -3,7 +3,7 @@ class Services::Command::Vehicles < Lib::Services::Base
   output do
     collection :vehicles do |c|
       c.component Services::Builders::VehiclesTable
-      c.value :location_name
+      c.attribute :location_name
     end
   end
 

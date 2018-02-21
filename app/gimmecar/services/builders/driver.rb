@@ -1,7 +1,7 @@
 class Services::Builders::Driver < Lib::Services::Builder
 
   component do |c|
-    c.values :gender,
+    c.attributes :gender,
       :address_1,
       :address_2,
       :city,
@@ -22,6 +22,6 @@ class Services::Builders::Driver < Lib::Services::Builder
       :name_middle,
       :name_last
 
-    c.value :do_not_rent, as: :do_not_rent?
+    c.attribute :do_not_rent, as: :do_not_rent?
   end
 end

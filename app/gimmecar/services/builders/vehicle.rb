@@ -1,7 +1,7 @@
 class Services::Builders::Vehicle < Lib::Services::Builder
 
   component do |c|
-    c.values :status,
+    c.attributes :status,
       :vin,
       :license_number,
       :make,
@@ -10,6 +10,6 @@ class Services::Builders::Vehicle < Lib::Services::Builder
       :color,
       :location_name
 
-    c.value :vehicle_type, output: -> (v) { ActiveSupport::Inflector.titleize(v.vehicle_type) }
+    c.attribute :vehicle_type, output: -> (v) { ActiveSupport::Inflector.titleize(v.vehicle_type) }
   end
 end

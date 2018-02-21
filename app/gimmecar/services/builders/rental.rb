@@ -1,7 +1,7 @@
 class Services::Builders::Rental < Lib::Services::Builder
 
   component do |c|
-    c.values :number,
+    c.attributes :number,
       :status,
       :notes,
       :pickup_location_id,

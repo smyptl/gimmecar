@@ -5,15 +5,15 @@ class Services::Command::Drivers < Lib::Services::Base
       #o.component Services::Builders::Driver
 
       #o.value :rentals_count, output: -> (d) { d.rentals.count }, if: -> (d) { d.rentals.any? }
-      o.value :rentals_count, output: -> (d) { d.rentals.count }
+      o.attribute :rentals_count, output: -> (d) { d.rentals.count }
 
       #o.collection :randoms, output: Services::Components::Random do |c|
-        #c.value :add_extra
+        #c.attribute :add_extra
       #end
 
       o.collection :another_name, as: :rentals do |c|
         c.id :number
-        c.value :number
+        c.attribute :number
       end
     end
   end

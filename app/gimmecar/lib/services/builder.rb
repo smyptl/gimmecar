@@ -65,18 +65,18 @@ class Lib::Services::Builder
     output[:attributes] = klass.retrieve_attributes.deep_merge(retrieve_attributes)
   end
 
-  def values(*args, **options)
+  def attributes(*args, **options)
     args.each do |arg|
-      value(arg, options)
+      attribute(arg, options)
     end
   end
 
-  def value(name, **options)
-    add_attribute(name, { name: name, type: :value, options: options })
+  def attribute(name, **options)
+    add_attribute(name, { name: name, type: :attribute, options: options })
   end
 
   def id(as = nil)
-    add_attribute(:id, { name: :id, type: :value, options: { as: as }})
+    add_attribute(:id, { name: :id, type: :attribute, options: { as: as }})
   end
 
   def retrieve

@@ -7,7 +7,7 @@ class Services::Admin::Vehicles::Available < Lib::Services::Base
 
   output do
     collection :vehicles, component: Services::Builders::VehiclesTable do |c|
-      c.value :color
+      c.attribute :color
     end
   end
 
