@@ -22,22 +22,14 @@ class Lib::Services::Generator
     return nil if query.nil?
 
     output = {}
-
     output[:object] = name(rules)
     output[:id]     = id(rules, query)
 
-    rules.except(:id).fetch(:attributes).each do |_, rule|
-      if rule.fetch(:type) == :attribute
-        if (rule[:options][:if] && run(rule[:options][:if], query)) || rule[:options][:if].blank?
-          output[rule[:name].to_sym] = attribute(rules: rule, query: query)
-        end
-      else
-        q = query.send(query_name(rules: rule))
-        output[rule[:name].to_sym] = create(rules: rule, query: q)
-      end
-    end
+    create_attributes(output: output, rules: rules, query: query)
+  end
 
-    output
+  def create_nested(rules:, query:)
+    create_attributes(output: {}, rules: rules, query: query)
   end
 
   def create_collection(rules:, query:)
@@ -46,19 +38,40 @@ class Lib::Services::Generator
     output[:count]  = query.count
 
     output[:data] = []
-    query.each do |q|
-      output[:data] << create_object(rules: rules, query: q)
+    query.each do |query_item|
+      output[:data] << create_object(rules: rules, query: query_item)
     end
 
     output
   end
 
-  def attribute(rules:, query:)
+  def create_attribute(rules:, query:)
     if rules[:options][:output]
       run(rules[:options][:output], query)
     else
       query.send(query_name(rules: rules))
     end
+  end
+
+  def create_attributes(output:, rules:, query:)
+    rules.except(:id).fetch(:attributes).each do |_, rule|
+      if include_attribute?(rules: rule, query: query)
+
+        run_query = if [:collection, :object].include?(rule.fetch(:type))
+                      query.send(query_name(rules: rule))
+                    else
+                      query
+                    end
+
+        output[rule.fetch(:name)] = create(rules: rule, query: run_query)
+      end
+    end
+
+    output
+  end
+
+  def include_attribute?(rules:, query:)
+    (rules[:options][:if] && run(rules[:options][:if], query)) || rules[:options][:if].blank?
   end
 
   def query_name(rules:)

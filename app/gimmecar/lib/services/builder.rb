@@ -41,21 +41,15 @@ class Lib::Services::Builder
   end
 
   def object(name, **options, &block)
-    add_attribute(name, {
-      name: name,
-      type: :object,
-      options: options,
-      attributes: new_builder(options, &block).retrieve_attributes
-    })
+    builder(name, :object, options, &block)
   end
 
   def collection(name, **options, &block)
-    add_attribute(name, {
-      name: name,
-      type: :collection,
-      options: options,
-      attributes: new_builder(options, &block).retrieve_attributes
-    })
+    builder(name, :collection, options, &block)
+  end
+
+  def nested(name, **options, &block)
+    builder(name, :nested, options, &block)
   end
 
   def component(klass)
@@ -88,9 +82,18 @@ class Lib::Services::Builder
 
   private
 
-  def new_builder(options, &block)
+  def builder(name, type, **options, &block)
+    add_attribute(name, {
+      name: name,
+      type: type,
+      options: options,
+      attributes: new_builder(options[:component], &block).retrieve_attributes
+    })
+  end
+
+  def new_builder(component, &block)
     builder = Lib::Services::Builder.new
-    builder.component(options[:component]) if options[:component]
+    builder.component(component) if component
 
     yield builder if block_given?
 
