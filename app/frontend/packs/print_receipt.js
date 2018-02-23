@@ -11,5 +11,5 @@ import Axios from 'Utils/axios'
 Vue.prototype.$http = Axios
 
 var vue = new Vue({
-  render: h => h(require('Admin/location/rentals/rental/print/base.vue')),
+  render: h => h(require('Admin/location/rentals/rental/_receipt.vue')),
 }).$mount('#gimmecar-app')
