@@ -22,8 +22,11 @@ class Lib::Services::Generator
     return nil if query.nil?
 
     output = {}
-    output[:object] = name(rules)
-    output[:id]     = id(rules, query)
+
+    unless nested?(rules)
+      output[:object] = name(rules)
+      output[:id]     = id(rules, query)
+    end
 
     create_attributes(output: output, rules: rules, query: query)
   end
@@ -42,7 +45,11 @@ class Lib::Services::Generator
       output[:data] << create_object(rules: rules, query: query_item)
     end
 
-    output
+    if nested?(rules)
+      output[:data]
+    else
+      output
+    end
   end
 
   def create_attribute(rules:, query:)
@@ -88,5 +95,9 @@ class Lib::Services::Generator
 
   def run(method, query)
     record.instance_exec(query, &method)
+  end
+
+  def nested?(rules)
+    Lib::Attributes::TypeCast.boolean(rules.dig(:options, :nested))
   end
 end

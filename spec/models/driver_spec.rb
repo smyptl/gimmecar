@@ -35,7 +35,6 @@ require 'factories/rentals'
 describe Driver do
 
   describe '.destroy' do
-
     it 'cannot destroy if rental' do
       driver = create(:driver)
       create(:rental, driver: driver)
@@ -54,4 +53,15 @@ describe Driver do
       expect(Driver.count).to eq(0)
     end
   end
+
+  #describe '.search' do
+    #it 'returns results of drivers' do
+      #driver_1 = create(:driver)
+      #driver_2 = create(:driver)
+
+      #results = Driver.search(name: driver_1.name_first)
+
+      #expect(results.count).to eq(1)
+    #end
+  #end
 end

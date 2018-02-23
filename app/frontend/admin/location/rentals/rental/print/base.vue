@@ -32,7 +32,7 @@
 
     .whole.margin-top-default
       b.text-light Prepared For:
-      h4 {{ this.summary.name }}
+      h4 {{ summary.driver_name }}
 
     .whole.margin-top-default.rental-invoice-summary
       h4.invoice-one-line We appreicate your business!
@@ -40,12 +40,13 @@
       h4.invoice-one-line.margin-bottom-default
 
     rental-invoice.page-break(v-bind:summary='summary')
+
     .page-break
       financial-responsibility.whole.left
 
       .one-half.left
         img(:src='this.summary.driver_financial_responsibility_signature')
-        h5 {{ this.summary.name }}
+        h5 {{ this.summary.driver_name }}
       .one-half.left(v-if='this.summary.additional_driver_name')
         img(:src='this.summary.additional_driver_financial_responsibility_signature')
         h5 {{ this.summary.additional_driver_name }}
@@ -55,7 +56,7 @@
       terms-and-conditions.whole.left
       .one-half.left
         img(:src='this.summary.driver_signature')
-        h5 {{ this.summary.name }}
+        h5 {{ this.summary.driver_name }}
       .one-half.left(v-if='this.summary.additional_driver_name')
         img(:src='this.summary.additional_driver_signature')
         h5 {{ this.summary.additional_driver_name }}

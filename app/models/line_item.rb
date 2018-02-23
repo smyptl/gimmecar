@@ -72,6 +72,6 @@ class LineItem < ApplicationRecord
       'city_taxable_amount',
       'city_amount',
       'district_taxable_amount',
-      'district_amount').with_indifferent_access
+      'district_amount').with_indifferent_access.freeze
   end
 end

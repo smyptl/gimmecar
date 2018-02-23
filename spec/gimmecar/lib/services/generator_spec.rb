@@ -126,5 +126,21 @@ describe Lib::Services::Generator do
       expect(results[:name][:first]).to eq(driver.name_first)
       expect(results[:name][:last]).to eq(driver.name_last)
     end
+
+    it 'creates nested collection' do
+      rules = Lib::Services::Builder.object(:driver) do |o|
+        o.collection :rentals, nested: true do |c|
+          c.id :number
+        end
+      end
+
+      results = Lib::Services::Generator.new(record: nil, rules: rules, query: driver).retrieve
+
+      expect(results[:object]).to eq('driver')
+      expect(results[:id]).to eq(driver.id)
+      expect(results.keys).to eq([:object, :id, :rentals])
+      expect(results[:rentals].count).to eq(1)
+      expect(results[:rentals].first.keys).to eq([:id])
+    end
   end
 end

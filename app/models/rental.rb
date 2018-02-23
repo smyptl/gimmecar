@@ -64,12 +64,14 @@ class Rental < ApplicationRecord
 
   before_create :create_number
 
-  delegate :name, to: :driver, prefix: true
-  delegate :name, to: :additional_driver, prefix: true, allow_nil: true
-  delegate :make_model, to: :vehicle, prefix: true
+  delegate :name,               to: :driver,            prefix: true
+  delegate :name,               to: :additional_driver, prefix: true, allow_nil: true
+  delegate :make_model,         to: :vehicle,           prefix: true
 
-  delegate :description, :name, to: :pickup_location, prefix: true
-  delegate :name, to: :drop_off_location, prefix: true
+  delegate :description, :name, to: :pickup_location,   prefix: true
+  delegate :name,               to: :drop_off_location, prefix: true
+
+  delegate :combined_tax_rate,  to: :tax_rate
 
   def self.create_open(args)
     create(args.merge(:status => OPEN))
@@ -93,10 +95,6 @@ class Rental < ApplicationRecord
 
   def days_apart
     rental_period.days_apart
-  end
-
-  def combined_tax_rate
-    tax_rate.combined_tax_rate
   end
 
   def tax_collectable

@@ -41,19 +41,33 @@
 
       li
         | Location:&nbsp;
-        b {{ summary.location }}
+        b {{ summary.location.description }}
 
       li
         | Vehicle:&nbsp;
-        b {{ summary.vehicle }}
+        b {{ summary.vehicle.make_model }}
+        template(v-if='summary.vehicle.vin') &nbsp; {{ summary.vehicle.vin }}
 
       li
         | Pickup:&nbsp;
         b {{ summary.pickup | date_time }}
+      li(v-if='summary.pickup_fuel')
+        | Pickup Fuel:&nbsp;
+        b {{ summary.pickup_fuel/10 | percent }}
+      li(v-if='summary.pickup_fuel')
+        | Pickup Odometer:&nbsp;
+        b {{ summary.pickup_odometer }}
 
       li
         | Drop Off:&nbsp;
         b {{ summary.drop_off | date_time }}
+      li(v-if='summary.drop_off_fuel')
+        | Drop Off Fuel:&nbsp;
+        b {{ summary.drop_off_fuel/10 | percent }}
+      li(v-if='summary.drop_off_odometer')
+        | Drop Off Odometer:&nbsp;
+        b {{ summary.drop_off_odometer }}
+
 
     h4.margin-bottom-sm Rates
     ul.left.whole.list-no-style

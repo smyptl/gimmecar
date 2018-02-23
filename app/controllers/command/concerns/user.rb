@@ -6,7 +6,7 @@ module Command::Concerns::User
     return if current_user
 
     if api?
-      head 401
+      head 400
     else
       redirect_to command_login_path
     end

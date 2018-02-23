@@ -9,8 +9,8 @@ class Services::Rates < Lib::Services::Base
 
   def output
     {
-      :vehicle           => ActiveSupport::Inflector.titleize(rental.vehicle_type),
-      :location          => location.description,
+      :vehicle           => { make_model: ActiveSupport::Inflector.titleize(rental.vehicle_type) },
+      :location          => { description: location.description },
       :pickup            => rental.pickup,
       :drop_off          => rental.drop_off,
       :rates             => rates,

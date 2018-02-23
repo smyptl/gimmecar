@@ -35,6 +35,10 @@ class Driver < ApplicationRecord
 
   before_destroy { |record| throw :abort if record.rentals? }
 
+  #def self.search(name: nil, date_of_birth: nil, license_number: nil)
+    #where("name_first LIKE ? OR name_last LIKE ? OR license_number LIKE ?", "%#{name}%", "%#{name}%", "%#{license_number}%")
+  #end
+
   def name
     "#{name_first} #{name_last}"
   end

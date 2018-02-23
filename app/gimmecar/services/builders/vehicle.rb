@@ -6,6 +6,7 @@ class Services::Builders::Vehicle < Lib::Services::Builder
       :license_number,
       :make,
       :model,
+      :make_model,
       :year,
       :color,
       :location_name

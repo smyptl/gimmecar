@@ -39,12 +39,12 @@ FactoryBot.define do
     state { Faker::Address.state }
     zip_code { Faker::Address.zip_code }
     country { Faker::Address.country }
-    cell_phone_number "9091231234"
-    home_phone_number "9091239021"
+    cell_phone_number '9091231234'
+    home_phone_number '9091239021'
     gender { ['male', 'female'].sample }
     email { Faker::Internet.email }
     date_of_birth Date.today - 26.years
-    license_number '123JAS12'
+    license_number { Faker::Number.number(7) }
     license_state { state }
     license_country { country }
     license_expiration_date Date.today + 1.year

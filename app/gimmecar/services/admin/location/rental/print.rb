@@ -6,28 +6,35 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
     a.string :number
   end
 
-  def output
-    {
-      :vehicle                                              => rental.vehicle_make_model,
-      :location                                             => rental.pickup_location_description,
-      :name                                                 => rental.driver_name,
-      :pickup                                               => rental.pickup,
-      :drop_off                                             => rental.drop_off,
-      :rates                                                => rental.rates,
-      :deposit                                              => rental.deposit,
-      :sub_total                                            => rental.sub_total,
-      :tax_collectable                                      => rental.tax_collectable,
-      :total                                                => rental.total,
-      :combined_tax_rate                                    => rental.combined_tax_rate,
-      :additional_driver_name                               => rental.additional_driver_name,
-      :driver_financial_responsibility_signature            => rental.driver_financial_responsibility_signature,
-      :additional_driver_financial_responsibility_signature => rental.additional_driver_financial_responsibility_signature,
-      :driver_signature                                     => rental.driver_signature,
-      :additional_driver_signature                          => rental.additional_driver_signature,
-    }
+  output do
+    object :rental do |o|
+      o.object :vehicle, component: Services::Builders::Vehicle
+
+      o.object :location, as: :pickup_location do |o|
+        o.attribute :description
+      end
+
+      o.attributes :driver_name, :additional_driver_name
+      o.attributes :pickup,
+        :pickup_fuel,
+        :pickup_odometer,
+        :drop_off,
+        :drop_off_fuel,
+        :drop_off_odometer,
+        :driver_financial_responsibility_signature,
+        :additional_driver_financial_responsibility_signature,
+        :driver_signature,
+        :additional_driver_signature
+
+      o.collection :rates, nested: true, component: Services::Builders::LineItem
+
+      o.object :deposit, component: Services::Builders::LineItem
+
+      o.attributes :sub_total, :tax_collectable, :total, :combined_tax_rate
+    end
   end
 
-  def rental
-    @rental ||= ::Rental.find_by(number: number)
+  def query
+    Rental.includes(:driver, :additional_driver, :vehicle, :pickup_location, :drop_off_location).find_by(number: number)
   end
 end

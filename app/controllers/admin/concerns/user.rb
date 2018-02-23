@@ -6,7 +6,7 @@ module Admin::Concerns::User
     return if current_user
 
     if api?
-      head 401
+      head 400
     else
       redirect_to admin_login_path
     end

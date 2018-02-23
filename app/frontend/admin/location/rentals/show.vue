@@ -94,7 +94,7 @@
             td Vehicle
             td
               router-link.right(:to="{ name: 'vehicle', params: { vin: rental.vehicle.vin } }")
-                span.block {{ rental.vehicle.make }} {{ rental.vehicle.model }}
+                span.block {{ rental.vehicle.make_model }}
                 span.block.description(v-if='rental.vehicle.license_number') License #: {{ rental.vehicle.license_number }}
                 span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
 
