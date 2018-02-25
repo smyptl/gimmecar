@@ -12,6 +12,9 @@ Vue.use(VueRouter)
 import Axios from 'Utils/axios'
 Vue.prototype.$http = Axios
 
+import Form from 'Utils/form'
+Vue.prototype.$form = Form
+
 import InputError from 'Components/inputs/error'
 Vue.directive('error', InputError)
 
