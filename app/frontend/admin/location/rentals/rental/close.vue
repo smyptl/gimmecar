@@ -3,7 +3,6 @@
   import Shake from 'Utils/transitions/shake'
 
   import InputDateTime from 'Components/inputs/date_time'
-
   import Popup from 'Components/popup'
 
   export default {
@@ -21,8 +20,8 @@
       this.open = true
     },
     components: {
-      Popup,
       InputDateTime,
+      Popup,
     },
     methods: {
       close () {

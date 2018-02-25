@@ -2,6 +2,7 @@
   import Capitalize from 'lodash/capitalize'
 
   export default {
+    name: 'vehicles',
     props: {
       form: {
         type: Object,

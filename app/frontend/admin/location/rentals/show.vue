@@ -10,7 +10,7 @@
 
   import DriverInfo from 'Components/driver/information'
 
-  import Close from './rental/_close'
+  import Close from './rental/close'
 
   export default {
     name: 'rental',
