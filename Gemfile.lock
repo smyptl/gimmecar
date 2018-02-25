@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/stripe/stripe-ruby
-  revision: fafd449c5fd628f4cea8bd15db0b52dee3df38c9
+  revision: a7ea9cf1e9cb4df0a4298d44318d459134b9b41a
   specs:
-    stripe (3.9.2)
+    stripe (3.10.0)
       faraday (~> 0.10)
 
 GEM
@@ -62,7 +62,7 @@ GEM
       axlsx (>= 2.0.1)
     bcrypt (3.1.11)
     bindex (0.5.0)
-    bugsnag (6.6.3)
+    bugsnag (6.6.4)
       concurrent-ruby (~> 1.0)
     builder (3.2.3)
     byebug (10.0.0)
@@ -88,13 +88,14 @@ GEM
       i18n (>= 0.7)
     faraday (0.14.0)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.21)
+    ffi (1.9.23)
     foreman (0.84.0)
       thor (~> 0.19.1)
+    fuzzy_match (2.1.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     htmlentities (4.3.4)
-    i18n (0.9.4)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
@@ -251,6 +252,7 @@ DEPENDENCIES
   factory_bot
   faker
   foreman
+  fuzzy_match
   jbuilder
   jwt
   letter_opener
@@ -267,7 +269,6 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   stripe!
-  tzinfo-data
   web-console
   webpacker
 

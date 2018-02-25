@@ -9,8 +9,8 @@ describe Services::Rates do
   let(:location) { create(:location) }
   let(:tax_rates) { create(:tax_rate, location: location) }
 
-  describe "#rates" do
-    it "returns array of rates for each day" do
+  describe '#rates' do
+    it 'returns array of rates for each day' do
       location
       tax_rates
       create(:rate, location: location, vehicle_type: :mid_size, :amount => 2000)
@@ -25,7 +25,7 @@ describe Services::Rates do
       expect(rental[:combined_tax_rate]).to eq(tax_rates.combined_tax_rate)
     end
 
-    describe "partial day" do
+    describe 'partial day' do
       it 'actual example' do
         location
         tax_rates

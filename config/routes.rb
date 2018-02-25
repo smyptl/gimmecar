@@ -47,10 +47,7 @@ Rails.application.routes.draw do
         post 'verify-insurance', to: 'verify_insurance#create'
       end
 
-      resources :drivers, only: [:show] do
-        resources :insurance_policies
-      end
-      post 'drivers/search'
+      post 'drivers/search', to: 'drivers#show'
 
       resources :vehicles, only: [:index, :show] do
         get 'status', to: 'vehicles/status#index'
