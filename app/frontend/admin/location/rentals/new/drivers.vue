@@ -88,12 +88,18 @@
       .input-block.margin-top-ex-sm.whole
         button.btn.btn-primary.btn-sm.right(@click.prevent='searchDriver') Search
 
-      .input-block
-        .panel.panel-base.margin-top-default
-          .panel-base-header
-            h2 {{ search_result.name_last }}, {{ search_result.name_first }} {{ search_result.name_middle }}
+      .input-row.margin-top-default(v-if='search_result')
+        .input-flex-container.input-block.whole
+          .input-element-fixed
+            input.input-field#driver_insurance_verified(type='checkbox')
 
-          .left {{ search_result }}
+          .input-element-flex
+            .margin-left-sm
+              .input-field
+                h3 {{ search_result.name_last }}, {{ search_result.name_first }} {{ search_result.name_middle }}
+                p.input-error-message.error-message-base(v-if='search_result.do_not_rent') DO NOT RENT!!!
+
+                .left {{ search_result }}
 
     .margin-top-sm.left
       template(v-if='form.add_additional_driver')

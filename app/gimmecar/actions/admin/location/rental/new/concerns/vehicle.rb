@@ -26,10 +26,10 @@ module Actions::Admin::Location::Rental::New::Concerns::Vehicle
   end
 
   def available_vehicle_ids
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def location
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 end

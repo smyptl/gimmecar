@@ -160,10 +160,10 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
   end
 
   def drop_off
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def pickup
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 end

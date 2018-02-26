@@ -53,15 +53,15 @@ class Lib::Forms::Base < Lib::Attributes::Base
   private
 
   def data(id)
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def save
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def success_args
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def failure_args

@@ -56,7 +56,7 @@ class Charge < ApplicationRecord
     when customer_id.present? && token.blank?
       customer_id
     else
-      raise Lib::Errors::NotImplemented
+      raise NotImplementedError
     end
   end
 end

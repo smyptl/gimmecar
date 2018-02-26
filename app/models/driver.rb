@@ -52,6 +52,6 @@ class Driver < ApplicationRecord
   end
 
   def do_not_rent?
-    do_not_rent
+    Lib::Attributes::TypeCast.boolean(do_not_rent)
   end
 end
