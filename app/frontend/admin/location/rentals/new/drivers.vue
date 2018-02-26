@@ -1,5 +1,4 @@
 <script>
-  import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
   import InputDate from 'Components/inputs/date'
@@ -18,6 +17,7 @@
     data () {
       return {
         driver_search: false,
+        search_result: null,
         search: new this.$form({
           name_first: null,
           name_last: null,
@@ -29,6 +29,20 @@
       InputDate,
       Driver,
       DriverAdditional,
+    },
+    methods: {
+      searchDriver() {
+        this.$http.post(this.$route.path + '/driver-search', {
+          search: this.search.data(),
+        })
+        .then(response => {
+          this.search.errors.clear()
+          this.search_result = response.data
+        })
+        .catch(error => {
+          this.search.errors.record(error.response.data.errors)
+        })
+      },
     },
   }
 </script>
@@ -72,7 +86,14 @@
           input-error-message(v-bind:errors='search.errors.get("date_of_birth")')
 
       .input-block.margin-top-ex-sm.whole
-        button.btn.btn-primary.btn-sm.right(@click.prevent='validatePayment' v-bind:disabled='disabled_button') Search
+        button.btn.btn-primary.btn-sm.right(@click.prevent='searchDriver') Search
+
+      .input-block
+        .panel.panel-base.margin-top-default
+          .panel-base-header
+            h2 {{ search_result.name_last }}, {{ search_result.name_first }} {{ search_result.name_middle }}
+
+          .left {{ search_result }}
 
     .margin-top-sm.left
       template(v-if='form.add_additional_driver')

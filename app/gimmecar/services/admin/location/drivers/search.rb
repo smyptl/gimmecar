@@ -6,7 +6,7 @@ class Services::Admin::Location::Drivers::Search < Lib::Services::Base
     a.string :name_last
   end
 
-  validates :date_of_birth, :name,
+  validates :date_of_birth, :name_first, :name_last,
     presence: true
 
   output do
