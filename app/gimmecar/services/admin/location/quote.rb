@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Quote < Lib::Forms::Base
+class Services::Admin::Location::Quote < Lib::Services::Base
 
   attributes do |a|
     a.date_time :pickup
@@ -29,10 +29,7 @@ class Actions::Admin::Location::Quote < Lib::Forms::Base
     end
   end
 
-  def success_args
+  def output
     Services::Rates.new(rental: self, location: params[:location]).retrieve!
-  end
-
-  def save
   end
 end

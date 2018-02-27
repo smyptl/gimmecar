@@ -1,12 +1,11 @@
 <script>
-  import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
   export default {
     name: 'login',
     data () {
       return {
-        login: new Form({
+        login: new this.$form({
           email: '',
           password: '',
         }),

@@ -1,5 +1,4 @@
 <script>
-  import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
   import RentalInvoice from 'Admin/location/components/rental_invoice'
@@ -16,7 +15,7 @@
     name: 'new',
     data () {
       return {
-        rental: new Form({
+        rental: new this.$form({
           drop_off: new Date().setDate(new Date().getDate() + 1),
           vehicle_type: '',
           promo_code: null,

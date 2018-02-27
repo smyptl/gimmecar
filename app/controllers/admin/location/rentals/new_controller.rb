@@ -4,11 +4,11 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
   end
 
   def rates
-    Actions::Admin::Location::Quote.new({
+    Services::Admin::Location::Quote.new({
       :pickup       => DateTime.now,
       :drop_off     => params[:rental].fetch(:drop_off),
       :vehicle_type => params[:rental].fetch(:vehicle_type)
-    }).execute(success, failure, { :location => location })
+    }).retrieve(success, failure, location: location)
   end
 
   def validate_drivers
@@ -36,7 +36,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       :vehicle_id      => params[:rental][:vehicle_id],
       :pickup_odometer => params[:rental][:pickup_odometer],
       :pickup_fuel     => params[:rental][:pickup_fuel],
-    }).execute(success, failure, { location_id: location.id })
+    }).execute(success, failure, location_id: location.id)
   end
 
   def validate_financial_responsibility
