@@ -1,14 +1,14 @@
-class Actions::Admin::Location::Quote < Lib::Forms::Base
+class Services::Admin::Location::Quote < Lib::Services::Base
 
   attributes do |a|
-    a.date_time :pickup
-    a.date_time :drop_off
-    a.string    :vehicle_type
+    a.time   :pickup
+    a.time   :drop_off
+    a.string :vehicle_type
   end
 
   validates :pickup,
     presence: true,
-    after_date: { with: -> { DateTime.now - 59.minutes }, message: 'must be in the future' }
+    after_date: { with: -> { Time.now - 59.minutes }, message: 'must be in the future' }
 
   validates :drop_off,
     presence: true,
@@ -29,10 +29,7 @@ class Actions::Admin::Location::Quote < Lib::Forms::Base
     end
   end
 
-  def success_args
+  def output
     Services::Rates.new(rental: self, location: params[:location]).retrieve!
-  end
-
-  def save
   end
 end

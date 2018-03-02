@@ -1,5 +1,4 @@
 <script>
-  import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
   import Popup from 'Components/popup'
@@ -8,7 +7,7 @@
     data () {
       return {
         open: false,
-        form: new Form({
+        form: new this.$form({
           status: '',
         })
       }

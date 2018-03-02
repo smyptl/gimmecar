@@ -2,7 +2,7 @@ class Lib::DateRange
 
   attr_reader :start_date, :end_date
 
-  def initialize(start_date, end_date)
+  def initialize(start_date, end_date, time_zone: nil)
     if end_date.before?(start_date)
       raise ArgumentError, "Start date cannot be before end date."
     end
@@ -10,13 +10,13 @@ class Lib::DateRange
     @start_date, @end_date = start_date, end_date
   end
 
-  def range
-    start_date..end_date
-  end
+  #def range
+    #start_date..end_date
+  #end
 
-  def each_date(*args, &block)
-    range(*args, &block)
-  end
+  #def each_date(*args, &block)
+    #range(*args, &block)
+  #end
 
   def include?(date)
     range.cover?(date)

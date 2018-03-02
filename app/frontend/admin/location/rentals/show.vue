@@ -1,6 +1,6 @@
 <script>
   import FDate from 'Filters/date'
-  import FDateTime from 'Filters/date_time'
+  import FTime from 'Filters/time'
   import Capitalize from 'lodash/capitalize'
 
   import Dropdown from 'Components/dropdown'
@@ -22,7 +22,7 @@
     },
     filters: {
       date: FDate,
-      date_time: FDateTime,
+      time: FTime,
       Capitalize,
     },
     components: {
@@ -86,10 +86,10 @@
             td {{ rental.status | capitalize }}
           tr
             td Pickup
-            td {{ rental.pickup | date_time }}
+            td {{ rental.pickup | time }}
           tr
             td Drop Off
-            td {{ rental.drop_off | date_time }}
+            td {{ rental.drop_off | time }}
           tr
             td Vehicle
             td

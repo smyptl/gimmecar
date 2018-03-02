@@ -37,6 +37,7 @@ class LineItem < ApplicationRecord
 
   scope 'rental_rates', -> { where(item_type: 'rental_rate') }
   scope 'deposits',     -> { where(item_type: 'deposit') }
+  scope 'deposits_unreturned', -> { joins(:invoice).deposits.where(invoice_type: 'Rental', invoice: { status: Rental::CLOSED }) }
 
   delegate :number, to: :invoice, prefix: true
 

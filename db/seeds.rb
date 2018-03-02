@@ -108,11 +108,11 @@ Rental.create_open({
   :vehicle                 => rental_vehicle,
   :vehicle_type            => 'subcompact',
   :pickup_location         => location,
-  :pickup                  => DateTime.now - 1.day,
+  :pickup                  => Time.now - 1.day,
   :pickup_odometer         => 14500,
   :pickup_fuel             => 10,
   :drop_off_location       => location,
-  :drop_off                => DateTime.now + 2.days,
+  :drop_off                => Time.now + 2.days,
   :collision_damage_waiver => false,
 })
 
@@ -141,7 +141,7 @@ Rental.create_open({
 #   :driver                  => reservation_driver,
 #   :vehicle_type            => 'compact',
 #   :pickup_location         => location,
-#   :pickup                  => DateTime.now + 3.day,
+#   :pickup                  => Time.now + 3.day,
 #   :drop_off_location       => location,
-#   :drop_off                => DateTime.now + 5.days,
+#   :drop_off                => Time.now + 5.days,
 # })

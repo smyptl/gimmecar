@@ -13,6 +13,6 @@
 <br>
 = "Location: #{@email.fetch(:location)}"
 <br/>
-= "Pickup: #{format_date_time(@email.fetch(:pickup))}"
+= "Pickup: #{format_time(@email.fetch(:pickup))}"
 <br/>
-= "Drop Off: #{format_date_time(@email.fetch(:drop_off))}"
+= "Drop Off: #{format_time(@email.fetch(:drop_off))}"

@@ -33,11 +33,9 @@ class Driver < ApplicationRecord
   has_many :rentals
   has_many :insurance_policies
 
-  before_destroy { |record| throw :abort if record.rentals? }
+  scope :search, -> (name:, date_of_birth:) { FuzzyMatch.new(where(date_of_birth: date_of_birth), read: :name).find(name) }
 
-  #def self.search(name: nil, date_of_birth: nil, license_number: nil)
-    #where("name_first LIKE ? OR name_last LIKE ? OR license_number LIKE ?", "%#{name}%", "%#{name}%", "%#{license_number}%")
-  #end
+  before_destroy { |record| throw :abort if record.rentals? }
 
   def name
     "#{name_first} #{name_last}"

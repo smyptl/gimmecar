@@ -45,7 +45,7 @@ class Charge < ApplicationRecord
   def find_or_create_customer(token:, customer_id:)
     case
     when customer_id.blank? && token.blank?
-      raise ArgumentError
+      raise ArgumentError 'customer_id and token missing'
     when customer_id.blank? && token.present?
       Stripe::Customer.create({ :source => token })['id']
     when customer_id.present? && token.present?

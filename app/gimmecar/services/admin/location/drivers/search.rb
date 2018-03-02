@@ -1,7 +1,7 @@
 class Services::Admin::Location::Drivers::Search < Lib::Services::Base
 
   attributes do |a|
-    a.date :date_of_birth
+    a.date   :date_of_birth
     a.string :name_first
     a.string :name_last
   end
@@ -16,7 +16,7 @@ class Services::Admin::Location::Drivers::Search < Lib::Services::Base
   private
 
   def query
-    FuzzyMatch.new(Driver.where(date_of_birth: date_range), read: :name).find(name)
+    Driver.search(date_of_birth: date_range, name: name)
   end
 
   def name

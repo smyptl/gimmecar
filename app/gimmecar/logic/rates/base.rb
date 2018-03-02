@@ -53,7 +53,7 @@ class Logic::Rates::Base
   end
 
   def start_date
-    @start_date ||= location.convert_date_time_to_time_zone(rental_period.start_date)
+    @start_date ||= location.convert_time_to_time_zone(rental_period.start_date)
   end
 
   def build_rate(amount:, date:, discount: 0)

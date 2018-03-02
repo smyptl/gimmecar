@@ -57,8 +57,8 @@ class Lib::Attributes::Parser
     @attributes[name] = { :type => :date, :options => options }
   end
 
-  def date_time(name, options = {})
-    @attributes[name] = { :type => :date_time, :options => options }
+  def time(name, options = {})
+    @attributes[name] = { :type => :time, :options => options }
   end
 
   def integer(name, options = {})

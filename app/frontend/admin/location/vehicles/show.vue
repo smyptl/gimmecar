@@ -1,6 +1,6 @@
 <script>
   import FDate from 'Filters/date'
-  import FDateTime from 'Filters/date_time'
+  import FTime from 'Filters/time'
 
   import Dropdown from 'Components/dropdown'
 
@@ -19,7 +19,7 @@
     },
     filters: {
       date: FDate,
-      date_time: FDateTime,
+      time: FTime,
     },
     components: {
       ActionsIcon,

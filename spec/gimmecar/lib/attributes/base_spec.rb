@@ -61,12 +61,22 @@ describe Lib::Attributes::Base do
       expect { form.promo_codes_code }.to raise_error(NoMethodError)
     end
 
-    it 'parses array of attributes correctly' do
-      form = test_form.new({
-        ids: ['4', :four, 4, nil, '']
-      })
+    describe 'array' do
+      it 'parses array of attributes correctly' do
+        form = test_form.new({
+          ids: ['4', :four, 4, nil, '']
+        })
 
-      expect(form.ids).to eq([4, 4])
+        expect(form.ids).to eq([4, 4])
+      end
+
+      it 'returns [] if array empty' do
+        form = test_form.new({
+          ids: nil,
+        })
+
+        expect(form.ids).to eq([])
+      end
     end
   end
 end

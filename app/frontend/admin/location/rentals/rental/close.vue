@@ -1,5 +1,4 @@
 <script>
-  import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
   import InputDateTime from 'Components/inputs/date_time'
@@ -9,7 +8,7 @@
     data () {
       return {
         open: false,
-        form: new Form({
+        form: new this.$form({
           drop_off: new Date(),
           drop_off_fuel: 10,
           drop_off_odometer: '',

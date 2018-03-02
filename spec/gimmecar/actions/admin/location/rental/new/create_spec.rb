@@ -27,7 +27,7 @@ describe Actions::Admin::Location::Rental::New::Create do
 
       expect(success).to receive(:call)
 
-      drop_off = DateTime.now + 2.days
+      drop_off = Time.now + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
         :drop_off                                  => drop_off,
@@ -133,7 +133,7 @@ describe Actions::Admin::Location::Rental::New::Create do
 
       expect(success).to receive(:call)
 
-      drop_off = DateTime.now + 2.days
+      drop_off = Time.now + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
         :drop_off                                             => drop_off,
@@ -200,7 +200,7 @@ describe Actions::Admin::Location::Rental::New::Create do
 
       expect(success).to receive(:call)
 
-      drop_off = DateTime.now + 2.days
+      drop_off = Time.now + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
         :drop_off                                             => drop_off,

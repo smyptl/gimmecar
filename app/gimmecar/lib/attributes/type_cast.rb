@@ -31,17 +31,17 @@ class Lib::Attributes::TypeCast
       end
     end
 
-    def date_time(value)
+    def time(value)
       case value
       when String
         if value =~ JSON_REGEX
           begin
-            DateTime.parse(value)
+            Time.parse(value)
           rescue ArgumentError
             nil
           end
         end
-      when DateTime
+      when Time
         value
       end
     end

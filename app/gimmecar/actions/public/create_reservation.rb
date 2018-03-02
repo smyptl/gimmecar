@@ -1,14 +1,14 @@
 class Actions::Public::CreateReservation < Lib::Forms::Base
 
   attributes do |a|
-    a.integer   :location_id
-    a.date_time :pickup
-    a.date_time :drop_off
-    a.string    :vehicle_type
-    a.string    :name_first
-    a.string    :name_last
-    a.string    :email
-    a.integer   :phone_number
+    a.integer :location_id
+    a.time    :pickup
+    a.time    :drop_off
+    a.string  :vehicle_type
+    a.string  :name_first
+    a.string  :name_last
+    a.string  :email
+    a.integer :phone_number
   end
 
   validates :name_first, :name_last,

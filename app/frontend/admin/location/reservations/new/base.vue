@@ -1,5 +1,4 @@
 <script>
-  import Form from 'Utils/form'
   import Shake from 'Utils/transitions/shake'
 
   import Quote from 'Admin/location/components/rental_invoice'
@@ -10,7 +9,7 @@
     name: 'new',
     data () {
       return {
-        quote: new Form({
+        quote: new this.$form({
           pickup: new Date().setHours(new Date().getHours() + 1),
           drop_off: new Date().setDate(new Date().getDate() + 1),
         }),
