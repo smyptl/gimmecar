@@ -1,8 +1,8 @@
-class Services::Admin::Vehicles::Available < Lib::Services::Base
+class Services::Admin::Location::Vehicles::Available < Lib::Services::Base
 
   attributes do |a|
     a.integer :location_id
-    a.string :vehicle_type
+    a.string  :vehicle_type
   end
 
   output do

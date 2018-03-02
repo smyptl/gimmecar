@@ -27,7 +27,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
   end
 
   def vehicles
-    Services::Admin::Vehicles::Available.new({
+    Services::Admin::Location::Vehicles::Available.new({
       location_id:  location.id,
       vehicle_type: params[:rental].fetch(:vehicle_type)
     }).retrieve(success, failure)

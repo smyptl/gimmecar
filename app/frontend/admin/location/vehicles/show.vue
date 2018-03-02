@@ -1,7 +1,4 @@
 <script>
-  import FDate from 'Filters/date'
-  import FTime from 'Filters/time'
-
   import Dropdown from 'Components/dropdown'
 
   import ActionsIcon from 'Components/icons/actions'
@@ -16,10 +13,6 @@
         vehicle: {},
         change_status: false,
       }
-    },
-    filters: {
-      date: FDate,
-      time: FTime,
     },
     components: {
       ActionsIcon,
@@ -53,7 +46,7 @@
 <template lang='pug'>
   .panel.panel-base
     .panel-base-header
-      h2 {{ vehicle.make }} {{ vehicle.model }}
+      h2 {{ vehicle.make_model }}
       dropdown.flex-element.right
         a(data-toggle='dropdown')
           actions-icon.action-icon

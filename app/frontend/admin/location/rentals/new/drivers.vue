@@ -99,7 +99,10 @@
                 h3 {{ search_result.name_last }}, {{ search_result.name_first }} {{ search_result.name_middle }}
                 p.input-error-message.error-message-base(v-if='search_result.do_not_rent') DO NOT RENT!!!
 
-                .left {{ search_result }}
+                table.panel-table.panel-table-key-pair
+                  tr
+                    td Name
+                    td {{ search_result.name_full }}
 
     .margin-top-sm.left
       template(v-if='form.add_additional_driver')

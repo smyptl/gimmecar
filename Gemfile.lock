@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/stripe/stripe-ruby
-  revision: a7ea9cf1e9cb4df0a4298d44318d459134b9b41a
+  revision: 3bc4256e2532d75e93ca744edc3dc7913aa79a86
   specs:
-    stripe (3.10.0)
+    stripe (3.11.0)
       faraday (~> 0.10)
 
 GEM
@@ -51,7 +51,7 @@ GEM
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
     arel (8.0.0)
-    autoprefixer-rails (8.0.0)
+    autoprefixer-rails (8.1.0)
       execjs
     axlsx (2.0.1)
       htmlentities (~> 4.3.1)
@@ -135,7 +135,7 @@ GEM
     rack (2.0.4)
     rack-proxy (0.6.3)
       rack
-    rack-test (0.8.2)
+    rack-test (0.8.3)
       rack (>= 1.0, < 3)
     rails (5.1.4)
       actioncable (= 5.1.4)
