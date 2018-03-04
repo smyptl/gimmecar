@@ -75,7 +75,9 @@ gem 'bugsnag'
 
 # Gem
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
-gem 'fuzzy_match'
 
+# ActiveRecord Add-Ons
+gem 'fuzzy_match'
+gem 'groupdate'
 
 ruby '2.4.3'

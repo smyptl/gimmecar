@@ -43,6 +43,10 @@ class Lib::Attributes::TypeCast
         end
       when Time
         value
+      when ActiveSupport::TimeWithZone
+        value
+      when DateTime
+        value.to_time
       end
     end
 

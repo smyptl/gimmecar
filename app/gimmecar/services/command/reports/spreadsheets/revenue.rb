@@ -1,4 +1,4 @@
-class Services::Command::Reports::Revenue < Lib::Services::Base
+class Services::Command::Reports::Spreadsheets::Revenue < Lib::Services::Base
 
   def output
     spreadsheet = Lib::Spreadsheet::Base.new('Revenue') do |ss|

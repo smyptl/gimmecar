@@ -1,8 +1,6 @@
 class Command::ReportsController < Command::BaseController
 
   def index
-    @report = Services::Command::Reports::Revenue.retrieve
-
-    render xlsx: @report.file_name, template: 'command/excel.axlsx'
+    Services::Command::Reports::RentalsPerMonth.retrieve(success, failure)
   end
 end

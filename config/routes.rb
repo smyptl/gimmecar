@@ -64,7 +64,7 @@ Rails.application.routes.draw do
     resources :vehicles, only: [:index, :show]
     resources :drivers,  only: [:index, :show]
 
-    #get '/reports',   to: 'reports#index'
+    get '/reports',   to: 'reports#index'
   end
 
   scope module: :public do
