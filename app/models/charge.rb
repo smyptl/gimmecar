@@ -45,7 +45,7 @@ class Charge < ApplicationRecord
   def find_or_create_customer(token:, customer_id:)
     case
     when customer_id.blank? && token.blank?
-      raise ArugmentError
+      raise ArgumentError 'customer_id and token missing'
     when customer_id.blank? && token.present?
       Stripe::Customer.create({ :source => token })['id']
     when customer_id.present? && token.present?
@@ -56,7 +56,7 @@ class Charge < ApplicationRecord
     when customer_id.present? && token.blank?
       customer_id
     else
-      raise Lib::Errors::NotImplemented
+      raise NotImplementedError
     end
   end
 end

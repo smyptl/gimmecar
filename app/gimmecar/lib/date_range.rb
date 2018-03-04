@@ -10,13 +10,13 @@ class Lib::DateRange
     @start_date, @end_date = start_date, end_date
   end
 
-  def range
-    start_date..end_date
-  end
+  #def range
+    #start_date..end_date
+  #end
 
-  def each_date(*args, &block)
-    range(*args, &block)
-  end
+  #def each_date(*args, &block)
+    #range(*args, &block)
+  #end
 
   def include?(date)
     range.cover?(date)

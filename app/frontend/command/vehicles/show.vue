@@ -1,7 +1,4 @@
 <script>
-  import FDate from 'Filters/date'
-  import FDateTime from 'Filters/date_time'
-
   import Dropdown from 'Components/dropdown'
   import ActionsIcon from 'Components/icons/actions'
   import VehicleInformation from 'Components/vehicle/information'
@@ -12,10 +9,6 @@
       return {
         vehicle: {},
       }
-    },
-    filters: {
-      date: FDate,
-      date_time: FDateTime,
     },
     components: {
       ActionsIcon,

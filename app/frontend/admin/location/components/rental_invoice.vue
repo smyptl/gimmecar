@@ -1,6 +1,6 @@
 <script>
   import FDate from "Filters/date"
-  import FDateTime from "Filters/date_time"
+  import FTime from "Filters/time"
   import Currency from 'Filters/currency'
   import Percent from 'Filters/percent'
 
@@ -21,7 +21,7 @@
       Currency,
       Percent,
       date: FDate,
-      date_time: FDateTime,
+      time: FTime,
     },
     computed: {
       rates () {
@@ -50,7 +50,7 @@
 
       li
         | Pickup:&nbsp;
-        b {{ summary.pickup | date_time }}
+        b {{ summary.pickup | time }}
       li(v-if='summary.pickup_fuel')
         | Pickup Fuel:&nbsp;
         b {{ summary.pickup_fuel/10 | percent }}
@@ -60,7 +60,7 @@
 
       li
         | Drop Off:&nbsp;
-        b {{ summary.drop_off | date_time }}
+        b {{ summary.drop_off | time }}
       li(v-if='summary.drop_off_fuel')
         | Drop Off Fuel:&nbsp;
         b {{ summary.drop_off_fuel/10 | percent }}

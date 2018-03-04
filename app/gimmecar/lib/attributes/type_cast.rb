@@ -31,18 +31,22 @@ class Lib::Attributes::TypeCast
       end
     end
 
-    def date_time(value)
+    def time(value)
       case value
       when String
         if value =~ JSON_REGEX
           begin
-            DateTime.parse(value)
+            Time.zone.parse(value)
           rescue ArgumentError
             nil
           end
         end
-      when DateTime
+      when Time
         value
+      when ActiveSupport::TimeWithZone
+        value
+      when DateTime
+        value.to_time
       end
     end
 

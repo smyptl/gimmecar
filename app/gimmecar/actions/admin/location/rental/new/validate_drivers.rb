@@ -2,11 +2,11 @@ class Actions::Admin::Location::Rental::New::ValidateDrivers < Lib::Forms::Base
   include Actions::Admin::Location::Rental::New::Concerns::Driver
 
   attributes do |a|
-    a.date_time :drop_off
+    a.time :drop_off
   end
 
   def pickup
-    DateTime.now
+    Time.now
   end
 
   def save

@@ -17,15 +17,15 @@ module Lib::Forms::AuditLog
   end
 
   def new_data_model
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def old_data_model
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def log_params
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def old_attributes

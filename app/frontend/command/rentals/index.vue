@@ -11,7 +11,7 @@
       }
     },
     filters: {
-      date_time (val) {
+      time (val) {
         var val = Moment(val)
 
         if (val.isValid()) {
@@ -68,8 +68,8 @@
             td {{ rental.name }}
             td {{ rental.pickup_location_name }}
             td {{ rental.vehicle }}
-            td {{ rental.pickup | date_time }}
-            td {{ rental.drop_off | date_time }}
+            td {{ rental.pickup | time }}
+            td {{ rental.drop_off | time }}
 </template>
 
 <style lang='stylus' scoped>

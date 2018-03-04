@@ -1,4 +1,4 @@
-class Services::Admin::Vehicles < Lib::Services::Base
+class Services::Admin::Location::Vehicles < Lib::Services::Base
 
   output do
     collection :vehicles, component: Services::Builders::VehiclesTable

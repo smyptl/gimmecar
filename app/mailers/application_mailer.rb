@@ -1,7 +1,7 @@
 class ApplicationMailer < ActionMailer::Base
   include ActionView::Helpers::NumberHelper
 
-  helper_method :format_percent, :format_currency, :format_date_time, :format_date
+  helper_method :format_percent, :format_currency, :format_time, :format_date
 
   default from: 'GimmeCar | Car Rentals <team@gimmecar.com>'
   layout 'email'
@@ -14,7 +14,7 @@ class ApplicationMailer < ActionMailer::Base
     number_to_currency(value/100, {:precision => 2})
   end
 
-  def format_date_time(value)
+  def format_time(value)
     value.strftime("%m/%d/%Y @ %I:%M:%S %p")
   end
 

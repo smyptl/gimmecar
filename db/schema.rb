@@ -227,5 +227,4 @@ ActiveRecord::Schema.define(version: 20180112175234) do
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
-
 end

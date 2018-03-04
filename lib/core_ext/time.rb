@@ -1,4 +1,4 @@
-class ActiveSupport::TimeWithZone
+class Time
 
   def before?(date)
     self < date

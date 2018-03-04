@@ -28,6 +28,9 @@ module.exports = {
             { path: '',     name: 'drivers', component: require('./drivers/index') },
           ],
         },
+        {
+          path: '/reports', name: 'reports', component: require('./reports/index')
+        }
       ],
     },
   ],

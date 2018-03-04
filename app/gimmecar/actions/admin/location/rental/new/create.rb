@@ -5,7 +5,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
   include Actions::Admin::Location::Rental::New::Concerns::TermsAndConditions
 
   attributes do |a|
-    a.date_time :drop_off
+    a.time :drop_off
 
     a.string :promo_code
     a.symbol :paid_by
@@ -23,7 +23,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
     inclusion: { in: [:driver, :additional_driver] }
 
   def pickup
-    DateTime.now
+    Time.now
   end
 
   def rental_period

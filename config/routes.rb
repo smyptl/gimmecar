@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       get  'rentals/new'                                   => 'rentals/new#index'
       post 'rentals/new/rates'                             => 'rentals/new#rates'
       post 'rentals/new/validate-drivers'                  => 'rentals/new#validate_drivers'
+      post 'rentals/new/driver-search'                     => 'rentals/new#driver_search'
       post 'rentals/new/vehicles'                          => 'rentals/new#vehicles'
       post 'rentals/new/validate-vehicle'                  => 'rentals/new#validate_vehicle'
       post 'rentals/new/validate-financial-responsibility' => 'rentals/new#validate_financial_responsibility'
@@ -46,11 +47,6 @@ Rails.application.routes.draw do
         get 'verify-insurance',  to: 'verify_insurance#index'
         post 'verify-insurance', to: 'verify_insurance#create'
       end
-
-      resources :drivers, only: [:show] do
-        resources :insurance_policies
-      end
-      post 'drivers/search'
 
       resources :vehicles, only: [:index, :show] do
         get 'status', to: 'vehicles/status#index'
@@ -68,7 +64,7 @@ Rails.application.routes.draw do
     resources :vehicles, only: [:index, :show]
     resources :drivers,  only: [:index, :show]
 
-    #get '/reports',   to: 'reports#index'
+    get '/reports',   to: 'reports#index'
   end
 
   scope module: :public do

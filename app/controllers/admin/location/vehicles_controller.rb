@@ -3,11 +3,11 @@ class Admin::Location::VehiclesController < Admin::Location::BaseController
   before_action :authorize_vehicle, except: :index
 
   def index
-    Services::Admin::Vehicles.retrieve(success, failure, location_id: location.id)
+    Services::Admin::Location::Vehicles.retrieve(success, failure, location_id: location.id)
   end
 
   def show
-    Services::Admin::Vehicle.new(vin: vin).retrieve(success, failure)
+    Services::Admin::Location::Vehicle.new(vin: vin).retrieve(success, failure)
   end
 
   private

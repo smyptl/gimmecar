@@ -1,15 +1,15 @@
 class Actions::Command::Quote < Lib::Forms::Base
 
   attributes do |a|
-    a.date_time :pickup
-    a.date_time :drop_off
-    a.string    :vehicle_type
-    a.integer   :location_id
+    a.time    :pickup
+    a.time    :drop_off
+    a.string  :vehicle_type
+    a.integer :location_id
   end
 
   validates :pickup,
     presence: true,
-    after_date: { with: -> { DateTime.now - 59.minutes }, message: 'must be in the future' }
+    after_date: { with: -> { Time.now - 59.minutes }, message: 'must be in the future' }
 
   validates :drop_off,
     presence: true,

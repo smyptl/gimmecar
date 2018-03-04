@@ -13,7 +13,8 @@ module GimmeCar
     # -- all .rb files in that directory are automatically loaded.
 
     # Config Time Zone
-    config.time_zone = "Etc/UTC"
+    config.time_zone = 'Etc/UTC'
+    config.active_record.default_timezone = :utc
 
     config.assets.initialize_on_precompile = false
   end

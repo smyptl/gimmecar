@@ -13,8 +13,8 @@ describe Logic::Rates::Base do
 
       results = Logic::Rates::Base.new(
         rental_period: Lib::DateRange.new(
-          DateTime.new(2018, 1, 1, 0, 0, 0, '-08:00'),
-          DateTime.new(2018, 1, 4, 0, 0, 0, '-08:00')),
+          Time.new(2018, 1, 1, 0, 0, 0, '-08:00'),
+          Time.new(2018, 1, 4, 0, 0, 0, '-08:00')),
         location: location,
         base_rate: 3000,
         tax_rate: tax_rate).retrieve
@@ -30,8 +30,8 @@ describe Logic::Rates::Base do
 
         results = Logic::Rates::Base.new(
           rental_period: Lib::DateRange.new(
-            DateTime.new(2018, 1, 1, 4, 0, 0, '-08:00'),
-            DateTime.new(2018, 1, 3, 7, 0, 0, '-08:00')),
+            Time.new(2018, 1, 1, 4, 0, 0, '-08:00'),
+            Time.new(2018, 1, 3, 7, 0, 0, '-08:00')),
           location: location,
           base_rate: 3000,
           tax_rate: tax_rate).retrieve
@@ -45,8 +45,8 @@ describe Logic::Rates::Base do
       it 'returns full day if for just one day' do
         results = Logic::Rates::Base.new(
           rental_period: Lib::DateRange.new(
-            DateTime.new(2018, 1, 1, 4, 0, 0, '-08:00'),
-            DateTime.new(2018, 1, 1, 7, 0, 0, '-08:00')),
+            Time.new(2018, 1, 1, 4, 0, 0, '-08:00'),
+            Time.new(2018, 1, 1, 7, 0, 0, '-08:00')),
           location: location,
           base_rate: 3000,
           tax_rate: tax_rate).retrieve

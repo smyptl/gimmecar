@@ -42,41 +42,41 @@ class Lib::Attributes::Parser
   end
 
   def string(name, options = {})
-    @attributes[name] = { :type => :string, :options => options }
+    @attributes[name] = { type: :string, options: options }
   end
 
   def symbol(name, options = {})
-    @attributes[name] = { :type => :symbol, :options => options }
+    @attributes[name] = { type: :symbol, options: options }
   end
 
   def boolean(name, options = {})
-    @attributes[name] = { :type => :boolean, :options => options }
+    @attributes[name] = { type: :boolean, options: options }
   end
 
   def date(name, options = {})
-    @attributes[name] = { :type => :date, :options => options }
+    @attributes[name] = { type: :date, options: options }
   end
 
-  def date_time(name, options = {})
-    @attributes[name] = { :type => :date_time, :options => options }
+  def time(name, options = {})
+    @attributes[name] = { type: :time, options: options }
   end
 
   def integer(name, options = {})
-    @attributes[name] = { :type => :integer, :options => options }
+    @attributes[name] = { type: :integer, options: options }
   end
 
   def signature(name, options = {})
-    @attributes[name] = { :type => :signature, :options => options }
+    @attributes[name] = { type: :signature, options: options }
   end
 
   def value(name, options = {})
-    @attributes[name] = { :type => :value, :options => options }
+    @attributes[name] = { type: :value, options: options }
   end
 
   def nested(name, options = {})
     form = Lib::Attributes::Parser.new
     yield form
-    @attributes[name] = { :type => :nested, :options => options, :attributes => form.retrieve }
+    @attributes[name] = { type: :nested, options: options, attributes: form.retrieve }
   end
 
   def retrieve

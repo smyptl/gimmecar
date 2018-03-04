@@ -3,11 +3,11 @@ module Actions::Admin::Location::Rental::New::Concerns::Vehicle
 
   included do
     attributes do |a|
-      a.date_time :drop_off
-      a.string    :vehicle_type
-      a.integer   :vehicle_id
-      a.integer   :pickup_odometer
-      a.integer   :pickup_fuel
+      a.time    :drop_off
+      a.string  :vehicle_type
+      a.integer :vehicle_id
+      a.integer :pickup_odometer
+      a.integer :pickup_fuel
     end
 
     validates :vehicle_type,
@@ -26,10 +26,10 @@ module Actions::Admin::Location::Rental::New::Concerns::Vehicle
   end
 
   def available_vehicle_ids
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def location
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 end

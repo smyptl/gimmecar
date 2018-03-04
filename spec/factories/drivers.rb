@@ -43,10 +43,10 @@ FactoryBot.define do
     home_phone_number '9091239021'
     gender { ['male', 'female'].sample }
     email { Faker::Internet.email }
-    date_of_birth Date.today - 26.years
+    date_of_birth (Time.current - 26.years).to_date
     license_number { Faker::Number.number(7) }
     license_state { state }
     license_country { country }
-    license_expiration_date Date.today + 1.year
+    license_expiration_date (Time.current + 1.year).to_date
   end
 end

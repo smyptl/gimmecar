@@ -95,11 +95,11 @@ rental_driver = Driver.create({
   :home_phone_number       => "9091239021",
   :gender                  => ['male', 'female'].sample,
   :email                   => Faker::Internet.email,
-  :date_of_birth           => Date.today - 26.years,
+  :date_of_birth           => Time.current - 26.years,
   :license_number          => '123JAS12',
   :license_state           => 'California',
   :license_country         => 'United States',
-  :license_expiration_date => Date.today + 1.year,
+  :license_expiration_date => Time.current + 1.year,
 })
 
 Rental.create_open({
@@ -108,11 +108,11 @@ Rental.create_open({
   :vehicle                 => rental_vehicle,
   :vehicle_type            => 'subcompact',
   :pickup_location         => location,
-  :pickup                  => DateTime.now - 1.day,
+  :pickup                  => Time.now - 1.day,
   :pickup_odometer         => 14500,
   :pickup_fuel             => 10,
   :drop_off_location       => location,
-  :drop_off                => DateTime.now + 2.days,
+  :drop_off                => Time.now + 2.days,
   :collision_damage_waiver => false,
 })
 
@@ -130,18 +130,18 @@ Rental.create_open({
 #   :home_phone_number       => "9091239021",
 #   :gender                  => ['male', 'female'].sample,
 #   :email                   => Faker::Internet.email,
-#   :date_of_birth           => Date.today - 26.years,
+#   :date_of_birth           => Time.current - 26.years,
 #   :license_number          => '123JAS12',
 #   :license_state           => 'California',
 #   :license_country         => 'United States',
-#   :license_expiration_date => Date.today + 1.year,
+#   :license_expiration_date => Time.current + 1.year,
 # })
 #
 # Rental.create_reservation({
 #   :driver                  => reservation_driver,
 #   :vehicle_type            => 'compact',
 #   :pickup_location         => location,
-#   :pickup                  => DateTime.now + 3.day,
+#   :pickup                  => Time.now + 3.day,
 #   :drop_off_location       => location,
-#   :drop_off                => DateTime.now + 5.days,
+#   :drop_off                => Time.now + 5.days,
 # })

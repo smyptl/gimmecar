@@ -68,6 +68,7 @@ group :test do
   gem 'capybara-webkit', '~> 1.14.0'
   gem 'factory_bot'
   gem 'database_cleaner'
+  gem 'zonebie'
 end
 
 # Developer Tools
@@ -76,7 +77,8 @@ gem 'bugsnag'
 # Gem
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# ActiveRecord Add-Ons
+gem 'fuzzy_match'
+gem 'groupdate'
 
 ruby '2.4.3'

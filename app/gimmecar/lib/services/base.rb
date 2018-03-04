@@ -65,12 +65,12 @@ class Lib::Services::Base < Lib::Attributes::Base
   private
 
   def output
-    _output || (raise Lib::Errors::NotImplemented)
+    _output || (raise NotImplementedError)
     Lib::Services::Generator.new(record: self, rules: _output, query: query).retrieve
   end
 
   def query
-    raise Lib::Errors::NotImplemented
+    raise NotImplementedError
   end
 
   def include_hash

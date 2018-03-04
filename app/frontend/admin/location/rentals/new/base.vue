@@ -2,14 +2,15 @@
   import Shake from 'Utils/transitions/shake'
 
   import RentalInvoice from 'Admin/location/components/rental_invoice'
-  import Driver from 'Admin/location/components/driver'
 
   import InputDateTime from 'Components/inputs/date_time'
   import Signature from 'Components/inputs/signature'
   import Payment from 'Components/inputs/payment'
   import FinancialResponsibilitySignatures from 'Admin/location/components/financial_responsibility_signatures'
   import TermsAndConditionsSignatures from 'Admin/location/components/terms_and_conditions_signatures'
-  import VehicleForm from './vehicles.vue'
+
+  import DriversForm from './drivers'
+  import VehicleForm from './vehicles'
 
   export default {
     name: 'new',
@@ -90,7 +91,7 @@
       }
     },
     components: {
-      Driver,
+      DriversForm,
       InputDateTime,
       FinancialResponsibilitySignatures,
       Payment,
@@ -289,7 +290,7 @@
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
     template(v-if='current_step == "Drivers"')
-      driver(v-bind:form='rental')
+      drivers-form(v-bind:form='rental')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
