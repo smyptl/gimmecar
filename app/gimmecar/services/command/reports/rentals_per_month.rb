@@ -19,7 +19,7 @@ class Services::Command::Reports::RentalsPerMonth < Lib::Services::Base
   end
 
   def date_range
-    current_month = Date.today.beginning_of_month
+    current_month = Time.current.beginning_of_month
 
     (current_month - 12.months)..current_month
   end

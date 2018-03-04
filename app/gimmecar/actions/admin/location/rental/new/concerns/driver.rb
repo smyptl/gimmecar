@@ -88,7 +88,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
 
     validates :driver_date_of_birth,
       presence: true,
-      before_date: -> { Date.today - 21.years }
+      before_date: -> { Time.current - 21.years }
 
     validates :driver_email,
       presence: true,
@@ -143,7 +143,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
 
       a.validates :additional_driver_date_of_birth,
         presence: true,
-        before_date: -> { Date.today - 21.years }
+        before_date: -> { Time.current - 21.years }
 
       a.validates :additional_driver_email,
         presence: true,

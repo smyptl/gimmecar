@@ -89,8 +89,8 @@ describe Lib::Attributes::TypeCast do
         expect(Lib::Attributes::TypeCast.time('2017-01-34T11:10:51-08:00')).to eq(nil)
       end
 
-      it 'value has wrong time, but adds to date' do
-        expect(Lib::Attributes::TypeCast.time('2017-01-04T41:10:51-08:00')).to eq(Time.new(2017, 1, 5, 17, 10, 51, '-08:00'))
+      it 'value has wrong time' do
+        expect(Lib::Attributes::TypeCast.time('2017-01-04T41:10:51-08:00')).to eq(nil)
       end
 
       it 'value is date and time are valid in string' do

@@ -95,11 +95,11 @@ rental_driver = Driver.create({
   :home_phone_number       => "9091239021",
   :gender                  => ['male', 'female'].sample,
   :email                   => Faker::Internet.email,
-  :date_of_birth           => Date.today - 26.years,
+  :date_of_birth           => Time.current - 26.years,
   :license_number          => '123JAS12',
   :license_state           => 'California',
   :license_country         => 'United States',
-  :license_expiration_date => Date.today + 1.year,
+  :license_expiration_date => Time.current + 1.year,
 })
 
 Rental.create_open({
@@ -130,11 +130,11 @@ Rental.create_open({
 #   :home_phone_number       => "9091239021",
 #   :gender                  => ['male', 'female'].sample,
 #   :email                   => Faker::Internet.email,
-#   :date_of_birth           => Date.today - 26.years,
+#   :date_of_birth           => Time.current - 26.years,
 #   :license_number          => '123JAS12',
 #   :license_state           => 'California',
 #   :license_country         => 'United States',
-#   :license_expiration_date => Date.today + 1.year,
+#   :license_expiration_date => Time.current + 1.year,
 # })
 #
 # Rental.create_reservation({

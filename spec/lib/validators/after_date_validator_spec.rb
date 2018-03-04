@@ -10,10 +10,10 @@ describe AfterDateValidator do
       end
 
       validates :date,
-        after_date: -> { Date.today }
+        after_date: -> { Time.current }
     end
 
-    form = test_form.new({ date: Date.today })
+    form = test_form.new({ date: Time.current })
 
     expect(form.valid?).to eq(false)
     expect(form.errors[:date].count).to eq(1)
@@ -27,10 +27,10 @@ describe AfterDateValidator do
       end
 
       validates :date,
-        after_date: { with: -> { Date.today }, message: 'must be after date' }
+        after_date: { with: -> { Time.current }, message: 'must be after date' }
     end
 
-    form = test_form.new({ date: Date.today })
+    form = test_form.new({ date: Time.current })
 
     expect(form.valid?).to eq(false)
     expect(form.errors[:date].count).to eq(1)
@@ -48,7 +48,7 @@ describe AfterDateValidator do
         after_date: { with: -> { nil }, message: 'must be after date' }
     end
 
-    form = test_form.new({ date: Date.today })
+    form = test_form.new({ date: Time.current })
 
     expect { form.valid? }.to raise_error(ArgumentError)
   end
@@ -64,7 +64,7 @@ describe AfterDateValidator do
         after_date: { with: -> { nil }, allow_nil: true, message: 'must be after date' }
     end
 
-    form = test_form.new({ date: Date.today })
+    form = test_form.new({ date: Time.current })
 
     expect(form.valid?).to eq(true)
   end
@@ -77,7 +77,7 @@ describe AfterDateValidator do
       end
 
       validates :date,
-        after_date: -> { Date.today }
+        after_date: -> { Time.current }
     end
 
     form = test_form.new

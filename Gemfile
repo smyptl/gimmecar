@@ -68,6 +68,7 @@ group :test do
   gem 'capybara-webkit', '~> 1.14.0'
   gem 'factory_bot'
   gem 'database_cleaner'
+  gem 'zonebie'
 end
 
 # Developer Tools

@@ -36,7 +36,7 @@ class Lib::Attributes::TypeCast
       when String
         if value =~ JSON_REGEX
           begin
-            Time.parse(value)
+            Time.zone.parse(value)
           rescue ArgumentError
             nil
           end

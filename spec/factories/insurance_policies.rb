@@ -24,10 +24,10 @@ FactoryBot.define do
     agent Faker::Name.name
     policy_number SecureRandom.hex(10)
     phone_number "9091231234"
-    effective_date Date.today - 6.months
-    expiration_date Date.today + 6.months
+    effective_date (Time.current - 6.months).to_date
+    expiration_date (Time.current + 6.months).to_date
 
-    verify_date Date.today
+    verify_date (Time.current).to_date
     verify_agent Faker::Name.name
     verify_call_center Faker::Address.city
   end
