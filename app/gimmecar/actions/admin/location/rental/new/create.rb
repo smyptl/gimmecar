@@ -23,7 +23,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
     inclusion: { in: [:driver, :additional_driver] }
 
   def pickup
-    Time.now
+    Time.current
   end
 
   def rental_period
@@ -129,5 +129,9 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
       message: "Rental #{@rental.number} created for #{driver_name_first} #{driver_name_last}.",
       number:  @rental.number,
     }
+  end
+
+  def time_zone
+    location.time_zone
   end
 end

@@ -12,7 +12,7 @@ class Services::Public::GetRates < Lib::Services::Base
 
   validates :pickup,
     presence: true,
-    after_date: { with: -> { Time.now - 59.minutes }, message: 'must be in the future' }
+    after_date: { with: -> { Time.current - 59.minutes }, message: 'must be in the future' }
 
   validates :drop_off,
     presence: true,

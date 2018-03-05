@@ -22,7 +22,6 @@ Rails.application.routes.draw do
 
       resources :rentals, except: [:new, :create] do
         get 'receipt/print', to: 'rentals/receipt#print'
-        post 'receipt/email', to: 'rentals/receipt#email'
 
         get 'close', to: 'rentals/close#index'
         post 'close', to: 'rentals/close#create'

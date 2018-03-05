@@ -6,12 +6,16 @@ class Actions::Admin::Location::Rental::New::ValidateDrivers < Lib::Forms::Base
   end
 
   def pickup
-    Time.now
+    Time.current
   end
 
   def save
   end
 
   def success_args
+  end
+
+  def time_zone
+    @time_zone ||= Location.find(params[:location_id]).time_zone
   end
 end

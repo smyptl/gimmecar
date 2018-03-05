@@ -5,6 +5,6 @@ class Admin::Location::Rentals::ReceiptController < Admin::Location::Rentals::Ba
   end
 
   def render_layout
-    render 'admin/print_receipt'
+    render 'admin/receipt'
   end
 end

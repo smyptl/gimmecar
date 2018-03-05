@@ -8,7 +8,7 @@ class Services::Admin::Location::Quote < Lib::Services::Base
 
   validates :pickup,
     presence: true,
-    after_date: { with: -> { Time.now - 59.minutes }, message: 'must be in the future' }
+    after_date: { with: -> { Time.current - 59.minutes }, message: 'must be in the future' }
 
   validates :drop_off,
     presence: true,
@@ -30,6 +30,10 @@ class Services::Admin::Location::Quote < Lib::Services::Base
   end
 
   def output
-    Services::Rates.new(rental: self, location: params[:location]).retrieve!
+    Services::Rates.new(rental: self, location: location).retrieve!
+  end
+
+  def location
+    @location ||= Location.find(params[:location_id])
   end
 end

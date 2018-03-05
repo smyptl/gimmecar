@@ -5,10 +5,10 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
 
   def rates
     Services::Admin::Location::Quote.new({
-      pickup:       Time.now,
+      pickup:       Time.current,
       drop_off:     params[:rental].fetch(:drop_off),
       vehicle_type: params[:rental].fetch(:vehicle_type)
-    }).retrieve(success, failure, location: location)
+    }).retrieve(success, failure, location_id: location.id)
   end
 
   def validate_drivers
@@ -19,7 +19,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       add_additional_driver: params[:rental][:add_additional_driver],
       additional_driver_id:  params[:rental][:additional_driver_id],
       additional_driver:     params[:rental][:additional_driver],
-    }).execute(success, failure, params)
+    }).execute(success, failure, location_id: location.id)
   end
 
   def driver_search
@@ -48,7 +48,7 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       add_additional_driver:                                params[:rental][:add_additional_driver],
       driver_financial_responsibility_signature:            params[:rental][:driver_financial_responsibility_signature],
       additional_driver_financial_responsibility_signature: params[:rental][:additional_driver_financial_responsibility_signature],
-    }).execute(success, failure, params)
+    }).execute(success, failure)
   end
 
   def validate_terms_and_conditions
@@ -56,10 +56,10 @@ class Admin::Location::Rentals::NewController < Admin::Location::BaseController
       add_additional_driver:       params[:rental][:add_additional_driver],
       driver_signature:            params[:rental][:driver_signature],
       additional_driver_signature: params[:rental][:additional_driver_signature],
-    }).execute(success, failure, params)
+    }).execute(success, failure)
   end
 
   def create
-    Actions::Admin::Location::Rental::New::Create.new(params.require(:rental)).execute(success, failure, { location_id: location.id, user_id: current_user.id })
+    Actions::Admin::Location::Rental::New::Create.new(params.require(:rental)).execute(success, failure, location_id: location.id, user_id: current_user.id)
   end
 end
