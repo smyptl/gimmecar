@@ -65,9 +65,9 @@
           )
 
             td {{ rental.number }}
-            td {{ rental.name }}
+            td {{ rental.driver_name }}
             td {{ rental.pickup_location_name }}
-            td {{ rental.vehicle }}
+            td {{ rental.vehicle_make_model }}
             td {{ rental.pickup | time }}
             td {{ rental.drop_off | time }}
 </template>

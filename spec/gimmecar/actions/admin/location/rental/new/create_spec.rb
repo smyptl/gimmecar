@@ -27,21 +27,21 @@ describe Actions::Admin::Location::Rental::New::Create do
 
       expect(success).to receive(:call)
 
-      drop_off = Time.now + 2.days
+      drop_off = Time.current + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
-        :drop_off                                  => drop_off,
-        :driver                                    => driver_attrs,
-        :driver_signature                          => 'test',
-        :driver_financial_responsibility_signature => 'test',
-        :add_additional_driver                     => false,
-        :vehicle_type                              => vehicle.vehicle_type,
-        :vehicle_id                                => vehicle.id,
-        :pickup_odometer                           => 1250,
-        :pickup_fuel                               => 10,
-        :stripe_token                              => create_valid_credit_card_token_id,
-        :paid_by                                   => :driver,
-      }).execute(success, failure, { :user_id => user.id, :location_id => location.id })
+        drop_off:                                  drop_off,
+        driver:                                    driver_attrs,
+        driver_signature:                          'test',
+        driver_financial_responsibility_signature: 'test',
+        add_additional_driver:                     false,
+        vehicle_type:                              vehicle.vehicle_type,
+        vehicle_id:                                vehicle.id,
+        pickup_odometer:                           1250,
+        pickup_fuel:                               10,
+        stripe_token:                              create_valid_credit_card_token_id,
+        paid_by:                                   :driver,
+      }).execute(success, failure, user_id: user.id, location_id: location.id)
 
       expect(Driver.count).to eq(1)
       driver = Driver.first
@@ -133,24 +133,24 @@ describe Actions::Admin::Location::Rental::New::Create do
 
       expect(success).to receive(:call)
 
-      drop_off = Time.now + 2.days
+      drop_off = Time.current + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
-        :drop_off                                             => drop_off,
-        :driver                                               => driver_attrs,
-        :add_additional_driver                                => true,
-        :additional_driver                                    => additional_driver_attrs,
-        :driver_signature                                     => 'test',
-        :driver_financial_responsibility_signature            => 'test',
-        :additional_driver_signature                          => 'test',
-        :additional_driver_financial_responsibility_signature => 'test',
-        :vehicle_type                                         => vehicle.vehicle_type,
-        :vehicle_id                                           => vehicle.id,
-        :pickup_odometer                                      => 1250,
-        :pickup_fuel                                          => 10,
-        :stripe_token                                         => create_valid_credit_card_token_id,
-        :paid_by                                              => :driver,
-      }).execute(success, failure, { :user_id => user.id, :location_id => location.id })
+        drop_off:                                             drop_off,
+        driver:                                               driver_attrs,
+        add_additional_driver:                                true,
+        additional_driver:                                    additional_driver_attrs,
+        driver_signature:                                     'test',
+        driver_financial_responsibility_signature:            'test',
+        additional_driver_signature:                          'test',
+        additional_driver_financial_responsibility_signature: 'test',
+        vehicle_type:                                         vehicle.vehicle_type,
+        vehicle_id:                                           vehicle.id,
+        pickup_odometer:                                      1250,
+        pickup_fuel:                                          10,
+        stripe_token:                                         create_valid_credit_card_token_id,
+        paid_by:                                              :driver,
+      }).execute(success, failure, user_id: user.id, location_id: location.id)
 
       expect(Driver.count).to eq(2)
       driver = Driver.first
@@ -200,24 +200,24 @@ describe Actions::Admin::Location::Rental::New::Create do
 
       expect(success).to receive(:call)
 
-      drop_off = Time.now + 2.days
+      drop_off = Time.current + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
-        :drop_off                                             => drop_off,
-        :driver                                               => driver_attrs,
-        :add_additional_driver                                => true,
-        :additional_driver                                    => additional_driver_attrs,
-        :driver_signature                                     => 'test',
-        :driver_financial_responsibility_signature            => 'test',
-        :additional_driver_signature                          => 'test',
-        :additional_driver_financial_responsibility_signature => 'test',
-        :vehicle_type                                         => vehicle.vehicle_type,
-        :vehicle_id                                           => vehicle.id,
-        :pickup_odometer                                      => 1250,
-        :pickup_fuel                                          => 10,
-        :stripe_token                                         => create_valid_credit_card_token_id,
-        :paid_by                                              => :additional_driver,
-      }).execute(success, failure, { :user_id => user.id, :location_id => location.id })
+        drop_off:                                             drop_off,
+        driver:                                               driver_attrs,
+        add_additional_driver:                                true,
+        additional_driver:                                    additional_driver_attrs,
+        driver_signature:                                     'test',
+        driver_financial_responsibility_signature:            'test',
+        additional_driver_signature:                          'test',
+        additional_driver_financial_responsibility_signature: 'test',
+        vehicle_type:                                         vehicle.vehicle_type,
+        vehicle_id:                                           vehicle.id,
+        pickup_odometer:                                      1250,
+        pickup_fuel:                                          10,
+        stripe_token:                                         create_valid_credit_card_token_id,
+        paid_by:                                              :additional_driver,
+      }).execute(success, failure, user_id: user.id, location_id: location.id)
 
       driver = Driver.first
       expect(driver.stripe_id).to eq(nil)

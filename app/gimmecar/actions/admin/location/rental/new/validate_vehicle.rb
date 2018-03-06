@@ -4,7 +4,7 @@ class Actions::Admin::Location::Rental::New::ValidateVehicle < Lib::Forms::Base
   private
 
   def pickup
-    Time.now
+    Time.current
   end
 
   def available_vehicle_ids

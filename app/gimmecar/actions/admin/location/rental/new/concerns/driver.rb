@@ -88,7 +88,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
 
     validates :driver_date_of_birth,
       presence: true,
-      before_date: -> { Time.current - 21.years }
+      before_date: -> { Time.current.in_time_zone(time_zone).to_date - 21.years }
 
     validates :driver_email,
       presence: true,
@@ -107,11 +107,11 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
 
     validates :driver_insurance_effective_date,
       presence: true,
-      before_date: -> { pickup }
+      before_date: -> { pickup.in_time_zone(time_zone).to_date }
 
     validates :driver_insurance_expiration_date,
       presence: true,
-      after_date: { with: -> { drop_off }, allow_nil: true }
+      after_date: { with: -> { drop_off.in_time_zone(time_zone).to_date }, allow_nil: true }
 
     with_options if: :driver_insurance_verified do |a|
       a.validates :driver_insurance_verify_date, :driver_insurance_verify_agent, :driver_insurance_verify_call_center,
@@ -143,7 +143,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
 
       a.validates :additional_driver_date_of_birth,
         presence: true,
-        before_date: -> { Time.current - 21.years }
+        before_date: -> { Time.current.in_time_zone(time_zone).to_date - 21.years }
 
       a.validates :additional_driver_email,
         presence: true,
@@ -165,5 +165,8 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
 
   def pickup
     raise NotImplementedError
+  end
+
+  def time_zone
   end
 end

@@ -13,7 +13,7 @@ describe AfterDateValidator do
         after_date: -> { Time.current }
     end
 
-    form = test_form.new({ date: Time.current })
+    form = test_form.new({ date: Time.current - 1.day })
 
     expect(form.valid?).to eq(false)
     expect(form.errors[:date].count).to eq(1)

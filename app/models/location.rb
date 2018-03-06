@@ -29,7 +29,7 @@ class Location < ApplicationRecord
   has_many :reservations, -> { reserved }, class_name: 'Rental', foreign_key: 'pickup_location_id'
   has_many :line_items, through: :rentals
 
-  has_many :today_drop_offs, -> { drop_off_rentals.where(date: Time.now) }
+  has_many :today_drop_offs, -> { drop_off_rentals.where(date: Time.current) }
 
   has_many :vehicles
 
@@ -70,6 +70,10 @@ class Location < ApplicationRecord
   end
 
   def convert_time_to_time_zone(time)
-    time.in_time_zone('Pacific Time (US & Canada)')
+    time.in_time_zone(time_zone)
+  end
+
+  def time_zone
+    'Pacific Time (US & Canada)'
   end
 end

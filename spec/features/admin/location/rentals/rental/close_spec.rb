@@ -8,7 +8,7 @@ feature 'close rental', js: true do
   include_context :login_user_and_select_location
 
   scenario 'success' do
-    rental = create(:rental, :open, pickup_location: location, pickup: (Time.now - 1.day))
+    rental = create(:rental, :open, pickup_location: location, pickup: (Time.current - 1.day))
     expect(rental.closed?).to eq(false)
 
     visit_admin admin_location_rental_path(:slug => location.slug, id: rental.number)
