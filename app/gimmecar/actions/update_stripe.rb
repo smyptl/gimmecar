@@ -1,9 +1,6 @@
 class Actions::UpdateStripe
 
-  def initialize()
-  end
-
-  def execute
+  def self.execute
     Driver.where.not(stripe_id: nil).each do |d|
       cu = Stripe::Customer.retrieve(d.stripe_id)
       cu.description = d.name

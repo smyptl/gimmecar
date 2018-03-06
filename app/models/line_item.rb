@@ -37,9 +37,9 @@ class LineItem < ApplicationRecord
 
   scope 'rental_rates', -> { where(item_type: 'rental_rate') }
   scope 'deposits',     -> { where(item_type: 'deposit') }
-  scope 'deposits_unreturned', -> { joins(:invoice).deposits.where(invoice_type: 'Rental', invoice: { status: Rental::CLOSED }) }
+  scope 'deposits_unreturned', -> { includes(:invoice).deposits.where(invoice_type: 'Rental').select(&:invoice_closed?) }
 
-  delegate :number, to: :invoice, prefix: true
+  delegate :number, :closed?, to: :invoice, prefix: true
 
   def self.calculate(date:, amount:, discount: 0, quantity: 1, taxable_amount: nil, tax_rate:)
     mock = self.build_mock(date: date, amount: amount, discount: discount, quantity: quantity)

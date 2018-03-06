@@ -48,6 +48,10 @@ FactoryBot.define do
       status Rental::OPEN
     end
 
+    trait :closed do
+      status Rental::CLOSED
+    end
+
     pickup_location { create(:location) }
     drop_off_location { pickup_location }
 

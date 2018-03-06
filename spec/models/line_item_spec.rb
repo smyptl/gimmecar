@@ -32,8 +32,20 @@
 
 require 'spec_helper'
 require 'factories/tax_rates'
+require 'factories/rentals'
+require 'factories/line_items'
 
 describe LineItem do
+
+  describe '.unreturned_deposits' do
+    it 'returns line_items with closed rentals' do
+      deposit = create(:line_item, :deposit, invoice: create(:rental, :closed))
+      create(:line_item, :deposit, invoice: create(:rental, :open))
+
+      results = LineItem.deposits_unreturned
+      expect(results).to eq([deposit])
+    end
+  end
 
   describe '.calculate' do
     it 'no discount' do
