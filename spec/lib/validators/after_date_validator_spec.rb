@@ -3,7 +3,7 @@ require 'spec_helper'
 describe AfterDateValidator do
 
   it 'creates error when date before validation' do
-    test_form = Class.new(Lib::Forms::Base) do
+    test_form = Class.new(Lib::Actions::Base) do
 
       attributes do |a|
         a.date :date
@@ -20,7 +20,7 @@ describe AfterDateValidator do
   end
 
   it 'passes unique message' do
-    test_form = Class.new(Lib::Forms::Base) do
+    test_form = Class.new(Lib::Actions::Base) do
 
       attributes do |a|
         a.date :date
@@ -38,7 +38,7 @@ describe AfterDateValidator do
   end
 
   it 'raise ArgumentError if date nil' do
-    test_form = Class.new(Lib::Forms::Base) do
+    test_form = Class.new(Lib::Actions::Base) do
 
       attributes do |a|
         a.date :date
@@ -54,7 +54,7 @@ describe AfterDateValidator do
   end
 
   it 'does not add error if allow_nil true' do
-    test_form = Class.new(Lib::Forms::Base) do
+    test_form = Class.new(Lib::Actions::Base) do
 
       attributes do |a|
         a.date :date
@@ -70,7 +70,7 @@ describe AfterDateValidator do
   end
 
   it 'does not add error if value is blank' do
-    test_form = Class.new(Lib::Forms::Base) do
+    test_form = Class.new(Lib::Actions::Base) do
 
       attributes do |a|
         a.date :date

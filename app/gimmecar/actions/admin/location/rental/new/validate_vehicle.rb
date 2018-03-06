@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Rental::New::ValidateVehicle < Lib::Forms::Base
+class Actions::Admin::Location::Rental::New::ValidateVehicle < Lib::Actions::Base
   include Actions::Admin::Location::Rental::New::Concerns::Vehicle
 
   private

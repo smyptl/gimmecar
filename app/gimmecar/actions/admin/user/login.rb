@@ -1,4 +1,4 @@
-class Actions::Admin::User::Login < Lib::Forms::Base
+class Actions::Admin::User::Login < Lib::Actions::Base
 
   attr_reader :user, :auth_token
 

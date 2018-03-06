@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Rental::New::Create < Lib::Forms::Base
+class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
   include Actions::Admin::Location::Rental::New::Concerns::Driver
   include Actions::Admin::Location::Rental::New::Concerns::Vehicle
   include Actions::Admin::Location::Rental::New::Concerns::FinancialResponsibility
