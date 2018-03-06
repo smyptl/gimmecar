@@ -9,16 +9,16 @@ class Lib::Forms::Base < Lib::Attributes::Base
       new().populate_form(data: data, id: id)
     end
 
-    def execute(success, failure, params = {})
+    def execute(success, failure, **params)
       self.new().execute(success, failure, params)
     end
 
-    def execute!(params = {})
+    def execute!(**params)
       self.new().execute!(params)
     end
   end
 
-  def execute(success, failure, params = {})
+  def execute(success, failure, **params)
     @params = params
 
     run_callbacks :execute do
@@ -35,7 +35,7 @@ class Lib::Forms::Base < Lib::Attributes::Base
     end
   end
 
-  def execute!(params = {})
+  def execute!(**params)
     success = lambda { |_| true }
     failure = lambda { |_| false }
     execute(success, failure, params)

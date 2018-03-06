@@ -18,7 +18,7 @@ class Actions::Admin::Location::Rental::Close < Lib::Forms::Base
     presence: true
 
   def save
-    @rental = Rental.find_by(number: @params.fetch('rental_id'))
+    @rental = Rental.find_by(number: params.fetch(:number))
     @rental.close(attributes)
     @rental.vehicle.update_status_dirty
   end
