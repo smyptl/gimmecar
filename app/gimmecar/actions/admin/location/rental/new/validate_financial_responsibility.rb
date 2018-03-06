@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Rental::New::ValidateFinancialResponsibility < Lib::Forms::Base
+class Actions::Admin::Location::Rental::New::ValidateFinancialResponsibility < Lib::Actions::Base
   include Actions::Admin::Location::Rental::New::Concerns::FinancialResponsibility
 
   def save

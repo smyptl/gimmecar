@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Rental::New::ValidateTermsAndConditions < Lib::Forms::Base
+class Actions::Admin::Location::Rental::New::ValidateTermsAndConditions < Lib::Actions::Base
   include Actions::Admin::Location::Rental::New::Concerns::TermsAndConditions
 
   def save

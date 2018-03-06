@@ -1,4 +1,4 @@
-class Actions::Public::CreateReservation < Lib::Forms::Base
+class Actions::Public::CreateReservation < Lib::Actions::Base
 
   attributes do |a|
     a.integer :location_id

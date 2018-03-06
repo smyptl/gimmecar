@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Rental::New::ValidateDrivers < Lib::Forms::Base
+class Actions::Admin::Location::Rental::New::ValidateDrivers < Lib::Actions::Base
   include Actions::Admin::Location::Rental::New::Concerns::Driver
 
   attributes do |a|

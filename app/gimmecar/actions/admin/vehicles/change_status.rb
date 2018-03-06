@@ -1,4 +1,4 @@
-class Actions::Admin::Vehicles::ChangeStatus < Lib::Forms::Base
+class Actions::Admin::Vehicles::ChangeStatus < Lib::Actions::Base
 
   attributes do |a|
     a.string :status

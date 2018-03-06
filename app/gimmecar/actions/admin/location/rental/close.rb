@@ -1,4 +1,4 @@
-class Actions::Admin::Location::Rental::Close < Lib::Forms::Base
+class Actions::Admin::Location::Rental::Close < Lib::Actions::Base
 
   attr_reader :rental
 

@@ -1,4 +1,4 @@
-class Lib::Forms::Base < Lib::Attributes::Base
+class Lib::Actions::Base < Lib::Attributes::Base
 
   attr_reader :params
 

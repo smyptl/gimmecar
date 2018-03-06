@@ -1,4 +1,4 @@
-class Actions::Command::Quote < Lib::Forms::Base
+class Actions::Command::Quote < Lib::Actions::Base
 
   attributes do |a|
     a.time    :pickup

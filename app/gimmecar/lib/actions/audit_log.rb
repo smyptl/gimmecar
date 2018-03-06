@@ -1,4 +1,4 @@
-module Lib::Forms::AuditLog
+module Lib::Actions::AuditLog
   extend ActiveSupport::Concern
 
   included do
