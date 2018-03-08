@@ -15,9 +15,9 @@ module Concerns::User::Authentication
       payload = Lib::AuthToken.authenticate(token)
 
       find_by({
-        :id                => payload.fetch('sub'),
-        :email             => payload.fetch('email'),
-        :persistence_token => payload.fetch('persistence_token')
+        id:                payload.fetch('sub'),
+        email:             payload.fetch('email'),
+        persistence_token: payload.fetch('persistence_token')
       })
     end
 
@@ -39,15 +39,15 @@ module Concerns::User::Authentication
     reset_persistence_token
 
     Lib::AuthToken.issue({
-      :sub               => id,
-      :email             => email,
-      :persistence_token => persistence_token,
+      sub:               id,
+      email:             email,
+      persistence_token: persistence_token,
     })
   end
 
   private
 
   def reset_persistence_token
-    update(:persistence_token => SecureRandom.uuid)
+    update(persistence_token: SecureRandom.uuid)
   end
 end

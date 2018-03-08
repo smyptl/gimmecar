@@ -11,7 +11,7 @@ class ApplicationMailer < ActionMailer::Base
   end
 
   def format_currency(value)
-    number_to_currency(value/100, {:precision => 2})
+    number_to_currency(value/100, {precision: 2})
   end
 
   def format_time(value)

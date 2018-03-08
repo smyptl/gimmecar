@@ -6,7 +6,7 @@ class Lib::Spreadsheet::Row
   end
 
   def value(value, options = {})
-    add_cell({ :value => value }.merge(merge_default_options(options)))
+    add_cell({ value: value }.merge(merge_default_options(options)))
   end
 
   def formula(formula, options = {})
@@ -14,7 +14,7 @@ class Lib::Spreadsheet::Row
       formula = formula.call(Lib::Spreadsheet::Formula)
     end
 
-    add_cell({ :formula => formula }.merge(merge_default_options(options)))
+    add_cell({ formula: formula }.merge(merge_default_options(options)))
   end
 
   def blank_cell(number = 1, options = {})

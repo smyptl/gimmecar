@@ -9,8 +9,8 @@ class Actions::ReturnDeposit
       charge = deposit.charge
 
       Stripe::Refund.create(
-        :charge => charge.stripe_charge_id,
-        :amount => amount,
+        charge: charge.stripe_charge_id,
+        amount: amount,
       )
 
       deposit.destroy

@@ -28,8 +28,8 @@ class Actions::Command::User::Login < Lib::Actions::Base
 
   def success_args
     {
-      :token => auth_token,
-      :user  => { :name => user.name },
+      token: auth_token,
+      user:  { name: user.name },
     }
   end
 

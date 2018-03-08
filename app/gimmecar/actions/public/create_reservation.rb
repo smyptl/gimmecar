@@ -26,21 +26,15 @@ class Actions::Public::CreateReservation < Lib::Actions::Base
 
   private
 
-  def failure_args
-    {
-      :errors => errors,
-    }
-  end
-
   def success_args
     @success_args ||= {
-      :name_first          => name_first,
-      :name_last           => name_last,
-      :email               => email,
-      :vehicle_type        => vehicle_type,
-      :location            => location.description,
-      :phone_number        => phone_number,
-      :confirmation_number => confirmation_number,
+      name_first:          name_first,
+      name_last:           name_last,
+      email:               email,
+      vehicle_type:        vehicle_type,
+      location:            location.description,
+      phone_number:        phone_number,
+      confirmation_number: confirmation_number,
     }.merge(rates)
   end
 

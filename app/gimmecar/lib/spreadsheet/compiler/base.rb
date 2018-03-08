@@ -50,9 +50,9 @@ class Lib::Spreadsheet::Compiler::Base
         cells << cell.fetch(:value)
       else
         spreadsheet.set({
-          :row_index    => row_index,
-          :column_index => column_index,
-          :sheet_id     => sheet.fetch(:id)
+          row_index:    row_index,
+          column_index: column_index,
+          sheet_id:     sheet.fetch(:id)
         })
 
         cells << cell.fetch(:formula).parse(spreadsheet)
@@ -66,7 +66,7 @@ class Lib::Spreadsheet::Compiler::Base
       end
     end
 
-    worksheet.add_row(cells, :style => styles, :height => Lib::Spreadsheet::Compiler::Height.parse(row.fetch(:height, nil)))
+    worksheet.add_row(cells, style: styles, height: Lib::Spreadsheet::Compiler::Height.parse(row.fetch(:height, nil)))
   end
 
   def compile_column(worksheet, sheet, column, column_index)

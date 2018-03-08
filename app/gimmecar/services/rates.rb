@@ -9,18 +9,18 @@ class Services::Rates < Lib::Services::Base
 
   def output
     {
-      :vehicle           => { make_model: ActiveSupport::Inflector.titleize(rental.vehicle_type) },
-      :location          => { description: location.description },
-      :pickup            => rental.pickup,
-      :drop_off          => rental.drop_off,
-      :rates             => rates,
-      :deposit           => deposit,
-      :add_ons           => add_ons,
-      :discount          => discount,
-      :sub_total         => sub_total,
-      :combined_tax_rate => combined_tax_rate,
-      :tax_collectable   => tax_collectable,
-      :total             => total,
+      vehicle:           { make_model: ActiveSupport::Inflector.titleize(rental.vehicle_type) },
+      location:          { description: location.description },
+      pickup:            rental.pickup,
+      drop_off:          rental.drop_off,
+      rates:             rates,
+      deposit:           deposit,
+      add_ons:           add_ons,
+      discount:          discount,
+      sub_total:         sub_total,
+      combined_tax_rate: combined_tax_rate,
+      tax_collectable:   tax_collectable,
+      total:             total,
     }
   end
 

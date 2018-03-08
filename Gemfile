@@ -75,7 +75,7 @@ end
 gem 'bugsnag'
 
 # Gem
-gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 
 # ActiveRecord Add-Ons
 gem 'fuzzy_match'

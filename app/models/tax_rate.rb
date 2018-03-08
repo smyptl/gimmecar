@@ -25,16 +25,16 @@ class TaxRate < ApplicationRecord
     district_amount = (taxable_amount*district_tax_rate).round
 
     {
-      :taxable_amount          => taxable_amount,
-      :tax_collectable         => (state_amount + county_amount + city_amount + district_amount),
-      :state_taxable_amount    => taxable_amount,
-      :state_amount            => state_amount,
-      :county_taxable_amount   => taxable_amount,
-      :county_amount           => county_amount,
-      :city_taxable_amount     => taxable_amount,
-      :city_amount             => city_amount,
-      :district_taxable_amount => taxable_amount,
-      :district_amount         => district_amount,
+      taxable_amount:          taxable_amount,
+      tax_collectable:         (state_amount + county_amount + city_amount + district_amount),
+      state_taxable_amount:    taxable_amount,
+      state_amount:            state_amount,
+      county_taxable_amount:   taxable_amount,
+      county_amount:           county_amount,
+      city_taxable_amount:     taxable_amount,
+      city_amount:             city_amount,
+      district_taxable_amount: taxable_amount,
+      district_amount:         district_amount,
     }
   end
 end

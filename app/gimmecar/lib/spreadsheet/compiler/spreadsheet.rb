@@ -31,7 +31,7 @@ class Lib::Spreadsheet::Compiler::Spreadsheet
 
       if args[:columns].is_a?(Array)
         args[:columns].map do |column|
-          "#{sheet}#{::Axlsx::cell_r(parse_column({:sheet => args[:sheet], :column => column}), row_index)}"
+          "#{sheet}#{::Axlsx::cell_r(parse_column({sheet: args[:sheet], column: column}), row_index)}"
         end
       else
         parse_sheet(args).fetch(:column_groups).fetch(args[:columns]).map do |column_index|
@@ -44,7 +44,7 @@ class Lib::Spreadsheet::Compiler::Spreadsheet
 
       if args[:rows].is_a?(Array)
         args[:rows].map do |row|
-          "#{sheet}#{::Axlsx::cell_r(column_index, parse_row({:sheet => args[:sheet], :row => row}))}"
+          "#{sheet}#{::Axlsx::cell_r(column_index, parse_row({sheet: args[:sheet], row: row}))}"
         end
       else
         parse_sheet(args).fetch(:row_groups).fetch(args[:rows]).map do |row_index|
@@ -117,13 +117,13 @@ class Lib::Spreadsheet::Compiler::Spreadsheet
 
   def process_sheet(sheet)
     processed_sheets[sheet.fetch(:id)] = {
-      :name          => sheet.fetch(:name),
-      :cells         => {},
-      :cell_groups   => {},
-      :rows          => {},
-      :row_groups    => {},
-      :columns       => {},
-      :column_groups => {}
+      name:          sheet.fetch(:name),
+      cells:         {},
+      cell_groups:   {},
+      rows:          {},
+      row_groups:    {},
+      columns:       {},
+      column_groups: {}
     }
 
     sheet.fetch(:rows).each_with_index do |row, row_index|
@@ -131,7 +131,7 @@ class Lib::Spreadsheet::Compiler::Spreadsheet
       add_group(:row_groups, row[:group], row_index, sheet[:id])
 
       row.fetch(:cells).each_with_index do |cell, column_index|
-        index = { :row_index => row_index, :column_index => column_index }
+        index = { row_index: row_index, column_index: column_index }
         add(:cells, cell[:id], index, sheet[:id])
         add_group(:cell_groups, cell[:group], index, sheet[:id])
       end

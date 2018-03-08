@@ -23,11 +23,11 @@ RSpec.configure do |config|
   # Database Cleaner
   # Since use_transactional_fixtures is false, use database cleaner
   # Needed to test javascript in browser
-  config.before(:suite)             { DatabaseCleaner.clean_with(:truncation) }
-  config.before(:each)              { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, :js => true) { DatabaseCleaner.strategy = :truncation }
-  config.before(:each)              { DatabaseCleaner.start }
-  config.after(:each)               { DatabaseCleaner.clean }
+  config.before(:suite)          { DatabaseCleaner.clean_with(:truncation) }
+  config.before(:each)           { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each)           { DatabaseCleaner.start }
+  config.after(:each)            { DatabaseCleaner.clean }
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and

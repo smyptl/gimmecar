@@ -13,7 +13,7 @@ class Lib::Spreadsheet::Sheet
     id = id.to_sym
     raise ArgumentError, "#{id} already taken." if column_ids.include?(id)
 
-    columns << {:name => name, :id => id, group: options[:group], :options => options}
+    columns << { name: name, id: id, group: options[:group], options: options }
   end
 
   def blank_row(number = 1, options = {})
@@ -46,10 +46,10 @@ class Lib::Spreadsheet::Sheet
 
   def fetch
     {
-      :name    => @name,
-      :id      => @id,
-      :columns => columns,
-      :rows    => rows,
+      name:    @name,
+      id:      @id,
+      columns: columns,
+      rows:    rows,
     }
   end
 

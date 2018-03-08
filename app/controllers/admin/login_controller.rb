@@ -17,10 +17,10 @@ class Admin::LoginController < ApplicationController
   def create
     success = lambda do |args|
       cookies.encrypted[:token] = {
-        :value    => args.fetch(:token),
-        :secure   => Rails.env.production? || Rails.env.staging?,
-        :expires  => 1.month.from_now,
-        :httponly => true,
+        value:    args.fetch(:token),
+        secure:   Rails.env.production? || Rails.env.staging?,
+        expires:  1.month.from_now,
+        httponly: true,
       }
 
       render json: {}, status: 200

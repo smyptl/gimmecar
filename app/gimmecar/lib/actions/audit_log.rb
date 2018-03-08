@@ -13,7 +13,7 @@ module Lib::Actions::AuditLog
   end
 
   def log!
-    @log ||= ::AuditLog.log(log_params.merge({ :attribute_changes => attribute_changes }))
+    @log ||= ::AuditLog.log(log_params.merge({ attribute_changes: attribute_changes }))
   end
 
   def new_data_model

@@ -74,15 +74,15 @@ class Rental < ApplicationRecord
   delegate :combined_tax_rate,  to: :tax_rate
 
   def self.create_open(args)
-    create(args.merge(:status => OPEN))
+    create(args.merge(status: OPEN))
   end
 
   def self.create_reservation(args)
-    create(args.merge(:status => RESERVED))
+    create(args.merge(status: RESERVED))
   end
 
   def close(args)
-    update(args.merge(:status => CLOSED))
+    update(args.merge(status: CLOSED))
   end
 
   def closed?

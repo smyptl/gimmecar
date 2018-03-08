@@ -14,8 +14,8 @@ class Lib::AuthToken
 
   def self.issue(payload)
     claims = {
-      :exp => TOKEN_LIFETIME.from_now.to_i,
-      :aud => TOKEN_AUDIENCE,
+      exp: TOKEN_LIFETIME.from_now.to_i,
+      aud: TOKEN_AUDIENCE,
     }
 
     payload = claims.merge(payload)
@@ -25,10 +25,10 @@ class Lib::AuthToken
 
   def self.authenticate(token)
     options = {
-      :algorithm         => SIGNATURE_ALGORITHM,
-      :aud               => TOKEN_AUDIENCE,
-      :verify_aud        => VERIFY_AUDIENCE,
-      :verify_expiration => VERIFY_EXPIRATION,
+      algorithm:         SIGNATURE_ALGORITHM,
+      aud:               TOKEN_AUDIENCE,
+      verify_aud:        VERIFY_AUDIENCE,
+      verify_expiration: VERIFY_EXPIRATION,
     }
 
     payload, _ = JWT.decode(token, SECRET_KEY.call, true, options)
