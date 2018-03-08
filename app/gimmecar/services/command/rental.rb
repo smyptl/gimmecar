@@ -5,7 +5,9 @@ class Services::Command::Rental < Lib::Services::Base
   end
 
   output do
-    object :rental, component: Services::Builders::Rental
+    object :rental, component: Services::Builders::Rental do |o|
+      o.attribute :pickup_location_name
+    end
   end
 
   private

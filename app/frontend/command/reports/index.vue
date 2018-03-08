@@ -1,5 +1,5 @@
 <script>
-  import Chart from 'frappe-charts/dist/frappe-charts.min.esm'
+  import Highcharts from 'highcharts'
 
   export default {
     name: 'index',
@@ -12,17 +12,28 @@
     created () {
       this.getData()
     },
+    mounted () {
+      this.setChart()
+    },
     watch: {
       '$route': 'getData',
     },
     methods: {
       setChart () {
-        new Chart({
-          parent: this.$refs.chart,
-          data: this.chart,
-          type: 'line',
-          height: 200,
-          colors: ['yellow'],
+        Highcharts.chart(this.$refs.chart, {
+          chart: {
+            type: 'line',
+          },
+          title: {
+            text: '',
+          },
+          xAxis: {
+            categories:  this.chart.labels,
+          },
+          yAxis: {
+            title: 'Test',
+          },
+          series: this.chart.datasets
         })
       },
       getData () {
@@ -30,7 +41,6 @@
           .get(this.$route.path)
           .then(response => {
             this.chart = response.data
-            console.log(this.chart)
         })
       },
     },

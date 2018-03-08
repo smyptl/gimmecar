@@ -1,4 +1,4 @@
-class Services::Admin::Location::Rental::Print < Lib::Services::Base
+class Services::Command::Rental::Print < Lib::Services::Base
 
   attr_reader :rental
 

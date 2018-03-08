@@ -10,6 +10,6 @@ class Services::Command::Vehicles < Lib::Services::Base
   private
 
   def query
-    Vehicle.includes(:pickup_location).all
+    ::Vehicle.includes(:location).all
   end
 end

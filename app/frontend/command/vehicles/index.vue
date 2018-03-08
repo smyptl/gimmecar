@@ -17,6 +17,11 @@
     components: {
       VehicleStatusIcons,
     },
+    computed: {
+      sorted_vehicles () {
+        return this.vehicles.data
+      },
+    },
     methods: {
       lastFive (vin) {
         return vin.slice(-5)
@@ -47,7 +52,7 @@
             th License #
             th Status
         tbody
-          tr.clickable(v-for='vehicle in vehicles' @click.prevent='viewVehicle(vehicle.vin)')
+          tr.clickable(v-for='vehicle in sorted_vehicles' @click.prevent='viewVehicle(vehicle.vin)')
             td {{ vehicle.make_model }}
             td {{ vehicle.vehicle_type }}
             td {{ vehicle.location_name }}

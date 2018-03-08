@@ -72,22 +72,20 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
     ad = Driver.create(additional_driver_attributes) if add_additional_driver
 
     @rental = Rental.create_open({
-      :driver                                               => d,
-      :additional_driver                                    => (ad if add_additional_driver),
-      :vehicle_id                                           => vehicle_id,
-      :vehicle_type                                         => vehicle_type,
-      :tax_rate                                             => location.latest_tax_rate,
-      :pickup_location                                      => location,
-      :pickup                                               => pickup,
-      :pickup_odometer                                      => pickup_odometer,
-      :pickup_fuel                                          => pickup_fuel,
-      :drop_off_location                                    => location,
-      :drop_off                                             => drop_off,
-      :collision_damage_waiver                              => false,
-      :driver_financial_responsibility_signature            => driver_financial_responsibility_signature,
-      :additional_driver_financial_responsibility_signature => (additional_driver_financial_responsibility_signature if add_additional_driver),
-      :driver_signature                                     => driver_signature,
-      :additional_driver_signature                          => (additional_driver_signature if add_additional_driver),
+      driver:                                               d,
+      additional_driver:                                    (ad if add_additional_driver),
+      vehicle_id:                                           vehicle_id,
+      tax_rate:                                             location.latest_tax_rate,
+      pickup_location:                                      location,
+      pickup:                                               pickup,
+      pickup_odometer:                                      pickup_odometer,
+      pickup_fuel:                                          pickup_fuel,
+      drop_off_location:                                    location,
+      drop_off:                                             drop_off,
+      collision_damage_waiver:                              false,
+      driver_financial_responsibility_signature:            driver_financial_responsibility_signature,
+      additional_driver_financial_responsibility_signature: (additional_driver_financial_responsibility_signature if add_additional_driver),
+      additional_driver_signature:                          (additional_driver_signature if add_additional_driver),
     })
 
     @charge.owner = @rental

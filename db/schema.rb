@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112175234) do
+ActiveRecord::Schema.define(version: 20180308155229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 20180112175234) do
     t.string "invoice_type"
     t.bigint "invoice_id"
     t.string "item_type"
-    t.bigint "item_id"
     t.bigint "charge_id"
     t.json "details"
     t.date "date"
@@ -98,7 +97,6 @@ ActiveRecord::Schema.define(version: 20180112175234) do
     t.text "description"
     t.index ["charge_id"], name: "index_line_items_on_charge_id"
     t.index ["invoice_type", "invoice_id"], name: "index_line_items_on_invoice_type_and_invoice_id"
-    t.index ["item_type", "item_id"], name: "index_line_items_on_item_type_and_item_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -146,7 +144,6 @@ ActiveRecord::Schema.define(version: 20180112175234) do
     t.bigint "additional_driver_id"
     t.bigint "vehicle_id"
     t.bigint "tax_rate_id"
-    t.string "vehicle_type"
     t.text "notes"
     t.bigint "pickup_location_id"
     t.datetime "pickup"
@@ -227,4 +224,5 @@ ActiveRecord::Schema.define(version: 20180112175234) do
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
+
 end

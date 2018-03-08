@@ -59,7 +59,11 @@ Rails.application.routes.draw do
     post '/', to: 'login#create'
 
     get '/dashboard', to: 'dashboard#index'
-    resources :rentals,  only: [:index, :show]
+    resources :rentals,  only: [:index, :show] do
+
+      get 'receipt/print', to: 'rentals/receipt#print'
+    end
+
     resources :vehicles, only: [:index, :show]
     resources :drivers,  only: [:index, :show]
 

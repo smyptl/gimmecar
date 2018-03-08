@@ -7,15 +7,15 @@ class Services::Command::Reports::RentalsPerMonth < Lib::Services::Base
       labels: query.keys,
       datasets: [
         {
-          title: 'Rentals',
-          values: query.values,
+          name: 'Rentals',
+          data: query.values,
         },
       ],
     }
   end
 
   def query
-    @query ||= Rental.group_by_month(:pickup, range: date_range, time_zone: "Pacific Time (US & Canada)").count
+    @query ||= ::Rental.group_by_month(:pickup, range: date_range, time_zone: "Pacific Time (US & Canada)").count
   end
 
   def date_range
