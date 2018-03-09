@@ -4,12 +4,12 @@ require 'factories/locations'
 require 'factories/rates'
 require 'factories/tax_rates'
 
-feature "Reservations", js: true do
+describe 'Reservations', type: :system, js: true do
 
-  scenario "create reservation" do
+  scenario 'create reservation' do
     visit root_path
 
-    location = create(:location)
+    location = create(:location, id: 1)
     create(:tax_rate, location: location)
     create(:rate, vehicle_type: :mid_size, location: location, amount: 3500)
 

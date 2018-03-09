@@ -1,6 +1,6 @@
 require 'spec_helper'
-require 'features/admin/helpers/path_helper'
-require 'features/admin/helpers/user_and_location'
+require 'system/admin/helpers/path_helper'
+require 'system/admin/helpers/user_and_location'
 
 require 'helpers/stripe_helper'
 
@@ -80,7 +80,7 @@ def fill_in_payment(number: CARD_TYPE[:visa], expiration_date: '01/20', cvc: '12
   end
 end
 
-feature 'create rental', js: true do
+describe 'create rental', type: :system, js: true do
   include_context :login_user_and_select_location
 
   scenario 'success in creating a single driver' do
@@ -131,7 +131,7 @@ feature 'create rental', js: true do
     fill_in_payment
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}", wait: 10)
 
     expect(Driver.count).to eq(1)
     driver = Driver.first
@@ -249,7 +249,7 @@ feature 'create rental', js: true do
     fill_in_payment
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}", wait: 10)
   end
 
   scenario 'success in creating a additional driver' do
@@ -325,7 +325,7 @@ feature 'create rental', js: true do
     fill_in_payment
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}")
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}", wait: 10)
 
     expect(Driver.count).to eq(2)
     driver = Driver.first
