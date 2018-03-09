@@ -33,6 +33,7 @@ xcrun
 # Ignore all files created by webpack
 app/assets/javascripts
 public/assets
+yarn-error.log
 
 # Ignore Byebug command history file.
 .byebug_history

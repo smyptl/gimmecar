@@ -62,13 +62,13 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
 
       charge_amount = rates.fetch(:total) + Rental::DEPOSIT_AMOUNT
 
-      Charge.new({ :amount => charge_amount }).execute(success, failure, token: stripe_token, customer_id: stripe_customer_id)
+      Charge.new({ amount: charge_amount }).execute(success, failure, token: stripe_token, customer_id: stripe_customer_id)
     end
   end
 
   def save
     d = Driver.create(driver_attributes)
-    InsurancePolicy.create(driver.fetch(:insurance).except(:verified).merge(:driver => d, :user_id => params.fetch(:user_id)))
+    InsurancePolicy.create(driver.fetch(:insurance).except(:verified).merge(driver: d, user_id: params.fetch(:user_id)))
     ad = Driver.create(additional_driver_attributes) if add_additional_driver
 
     @rental = Rental.create_open({
@@ -117,8 +117,8 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
 
   def failure_args
     {
-      :errors             => errors,
-      :stripe_customer_id => stripe_customer_id,
+      errors:             errors,
+      stripe_customer_id: stripe_customer_id,
     }
   end
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe AfterDateValidator do
 
-  it 'creates error when date before validation' do
+  it 'is valid when after date' do
     test_form = Class.new(Lib::Actions::Base) do
 
       attributes do |a|
@@ -13,7 +13,23 @@ describe AfterDateValidator do
         after_date: -> { Time.current }
     end
 
-    form = test_form.new({ date: Time.current - 1.day })
+    form = test_form.new({ date: Time.current + 1.day })
+
+    expect(form.valid?).to eq(true)
+  end
+
+  it 'creates error when date before validation' do
+    test_form = Class.new(Lib::Actions::Base) do
+
+      attributes do |a|
+        a.date :date
+      end
+
+      validates :date,
+        after_date: -> { Time.new(2018, 2, 1, 0, 0, 0, '+00:00')}
+    end
+
+    form = test_form.new({ date: Time.new(2018, 1, 31, 0, 0, 0, '-08:00') })
 
     expect(form.valid?).to eq(false)
     expect(form.errors[:date].count).to eq(1)
@@ -30,7 +46,7 @@ describe AfterDateValidator do
         after_date: { with: -> { Time.current }, message: 'must be after date' }
     end
 
-    form = test_form.new({ date: Time.current })
+    form = test_form.new({ date: Time.current - 1.day })
 
     expect(form.valid?).to eq(false)
     expect(form.errors[:date].count).to eq(1)

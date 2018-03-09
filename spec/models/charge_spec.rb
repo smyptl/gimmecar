@@ -20,7 +20,7 @@ describe Charge do
   describe '#execute' do
     it 'calls success and returns self' do
       charge = Charge.new({
-        :amount => 1400,
+        amount: 1400,
       })
 
       success = double(:success)
@@ -35,7 +35,7 @@ describe Charge do
 
     it 'calls failure to prepaid card' do
       charge = Charge.new({
-        :amount => 1400,
+        amount: 1400,
       })
 
       success = double(:success)
@@ -48,7 +48,7 @@ describe Charge do
 
     it 'calls failure, card attached to customer but no charge' do
       charge = Charge.new({
-        :amount => 1400,
+        amount: 1400,
       })
 
       success = double(:success)

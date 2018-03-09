@@ -25,9 +25,9 @@ class Charge < ApplicationRecord
 
       unless amount == 0
         charge = Stripe::Charge.create({
-          :amount   => amount,
-          :currency => 'usd',
-          :customer => customer_id,
+          amount:   amount,
+          currency: 'usd',
+          customer: customer_id,
         })
 
         write_attribute(:stripe_charge_id, charge['id'])
@@ -47,7 +47,7 @@ class Charge < ApplicationRecord
     when customer_id.blank? && token.blank?
       raise ArgumentError 'customer_id and token missing'
     when customer_id.blank? && token.present?
-      Stripe::Customer.create({ :source => token })['id']
+      Stripe::Customer.create({ source: token })['id']
     when customer_id.present? && token.present?
       customer = Stripe::Customer.retrieve(customer_id)
       customer.source = token

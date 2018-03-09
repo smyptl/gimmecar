@@ -1,11 +1,11 @@
 require 'spec_helper'
-require 'features/admin/helpers/path_helper'
-require 'features/admin/helpers/user_and_location'
+require 'system/admin/helpers/path_helper'
+require 'system/admin/helpers/user_and_location'
 
 require 'factories/rates'
 require 'factories/tax_rates'
 
-feature 'quote', js: true do
+describe 'quote', type: :system, js: true do
   include_context :login_user_and_select_location
 
   scenario 'gets quote' do

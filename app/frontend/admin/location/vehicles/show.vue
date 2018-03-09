@@ -48,7 +48,7 @@
     .panel-base-header
       h2 {{ vehicle.make_model }}
       dropdown.flex-element.right
-        a(data-toggle='dropdown')
+        a.right(data-toggle='dropdown' href='#')
           actions-icon.action-icon
         .dropdown-menu.right(slot='dropdown-menu')
           ul

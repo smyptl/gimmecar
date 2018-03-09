@@ -16,10 +16,10 @@ html
       .message
         - case response.status
         - when 500
-          = image_tag "emojis/injured.png", :width => "80px", :height => "80px"
+          = image_tag "emojis/injured.png", width: "80px", height: "80px"
           h2 Sorry! Something is not quite right, we hope to solve it shortly.
         - else
-          = image_tag "emojis/confused.png", :width => "80px", :height => "80px"
+          = image_tag "emojis/confused.png", width: "80px", height: "80px"
           h2 Oops! Looks like you are lost... The page you are looking for does not exist.
 
         = link_to root_path do

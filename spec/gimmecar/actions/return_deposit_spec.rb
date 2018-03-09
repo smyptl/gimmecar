@@ -11,8 +11,8 @@ describe Actions::ReturnDeposit do
 
     c = Charge.new(amount: deposit_amount + charge_amount)
     c.execute(
-      double(:success, :call => true),
-      double(:failure, :call => true),
+      double(:success, call: true),
+      double(:failure, call: true),
       token: 'tok_visa',
       customer_id: nil)
     c.owner = rental

@@ -66,7 +66,7 @@ class Lib::Actions::Base < Lib::Attributes::Base
 
   def failure_args
     {
-      :errors => errors,
+      errors: errors,
     }
   end
 end

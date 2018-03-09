@@ -9,10 +9,10 @@ describe Lib::Services::Builder do
       end
 
       expect(output).to eq({
-        :id => {
-          :name    => :id,
-          :type    => :attribute,
-          :options => { :as => :number },
+        id: {
+          name:    :id,
+          type:    :attribute,
+          options: { as: :number },
         }
       })
     end

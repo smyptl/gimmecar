@@ -20,7 +20,7 @@ gem 'slim'
 gem 'slim-rails'
 
 # Excel generator
-gem 'rubyzip'
+gem 'zip-zip'
 gem 'axlsx'
 gem 'axlsx_rails'
 
@@ -64,10 +64,9 @@ end
 
 group :test do
   gem 'rspec-rails'
-  gem 'capybara'
-  gem 'capybara-webkit', '~> 1.14.0'
+  gem 'capybara', '~> 2.13'
+  gem 'selenium-webdriver'
   gem 'factory_bot'
-  gem 'database_cleaner'
   gem 'zonebie'
 end
 
@@ -75,7 +74,7 @@ end
 gem 'bugsnag'
 
 # Gem
-gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 
 # ActiveRecord Add-Ons
 gem 'fuzzy_match'

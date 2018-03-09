@@ -7,7 +7,8 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 require 'capybara/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
-require "zonebie/rspec"
+require 'zonebie/rspec'
+Zonebie.quiet = true
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -18,16 +19,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = false
-
-  # Database Cleaner
-  # Since use_transactional_fixtures is false, use database cleaner
-  # Needed to test javascript in browser
-  config.before(:suite)             { DatabaseCleaner.clean_with(:truncation) }
-  config.before(:each)              { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, :js => true) { DatabaseCleaner.strategy = :truncation }
-  config.before(:each)              { DatabaseCleaner.start }
-  config.after(:each)               { DatabaseCleaner.clean }
+  config.use_transactional_fixtures = true
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -80,34 +72,17 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = "random"
+  config.order = 'random'
 
   # Include FactoryBot
   config.include FactoryBot::Syntax::Methods
-end
 
-# Javascript driver for capybara
-Capybara.javascript_driver = :webkit
-Capybara.configure do |config|
-  config.always_include_port = true
-  config.default_max_wait_time = 10
-end
+  # System Tests
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
 
-Capybara::Webkit.configure do |config|
-  # By default, requests to outside domains (anything besides localhost) will
-  # result in a warning. Several methods allow you to change this behavior.
-
-  # Silently return an empty 200 response for any requests to unknown URLs.
-  config.block_unknown_urls
-  config.allow_url('*.local')
-  config.allow_url('*.stripe.com')
-
-  # Timeout if requests take longer than 5 seconds
-  config.timeout = 10
-
-  # Don't raise errors when SSL certificates can't be validated
-  config.ignore_ssl_errors
-
-  # Don't load images
-  config.skip_image_loading
+  config.before(:each, type: :system, js: true) do
+    driven_by :selenium_chrome_headless, options: { js_errors: true }
+  end
 end
