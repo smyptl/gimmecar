@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'zonebie/rspec'
+Zonebie.quiet = true
 
 ActiveRecord::Migration.maintain_test_schema!
 
