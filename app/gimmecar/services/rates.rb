@@ -49,15 +49,15 @@ class Services::Rates < Lib::Services::Base
   end
 
   def sub_total
-    (rates + add_ons).sum { |l| l.fetch('sub_total') }
+    (rates + add_ons).sum { |l| l.fetch(:sub_total) }
   end
 
   def tax_collectable
-    line_items.sum { |l| l.fetch('tax_collectable') }
+    line_items.sum { |l| l.fetch(:tax_collectable) }
   end
 
   def total
-    line_items.sum { |l| l.fetch('total') }
+    line_items.sum { |l| l.fetch(:total) }
   end
 
   def line_items
