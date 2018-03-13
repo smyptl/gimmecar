@@ -3,7 +3,7 @@
     name: 'drivers',
     data () {
       return {
-        drivers: [],
+        drivers: {},
       }
     },
     created () {
@@ -22,8 +22,11 @@
         this.$http
           .get(this.$route.path)
           .then(response => {
-            this.data = response.data
+            this.drivers = response.data
         })
+      },
+      viewDriver (id) {
+        this.$router.push({ name: 'driver', params: { id: id } })
       },
     },
   }
@@ -36,30 +39,20 @@
         thead
           tr
             th Name
-            th Type
-            th Location
-            th License #
-            th Status
+            th Rentals
+            th Do Not Rent
         tbody
           tr.clickable(
-            v-for='driver in data'
+            v-for='driver in sorted_drivers'
             :key='driver.id'
             @click.prevent='viewDriver(driver.id)'
           )
 
-            td {{ vehicle.make_model }}
-            td {{ vehicle.vehicle_type }}
-            td {{ vehicle.location_name }}
-            td(v-if='vehicle.license_number') {{ vehicle.license_number }}
-            td(v-else)
-              i VIN: {{ lastFive(vehicle.vin) }}
-            td.status
-              vehicle-status-icons(:status='vehicle.status')
+            td {{ driver.name_full }}
+            td {{ driver.rentals_count }}
+            td {{ driver.do_not_rent }}
 </template>
 
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/table'
-
-  .status
-    vertical-align: center
 </style>

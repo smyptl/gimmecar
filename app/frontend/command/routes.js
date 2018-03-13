@@ -26,6 +26,7 @@ module.exports = {
         { path: '/drivers', component: require('./base'),
           children: [
             { path: '',     name: 'drivers', component: require('./drivers/index') },
+            { path: ':id',  name: 'driver',  component: require('./drivers/show') },
           ],
         },
         {

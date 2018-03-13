@@ -80,4 +80,4 @@ gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 gem 'fuzzy_match'
 gem 'groupdate'
 
-ruby '2.4.3'
+ruby '2.5.0'
