@@ -5,8 +5,6 @@ import Vue from 'vue'
 import Axios from 'Utils/axios'
 Vue.prototype.$http = Axios
 
-import Reservation from 'Public/reservation/index.vue'
-
 // To add to window
 if (!window.Promise) {
   window.Promise = Promise;
@@ -14,5 +12,5 @@ if (!window.Promise) {
 
 new Vue({
   el: '#billboard-reservation',
-  render: h => h(Reservation)
+  render: h => h(require('Public/reservation/index.vue').default)
 })

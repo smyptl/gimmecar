@@ -18,9 +18,9 @@ Vue.directive('error', InputError)
 import InputErrorMessage from 'Components/inputs/error_message'
 Vue.component('input-error-message', InputErrorMessage)
 
-const router = new VueRouter(require('Command/routes.js'))
+const router = new VueRouter(require('Command/routes.js').default)
 
 var vue = new Vue({
   router,
-  render: h => h(require('Command/base')),
+  render: h => h(require('Command/base').default),
 }).$mount('#gimmecar-app')

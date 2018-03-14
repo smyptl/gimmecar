@@ -1,36 +1,36 @@
-module.exports = {
+export default {
   mode: 'history',
   linkActiveClass: 'active',
   routes: [
-    { path: '/', name: 'login', component: require('./login') },
+    { path: '/', name: 'login', component: require('./login').default },
     {
       path: '/',
-      component: require('./layout/base'),
+      component: require('./layout/base').default,
       children: [
-        { path: '/dashboard', name: 'dashboard', component: require('./dashboard/base') },
-        { path: '/rentals', component: require('./base'),
+        { path: '/dashboard', name: 'dashboard', component: require('./dashboard/base').default },
+        { path: '/rentals', component: require('./base').default,
           children: [
-            { path: '',        name: 'rentals', component: require('./rentals/index') },
-            { path: ':number', name: 'rental',  component: require('./rentals/show') },
+            { path: '',        name: 'rentals', component: require('./rentals/index').default },
+            { path: ':number', name: 'rental',  component: require('./rentals/show').default },
           ],
         },
-        { path: '/vehicles', component: require('./base'),
+        { path: '/vehicles', component: require('./base').default,
           children: [
-            { path: '',     name: 'vehicles', component: require('./vehicles/index') },
-            { path: ':vin', name: 'vehicle',  component: require('./vehicles/show') },
-          ],
-        },
-        {
-          path: '/rates', name: 'rates', component: require('./rates/index'),
-        },
-        { path: '/drivers', component: require('./base'),
-          children: [
-            { path: '',     name: 'drivers', component: require('./drivers/index') },
-            { path: ':id',  name: 'driver',  component: require('./drivers/show') },
+            { path: '',     name: 'vehicles', component: require('./vehicles/index').default },
+            { path: ':vin', name: 'vehicle',  component: require('./vehicles/show').default },
           ],
         },
         {
-          path: '/reports', name: 'reports', component: require('./reports/index')
+          path: '/rates', name: 'rates', component: require('./rates/index').default,
+        },
+        { path: '/drivers', component: require('./base').default,
+          children: [
+            { path: '',     name: 'drivers', component: require('./drivers/index').default },
+            { path: ':id',  name: 'driver',  component: require('./drivers/show').default },
+          ],
+        },
+        {
+          path: '/reports', name: 'reports', component: require('./reports/index').default
         }
       ],
     },
