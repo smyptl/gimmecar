@@ -18,7 +18,7 @@ describe Actions::ReturnDeposit do
     c.owner = rental
     c.save
 
-    deposit = LineItem.new(LineItem.calculate(amount: deposit_amount, date: Time.current, taxable_amount: 0, tax_rate: rental.tax_rate))
+    deposit = LineItem.new(LineItem.calculate(amount: deposit_amount, date: Time.current, taxable_amount: 0, tax_rate: rental.tax_rate).to_h)
     deposit.item_type = :deposit
     deposit.charge = c
     deposit.invoice = rental

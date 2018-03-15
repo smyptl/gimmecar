@@ -49,6 +49,13 @@ def fill_in_driver(driver:, insurance: nil)
   end
 end
 
+def check_rental_rates
+  expect(page).to have_content('Rental: Rates')
+  expect(page).to have_content('Rental Details')
+  expect(page).to have_content('$200.00')
+  expect(page).to have_content('Estimated Total:')
+end
+
 def check_financial_responsibility(driver:, additional_driver: nil)
   expect(page).to have_content('Rental: Financial Responsibility')
   expect(page).to have_content('Notice About Your Financial Responibility')
@@ -96,9 +103,7 @@ describe 'create rental', type: :system, js: true do
     select 'Mid-Size', from: 'vehicle_type'
     click_on 'Continue'
 
-    expect(page).to have_content('Rental: Rates')
-    expect(page).to have_content('Rental Details')
-    expect(page).to have_content('Estimated Total:')
+    check_rental_rates
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Drivers')
@@ -205,10 +210,7 @@ describe 'create rental', type: :system, js: true do
     select 'Compact', from: 'Vehicle Type'
     click_on 'Continue'
 
-    expect(page).to have_content('Rental: Rates')
-    expect(page).to have_content('Rental Details')
-    expect(page).to have_content('$200.00')
-    expect(page).to have_content('Estimated Total:')
+    check_rental_rates
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Drivers')
@@ -264,9 +266,7 @@ describe 'create rental', type: :system, js: true do
     select 'Compact', from: 'Vehicle Type'
     click_on 'Continue'
 
-    expect(page).to have_content('Rental: Rates')
-    expect(page).to have_content('Rental Details')
-    expect(page).to have_content('Estimated Total:')
+    check_rental_rates
     click_on 'Continue'
 
     expect(page).to have_content('Rental: Drivers')

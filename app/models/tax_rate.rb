@@ -18,6 +18,8 @@ class TaxRate < ApplicationRecord
   belongs_to :location
   has_many :line_items
 
+  delegate :convert_date_to_time_zone, to: :location
+
   def calculate(taxable_amount)
     state_amount    = (taxable_amount*state_tax_rate).round
     county_amount   = (taxable_amount*county_tax_rate).round

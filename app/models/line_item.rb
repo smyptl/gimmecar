@@ -42,37 +42,22 @@ class LineItem < ApplicationRecord
   delegate :number, :closed?, to: :invoice, prefix: true
 
   def self.calculate(date:, amount:, discount: 0, quantity: 1, taxable_amount: nil, tax_rate:)
-    mock = self.build_mock(date: date, amount: amount, discount: discount, quantity: quantity)
-
+    date = tax_rate.convert_date_to_time_zone(date) if date
     sub_total = amount
     taxable_amount ||= (amount - discount)
 
-    mock.assign_attributes(tax_rate.calculate(taxable_amount))
+    tax_calculations = tax_rate.calculate(taxable_amount)
 
-    total = sub_total - discount + mock.tax_collectable
+    total = sub_total - discount + tax_calculations.fetch(:tax_collectable)
 
-    mock.assign_attributes(sub_total: sub_total, total: total)
-
-    mock.calculations
-  end
-
-  def calculations
-    attributes.slice(
-      'date',
-      'quantity',
-      'total',
-      'amount',
-      'discount',
-      'sub_total',
-      'taxable_amount',
-      'tax_collectable',
-      'state_taxable_amount',
-      'state_amount',
-      'county_taxable_amount',
-      'county_amount',
-      'city_taxable_amount',
-      'city_amount',
-      'district_taxable_amount',
-      'district_amount').with_indifferent_access.freeze
+    {
+      date:           date,
+      quantity:       quantity,
+      total:          total,
+      amount:         amount,
+      discount:       discount,
+      sub_total:      sub_total,
+      taxable_amount: taxable_amount,
+    }.merge(tax_calculations).freeze
   end
 end

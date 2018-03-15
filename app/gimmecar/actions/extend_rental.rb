@@ -15,7 +15,7 @@ class Actions::ExtendRental
       d = @date
 
       @days.times do
-        li = LineItem.new(LineItem.calculate(amount: @amount, date: d, tax_rate: @rental.tax_rate))
+        li = LineItem.new(LineItem.calculate(amount: @amount, date: d, tax_rate: @rental.tax_rate).to_h)
         li.charge = c
         li.invoice = @rental
         li.item_type = 'rental_rate'
