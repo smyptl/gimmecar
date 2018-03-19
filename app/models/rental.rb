@@ -34,9 +34,8 @@ class Rental < ApplicationRecord
 
   DEPOSIT_AMOUNT = 20000
 
-  OPEN     = 'open'
-  CLOSED   = 'closed'
-  RESERVED = 'reserved'
+  OPEN   = 'open'
+  CLOSED = 'closed'
 
   belongs_to :driver
   belongs_to :additional_driver, class_name: 'Driver', required: false
@@ -54,8 +53,6 @@ class Rental < ApplicationRecord
 
   has_many :charges, as: :owner
 
-  scope :reserved,  -> { where(status: RESERVED) }
-  scope :cancelled, -> { where(status: 'cancelled') }
   scope :open,      -> { where(status: OPEN) }
   scope :closed,    -> { where(status: CLOSED) }
 
@@ -77,16 +74,16 @@ class Rental < ApplicationRecord
     create(args.merge(status: OPEN))
   end
 
-  def self.create_reservation(args)
-    create(args.merge(status: RESERVED))
-  end
-
   def close(args)
     update(args.merge(status: CLOSED))
   end
 
   def closed?
     status == CLOSED
+  end
+
+  def stripe_customer_id
+    driver.stripe_id || additional_driver.stripe_id
   end
 
   def rental_period

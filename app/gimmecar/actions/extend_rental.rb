@@ -5,32 +5,46 @@ class Actions::ExtendRental
   end
 
   def execute
-    total = LineItem.calculate(amount: @amount, date: nil, tax_rate: @rental.tax_rate).fetch(:total)*@days
+    Charge.new(amount: total).execute(success, failure, customer_id: @rental.stripe_customer_id)
+  end
 
-    success = lambda do |args|
-      c = args[:charge]
-      c.owner = @rental
-      c.save
+  private
 
-      d = @date
+  def total
+    @total ||= line_item_calculations.fetch(:total)*@days
+  end
+
+  def line_item_calculations
+    @line_item ||= LineItem.calculate(amount: @amount, date: nil, tax_rate: @rental.tax_rate)
+  end
+
+  def success
+    lambda do |args|
+      charge = args[:charge]
+      charge.owner = @rental
+      charge.save
+
+      date = @date
 
       @days.times do
-        li = LineItem.new(LineItem.calculate(amount: @amount, date: d, tax_rate: @rental.tax_rate).to_h)
-        li.charge = c
+        li = LineItem.new(line_item_calculations.merge(date: date))
+        li.charge = charge
         li.invoice = @rental
         li.item_type = 'rental_rate'
         li.save
-        d += 1.day
+        date += 1.day
       end
 
       @rental.drop_off += @days.days
       @rental.save
-    end
 
-    failure = lambda do |args|
+      puts "Rental #{@rental.number} extended by #{@days} days, #{charge.amount} charged."
+    end
+  end
+
+  def failure
+    lambda do |args|
       puts args[:message]
     end
-
-    Charge.new(amount: total).execute(success, failure, customer_id: @rental.driver.stripe_id)
   end
 end

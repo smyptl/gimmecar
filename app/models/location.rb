@@ -26,7 +26,6 @@ class Location < ApplicationRecord
   has_many :drop_off_rentals, class_name: 'Rental', foreign_key: 'drop_off_location_id'
 
   has_many :open_rentals, -> { where(status: Rental::OPEN) }, class_name: 'Rental', foreign_key: 'pickup_location_id'
-  has_many :reservations, -> { reserved }, class_name: 'Rental', foreign_key: 'pickup_location_id'
   has_many :line_items, through: :rentals
 
   has_many :today_drop_offs, -> { drop_off_rentals.where(date: Time.current) }
@@ -54,7 +53,7 @@ class Location < ApplicationRecord
   end
 
   def available_vehicles(vehicle_type:)
-    vehicles.where(vehicle_type: vehicle_type).select { |v| v.available? }
+    vehicles.where(vehicle_type: vehicle_type).select(&:available?)
   end
 
   def available_vehicle_ids(vehicle_type:)

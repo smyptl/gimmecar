@@ -20,6 +20,7 @@ describe Actions::ExtendRental do
     expect(LineItem.count).to eq(1)
     line_item = LineItem.first
     expect(line_item.amount).to eq(amount)
+    expect(line_item.date).to_not eq(nil)
 
     rental = Rental.first
     expect(rental.drop_off).to eq(drop_off + 1.days)
