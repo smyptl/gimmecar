@@ -57,8 +57,9 @@ FactoryBot.define do
     end
 
     before :create do |driver, evaluator|
-      return unless evaluator.create_stripe_id
-      driver.stripe_id = create_customer_id(driver: driver, token: create_valid_credit_card_token_id)
+      if evaluator.create_stripe_id
+        driver.stripe_id = create_customer_id(driver: driver, token: create_valid_credit_card_token_id)
+      end
     end
   end
 end
