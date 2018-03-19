@@ -5,7 +5,7 @@ class Actions::ExtendRental
   end
 
   def execute
-    total = LineItem.calculate(amount: @amount, date: nil, tax_rate: @rental.tax_rate)['total']*@days
+    total = LineItem.calculate(amount: @amount, date: nil, tax_rate: @rental.tax_rate).fetch(:total)*@days
 
     success = lambda do |args|
       c = args[:charge]
