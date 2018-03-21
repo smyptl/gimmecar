@@ -96,11 +96,11 @@
                 span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
 
     .panel.panel-base
-      h6.left.padding-top-sm.padding-left-default Driver
+      h6.left.pt-sm.pl-default Driver
       driver-info(v-bind:driver='rental.driver')
 
     .panel.panel-base(v-if='rental.additional_driver')
-      h6.left.padding-top-sm.padding-left-default Additional Driver
+      h6.left.pt-sm.pl-default Additional Driver
       driver-info(v-bind:driver='rental.additional_driver')
 
 </template>

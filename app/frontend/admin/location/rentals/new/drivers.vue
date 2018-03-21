@@ -23,13 +23,13 @@
   div
     driver.left(v-bind:form='form')
 
-    .margin-top-sm.left
+    .mt-sm.left
       template(v-if='form.add_additional_driver')
         a.link-danger(@click.prevent='form.add_additional_driver = false')
           h3.panel-form-header Remove Additional Driver
         driver-additional.left(v-bind:form='form')
 
       template(v-else)
-        a.margin-top-sm(@click.prevent='form.add_additional_driver = true')
+        a.mt-sm(@click.prevent='form.add_additional_driver = true')
           h3.panel-form-header Add Additional Driver
 </template>

@@ -18,7 +18,7 @@
 
 <template lang='pug'>
   div
-    .input-block.margin-top-sm
+    .input-block.mt-sm
       terms-and-conditions
 
     h6.input-label {{ form.driver.name_first }} {{ form.driver.name_last }}
@@ -30,7 +30,7 @@
     input-error-message(v-bind:errors='form.errors.get("driver_signature")')
 
     template(v-if='form.add_additional_driver')
-      h6.input-label.margin-top-default {{ form.additional_driver.name_first }} {{ form.additional_driver.name_last }}
+      h6.input-label.mt-default {{ form.additional_driver.name_first }} {{ form.additional_driver.name_last }}
       .input-block.whole
         signature(
           v-model='form.additional_driver_signature'

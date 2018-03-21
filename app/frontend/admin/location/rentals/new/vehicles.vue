@@ -55,7 +55,7 @@
             td(v-else)
               i VIN: {{ lastFive(vehicle.vin) }}
 
-    .input-row.margin-top-default
+    .input-row.mt-default
       .input-container.two-fifths
         label.input-label(for='pickup_odometer') Vehicle Odometer *
         .input-block.whole
