@@ -33,7 +33,7 @@
 
 <template lang='pug'>
   .rental-invoice-summary.whole
-    h4.margin-bottom-sm Rental Details
+    h4.mb-sm Rental Details
     ul.left.whole.list-no-style
       li(v-if='summary.confirmation_number')
         | Confirmation Number:&nbsp;
@@ -69,13 +69,13 @@
         b {{ summary.drop_off_odometer }}
 
 
-    h4.margin-bottom-sm Rates
+    h4.mb-sm Rates
     ul.left.whole.list-no-style
       li(v-for='rate in rates')
         span.left {{ rate.date | date }}
         span.right {{ rate.amount | currency }}
 
-    h4.margin-bottom-sm Taxes & Fees
+    h4.mb-sm Taxes & Fees
     ul.left.whole.list-no-style
       li
         span.left Sales Tax - {{ summary.combined_tax_rate | percent }}

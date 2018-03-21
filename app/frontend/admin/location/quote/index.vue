@@ -46,7 +46,7 @@
     h3.panel-form-header Quote
 
     template(v-if='summary')
-      rental-invoice.input-block.margin-top-sm(v-bind:summary='summary')
+      rental-invoice.input-block.mt-sm(v-bind:summary='summary')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='resetSummary()') Back

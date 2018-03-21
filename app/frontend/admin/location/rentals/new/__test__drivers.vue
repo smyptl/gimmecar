@@ -85,16 +85,16 @@
               @input='search.errors.clear("date_of_birth")')
           input-error-message(v-bind:errors='search.errors.get("date_of_birth")')
 
-      .input-block.margin-top-ex-sm.whole
+      .input-block.mt-ex-sm.whole
         button.btn.btn-primary.btn-sm.right(@click.prevent='searchDriver') Search
 
-      .input-row.margin-top-default(v-if='search_result')
+      .input-row.mt-default(v-if='search_result')
         .input-flex-container.input-block.whole
           .input-element-fixed
             input.input-field#driver_insurance_verified(type='checkbox')
 
           .input-element-flex
-            .margin-left-sm
+            .ml-sm
               .input-field
                 h3 {{ search_result.name_last }}, {{ search_result.name_first }} {{ search_result.name_middle }}
                 p.input-error-message.error-message-base(v-if='search_result.do_not_rent') DO NOT RENT!!!
@@ -104,13 +104,13 @@
                     td Name
                     td {{ search_result.name_full }}
 
-    .margin-top-sm.left
+    .mt-sm.left
       template(v-if='form.add_additional_driver')
         a.link-danger(@click.prevent='form.add_additional_driver = false')
           h3.panel-form-header Remove Additional Driver
         driver-additional.left(v-bind:form='form')
 
       template(v-else)
-        a.margin-top-sm(@click.prevent='form.add_additional_driver = true')
+        a.mt-sm(@click.prevent='form.add_additional_driver = true')
           h3.panel-form-header Add Additional Driver
 </template>

@@ -38,7 +38,7 @@
 <template lang='pug'>
   .flex-container
     #custom
-      h4.margin-bottom-default Locations
+      h4.mb-default Locations
       .panel.panel-base
         ul.list-no-style
           li(v-for='location in locations')

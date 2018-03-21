@@ -30,14 +30,14 @@
       h1.logo.left GimmeCar
       h4.right.text-light Invoice
 
-    .whole.margin-top-default
+    .whole.mt-default
       b.text-light Prepared For:
       h4 {{ summary.driver_name }}
 
-    .whole.margin-top-default.rental-invoice-summary
+    .whole.mt-default.rental-invoice-summary
       h4.invoice-one-line We appreicate your business!
       p Thanks for being a customer. A detailed summary of your invoice is below. If you have any questions, we are happy to help. Email support@gimmecar.com or call 909.318.0450.
-      h4.invoice-one-line.margin-bottom-default
+      h4.invoice-one-line.mb-default
 
     rental-invoice.page-break(v-bind:summary='summary')
 

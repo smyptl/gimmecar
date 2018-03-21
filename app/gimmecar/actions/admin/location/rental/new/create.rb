@@ -84,6 +84,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
       drop_off:                                             drop_off,
       collision_damage_waiver:                              false,
       driver_financial_responsibility_signature:            driver_financial_responsibility_signature,
+      driver_signature:                                     driver_signature,
       additional_driver_financial_responsibility_signature: (additional_driver_financial_responsibility_signature if add_additional_driver),
       additional_driver_signature:                          (additional_driver_signature if add_additional_driver),
     })

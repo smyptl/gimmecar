@@ -33,11 +33,11 @@
 <template lang='pug'>
   #login
     #login-container
-      h1.logo.logo-vertical.margin-bottom-lg.text-center
+      h1.logo.logo-vertical.mb-lg.text-center
         | GimmeCar
         small Command
 
-      #login-form.margin-top-sm
+      #login-form.mt-sm
         form(@submit.prevent='loginUser()')
           input-error-message(v-bind:errors='login.errors.get("base")' :base='true')
 

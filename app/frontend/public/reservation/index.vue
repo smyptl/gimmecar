@@ -96,7 +96,7 @@
       v-on:leave='leave')
 
       #rental-details(v-if="current_step == 'rental-details'" key='details')
-        .input-row.margin-top-ex-sm
+        .input-row.mt-ex-sm
           label.input-label(for='location_id') Where:
           .input-block.whole
             select.input-field#location_id(
@@ -147,7 +147,7 @@
               input.btn.btn-full.btn-primary(@click.prevent='viewRates' type='submit' value='View Rates')
 
       #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
-        rates.input-block.margin-top-default(:summary='summary')
+        rates.input-block.mt-default(:summary='summary')
 
         .input-submit.input-flex-container
           .input-block.input-element-fixed
@@ -157,7 +157,7 @@
 
       #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
         form(@submit.prevent='createReservation')
-          .input-row.margin-top-ex-sm
+          .input-row.mt-ex-sm
             label.input-label(for='name_first') Name
             .input-container.one-half.fixed
               .input-block.whole
