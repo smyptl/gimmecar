@@ -37,3 +37,10 @@ def create_invalid_credit_card_token_id(reason)
     },
   })['id']
 end
+
+def create_customer_id(driver:, token: nil)
+  Stripe::Customer.create({
+    description: driver.name,
+    source: token,
+  })['id']
+end

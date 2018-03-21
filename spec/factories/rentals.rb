@@ -38,12 +38,6 @@ require 'factories/locations'
 FactoryBot.define do
 
   factory :rental do
-
-    factory :reservation do
-      status Rental::RESERVED
-      vehicle nil
-    end
-
     trait :open do
       status Rental::OPEN
     end

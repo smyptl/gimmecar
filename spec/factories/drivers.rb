@@ -28,6 +28,8 @@
 #  name_last               :string
 #
 
+require 'helpers/stripe_helper'
+
 FactoryBot.define do
   factory :driver do
     name_first { Faker::Name.first_name }
@@ -48,5 +50,16 @@ FactoryBot.define do
     license_state { state }
     license_country { country }
     license_expiration_date (Time.current + 1.year).to_date
+
+    transient do
+      create_stripe_id false
+      card_type :valid
+    end
+
+    before :create do |driver, evaluator|
+      if evaluator.create_stripe_id
+        driver.stripe_id = create_customer_id(driver: driver, token: create_valid_credit_card_token_id)
+      end
+    end
   end
 end
