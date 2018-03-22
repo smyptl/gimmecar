@@ -106,6 +106,10 @@ class Rental < ApplicationRecord
     rates.sum(&:total)
   end
 
+  def last_rental_rate
+    rates.order(date: :desc).first.try(:amount)
+  end
+
   private
 
   def create_number

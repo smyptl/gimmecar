@@ -28,7 +28,7 @@ module Concerns::User::Authentication
   end
 
   def command?
-    if !Rails.env.development?
+    if Rails.env.production?
       ['samay@gimmecar.com', 'jay@gimmecar.com'].include?(email)
     else
       true

@@ -17,6 +17,8 @@ class Actions::Admin::Location::Rental::Close < Lib::Actions::Base
   validates :drop_off_fuel,
     presence: true
 
+  private
+
   def save
     @rental = Rental.find_by(number: params.fetch(:number))
     @rental.close(attributes)

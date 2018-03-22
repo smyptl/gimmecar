@@ -10,11 +10,14 @@
 
   import DriverInfo from 'Components/driver/information'
 
+  import RentalExtend from './rental/extend'
+
   export default {
     name: 'rental',
     data () {
       return {
         rental: {},
+        action: '',
       }
     },
     filters: {
@@ -25,8 +28,9 @@
     components: {
       ActionsIcon,
       Dropdown,
-      RightArrowIcon,
       DriverInfo,
+      RentalExtend,
+      RightArrowIcon,
     },
     created () {
       this.getData()
@@ -41,6 +45,11 @@
         })
       },
       extendRental () {
+        this.action = 'extend'
+      },
+      refreshData () {
+        this.getData()
+        this.action = ''
       },
       emailInvoice () {
       },
@@ -57,12 +66,14 @@
       .panel-base-header
         h2 {{ rental.number }}
         dropdown.flex-element.right
-          a(data-toggle='dropdown')
+          a.right(href='#' data-toggle='dropdown')
             actions-icon.action-icon
           .dropdown-menu.right(slot='dropdown-menu')
             ul
               li
                 button.link(@click='printInvoice') Print Invoice
+              li
+                button.link(@click='extendRental') Extend Rental
 
       table.panel-table.panel-table-key-pair
         tbody
@@ -102,6 +113,8 @@
     .panel.panel-base(v-if='rental.additional_driver')
       h6.left.pt-sm.pl-default Additional Driver
       driver-info(v-bind:driver='rental.additional_driver')
+
+    rental-extend(v-if='action == "extend"' v-on:close='refreshData')
 
 </template>
 
