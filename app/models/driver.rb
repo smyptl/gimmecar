@@ -37,6 +37,20 @@ class Driver < ApplicationRecord
 
   before_destroy { |record| throw :abort if record.rentals? }
 
+  def retrieve_or_create_stripe_customer
+    if stripe_id
+      retrieve_stripe_customer
+    else
+      customer = Stripe::Customer.create({ description: name, email: email })
+      self.stripe_id = customer['id']
+      save
+    end
+  end
+
+  def retrieve_stripe_customer
+    Stripe::Customer.retrieve(stripe_id)
+  end
+
   def name
     "#{name_first} #{name_last}"
   end

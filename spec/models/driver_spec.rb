@@ -54,14 +54,32 @@ describe Driver do
     end
   end
 
-  #describe '.search' do
-    #it 'returns results of drivers' do
-      #driver_1 = create(:driver)
-      #driver_2 = create(:driver)
+  describe '.search' do
+    it 'returns results of drivers' do
+      driver_1 = create(:driver)
+      driver_2 = create(:driver)
 
-      #results = Driver.search(name: driver_1.name_first)
+      result = Driver.search(name: driver_1.name_first.upcase, date_of_birth: driver_1.date_of_birth)
 
-      #expect(results.count).to eq(1)
-    #end
-  #end
+      expect(result).to eq(driver_1)
+    end
+  end
+
+  describe '#retrieve_or_create_stripe_customer' do
+    it 'retrieves customer' do
+      driver = create(:driver, create_stripe_id: true)
+      stripe_id = driver.stripe_id
+      driver.retrieve_or_create_stripe_customer
+      driver = Driver.find(driver.id)
+      expect(driver.stripe_id).to eq(stripe_id)
+    end
+
+    it 'creates customer' do
+      driver = create(:driver)
+      expect(driver.stripe_id).to eq(nil)
+      driver.retrieve_or_create_stripe_customer
+      driver = Driver.find(driver.id)
+      expect(driver.stripe_id).to_not eq(nil)
+    end
+  end
 end
