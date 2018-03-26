@@ -1,4 +1,4 @@
-class Actions::Command::Drivers::AddCard < Lib::Actions::Base
+class Actions::Command::Driver::AddCard < Lib::Actions::Base
 
   attributes do |a|
     a.integer :driver_id
