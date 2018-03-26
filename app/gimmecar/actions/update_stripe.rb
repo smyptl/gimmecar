@@ -1,6 +1,10 @@
-class Actions::UpdateStripe
+class Actions::UpdateStripe < Lib::Actions::Base
 
-  def self.execute
+  def success_args
+    {}
+  end
+
+  def save
     Driver.where.not(stripe_id: nil).each do |driver|
       cu = driver.retrieve_stripe_customer
       cu.description = d.name

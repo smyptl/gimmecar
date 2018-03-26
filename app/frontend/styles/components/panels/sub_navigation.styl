@@ -1,0 +1,30 @@
+@import '~Styles/global/layout'
+
+.sub-navigation
+  flex: auto
+  width: 100%
+  float: left
+  overflow-x: scroll
+  overflow-y: visible
+
+  margin-bottom: $margin-default
+
+  ul
+    width: 1000rem
+    list-style: none
+
+  li:first-of-type
+    padding-left: 0
+
+  li
+    padding: 0 $padding-sm
+
+    a
+      float: left
+
+      color: $black-ex-light
+      line-height: 1.875rem - $padding-sm
+
+    a.active
+      color: $purple
+      font-weight: 700

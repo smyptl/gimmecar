@@ -67,7 +67,10 @@ Rails.application.routes.draw do
       get 'receipt/print', to: 'rentals/receipt#print'
     end
 
-    resources :vehicles, only: [:index, :show]
+    resources :vehicles, only: [:index, :show] do
+      get 'rentals', to: 'vehicles/rentals#index'
+      get 'revenue', to: 'vehicles/revenue#index'
+    end
     resources :drivers,  only: [:index, :show]
 
     get '/reports',   to: 'reports#index'

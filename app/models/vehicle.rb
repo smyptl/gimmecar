@@ -32,7 +32,7 @@ class Vehicle < ApplicationRecord
   has_many :rentals
   has_one :open_rental, -> { where(status: Rental::OPEN) }, class_name: 'Rental'
   has_one :last_rental, -> { past }, class_name: 'Rental'
-  has_many :rental_line_items, -> {  }
+  has_many :rates, through: :rentals
 
   belongs_to :original_location, class_name: 'Location'
   belongs_to :location
@@ -52,7 +52,7 @@ class Vehicle < ApplicationRecord
   end
 
   def open_rental?
-    !open_rental.blank?
+    open_rental.present?
   end
 
   def make_model

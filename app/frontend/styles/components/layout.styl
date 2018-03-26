@@ -2,6 +2,8 @@
 @import '~Styles/global/layout'
 @import '~Styles/global/type'
 
+@import '~Styles/components/panels/sub_navigation'
+
 header
   margin-bottom: $margin-default
 
@@ -16,30 +18,12 @@ nav
   flex-direction: row
 
 #navigation
-  flex: auto
-  overflow-x: scroll
-  overflow-y: visible
+  @extends .sub-navigation
 
-  ul
-    width: 1000rem
-    list-style: none
+  margin-bottom: 0
 
-  li:first-of-type
-    padding-left: 0
-
-  li
-    padding: 0 $padding-sm
-
-    a
-      float: left
-
-      color: $black-ex-light
-      line-height: 1.875rem - $padding-sm
-      font-size: $font-size-default + 0.125rem
-
-    a.active
-      color: $purple
-      font-weight: 700
+  a
+    font-size: $font-size-default + 0.125rem
 
 #short-cuts
   flex: auto

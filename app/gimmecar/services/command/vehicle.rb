@@ -11,6 +11,6 @@ class Services::Command::Vehicle < Lib::Services::Base
   private
 
   def query
-    Vehicle.includes(:location).find_by(vin: vin)
+    Vehicle.includes(:location, rentals: [:driver, :pickup_location]).find_by(vin: vin)
   end
 end
