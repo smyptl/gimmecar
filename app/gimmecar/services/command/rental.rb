@@ -7,6 +7,16 @@ class Services::Command::Rental < Lib::Services::Base
   output do
     object :rental, component: Services::Builders::Rental do |o|
       o.attribute :pickup_location_name
+
+      o.object :driver do |o|
+        o.attribute :name
+      end
+
+      o.object :additional_driver do |o|
+        o.attribute :name
+      end
+
+      o.object :vehicle, component: Services::Builders::VehiclesTable
     end
   end
 

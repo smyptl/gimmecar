@@ -17,9 +17,5 @@ class Services::Builders::Rental < Lib::Services::Builder
       :additional_driver_financial_responsibility_signature,
       :driver_signature,
       :additional_driver_signature
-
-    c.object :driver,            component: Services::Builders::Driver
-    c.object :additional_driver, component: Services::Builders::Driver
-    c.object :vehicle,           component: Services::Builders::VehiclesTable
   end
 end

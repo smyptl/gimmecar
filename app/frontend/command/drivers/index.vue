@@ -39,8 +39,7 @@
         thead
           tr
             th Name
-            th Rentals
-            th Do Not Rent
+            th
         tbody
           tr.clickable(
             v-for='driver in sorted_drivers'
@@ -49,10 +48,23 @@
           )
 
             td {{ driver.name_full }}
-            td {{ driver.rentals_count }}
-            td {{ driver.do_not_rent }}
+            td.text-right
+              span.dnr.font-mono(v-if='driver.do_not_rent') DNR
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/global/colors'
+  @import '~Styles/global/layout'
   @import '~Styles/components/panels/table'
+
+  .dnr
+    padding: $padding-ex-sm
+
+    background: $red
+    border-radius: 0.125rem
+
+    font-size: 80%
+    font-weight: 700
+    color: #ffffff
+
 </style>

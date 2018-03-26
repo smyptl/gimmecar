@@ -71,7 +71,10 @@ Rails.application.routes.draw do
       get 'rentals', to: 'vehicles/rentals#index'
       get 'revenue', to: 'vehicles/revenue#index'
     end
-    resources :drivers,  only: [:index, :show]
+    resources :drivers,  only: [:index, :show] do
+      get 'insurance-policies', to: 'drivers/insurance_policies#index'
+      get 'rentals',            to: 'drivers/rentals#index'
+    end
 
     get '/reports',   to: 'reports#index'
   end

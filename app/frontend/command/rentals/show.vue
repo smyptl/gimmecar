@@ -106,13 +106,17 @@
                 span.block.description(v-if='rental.vehicle.license_number') License #: {{ rental.vehicle.license_number }}
                 span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
 
-    .panel.panel-base
-      h6.left.pt-sm.pl-default Driver
-      driver-info(v-bind:driver='rental.driver')
+          tr
+            td Driver
+            td
+              router-link.right(:to="{ name: 'driver', params: { id: rental.driver.id } }")
+                span.block {{ rental.driver.name }}
 
-    .panel.panel-base(v-if='rental.additional_driver')
-      h6.left.pt-sm.pl-default Additional Driver
-      driver-info(v-bind:driver='rental.additional_driver')
+          tr(v-if='rental.additional_driver')
+            td Additional Driver
+            td
+              router-link.right(:to="{ name: 'driver', params: { id: rental.additional_driver.id } }")
+                span.block {{ rental.additional_driver.name }}
 
     rental-extend(v-if='action == "extend"' v-on:close='refreshData')
 
