@@ -30,7 +30,7 @@
 
 class Driver < ApplicationRecord
 
-  has_many :rentals
+  has_many :rentals #, -> (driver) { where(driver: driver).or.where(additional_driver: driver) }
   has_many :insurance_policies
 
   scope :search, -> (name:, date_of_birth:) { FuzzyMatch.new(where(date_of_birth: date_of_birth), read: :name).find(name) }

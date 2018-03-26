@@ -33,6 +33,7 @@ class Vehicle < ApplicationRecord
   has_one :open_rental, -> { where(status: Rental::OPEN) }, class_name: 'Rental'
   has_one :last_rental, -> { past }, class_name: 'Rental'
   has_many :rates, through: :rentals
+  has_many :line_items, through: :rentals
 
   belongs_to :original_location, class_name: 'Location'
   belongs_to :location

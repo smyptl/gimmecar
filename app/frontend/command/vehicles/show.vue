@@ -30,7 +30,7 @@
         var val = Moment(val)
 
         if (val.isValid()) {
-          return val.format('M/D @ h:mm A')
+          return val.format('M/D/YY @ h:mm A')
         }
       },
     },

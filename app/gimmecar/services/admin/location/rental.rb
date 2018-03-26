@@ -7,7 +7,11 @@ class Services::Admin::Location::Rental < Lib::Services::Base
   end
 
   output do
-    object :rental, component: Services::Builders::Rental
+    object :rental, component: Services::Builders::Rental do |o|
+      o.object :driver,            component: Services::Builders::Driver
+      o.object :additional_driver, component: Services::Builders::Driver
+      o.object :vehicle,           component: Services::Builders::VehiclesTable
+    end
   end
 
   def query
