@@ -18,6 +18,7 @@
     mounted () {
       this.$http.get(this.$route.path + '/extend').then(response => {
         this.form.amount = response.data.last_rental_rate
+        this.form.date   = response.data.drop_off
       })
 
       this.open = true
@@ -53,7 +54,8 @@
         h4.panel-form-popup-header Extend
 
       .panel-form.panel-form-padding.panel-popup-form-content
-        input-error-message.mb-default.mt-default(v-bind:base='true' v-bind:errors='form.errors.get("base")')
+        .input-block.mt-default.mb-sm(v-if='form.errors.has("base")')
+          input-error-message(v-bind:base='true' v-bind:errors='form.errors.get("base")')
 
         .input-row
           .input-container.two-fifths.fixed
@@ -84,7 +86,6 @@
                 v-error='form.errors.has("amount")'
                 @input='form.errors.clear("amount")')
             input-error-message(v-bind:errors='form.errors.get("amount")')
-
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

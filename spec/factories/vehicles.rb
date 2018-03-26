@@ -24,9 +24,12 @@
 #  status               :string
 #
 
+require 'factories/locations'
+
 FactoryBot.define do
 
   factory :vehicle do
+    location { create(:location) }
     original_location { location }
     vehicle_type :mid_size
     make { ['BMW', 'Toyota', 'Ford', 'Porsche'].sample }

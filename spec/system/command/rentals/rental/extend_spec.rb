@@ -23,7 +23,7 @@ describe 'close rental', type: :system, js: true do
     find("a[data-toggle='dropdown']").click
     click_button('Extend')
 
-    expect(page).to have_content('Extend')
+    expect(page).to have_content('Extend', wait: 4)
 
     fill_in 'Days', with: days
     within('div.popup') do

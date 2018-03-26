@@ -1,6 +1,6 @@
 class Command::Rentals::ReceiptController < Command::BaseController
 
-  before_action :authorize_rental, except: :index
+  before_action :authorize_rental
 
   def print
     Services::Command::Rental::Print.new(number: number).retrieve(success, failure)

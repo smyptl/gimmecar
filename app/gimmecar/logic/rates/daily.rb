@@ -1,7 +1,7 @@
 class Logic::Rates::Daily < Logic::Rates::Base
 
-  PREMIUM_DAILY      = 0.15
-  PREMIUM_WEEKEND    = 0.10
+  PREMIUM_DAILY      = 0.175
+  PREMIUM_WEEKEND    = 0.125
   PREMIUM_OFF_HOURS  = 0.075
 
   OFF_HOURS_WEEKDAY  = [18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6]
@@ -10,8 +10,8 @@ class Logic::Rates::Daily < Logic::Rates::Base
 
   def calculate
     premium = 0
-    premium += PREMIUM_DAILY     if (days_apart <= 2)
-    premium += PREMIUM_WEEKEND   if (start_date.friday? || start_date.thursday?)
+    premium += PREMIUM_DAILY     if (days_apart <= 3)
+    premium += PREMIUM_WEEKEND   if (start_date.saturday? || start_date.friday? || start_date.thursday?)
     premium += PREMIUM_OFF_HOURS if off_hour?
 
     (@base_rate * (1 + premium)).round

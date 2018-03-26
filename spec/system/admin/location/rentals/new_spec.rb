@@ -136,7 +136,7 @@ describe 'create rental', type: :system, js: true do
     fill_in_payment
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}", wait: 5)
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}", wait: 4)
 
     expect(Driver.count).to eq(1)
     driver = Driver.first
@@ -325,7 +325,7 @@ describe 'create rental', type: :system, js: true do
     fill_in_payment
     click_on 'Continue'
 
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}", wait: 5)
+    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}", wait: 4)
 
     expect(Driver.count).to eq(2)
     driver = Driver.first

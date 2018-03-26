@@ -1,8 +1,12 @@
-class Actions::UpdateStripe
+class Actions::UpdateStripe < Lib::Actions::Base
 
-  def self.execute
-    Driver.where.not(stripe_id: nil).each do |d|
-      cu = Stripe::Customer.retrieve(d.stripe_id)
+  def success_args
+    {}
+  end
+
+  def save
+    Driver.where.not(stripe_id: nil).each do |driver|
+      cu = driver.retrieve_stripe_customer
       cu.description = d.name
       cu.email = d.email
       cu.save
