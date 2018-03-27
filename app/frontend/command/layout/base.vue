@@ -1,6 +1,6 @@
 <script>
   export default {
-    name: 'command',
+    name: 'Command',
     data () {
       return {
         nav: false,

@@ -13,7 +13,7 @@
   import RentalExtend from './rental/extend'
 
   export default {
-    name: 'rental',
+    name: 'Rental',
     data () {
       return {
         rental: {},

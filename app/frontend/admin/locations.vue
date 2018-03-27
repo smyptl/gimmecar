@@ -1,6 +1,6 @@
 <script>
   export default {
-    name: 'locations',
+    name: 'Locations',
     data () {
       return {
         loading: false,

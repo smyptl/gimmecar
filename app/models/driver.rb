@@ -36,6 +36,10 @@ class Driver < ApplicationRecord
 
   before_destroy { |record| throw :abort if record.rentals? }
 
+  def rentals
+    Rental.where(driver: self).or(Rental.where(additional_driver: self))
+  end
+
   def retrieve_or_create_stripe_customer
     if stripe_id
       retrieve_stripe_customer
@@ -48,10 +52,6 @@ class Driver < ApplicationRecord
 
   def retrieve_stripe_customer
     Stripe::Customer.retrieve(stripe_id)
-  end
-
-  def rentals
-    Rental.where(driver: self).or(Rental.where(additional_driver: self))
   end
 
   def name

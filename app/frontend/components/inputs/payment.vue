@@ -42,5 +42,4 @@
   .__PrivateStripeElement
     flex: 1
     align-self: center
-
 </style>

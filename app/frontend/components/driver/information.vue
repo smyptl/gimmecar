@@ -3,6 +3,7 @@
   import TDate from 'Filters/date'
 
   export default {
+    name: 'Information',
     props: {
       driver: {
         required: true,
