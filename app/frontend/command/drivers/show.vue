@@ -6,6 +6,7 @@
   import ActionsIcon from 'Components/icons/actions'
 
   import Currency from 'Filters/currency'
+  import TDate from 'Filters/date'
 
   export default {
     name: 'vehicle',
@@ -24,6 +25,7 @@
     },
     filters: {
       Currency,
+      date: TDate,
       time (val) {
         var val = Moment(val)
 
@@ -79,7 +81,7 @@
         li
           a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
 
-    .panel.panel-base(v-if='tabActive("insurance-policies")')
+    template(v-if='tabActive("insurance-policies")')
       .panel.panel-base(
         v-for='policy in insurance_policies.data'
         :key='policy.id'
@@ -94,10 +96,10 @@
               td {{ policy.policy_number }}
             tr
               td Effective Date
-              td {{ policy.effective_date }}
+              td {{ policy.effective_date | date }}
             tr
               td Expiration Date
-              td {{ policy.expiration_date }}
+              td {{ policy.expiration_date | date }}
 
 
     .panel.panel-base(v-if='tabActive("rentals")')
