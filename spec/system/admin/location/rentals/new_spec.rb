@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'system/admin/helpers/path_helper'
 require 'system/admin/helpers/user_and_location'
 
-require 'helpers/stripe_helper'
+require 'system/helpers/payment'
 
 require 'factories/vehicles'
 require 'factories/drivers'
@@ -74,16 +74,6 @@ def check_rental_terms(driver:, additional_driver: nil)
 
   if additional_driver
     expect(page).to have_content("#{additional_driver.name_first} #{additional_driver.name_last}")
-  end
-end
-
-def fill_in_payment(number: CARD_TYPE[:visa], expiration_date: '01/20', cvc: '123', zip_code: '90210')
-  stripe_iframe = all('iframe[name=__privateStripeFrame3]').last
-  Capybara.within_frame stripe_iframe do
-    find('input[name=cardnumber]').set(number)
-    find('input[name="exp-date"]').set(expiration_date)
-    find('input[name="cvc"]').set(cvc)
-    find('input[name="postal"]').set(zip_code)
   end
 end
 

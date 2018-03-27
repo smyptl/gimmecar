@@ -1,5 +1,6 @@
 <script>
   export default {
+    name: 'Vehicle-Status',
     props: {
       status: {
         required: true,

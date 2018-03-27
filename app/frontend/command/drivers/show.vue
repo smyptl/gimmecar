@@ -1,29 +1,34 @@
 <script>
   import Moment from 'moment'
 
+  import ActionsIcon       from 'Components/icons/actions'
+  import AddCard           from './driver/add_card'
   import DriverInformation from 'Components/driver/information'
-  import Dropdown from 'Components/dropdown'
-  import ActionsIcon from 'Components/icons/actions'
+  import Dropdown          from 'Components/dropdown'
 
   import Currency from 'Filters/currency'
+  import TDate from 'Filters/date'
 
   export default {
-    name: 'vehicle',
+    name: 'Driver',
     data () {
       return {
         driver: {},
         insurance_policies: {},
         rentals: {},
+        action: '',
         tab: '',
       }
     },
     components: {
       ActionsIcon,
+      AddCard,
       DriverInformation,
       Dropdown,
     },
     filters: {
       Currency,
+      date: TDate,
       time (val) {
         var val = Moment(val)
 
@@ -39,6 +44,23 @@
       '$route': 'getData',
     },
     methods: {
+      addCard () {
+        return this.action = 'add-card'
+      },
+      getData () {
+        this.$http.get(this.$route.path).then(response => {
+          this.driver = response.data
+          this.insurance_policies = this.driver.insurance_policies
+          this.tab = 'insurance-policies'
+        })
+      },
+      refreshData () {
+        this.getData()
+        this.action = ''
+      },
+      tabActive (value) {
+        return this.tab === value;
+      },
       view (tab) {
         this.$http.get(this.$route.path + '/' + tab).then(response => {
           this[tab] = response.data
@@ -47,16 +69,6 @@
       },
       viewRental (number) {
         this.$router.push({ name: 'rental', params: { number: number }})
-      },
-      tabActive (value) {
-        return this.tab === value;
-      },
-      getData () {
-        this.$http.get(this.$route.path).then(response => {
-          this.driver = response.data
-          this.insurance_policies = this.driver.insurance_policies
-          this.tab = 'insurance-policies'
-        })
       },
     },
   }
@@ -67,10 +79,15 @@
     .panel.panel-base
       .panel-base-header
         h2 {{ driver.name_first }} {{ driver.name_last }}
+        dropdown.flex-element.right
+          a.right(href='#' data-toggle='dropdown')
+            actions-icon.action-icon
+          .dropdown-menu.right(slot='dropdown-menu')
+            ul
+              li
+                button.link(@click='addCard') Add Card
 
-      driver-information(:driver='driver')
-        tr
-          td
+      driver-information.left(:driver='driver')
 
     .sub-navigation
       ul.list-horizontal
@@ -79,7 +96,7 @@
         li
           a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
 
-    .panel.panel-base(v-if='tabActive("insurance-policies")')
+    template(v-if='tabActive("insurance-policies")')
       .panel.panel-base(
         v-for='policy in insurance_policies.data'
         :key='policy.id'
@@ -94,10 +111,10 @@
               td {{ policy.policy_number }}
             tr
               td Effective Date
-              td {{ policy.effective_date }}
+              td {{ policy.effective_date | date }}
             tr
               td Expiration Date
-              td {{ policy.expiration_date }}
+              td {{ policy.expiration_date | date }}
 
 
     .panel.panel-base(v-if='tabActive("rentals")')
@@ -122,6 +139,8 @@
               td {{ rental.vehicle_make_model }}
               td {{ rental.pickup | time }}
               td {{ rental.drop_off | time }}
+
+    component(v-bind:is='action' v-on:close='refreshData')
 </template>
 
 <style lang='stylus' scoped>

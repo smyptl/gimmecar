@@ -5,22 +5,4 @@
   javascript:
     window.location_name = null;
 
-script(src='https://js.stripe.com/v3/')
-
-javascript:
-  var stripe = Stripe("#{ENV['STRIPE_PUBLIC_KEY']}");
-  var elements = stripe.elements();
-  var card = elements.create('card', { style: {
-        base: {
-          fontFamily: '"Hack"',
-          fontSmoothing: 'antialiased',
-          fontSize: '11px',
-          fontWeight: 400,
-          '::placeholder': {
-            color: '#767676'
-          }
-        },
-      }
-    });
-
 = javascript_pack_tag 'admin'

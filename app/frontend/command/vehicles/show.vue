@@ -9,7 +9,7 @@
   import Currency from 'Filters/currency'
 
   export default {
-    name: 'vehicle',
+    name: 'Vehicle',
     data () {
       return {
         vehicle: {},

@@ -35,7 +35,7 @@ require 'factories/rentals'
 describe Driver do
 
   describe '.destroy' do
-    it 'cannot destroy if rental' do
+    it 'cannot destroy if rental as driver' do
       driver = create(:driver)
       create(:rental, driver: driver)
 
@@ -43,6 +43,16 @@ describe Driver do
       driver.destroy
 
       expect(Driver.count).to eq(1)
+    end
+
+    it 'cannot destroy if rental as additional_driver' do
+      additional_driver = create(:driver)
+      create(:rental, additional_driver: additional_driver)
+
+      expect(Driver.count).to eq(2)
+      additional_driver.destroy
+
+      expect(Driver.count).to eq(2)
     end
 
     it 'destroys driver if no rental' do

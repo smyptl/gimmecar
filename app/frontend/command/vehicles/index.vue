@@ -2,7 +2,7 @@
   import VehicleStatusIcons from 'Components/vehicle/status'
 
   export default {
-    name: 'index',
+    name: 'Vehicles',
     data () {
       return {
         vehicles: [],

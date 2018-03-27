@@ -2,7 +2,7 @@
   import Add from './add'
 
   export default {
-    name: 'location',
+    name: 'Location',
     data () {
       return {
         nav: false,

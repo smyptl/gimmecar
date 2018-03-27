@@ -13,7 +13,7 @@
   import Close from './rental/close'
 
   export default {
-    name: 'rental',
+    name: 'Rental',
     data () {
       return {
         rental: {},

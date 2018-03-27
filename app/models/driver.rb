@@ -30,25 +30,32 @@
 
 class Driver < ApplicationRecord
 
-  has_many :rentals #, -> (driver) { where(driver: driver).or.where(additional_driver: driver) }
   has_many :insurance_policies
 
   scope :search, -> (name:, date_of_birth:) { FuzzyMatch.new(where(date_of_birth: date_of_birth), read: :name).find(name) }
 
   before_destroy { |record| throw :abort if record.rentals? }
 
+  def rentals
+    Rental.where(driver: self).or(Rental.where(additional_driver: self))
+  end
+
   def retrieve_or_create_stripe_customer
     if stripe_id
-      retrieve_stripe_customer
+      stripe_customer
     else
       customer = Stripe::Customer.create({ description: name, email: email })
-      self.stripe_id = customer['id']
-      save
+      update(stripe_id: customer['id'])
+      customer
     end
   end
 
-  def retrieve_stripe_customer
+  def stripe_customer
     Stripe::Customer.retrieve(stripe_id)
+  end
+
+  def stripe_sources
+    stripe_customer[:sources]
   end
 
   def name
