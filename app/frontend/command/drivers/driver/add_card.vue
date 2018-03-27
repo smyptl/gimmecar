@@ -9,7 +9,7 @@
       return {
         open: false,
         form: new this.$form({
-          stripe_token: '',
+          token: '',
         }),
       }
     },
@@ -24,28 +24,24 @@
       close () {
         this.$emit('close')
       },
-      addCard () {
+      addtoken () {
         stripe.createToken(window.card).then(result => {
           if (result.error) {
-            Shake(this.$refs.form)
-            this.form.errors.record({ card: [result.error.message] })
+            this.form.errors.record({ token: [result.error.message] })
             this.disabled_button = false
           } else {
             this.form.errors.clear
             // Send the token to your server
-            this.form.stripe_token = result.token.id
+            this.form.token = result.token.id
 
-            this.$http.post(this.$route.path + '/add-card', {
-              extend: this.form.data(),
-            })
-            .then(response => {
-              this.form.errors.clear
-              this.close()
-            })
-            .catch(error => {
-              this.form.errors.record(error.response.data.errors)
-            })
-
+            this.$http.post(this.$route.path + '/add-card', this.form.data())
+              .then(response => {
+                this.form.errors.clear
+                this.close()
+              })
+              .catch(error => {
+                this.form.errors.record(error.response.data.errors)
+              })
           }
         });
       },
@@ -65,12 +61,12 @@
             | Card Number
             .input-label-note.right DO NOT accept prepaid cards.
           .input-block.whole
-            payment(v-error='form.errors.has("card")' @click='form.errors.clear("card")')
-          input-error-message(v-bind:errors='form.errors.get("card")')
+            payment(v-error='form.errors.has("token")' @click='form.errors.clear("token")')
+          input-error-message(v-bind:errors='form.errors.get("token")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
-          button.btn.btn-primary.right(@click.prevent='addCard()') Add
+          button.btn.btn-primary.right(@click.prevent='addtoken()') Add
 </template>
 
 <style lang='stylus' scoped>

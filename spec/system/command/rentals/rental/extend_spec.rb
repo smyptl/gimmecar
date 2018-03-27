@@ -5,7 +5,7 @@ require 'system/command/helpers/user'
 require 'factories/rentals'
 require 'factories/line_items'
 
-describe 'close rental', type: :system, js: true do
+describe 'Extend rental', type: :system, js: true do
   include_context :login_user
 
   scenario 'success' do
@@ -23,13 +23,13 @@ describe 'close rental', type: :system, js: true do
     find("a[data-toggle='dropdown']").click
     click_button('Extend')
 
-    expect(page).to have_content('Extend', wait: 4)
+    expect(page).to have_content('Extend')
 
     fill_in 'Days', with: days
     within('div.popup') do
       click_button('Extend')
     end
-    expect(page).to_not have_content('Extend')
+    expect(page).to_not have_content('Extend', wait: 2)
 
     expect(Charge.count).to eq(2)
     charge = Charge.last

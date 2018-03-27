@@ -4,6 +4,7 @@
   import VehicleStatusIcons from './status'
 
   export default {
+    name: 'Information',
     props: {
       vehicle: {
         required: true,

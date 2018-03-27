@@ -55,7 +55,8 @@
         })
       },
       refreshData () {
-
+        this.getData()
+        this.action = ''
       },
       tabActive (value) {
         return this.tab === value;

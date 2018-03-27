@@ -42,16 +42,20 @@ class Driver < ApplicationRecord
 
   def retrieve_or_create_stripe_customer
     if stripe_id
-      retrieve_stripe_customer
+      stripe_customer
     else
       customer = Stripe::Customer.create({ description: name, email: email })
-      self.stripe_id = customer['id']
-      save
+      update(stripe_id: customer['id'])
+      customer
     end
   end
 
-  def retrieve_stripe_customer
+  def stripe_customer
     Stripe::Customer.retrieve(stripe_id)
+  end
+
+  def stripe_sources
+    stripe_customer[:sources]
   end
 
   def name
