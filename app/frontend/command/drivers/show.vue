@@ -1,10 +1,12 @@
 <script>
-  import Moment from 'moment'
+  import Moment     from 'moment'
+  import Capitalize from 'lodash/capitalize'
 
   import ActionsIcon       from 'Components/icons/actions'
   import AddCard           from './driver/add_card'
   import DriverInformation from 'Components/driver/information'
   import Dropdown          from 'Components/dropdown'
+  import SourcesIcon       from 'Components/driver/sources_icon'
 
   import Currency from 'Filters/currency'
   import TDate from 'Filters/date'
@@ -15,6 +17,7 @@
       return {
         driver: {},
         insurance_policies: {},
+        sources: {},
         rentals: {},
         action: '',
         tab: '',
@@ -25,8 +28,10 @@
       AddCard,
       DriverInformation,
       Dropdown,
+      SourcesIcon,
     },
     filters: {
+      Capitalize,
       Currency,
       date: TDate,
       time (val) {
@@ -42,6 +47,13 @@
     },
     watch: {
       '$route': 'getData',
+    },
+    computed: {
+      card_sources () {
+        return(this.sources.data, n => {
+          return n.object != 'card'
+        })
+      },
     },
     methods: {
       addCard () {
@@ -95,6 +107,8 @@
           a(@click.prevent='view("insurance-policies")' v-bind:class='{ active: tabActive("insurance-policies") }') Insurance Policies
         li
           a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
+        li(v-if='driver.stripe_id')
+          a(@click.prevent='view("sources")' v-bind:class='{ active: tabActive("sources") }') Payment Sources
 
     template(v-if='tabActive("insurance-policies")')
       .panel.panel-base(
@@ -140,6 +154,41 @@
               td {{ rental.pickup | time }}
               td {{ rental.drop_off | time }}
 
+    .panel.panel-base(v-if='tabActive("sources")')
+      .gimmecar-app-vertical-scroll
+        table.panel-table
+          thead
+            th(colspan='2') Source
+            th.text-right Last 4
+            th.text-right Exp
+            th.text-right CVC
+            th.text-right Zip
+          tbody
+            tr(
+              v-for='source in sources.data'
+              :key='source.id'
+            )
+
+              template(v-if='source.object == "card"')
+                td.source-icon
+                  sources-icon(:brand='source.brand')
+                td {{ source.brand }} - {{ source.funding | capitalize }}
+                td.text-right {{ source.last4 }}
+                td.text-right {{ source.exp_month }} / {{ source.exp_year }}
+                td.text-right {{ source.cvc_check }}
+                td.text-right {{ source.address_zip_check }}
+
+              template(v-if='source.object == "bank_account"')
+                td.source-icon
+                  sources-icon(brand='default')
+                td {{ source.bank_name | capitalize }} - Bank
+                td.text-right ---- {{ source.last4 }}
+                td
+                td
+                td
+
+      <!--| {{ sources }}-->
+
     component(v-bind:is='action' v-on:close='refreshData')
 </template>
 
@@ -151,6 +200,12 @@
     float: right
     height: 1.25rem
 
-  .status
-    vertical-align: center
+  .source-icon
+    svg
+      float: left
+      display: inline-block
+
+      height: 1.25rem
+      width: auto
+
 </style>
