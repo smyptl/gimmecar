@@ -150,6 +150,8 @@
         })
       },
       validateDrivers () {
+        this.loading_button = true
+
         this.$http.post(this.$route.path + '/validate-drivers', {
           rental: this.rental.data(),
         })
@@ -158,6 +160,7 @@
           this.getVehicles()
         })
         .catch(error => {
+          this.loading_button = false
           Shake(this.$refs.form)
           this.rental.errors.record(error.response.data.errors)
         })
@@ -167,6 +170,7 @@
           rental: this.rental.data(),
         })
         .then(response => {
+          this.loading_button = false
           this.vehicles = response.data
           this.nextStep()
         })
@@ -174,40 +178,52 @@
         })
       },
       validateVehicle () {
+        this.loading_button = true
+
         this.$http.post(this.$route.path + '/validate-vehicle', {
           rental: this.rental.data(),
         })
         .then(response => {
+          this.loading_button = false
           this.rental.errors.clear
           this.nextStep()
         })
         .catch(error => {
+          this.loading_button = false
           Shake(this.$refs.form)
           this.rental.errors.record(error.response.data.errors)
         })
       },
       validateFinancialResponsibility () {
+        this.loading_button = true
+
         this.$http.post(this.$route.path + '/validate-financial-responsibility', {
           rental: this.rental.data(),
         })
         .then(response => {
+          this.loading_button = false
           this.rental.errors.clear
           this.nextStep()
         })
         .catch(error => {
+          this.loading_button = false
           Shake(this.$refs.form)
           this.rental.errors.record(error.response.data.errors)
         })
       },
       validateTermsAndConditions () {
+        this.loading_button = true
+
         this.$http.post(this.$route.path + '/validate-terms-and-conditions', {
           rental: this.rental.data(),
         })
         .then(response => {
+          this.loading_button = false
           this.rental.errors.clear
           this.nextStep()
         })
         .catch(error => {
+          this.loading_button = false
           Shake(this.$refs.form)
           this.rental.errors.record(error.response.data.errors)
         })
@@ -229,11 +245,12 @@
         });
       },
       createRental () {
+        this.loading_button = true
+
         this.$http.post(this.$route.path, {
           rental: this.rental.data(),
         })
         .then(response => {
-          this.rental.errors.clear
           this.$router.push({ name: 'rental', params: { number: response.data.number }})
         })
         .catch(error => {
@@ -300,21 +317,21 @@
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateDrivers()') Continue
+        submit.btn.btn-primary.right(@click.native.prevent='validateDrivers()' :loading='loading_button') Continue
 
     template(v-if='current_step == "Vehicle"')
       vehicle-form(v-bind:form='rental' v-bind:vehicles='vehicles')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateVehicle()') Continue
+        submit.btn.btn-primary.right(@click.native.prevent='validateVehicle()' :loading='loading_button') Continue
 
     template(v-if='current_step == "Financial Responsibility"')
       financial-responsibility-signatures(v-bind:form='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateFinancialResponsibility()') Continue
+        submit.btn.btn-primary.right(@click.native.prevent='validateFinancialResponsibility()' :loading='loading_button') Continue
 
     template(v-if='current_step == "Terms & Conditions"')
       rental-invoice.input-block.mt-sm(v-bind:summary='summary')
@@ -322,7 +339,7 @@
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validateTermsAndConditions()') Continue
+        submit.btn.btn-primary.right(@click.native.prevent='validateTermsAndConditions()' :loading='loading_button')  Continue
 
     template(v-if='current_step == "Payment"')
       .input-row
