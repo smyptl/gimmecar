@@ -3,6 +3,7 @@
 
   import RentalInvoice from 'Admin/location/components/rental_invoice'
 
+  import Submit from 'Components/submit'
   import InputDateTime from 'Components/inputs/date_time'
   import Signature from 'Components/inputs/signature'
   import Payment from 'Components/inputs/payment'
@@ -13,7 +14,7 @@
   import VehicleForm from './vehicles'
 
   export default {
-    name: 'new',
+    name: 'Rental-New',
     data () {
       return {
         rental: new this.$form({
@@ -87,7 +88,7 @@
         current_step: 'Details',
         vehicles: [],
         summary: {},
-        disabled_button: false,
+        loading_button: false,
       }
     },
     components: {
@@ -99,6 +100,7 @@
       Signature,
       TermsAndConditionsSignatures,
       VehicleForm,
+      Submit
     },
     computed: {
       pickup () {
@@ -130,6 +132,8 @@
         this.current_step = this.steps[this.steps.indexOf(this.current_step) - 1]
       },
       getRates () {
+        this.loading_button = true
+
         this.$http.post(this.$route.path + '/rates', {
           rental: this.rental.data(),
         })
@@ -137,9 +141,11 @@
           this.rental.errors.clear
           this.summary = response.data
           this.nextStep()
+          this.loading_button = false
         })
         .catch(error => {
           Shake(this.$refs.form)
+          this.loading_button = false
           this.rental.errors.record(error.response.data.errors)
         })
       },
@@ -207,13 +213,13 @@
         })
       },
       validatePayment () {
-        this.disabled_button = true
+        this.loading_button = true
 
         stripe.createToken(window.card).then(result => {
           if (result.error) {
             Shake(this.$refs.form)
             this.rental.errors.record({ card: [result.error.message] })
-            this.disabled_button = false
+            this.loading_button = false
           } else {
             this.rental.errors.clear
             // Send the token to your server
@@ -234,7 +240,7 @@
           Shake(this.$refs.form)
           this.rental.stripe_customer_id = error.response.data.stripe_customer_id
           this.rental.errors.record(error.response.data.errors)
-          this.disabled_button = false
+          this.loading_button = false
         })
       },
     },
@@ -280,7 +286,7 @@
           input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
 
       .input-submit.input-block
-        button.btn.btn-primary.right(@click.prevent='getRates()') Continue
+        submit.btn.btn-primary.right(@click.native.prevent='getRates()' :loading='loading_button') Continue
 
     template(v-if='current_step == "Rates"')
       rental-invoice.input-block.mt-sm(v-bind:summary='summary' v-bind:estimated='true')
@@ -352,8 +358,7 @@
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        button.btn.btn-primary.right(@click.prevent='validatePayment' v-bind:disabled='disabled_button') Continue
-
+        submit.btn.btn-primary.right(@click.native.prevent='validatePayment()' :loading='loading_button') Continue
 </template>
 
 <style lang='stylus'>
