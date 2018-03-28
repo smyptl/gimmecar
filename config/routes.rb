@@ -74,6 +74,8 @@ Rails.application.routes.draw do
     resources :drivers,  only: [:index, :show] do
       get 'insurance-policies', to: 'drivers/insurance_policies#index'
       get 'rentals',            to: 'drivers/rentals#index'
+      get 'sources',            to: 'drivers/sources#index'
+
       post 'add-card',          to: 'drivers/add_card#create'
     end
 
