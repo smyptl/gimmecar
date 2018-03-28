@@ -131,6 +131,11 @@
       goBack () {
         this.current_step = this.steps[this.steps.indexOf(this.current_step) - 1]
       },
+      errorResponse (error) {
+        Shake(this.$refs.form)
+        this.loading_button = false
+        this.rental.errors.record(error.response.data.errors)
+      },
       getRates () {
         this.loading_button = true
 
@@ -144,9 +149,7 @@
           this.loading_button = false
         })
         .catch(error => {
-          Shake(this.$refs.form)
-          this.loading_button = false
-          this.rental.errors.record(error.response.data.errors)
+          this.errorResponse(error)
         })
       },
       validateDrivers () {
@@ -160,9 +163,7 @@
           this.getVehicles()
         })
         .catch(error => {
-          this.loading_button = false
-          Shake(this.$refs.form)
-          this.rental.errors.record(error.response.data.errors)
+          this.errorResponse(error)
         })
       },
       getVehicles () {
@@ -175,6 +176,7 @@
           this.nextStep()
         })
         .catch(error => {
+          this.errorResponse(error)
         })
       },
       validateVehicle () {
@@ -189,9 +191,7 @@
           this.nextStep()
         })
         .catch(error => {
-          this.loading_button = false
-          Shake(this.$refs.form)
-          this.rental.errors.record(error.response.data.errors)
+          this.errorResponse(error)
         })
       },
       validateFinancialResponsibility () {
@@ -206,9 +206,7 @@
           this.nextStep()
         })
         .catch(error => {
-          this.loading_button = false
-          Shake(this.$refs.form)
-          this.rental.errors.record(error.response.data.errors)
+          this.errorResponse(error)
         })
       },
       validateTermsAndConditions () {
@@ -223,9 +221,7 @@
           this.nextStep()
         })
         .catch(error => {
-          this.loading_button = false
-          Shake(this.$refs.form)
-          this.rental.errors.record(error.response.data.errors)
+          this.errorResponse(error)
         })
       },
       validatePayment () {
@@ -254,10 +250,8 @@
           this.$router.push({ name: 'rental', params: { number: response.data.number }})
         })
         .catch(error => {
-          Shake(this.$refs.form)
+          this.errorResponse(error)
           this.rental.stripe_customer_id = error.response.data.stripe_customer_id
-          this.rental.errors.record(error.response.data.errors)
-          this.loading_button = false
         })
       },
     },
