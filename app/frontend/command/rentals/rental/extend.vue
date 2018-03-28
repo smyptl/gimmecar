@@ -2,6 +2,7 @@
   import Shake from 'Utils/transitions/shake'
 
   import InputDate from 'Components/inputs/date'
+  import Submit from 'Components/submit'
   import Popup from 'Components/popup'
 
   export default {
@@ -13,6 +14,7 @@
           days: 1,
           amount: '',
         }),
+        loading_button: false,
       }
     },
     mounted () {
@@ -25,6 +27,7 @@
     },
     components: {
       InputDate,
+      Submit,
       Popup,
     },
     methods: {
@@ -32,6 +35,8 @@
         this.$emit('close')
       },
       extendRental () {
+        this.loading_button = true
+
         this.$http.post(this.$route.path + '/extend', {
           extend: this.form.data(),
         })
@@ -41,6 +46,7 @@
         })
         .catch(error => {
           this.form.errors.record(error.response.data.errors)
+          this.loading_button = false
         })
       },
     },
@@ -89,7 +95,7 @@
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
-          button.btn.btn-primary.right(@click.prevent='extendRental()') Extend
+          submit.btn.btn-primary.right(@click.native.prevent='extendRental()' :loading='loading_button') Extend
 </template>
 
 <style lang='stylus' scoped>

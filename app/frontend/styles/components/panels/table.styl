@@ -11,6 +11,9 @@
   text-align: left
   font-weight: 400
 
+  .text-nowrap
+    white-space: nowrap
+
   td:first-of-type,
   th:first-of-type
     padding-left: $padding-default
@@ -59,12 +62,18 @@
 
   tbody.alternate-color
     tr
-      background: $white-dark
       border-top: 0
       border-bottom: 0
 
+    tr:nth-child(odd)
+      background: $white-dark
+
     tr:nth-child(even)
       background: $background-color-panel
+
+  span.description
+    font-size: $font-size-default - 0.0625rem
+    color: $silver
 
 .panel-table.panel-table-key-pair
   table-layout: fixed
@@ -101,7 +110,3 @@
 
   td:nth-of-type(2)
     color: $black
-
-  span.description
-    font-size: $font-size-default - 0.0625rem
-    color: $silver

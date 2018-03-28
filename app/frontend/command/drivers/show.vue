@@ -159,7 +159,7 @@
         table.panel-table
           thead
             th(colspan='2') Source
-            th.text-right Last 4
+            th.text-nowrap.text-right Last 4
             th.text-right Exp
             th.text-right CVC
             th.text-right Zip
@@ -172,8 +172,8 @@
               template(v-if='source.object == "card"')
                 td.source-icon
                   sources-icon(:brand='source.brand')
-                td {{ source.brand }} - {{ source.funding | capitalize }}
-                td.text-right {{ source.last4 }}
+                td.text-nowrap {{ source.brand }} - {{ source.funding | capitalize }}
+                td.text-nowrap.text-right {{ source.last4 }}
                 td.text-right {{ source.exp_month }} / {{ source.exp_year }}
                 td.text-right {{ source.cvc_check }}
                 td.text-right {{ source.address_zip_check }}
@@ -181,13 +181,11 @@
               template(v-if='source.object == "bank_account"')
                 td.source-icon
                   sources-icon(brand='default')
-                td {{ source.bank_name | capitalize }} - Bank
-                td.text-right ---- {{ source.last4 }}
+                td.text-nowrap {{ source.bank_name | capitalize }} - Bank
+                td.text-nowrap.text-right {{ source.last4 }}
                 td
                 td
                 td
-
-      <!--| {{ sources }}-->
 
     component(v-bind:is='action' v-on:close='refreshData')
 </template>
