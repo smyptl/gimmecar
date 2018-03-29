@@ -13,6 +13,6 @@ class Services::Command::Vehicle::Rentals < Lib::Services::Base
   private
 
   def query
-    Vehicle.includes(rentals: [:driver, :pickup_location]).find_by(vin: vin).rentals
+    Vehicle.includes(rentals: [:driver, :pickup_location]).find_by(vin: vin).rentals.order(pickup: :desc)
   end
 end

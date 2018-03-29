@@ -43,6 +43,8 @@
                 router-link(:to="{ name: 'vehicles' }") Vehicles
               li
                 router-link(:to="{ name: 'drivers' }") Drivers
+              li
+                router-link(:to="{ name: 'quote' }") Quote
               <!--li-->
                 <!--router-link(:to="{ name: 'reports' }") Reports-->
 

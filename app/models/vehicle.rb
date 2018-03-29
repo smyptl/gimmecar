@@ -30,8 +30,9 @@ class Vehicle < ApplicationRecord
   TYPES = ['subcompact', 'compact', 'mid_size']
 
   has_many :rentals
-  has_one :open_rental, -> { where(status: Rental::OPEN) }, class_name: 'Rental'
-  has_one :last_rental, -> { past }, class_name: 'Rental'
+  has_one :open_rental,   -> { where(status: Rental::OPEN) }, class_name: 'Rental'
+  has_one :last_rental,   -> { past }, class_name: 'Rental'
+  has_one :latest_rental, -> { rentals.order(drop_off: :asc).last }, class_name: 'Rental'
   has_many :rates, through: :rentals
   has_many :line_items, through: :rentals
 
@@ -58,6 +59,14 @@ class Vehicle < ApplicationRecord
 
   def make_model
     "#{make} #{model}"
+  end
+
+  def odometer
+    latest_rental.drop_off_odometer || latest_rental.pickup_odometer
+  end
+
+  def fuel_level
+    latest_rental.drop_off_fuel || latest_rental.pickup_fuel
   end
 
   def status
