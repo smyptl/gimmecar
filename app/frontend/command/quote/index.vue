@@ -17,14 +17,25 @@
         }),
         loading_button: false,
         locations: {},
-        summary: {},
+        summary: null,
       }
     },
     components: {
-      RentalInvoice,
       InputDateTime,
+      RentalInvoice,
+      Submit,
+    },
+    created () {
+      this.getLocations()
     },
     methods: {
+      getLocations () {
+        this.$http
+          .get(this.$route.path)
+          .then(response => {
+            this.locations = response.data
+        })
+      },
       getQuote () {
         this.loading_button = true
 
@@ -68,6 +79,7 @@
           v-error='quote.errors.has("location_id")'
           @input='quote.errors.clear("location_id")')
 
+          option(value='') --
           option(v-for='location in locations.data' :key='location.id' :value='location.id') {{ location.name }} -- {{ location.city }}, {{ location.state }}
 
       .input-row
@@ -98,7 +110,7 @@
               v-error='quote.errors.has("vehicle_type")'
               @input='quote.errors.clear("vehicle_type")')
 
-              option(value='' disabled) -- Select Vehicle Type --
+              option(value='' disabled) --
               option(value='subcompact') Subcompact (Toyota Yaris iA)
               option(value='compact') Compact (Toyota Corolla)
               option(value='mid_size') Mid-Size (Toyota Camry)

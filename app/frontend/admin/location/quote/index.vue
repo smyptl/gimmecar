@@ -87,7 +87,7 @@
               v-error='quote.errors.has("vehicle_type")'
               @input='quote.errors.clear("vehicle_type")')
 
-              option(value='' disabled) -- Select Vehicle Type --
+              option(value='' disabled) --
               option(value='subcompact') Subcompact (Toyota Yaris iA)
               option(value='compact') Compact (Toyota Corolla)
               option(value='mid_size') Mid-Size (Toyota Camry)

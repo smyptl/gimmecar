@@ -21,8 +21,7 @@ export default {
           ],
         },
         {
-          path: '/quote', name: 'quote', component: require('./quotes/index').default,
-
+          path: '/quote', name: 'quote', component: require('./quote/index').default,
         },
         { path: '/drivers', component: require('./base').default,
           children: [

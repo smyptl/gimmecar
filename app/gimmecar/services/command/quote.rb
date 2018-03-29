@@ -1,4 +1,4 @@
-class Services::Admin::Location::Quote < Lib::Services::Base
+class Services::Command::Quote < Lib::Services::Base
 
   attributes do |a|
     a.integer :location_id
@@ -38,6 +38,6 @@ class Services::Admin::Location::Quote < Lib::Services::Base
   end
 
   def location
-    @location ||= Location.find(params[:location_id])
+    @location ||= Location.find(location_id)
   end
 end

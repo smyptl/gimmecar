@@ -1,10 +1,10 @@
-class Command::Controller < Command::BaseController
+class Command::QuoteController < Command::BaseController
 
   def index
     Services::Command::Locations.retrieve(success, failure)
   end
 
-  def show
-    Services::Command::Quote.new(params.require(:quote)).execute(success, failure)
+  def create
+    Services::Command::Quote.new(params.require(:quote)).retrieve(success, failure)
   end
 end

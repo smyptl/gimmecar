@@ -1,4 +1,4 @@
-class Services::Command::Location < Lib::Services::Base
+class Services::Command::Locations < Lib::Services::Base
 
   output do
     collection :locations do |c|
