@@ -13,6 +13,6 @@ class Services::Command::Driver::Rentals < Lib::Services::Base
   private
 
   def query
-    Driver.find(id).rentals
+    Driver.find(id).rentals.order(pickup: :desc)
   end
 end

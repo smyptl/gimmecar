@@ -10,11 +10,13 @@
     data () {
       return {
         quote: new this.$form({
+          location_id: '',
           pickup: new Date(),
           drop_off: new Date().setDate(new Date().getDate() + 1),
           vehicle_type: '',
         }),
         loading_button: false,
+        locations: {},
         summary: null,
       }
     },
@@ -23,7 +25,17 @@
       RentalInvoice,
       Submit,
     },
+    created () {
+      this.getLocations()
+    },
     methods: {
+      getLocations () {
+        this.$http
+          .get(this.$route.path)
+          .then(response => {
+            this.locations = response.data
+        })
+      },
       getQuote () {
         this.loading_button = true
 
@@ -60,6 +72,17 @@
 
     template(v-else)
       .input-row
+        label.input-label(for='location_id') Location *
+        .input-block.whole
+        select.input-field#location_id(
+          v-model='quote.location_id'
+          v-error='quote.errors.has("location_id")'
+          @input='quote.errors.clear("location_id")')
+
+          option(value='') --
+          option(v-for='location in locations.data' :key='location.id' :value='location.id') {{ location.name }} -- {{ location.city }}, {{ location.state }}
+
+      .input-row
         .input-container.one-half
           label.input-label Pickup *
           .input-block.whole
@@ -95,5 +118,4 @@
 
       .input-block.input-submit
         submit.btn.btn-primary.right(@click.native.prevent='getQuote' :loading='loading_button') Continue
-
 </template>

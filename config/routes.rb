@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       get '/vehicles', to: 'vehicles#index'
 
       get  '/quote', to: 'quote#index'
-      post '/quote', to: 'quote#show'
+      post '/quote', to: 'quote#create'
 
       get '/new', to: 'new#index'
 
@@ -71,6 +71,7 @@ Rails.application.routes.draw do
       get 'rentals', to: 'vehicles/rentals#index'
       get 'revenue', to: 'vehicles/revenue#index'
     end
+
     resources :drivers,  only: [:index, :show] do
       get 'insurance-policies', to: 'drivers/insurance_policies#index'
       get 'rentals',            to: 'drivers/rentals#index'
@@ -78,6 +79,9 @@ Rails.application.routes.draw do
 
       post 'add-card',          to: 'drivers/add_card#create'
     end
+
+    get '/quote',   to: 'quote#index'
+    post  '/quote', to: 'quote#create'
 
     get '/reports',   to: 'reports#index'
   end

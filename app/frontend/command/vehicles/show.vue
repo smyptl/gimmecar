@@ -7,6 +7,7 @@
   import VehicleStatusIcons from 'Components/vehicle/status'
 
   import Currency from 'Filters/currency'
+  import Percent from 'Filters/percent'
 
   export default {
     name: 'Vehicle',
@@ -26,6 +27,7 @@
     },
     filters: {
       Currency,
+      Percent,
       time (val) {
         var val = Moment(val)
 
@@ -69,6 +71,13 @@
         h2 {{ vehicle.make }} {{ vehicle.model }}
 
       vehicle-information(v-bind:vehicle='vehicle')
+        tr
+          td Odometer
+          td {{ vehicle.odometer }}
+        tr
+          td Fuel
+          td {{ vehicle.fuel_level/10 | percent }}
+
 
     .sub-navigation
       ul.list-horizontal

@@ -131,6 +131,10 @@
       goBack () {
         this.current_step = this.steps[this.steps.indexOf(this.current_step) - 1]
       },
+      successResponse () {
+        this.rental.errors.clear
+        this.loading_button = false
+      },
       errorResponse (error) {
         Shake(this.$refs.form)
         this.loading_button = false
@@ -143,10 +147,9 @@
           rental: this.rental.data(),
         })
         .then(response => {
-          this.rental.errors.clear
+          this.successResponse()
           this.summary = response.data
           this.nextStep()
-          this.loading_button = false
         })
         .catch(error => {
           this.errorResponse(error)
@@ -171,7 +174,7 @@
           rental: this.rental.data(),
         })
         .then(response => {
-          this.loading_button = false
+          this.successResponse()
           this.vehicles = response.data
           this.nextStep()
         })
@@ -186,8 +189,7 @@
           rental: this.rental.data(),
         })
         .then(response => {
-          this.loading_button = false
-          this.rental.errors.clear
+          this.successResponse()
           this.nextStep()
         })
         .catch(error => {
@@ -201,8 +203,7 @@
           rental: this.rental.data(),
         })
         .then(response => {
-          this.loading_button = false
-          this.rental.errors.clear
+          this.successResponse()
           this.nextStep()
         })
         .catch(error => {
@@ -216,8 +217,7 @@
           rental: this.rental.data(),
         })
         .then(response => {
-          this.loading_button = false
-          this.rental.errors.clear
+          this.successResponse()
           this.nextStep()
         })
         .catch(error => {
