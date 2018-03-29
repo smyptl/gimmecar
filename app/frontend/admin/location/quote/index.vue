@@ -15,7 +15,7 @@
           vehicle_type: '',
         }),
         loading_button: false,
-        summary: {},
+        summary: null,
       }
     },
     components: {

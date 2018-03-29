@@ -5,12 +5,14 @@ class Services::Command::Vehicle < Lib::Services::Base
   end
 
   output do
-    object :vehicle, component: Services::Builders::Vehicle
+    object :vehicle, component: Services::Builders::Vehicle do |o|
+      o.attributes :fuel_level, :odometer
+    end
   end
 
   private
 
   def query
-    Vehicle.includes(:location, rentals: [:driver, :pickup_location]).find_by(vin: vin)
+    Vehicle.includes(:location, :latest_rental).find_by(vin: vin)
   end
 end

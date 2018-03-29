@@ -45,6 +45,7 @@
       tr
         td Color
         td {{ vehicle.color | capitalize }}
+      slot
 
 </template>
 
