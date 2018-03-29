@@ -1,6 +1,6 @@
 class Logic::Rates::Monthly < Logic::Rates::Base
 
-  MONTHLY_DISCOUNT = 0.15
+  MONTHLY_DISCOUNT = 0.12
 
   def calculate
     discount = MONTHLY_DISCOUNT
