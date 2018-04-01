@@ -1,9 +1,15 @@
-class Actions::ReturnDeposit < Lib::Actions::Base
+class Actions::Command::Rental::ReturnDeposit < Lib::Actions::Base
 
   attributes do |a|
     a.string  :number
     a.integer :amount
   end
+
+  validate :amount,
+    presence: true,
+    numercality: { less_than_or_equal_to: 'deposit_amount' }
+
+  private
 
   def success_args
     {}
@@ -37,5 +43,9 @@ class Actions::ReturnDeposit < Lib::Actions::Base
 
   def deposit
     @deposit ||= rental.deposit
+  end
+
+  def deposit_amount
+    rental.deposit_amount
   end
 end

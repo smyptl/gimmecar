@@ -23,7 +23,7 @@
     },
     mounted () {
       this.$http.get(this.url).then(response => {
-        this.form.amount = response.data.amount
+        this.form.amount = response.data.deposit_amount
       })
 
       this.open = true
