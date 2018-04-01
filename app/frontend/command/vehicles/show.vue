@@ -4,7 +4,6 @@
   import Dropdown from 'Components/dropdown'
   import ActionsIcon from 'Components/icons/actions'
   import VehicleInformation from 'Components/vehicle/information'
-  import VehicleStatusIcons from 'Components/vehicle/status'
 
   import Currency from 'Filters/currency'
   import Percent from 'Filters/percent'
@@ -23,7 +22,6 @@
       ActionsIcon,
       Dropdown,
       VehicleInformation,
-      VehicleStatusIcons,
     },
     filters: {
       Currency,
@@ -128,7 +126,4 @@
   .action-icon
     float: right
     height: 1.25rem
-
-  .status
-    vertical-align: center
 </style>

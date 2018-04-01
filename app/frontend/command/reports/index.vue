@@ -1,46 +1,36 @@
 <script>
-  import Highcharts from 'highcharts'
+  import Currency from 'Filters/currency'
+
+  import Values from 'lodash/values'
+  import SumBy from 'lodash/sumBy'
 
   export default {
-    name: 'index',
+    name: 'Reports',
     data () {
       return {
-        chart: null,
-        test: null,
+        revenue: {},
       }
+    },
+    filters: {
+      Currency
     },
     created () {
       this.getData()
     },
-    mounted () {
-      this.setChart()
-    },
     watch: {
       '$route': 'getData',
     },
-    methods: {
-      setChart () {
-        Highcharts.chart(this.$refs.chart, {
-          chart: {
-            type: 'line',
-          },
-          title: {
-            text: '',
-          },
-          xAxis: {
-            categories:  this.chart.labels,
-          },
-          yAxis: {
-            title: 'Test',
-          },
-          series: this.chart.datasets
-        })
+    computed: {
+      total () {
+        return SumBy(Values(this.revenue), v => { return parseInt(v) })
       },
+    },
+    methods: {
       getData () {
         this.$http
           .get(this.$route.path)
           .then(response => {
-            this.chart = response.data
+            this.revenue = response.data
         })
       },
     },
@@ -49,5 +39,22 @@
 
 <template lang='pug'>
   .panel.panel-base
-    #chart(ref='chart')
+    table.panel-table.panel-table-key-pair
+      thead
+        tr
+          th Month
+          th Revenue
+      tbody
+        tr(v-for='(rev, month) in revenue')
+          td {{ month }}
+          td {{ rev | currency }}
+      tfoot
+        tr
+          td Total
+          td {{ total | currency }}
+
 </template>
+
+<style lang='stylus' scoped>
+  @import '~Styles/components/panels/table'
+</style>

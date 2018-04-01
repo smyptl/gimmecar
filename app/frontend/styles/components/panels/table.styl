@@ -71,6 +71,13 @@
     tr:nth-child(even)
       background: $background-color-panel
 
+  tfoot
+    tr
+      border-top: 0.1875rem solid $border-color-panel
+
+    td
+      font-weight: 700
+
   span.description
     font-size: $font-size-default - 0.0625rem
     color: $silver
@@ -81,8 +88,12 @@
   margin-bottom: 0
 
   tr
-    border-top: 1px solid $border-color-light
     vertical-align: top
+
+  tbody,
+  thead
+    tr
+      border-top: 1px solid $border-color-light
 
   td,
   th
@@ -98,7 +109,6 @@
     text-align: left
 
   td:first-of-type
-    font-weight: 400
     color: $black-light
 
   td:nth-of-type(2)

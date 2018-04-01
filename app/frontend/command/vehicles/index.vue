@@ -46,13 +46,15 @@
       table.panel-table
         thead
           tr
+            th
             th Vehicle
             th Type
             th Location
             th License #
-            th Status
         tbody
           tr.clickable(v-for='vehicle in sorted_vehicles' @click.prevent='viewVehicle(vehicle.vin)')
+            td
+              vehicle-status-icons(:status='vehicle.status')
             td {{ vehicle.make_model }}
             td {{ vehicle.vehicle_type }}
             td {{ vehicle.location_name }}
@@ -60,13 +62,8 @@
               template(v-if='vehicle.license_number') {{ vehicle.license_number }}
               template(v-else)
                 i VIN: {{ lastFive(vehicle.vin) }}
-            td.status
-              vehicle-status-icons(:status='vehicle.status')
 </template>
 
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/table'
-
-  .status
-    vertical-align: center
 </style>

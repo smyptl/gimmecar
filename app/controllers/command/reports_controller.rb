@@ -1,6 +1,6 @@
 class Command::ReportsController < Command::BaseController
 
   def index
-    Services::Command::Reports::RentalsPerMonth.retrieve(success, failure)
+    Services::Command::Reports::RevenueMonthly.retrieve(success, failure)
   end
 end
