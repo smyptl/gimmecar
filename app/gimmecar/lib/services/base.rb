@@ -81,6 +81,10 @@ class Lib::Services::Base < Lib::Attributes::Base
     Lib::Attributes::TypeCast.boolean(include_hash[key]) || false
   end
 
+  def urls
+    Rails.application.routes.url_helpers
+  end
+
   def failure_args
     {
       errors: errors,

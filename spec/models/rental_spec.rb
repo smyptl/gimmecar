@@ -13,7 +13,6 @@
 #  additional_driver_id                                 :integer
 #  vehicle_id                                           :integer
 #  tax_rate_id                                          :integer
-#  vehicle_type                                         :string
 #  notes                                                :text
 #  pickup_location_id                                   :integer
 #  pickup                                               :datetime

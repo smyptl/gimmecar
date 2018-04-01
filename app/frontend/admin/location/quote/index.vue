@@ -3,7 +3,7 @@
 
   import RentalInvoice from 'Admin/location/components/rental_invoice'
   import InputDateTime from 'Components/inputs/date_time'
-  import Submit        from 'Components/submit'
+  import Submit        from 'Components/inputs/submit'
 
   export default {
     name: 'Quote',

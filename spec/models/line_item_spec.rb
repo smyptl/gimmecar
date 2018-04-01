@@ -8,7 +8,6 @@
 #  invoice_type            :string
 #  invoice_id              :integer
 #  item_type               :string
-#  item_id                 :integer
 #  charge_id               :integer
 #  details                 :json
 #  date                    :date

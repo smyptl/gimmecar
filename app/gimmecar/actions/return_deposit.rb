@@ -1,10 +1,15 @@
-class Actions::ReturnDeposit
+class Actions::ReturnDeposit < Lib::Actions::Base
 
-  def initialize(rental:, amount: nil)
-    @rental, @amount = rental, amount
+  attributes do |a|
+    a.string  :number
+    a.integer :amount
   end
 
-  def execute
+  def success_args
+    {}
+  end
+
+  def save
     if deposit
       charge = deposit.charge
 
@@ -22,11 +27,15 @@ class Actions::ReturnDeposit
 
   private
 
+  def rental
+    @rental ||= Rental.find_by(number: number)
+  end
+
   def amount
-    @amount || deposit.amount
+    read_attribute(:amount) || deposit.amount
   end
 
   def deposit
-    @deposit ||= @rental.deposit
+    @deposit ||= rental.deposit
   end
 end

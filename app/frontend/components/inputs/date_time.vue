@@ -310,7 +310,7 @@
 
     line-height: @height
     font-size: 1.25rem
-    font-family: $mono-font
+    font-family: $font-mono
     cursor: pointer
     color: $gray
 
@@ -337,7 +337,7 @@
     border-radius: 2px
     box-shadow: 0 1px 0.125rem 0 $border-color-dark
 
-    font-family: $mono-font
+    font-family: $font-mono
 
   .calendar-header
     width: 100%

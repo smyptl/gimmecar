@@ -2,6 +2,7 @@
   import FDate from 'Filters/date'
   import FTime from 'Filters/time'
   import Capitalize from 'lodash/capitalize'
+  import Camelcase from 'lodash/camelCase'
 
   import Dropdown from 'Components/dropdown'
 
@@ -9,8 +10,9 @@
   import RightArrowIcon from 'Components/icons/right_arrow'
 
   import DriverInfo from 'Components/driver/information'
+  import Extend from './rental/extend'
+  import ReturnDeposit from './rental/return_deposit'
 
-  import RentalExtend from './rental/extend'
 
   export default {
     name: 'Rental',
@@ -18,6 +20,7 @@
       return {
         rental: {},
         action: '',
+        action_url: ''
       }
     },
     filters: {
@@ -29,7 +32,8 @@
       ActionsIcon,
       Dropdown,
       DriverInfo,
-      RentalExtend,
+      Extend,
+      ReturnDeposit,
       RightArrowIcon,
     },
     created () {
@@ -44,8 +48,9 @@
           this.rental = response.data
         })
       },
-      extendRental () {
-        this.action = 'extend'
+      loadAction (action) {
+        this.action_url = this.rental.actions[action].url
+        this.action = Camelcase(action)
       },
       refreshData () {
         this.getData()
@@ -72,8 +77,10 @@
             ul
               li
                 button.link(@click='printInvoice') Print Invoice
-              li
-                button.link(@click='extendRental') Extend Rental
+              li(v-if='rental.actions.extend')
+                button.link(@click='loadAction("extend")') Extend Rental
+              <!--li(v-if='rental.actions.return_deposit')-->
+                <!--button.link(@click='loadAction("return_deposit")') Return Deposit-->
 
       table.panel-table.panel-table-key-pair
         tbody
@@ -118,7 +125,7 @@
               router-link.right(:to="{ name: 'driver', params: { id: rental.additional_driver.id } }")
                 span.block {{ rental.additional_driver.name }}
 
-    rental-extend(v-if='action == "extend"' v-on:close='refreshData')
+    component(:is='action' :url='action_url' v-on:close='refreshData')
 
 </template>
 

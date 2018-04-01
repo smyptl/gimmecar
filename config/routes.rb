@@ -64,6 +64,9 @@ Rails.application.routes.draw do
       get 'extend', to: 'rentals/extend#index'
       post 'extend', to: 'rentals/extend#create'
 
+      get 'return-deposit', to: 'rentals/return_deposit#index'
+      post 'return-deposit', to: 'rentals/return_deposit#create'
+
       get 'receipt/print', to: 'rentals/receipt#print'
     end
 
