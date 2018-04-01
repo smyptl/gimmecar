@@ -8,6 +8,16 @@ class Services::Command::Rental < Lib::Services::Base
     object :rental, component: Services::Builders::Rental do |o|
       o.attribute :pickup_location_name
 
+      o.nested :actions do |n|
+        n.nested :extend,         if: -> (r) { r.can_extend_rental? }  do |n|
+          n.attribute :url, output: -> (r) { urls.command_rental_extend_path(rental_id: r.number) }
+        end
+
+        n.nested :return_deposit, if: -> (r) { r.can_return_deposit? } do |n|
+          n.attribute :url, output: -> (r) { urls.command_rental_return_deposit_path(rental_id: r.number) }
+        end
+      end
+
       o.object :driver do |o|
         o.attribute :name
       end

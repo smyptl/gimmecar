@@ -3,7 +3,7 @@
 
   import RentalInvoice from 'Admin/location/components/rental_invoice'
 
-  import Submit from 'Components/submit'
+  import Submit from 'Components/inputs/submit'
   import InputDateTime from 'Components/inputs/date_time'
   import Signature from 'Components/inputs/signature'
   import Payment from 'Components/inputs/payment'

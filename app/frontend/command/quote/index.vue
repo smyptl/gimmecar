@@ -3,7 +3,7 @@
 
   import RentalInvoice from 'Admin/location/components/rental_invoice'
   import InputDateTime from 'Components/inputs/date_time'
-  import Submit        from 'Components/submit'
+  import Submit        from 'Components/inputs/submit'
 
   export default {
     name: 'Quote',
@@ -74,13 +74,13 @@
       .input-row
         label.input-label(for='location_id') Location *
         .input-block.whole
-        select.input-field#location_id(
-          v-model='quote.location_id'
-          v-error='quote.errors.has("location_id")'
-          @input='quote.errors.clear("location_id")')
+          select.input-field#location_id(
+            v-model='quote.location_id'
+            v-error='quote.errors.has("location_id")'
+            @input='quote.errors.clear("location_id")')
 
-          option(value='') --
-          option(v-for='location in locations.data' :key='location.id' :value='location.id') {{ location.name }} -- {{ location.city }}, {{ location.state }}
+            option(value='') --
+            option(v-for='location in locations.data' :key='location.id' :value='location.id') {{ location.name }} -- {{ location.city }}, {{ location.state }}
 
       .input-row
         .input-container.one-half

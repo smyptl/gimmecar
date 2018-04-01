@@ -9,15 +9,13 @@
     props: {
       url: {
         type: String,
-        required: true
+        required: true,
       }
     },
     data () {
       return {
         open: false,
         form: new this.$form({
-          date: new Date(),
-          days: 1,
           amount: '',
         }),
         loading_button: false,
@@ -25,14 +23,12 @@
     },
     mounted () {
       this.$http.get(this.url).then(response => {
-        this.form.amount = response.data.last_rental_rate
-        this.form.date   = response.data.drop_off
+        this.form.amount = response.data.amount
       })
 
       this.open = true
     },
     components: {
-      InputDate,
       Submit,
       Popup,
     },
@@ -40,11 +36,11 @@
       close () {
         this.$emit('close')
       },
-      extendRental () {
+      returnDeposit () {
         this.loading_button = true
 
         this.$http.post(this.url, {
-          extend: this.form.data(),
+          return_deposit: this.form.data(),
         })
         .then(response => {
           this.form.errors.clear
@@ -63,31 +59,11 @@
   popup(v-if='open' v-on:closed='close')
     .panel-form-popup
       .panel-form.panel-form-padding
-        h4.panel-form-popup-header Extend
+        h4.panel-form-popup-header Return Deposit
 
       .panel-form.panel-form-padding.panel-popup-form-content
         .input-block.mt-default.mb-sm(v-if='form.errors.has("base")')
           input-error-message(v-bind:base='true' v-bind:errors='form.errors.get("base")')
-
-        .input-row
-          .input-container.two-fifths.fixed
-            label.input-label(for='date') Date *
-            .input-block.whole
-              input-date#date(
-                v-model='form.date'
-                v-error='form.errors.has("date")'
-                @input='form.errors.clear("date")')
-            input-error-message(v-bind:errors='form.errors.get("date")')
-
-          .input-container.one-fifth.fixed
-            label.input-label(for='days') Days *
-            .input-block.whole
-              input.input-field#days(
-                type='text'
-                v-model='form.days'
-                v-error='form.errors.has("days")'
-                @input='form.errors.clear("days")')
-            input-error-message(v-bind:errors='form.errors.get("days")')
 
           .input-container.two-fifths.fixed
             label.input-label(for='amount') Amount
@@ -101,7 +77,7 @@
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
-          submit.btn.btn-primary.right(@click.native.prevent='extendRental()' :loading='loading_button') Extend
+          submit.btn.btn-primary.right(@click.native.prevent='extendRental()' :loading='loading_button') Return
 </template>
 
 <style lang='stylus' scoped>

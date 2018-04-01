@@ -13,7 +13,6 @@
 #  additional_driver_id                                 :integer
 #  vehicle_id                                           :integer
 #  tax_rate_id                                          :integer
-#  vehicle_type                                         :string
 #  notes                                                :text
 #  pickup_location_id                                   :integer
 #  pickup                                               :datetime
@@ -82,6 +81,10 @@ class Rental < ApplicationRecord
     status == CLOSED
   end
 
+  def open?
+    status == OPEN
+  end
+
   def stripe_customer_id
     driver.stripe_id || additional_driver.stripe_id
   end
@@ -108,6 +111,22 @@ class Rental < ApplicationRecord
 
   def last_rental_rate
     rates.order(date: :desc).first.try(:amount)
+  end
+
+  def deposit_amount
+    deposit.total
+  end
+
+  def can_close?
+    open?
+  end
+
+  def can_extend_rental?
+    open?
+  end
+
+  def can_return_deposit?
+    closed? && deposit.present?
   end
 
   private

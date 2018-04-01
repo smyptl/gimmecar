@@ -8,7 +8,6 @@
 #  invoice_type            :string
 #  invoice_id              :integer
 #  item_type               :string
-#  item_id                 :integer
 #  charge_id               :integer
 #  details                 :json
 #  date                    :date
@@ -38,6 +37,7 @@ class LineItem < ApplicationRecord
   scope :rental_rates, -> { where(item_type: 'rental_rate') }
   scope :deposits,     -> { where(item_type: 'deposit') }
   scope :gas,          -> { where(item_type: 'gas') }
+  scope :cleaning,     -> { where(item_type: 'cleaning') }
   scope :deposits_unreturned, -> { includes(:invoice).deposits.where(invoice_type: 'Rental').select(&:invoice_closed?) }
 
   delegate :number, :closed?, to: :invoice, prefix: true

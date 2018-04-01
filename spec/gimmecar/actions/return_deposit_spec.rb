@@ -26,7 +26,7 @@ describe Actions::ReturnDeposit do
 
     expect(LineItem.deposits.count).to eq(1)
 
-    Actions::ReturnDeposit.new(rental: rental).execute
+    Actions::ReturnDeposit.new(number: rental.number).execute!
 
     charge = Charge.first
     expect(charge.amount).to eq(charge_amount)

@@ -6,7 +6,6 @@ html
     = stylesheet_link_tag 'application', media: 'all'
     = stylesheet_link_tag 'public/landing'
     meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")
-    link(href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet')
     link(href='//cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css' rel='stylesheet')
 
     = csrf_meta_tag
@@ -27,7 +26,7 @@ html
   body(lang='en')
     header
       .container
-        h1 GimmeCar
+        h1.logo GimmeCar
 
         nav
           ul
