@@ -44,9 +44,11 @@
               li
                 router-link(:to="{ name: 'drivers' }") Drivers
               li
-                router-link(:to="{ name: 'quote' }") Quote
+                router-link(:to="{ name: 'locations' }") Locations
               li
                 router-link(:to="{ name: 'reports' }") Reports
+              li
+                router-link(:to="{ name: 'quote' }") Quote
 
     content
       .gimmecar-app-container#gimmecar-app-command

@@ -3,7 +3,7 @@ class Command::LocationsController < Command::BaseController
   before_action :authorize_location, except: :index
 
   def index
-    Services::Command::Location.retrieve(success, failure)
+    Services::Command::Locations.retrieve(success, failure)
   end
 
   #def show

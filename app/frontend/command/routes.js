@@ -20,9 +20,6 @@ export default {
             { path: ':vin', name: 'vehicle',  component: require('./vehicles/show').default },
           ],
         },
-        {
-          path: '/quote', name: 'quote', component: require('./quote/index').default,
-        },
         { path: '/drivers', component: require('./base').default,
           children: [
             { path: '',     name: 'drivers', component: require('./drivers/index').default },
@@ -30,8 +27,14 @@ export default {
           ],
         },
         {
+          path: '/locations', name: 'locations', component: require('./locations/index').default
+        },
+        {
           path: '/reports', name: 'reports', component: require('./reports/index').default
-        }
+        },
+        {
+          path: '/quote', name: 'quote', component: require('./quote/index').default,
+        },
       ],
     },
   ],
