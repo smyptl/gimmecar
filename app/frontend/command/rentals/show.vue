@@ -79,8 +79,8 @@
                 button.link(@click='printInvoice') Print Invoice
               li(v-if='rental.actions.extend')
                 button.link(@click='loadAction("extend")') Extend Rental
-              <!--li(v-if='rental.actions.return_deposit')-->
-                <!--button.link(@click='loadAction("return_deposit")') Return Deposit-->
+              li(v-if='rental.actions.return_deposit')
+                button.link(@click='loadAction("return_deposit")') Return Deposit
 
       table.panel-table.panel-table-key-pair
         tbody

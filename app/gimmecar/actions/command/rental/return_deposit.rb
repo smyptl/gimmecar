@@ -5,9 +5,9 @@ class Actions::Command::Rental::ReturnDeposit < Lib::Actions::Base
     a.integer :amount
   end
 
-  validate :amount,
+  validates :amount,
     presence: true,
-    numercality: { less_than_or_equal_to: 'deposit_amount' }
+    numericality: { less_than_or_equal_to: :deposit_amount }
 
   private
 
@@ -35,10 +35,6 @@ class Actions::Command::Rental::ReturnDeposit < Lib::Actions::Base
 
   def rental
     @rental ||= Rental.find_by(number: number)
-  end
-
-  def amount
-    read_attribute(:amount) || deposit.amount
   end
 
   def deposit

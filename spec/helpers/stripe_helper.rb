@@ -1,3 +1,5 @@
+TOKEN_VALID = 'tok_visa'
+
 CARD_TYPE = {
   visa:    '4242424242424242',
   prepaid: '5105105105105100',
@@ -43,4 +45,12 @@ def create_customer_id(driver:, token: nil)
     description: driver.name,
     source: token,
   })['id']
+end
+
+def create_charge(token: TOKEN_VALID, amount:)
+  Stripe::Charge.create(
+    amount: amount,
+    currency: 'usd',
+    source: token
+  )
 end
