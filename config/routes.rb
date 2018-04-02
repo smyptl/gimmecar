@@ -83,10 +83,12 @@ Rails.application.routes.draw do
       post 'add-card',          to: 'drivers/add_card#create'
     end
 
-    get '/quote',   to: 'quote#index'
-    post  '/quote', to: 'quote#create'
+    resources :locations, only: [:index, :show]
 
     get '/reports',   to: 'reports#index'
+
+    get '/quote',   to: 'quote#index'
+    post  '/quote', to: 'quote#create'
   end
 
   scope module: :public do

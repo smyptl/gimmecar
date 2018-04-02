@@ -33,6 +33,10 @@ require 'factories/charges'
 
 FactoryBot.define do
   factory :line_item do
+    total 0
+    sub_total 0
+    amount 0
+
     trait :deposit do
       item_type :deposit
     end
