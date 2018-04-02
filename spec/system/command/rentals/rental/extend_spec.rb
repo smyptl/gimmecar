@@ -5,7 +5,7 @@ require 'system/command/helpers/user'
 require 'factories/rentals'
 require 'factories/line_items'
 
-describe 'Extend rental', type: :system, js: true do
+describe 'Extend', type: :system, js: true do
   include_context :login_user
 
   scenario 'success' do

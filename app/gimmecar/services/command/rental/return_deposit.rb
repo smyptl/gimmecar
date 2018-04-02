@@ -1,7 +1,5 @@
 class Services::Command::Rental::ReturnDeposit < Lib::Services::Base
 
-  attr_reader :rental
-
   attributes do |a|
     a.string :number
   end
@@ -13,6 +11,6 @@ class Services::Command::Rental::ReturnDeposit < Lib::Services::Base
   end
 
   def query
-    Rental.include(:deposit).find_by(number: number)
+    Rental.includes(:deposit).find_by(number: number)
   end
 end
