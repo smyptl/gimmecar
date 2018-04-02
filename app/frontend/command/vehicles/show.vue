@@ -4,8 +4,8 @@
   import Dropdown from 'Components/dropdown'
   import ActionsIcon from 'Components/icons/actions'
   import VehicleInformation from 'Components/vehicle/information'
+  import MonthlyRevenue from 'Command/vehicles/vehicle/monthly_revenue'
 
-  import Currency from 'Filters/currency'
   import Percent from 'Filters/percent'
 
   export default {
@@ -21,10 +21,10 @@
     components: {
       ActionsIcon,
       Dropdown,
+      MonthlyRevenue,
       VehicleInformation,
     },
     filters: {
-      Currency,
       Percent,
       time (val) {
         var val = Moment(val)
@@ -107,23 +107,10 @@
               td {{ rental.pickup | time }}
               td {{ rental.drop_off | time }}
 
-    .panel.panel-base(v-if='tabActive("revenue")')
-      table.panel-table.panel-table-key-pair
-        thead
-          tr
-            th Month
-            th Revenue
-        tbody
-          tr(v-for='(rev, month) in revenue')
-            td {{ month }}
-            td {{ rev | currency }}
+    monthly-revenue(v-if='tabActive("revenue")' :revenue='revenue')
 </template>
 
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/table'
   @import '~Styles/components/panels/sub_navigation'
-
-  .action-icon
-    float: right
-    height: 1.25rem
 </style>

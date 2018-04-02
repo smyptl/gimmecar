@@ -1,6 +1,8 @@
 <script>
   import FDate from 'Filters/date'
   import FTime from 'Filters/time'
+  import Percent from 'Filters/percent'
+  import Currency from 'Filters/currency'
   import Capitalize from 'lodash/capitalize'
   import Camelcase from 'lodash/camelCase'
 
@@ -27,6 +29,8 @@
       date: FDate,
       time: FTime,
       Capitalize,
+      Currency,
+      Percent,
     },
     components: {
       ActionsIcon,
@@ -124,6 +128,36 @@
             td
               router-link.right(:to="{ name: 'driver', params: { id: rental.additional_driver.id } }")
                 span.block {{ rental.additional_driver.name }}
+
+      .gimmecar-app-vertical-scroll
+        table.panel-table
+          thead
+            tr
+              th
+              th.text-right Pickup
+              th.text-right Drop Off
+          tbody
+            tr
+              td Fuel
+              td.text-right {{ rental.pickup_fuel/10 | percent }}
+              td.text-right {{ rental.drop_off_fuel/10 | percent }}
+            tr
+              td Odometer
+              td.text-right {{ rental.pickup_odometer }}
+              td.text-right {{ rental.drop_off_odometer }}
+
+      table.panel-table.panel-table-key-pair(v-if='rental.status == "closed"')
+        thead
+          tr
+            th Metrics
+            th
+        tbody
+          tr
+            td Miles Driven
+            td {{ rental.miles_driven }}
+          tr
+            td Avg. Price / Mile
+            td {{ rental.average_price_per_mile | currency }}
 
     component(:is='action' :url='action_url' v-on:close='refreshData')
 

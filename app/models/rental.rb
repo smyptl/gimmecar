@@ -113,6 +113,14 @@ class Rental < ApplicationRecord
     rates.order(date: :desc).first.try(:amount)
   end
 
+  def miles_driven
+    drop_off_odometer - pickup_odometer if drop_off_odometer
+  end
+
+  def average_price_per_mile
+    miles_driven/sub_total if miles_driven
+  end
+
   def deposit_amount
     deposit.total
   end

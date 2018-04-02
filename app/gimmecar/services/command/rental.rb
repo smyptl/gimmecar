@@ -7,6 +7,7 @@ class Services::Command::Rental < Lib::Services::Base
   output do
     object :rental, component: Services::Builders::Rental do |o|
       o.attribute :pickup_location_name
+      o.attributes :miles_driven, :average_price_per_mile
 
       o.nested :actions do |n|
         n.nested :extend,         if: -> (r) { r.can_extend_rental? }  do |n|
