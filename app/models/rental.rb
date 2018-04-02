@@ -117,8 +117,12 @@ class Rental < ApplicationRecord
     drop_off_odometer - pickup_odometer if drop_off_odometer
   end
 
+  def average_rate
+    sub_total/rates.count if rates.present?
+  end
+
   def average_price_per_mile
-    miles_driven/sub_total if miles_driven
+    sub_total/miles_driven if miles_driven
   end
 
   def deposit_amount

@@ -46,6 +46,11 @@
     watch: {
       '$route': 'getData',
     },
+    computed: {
+      is_closed () {
+        return this.rental.status == "closed"
+      },
+    },
     methods: {
       getData () {
         this.$http.get(this.$route.path).then(response => {
@@ -129,35 +134,44 @@
               router-link.right(:to="{ name: 'driver', params: { id: rental.additional_driver.id } }")
                 span.block {{ rental.additional_driver.name }}
 
-      .gimmecar-app-vertical-scroll
-        table.panel-table
-          thead
-            tr
-              th
-              th.text-right Pickup
-              th.text-right Drop Off
-          tbody
-            tr
-              td Fuel
-              td.text-right {{ rental.pickup_fuel/10 | percent }}
-              td.text-right {{ rental.drop_off_fuel/10 | percent }}
-            tr
-              td Odometer
-              td.text-right {{ rental.pickup_odometer }}
-              td.text-right {{ rental.drop_off_odometer }}
-
-      table.panel-table.panel-table-key-pair(v-if='rental.status == "closed"')
+      table.panel-table
         thead
           tr
-            th Metrics
             th
+            th.text-right Pickup
+            th.text-right Drop Off
         tbody
           tr
-            td Miles Driven
-            td {{ rental.miles_driven }}
+            td Fuel
+            td.text-right {{ rental.pickup_fuel/10 | percent }}
+            td.text-right
+              template(v-if='is_closed') {{ rental.drop_off_fuel/10 | percent }}
+              template(v-else) --
           tr
-            td Avg. Price / Mile
-            td {{ rental.average_price_per_mile | currency }}
+            td Odometer
+            td.text-right {{ rental.pickup_odometer }}
+            td.text-right
+              template(v-if='is_closed') {{ rental.drop_off_odometer }}
+              template(v-else) --
+
+      table.panel-table.panel-table-key-pair
+        thead
+          tr
+            th(colspan='2') Metrics
+        tbody
+          tr
+            td Revenue
+            td {{ rental.sub_total | currency }}
+          tr
+            td Avg. Rate
+            td {{ rental.average_rate | currency }}
+          template(v-if='is_closed')
+            tr
+              td Miles Driven
+              td {{ rental.miles_driven }}
+            tr
+              td Avg. Price / Mile
+              td {{ rental.average_price_per_mile | currency }}
 
     component(:is='action' :url='action_url' v-on:close='refreshData')
 

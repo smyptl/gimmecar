@@ -5,7 +5,7 @@
     name: 'Vehicles',
     data () {
       return {
-        vehicles: [],
+        vehicles: {},
       }
     },
     created () {
