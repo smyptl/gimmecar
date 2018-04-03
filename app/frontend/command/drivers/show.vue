@@ -1,6 +1,7 @@
 <script>
   import Moment     from 'moment'
   import Capitalize from 'lodash/capitalize'
+  import SnackCase  from 'lodash/snakeCase'
 
   import ActionsIcon       from 'Components/icons/actions'
   import AddCard           from './driver/add_card'
@@ -74,7 +75,7 @@
       },
       view (tab) {
         this.$http.get(this.$route.path + '/' + tab).then(response => {
-          this[tab] = response.data
+          this[SnackCase(tab)] = response.data
           this.tab = tab
         })
       },
