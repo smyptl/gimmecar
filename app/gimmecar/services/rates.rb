@@ -13,7 +13,7 @@ class Services::Rates < Lib::Services::Base
       location:          { description: location.description },
       pickup:            rental.pickup,
       drop_off:          rental.drop_off,
-      rates:             rates,
+      rental_rates:      rental_rates,
       deposit:           deposit,
       add_ons:           add_ons,
       discount:          discount,
@@ -28,8 +28,8 @@ class Services::Rates < Lib::Services::Base
     @rental_period ||= Lib::DateRange.new(rental.pickup, rental.drop_off)
   end
 
-  def rates
-    @rates ||= calculate_rate
+  def rental_rates
+    @rental_rates ||= Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: tax_rate).retrieve
   end
 
   def deposit
@@ -49,7 +49,7 @@ class Services::Rates < Lib::Services::Base
   end
 
   def sub_total
-    (rates + add_ons).sum { |l| l.fetch(:sub_total) }
+    (rental_rates + add_ons).sum { |l| l.fetch(:sub_total) }
   end
 
   def tax_collectable
@@ -61,15 +61,11 @@ class Services::Rates < Lib::Services::Base
   end
 
   def line_items
-    rates + add_ons
+    rental_rates + add_ons
   end
 
   def tax_rate
     @tax_rate ||= location.latest_tax_rate
-  end
-
-  def calculate_rate
-    Logic::Rates::Base.new(rental_period: rental_period, location: location, base_rate: rate, tax_rate: tax_rate).retrieve
   end
 
   def rate

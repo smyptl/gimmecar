@@ -11,6 +11,6 @@ class Services::Command::Vehicle::Revenue < Lib::Services::Base
   end
 
   def query
-    Vehicle.includes(:rates).find_by(vin: vin).rates.group_by_month(:date, format: '%b %Y').sum(:sub_total)
+    Vehicle.includes(:rental_rates).find_by(vin: vin).rental_rates.group_by_month(:date, format: '%b %Y').sum(:sub_total)
   end
 end

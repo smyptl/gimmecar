@@ -5,19 +5,14 @@ class Services::Command::Driver < Lib::Services::Base
   end
 
   output do
-    object :driver do |o|
-      o.component Services::Builders::Driver
-
-      o.collection :insurance_policies do |c|
-        c.attributes :company_name, :policy_number, :effective_date, :expiration_date
-      end
+    object :driver, component: Services::Builders::Driver do |o|
+      o.attributes :days_rented, :sub_total, :miles_driven, :average_miles_per_day, :average_rate, :average_price_per_mile
     end
   end
-
 
   private
 
   def query
-    ::Driver.includes(:insurance_policies).find(id)
+    ::Driver.find(id)
   end
 end

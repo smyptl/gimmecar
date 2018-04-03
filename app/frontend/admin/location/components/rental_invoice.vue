@@ -25,7 +25,7 @@
     },
     computed: {
       rates () {
-        return SortBy(this.summary.rates, ['date'])
+        return SortBy(this.summary.rental_rates, ['date'])
       },
     },
   }

@@ -21,8 +21,8 @@ describe Services::Rates do
                         pickup:       Time.new(2011, 1, 1, 0, 0, 0, '-08:00'),
                         drop_off:     Time.new(2011, 1, 4, 0, 0, 0, '-08:00'))).retrieve!
 
-      expect(rental[:rates].count).to eq(3)
-      expect(rental[:combined_tax_rate]).to eq(tax_rates.combined_tax_rate)
+      expect(rental.fetch(:rental_rates).count).to eq(3)
+      expect(rental.fetch(:combined_tax_rate)).to eq(tax_rates.combined_tax_rate)
     end
 
     describe 'partial day' do
@@ -37,7 +37,7 @@ describe Services::Rates do
                           pickup:       Time.new(2017, 1, 31, 10, 57, 0, '-07:00'),
                           drop_off:     Time.new(2017, 2, 5, 9, 57, 0, '-07:00'))).retrieve!
 
-        expect(rental[:rates].count).to eq(5)
+        expect(rental.fetch(:rental_rates).count).to eq(5)
       end
     end
   end

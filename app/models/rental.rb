@@ -47,16 +47,17 @@ class Rental < ApplicationRecord
   has_one :latest_tax_rate, through: :pickup_location
 
   has_many :line_items, as: :invoice
-  has_many :rates, -> { rental_rates }, class_name: 'LineItem', as: :invoice
+  has_many :rental_rates, -> { rental_rates }, class_name: 'LineItem', as: :invoice
+  has_one :last_rental_rate, -> { rental_rates.order(date: :desc) }, class_name: 'LineItem', as: :invoice
   has_one :deposit, -> { deposits }, class_name: 'LineItem', as: :invoice
 
   has_many :charges, as: :owner
 
-  scope :open,      -> { where(status: OPEN) }
-  scope :closed,    -> { where(status: CLOSED) }
+  scope :open_status,   -> { where(status: OPEN) }
+  scope :closed_status, -> { where(status: CLOSED) }
 
   scope :in_between, -> (date) { where('pickup <= :date and drop_off >= :date', date: date) }
-  scope :past, -> { where('drop_off < ?', Time.current) }
+  scope :past,       -> { where('drop_off < ?', Time.current) }
 
   before_create :create_number
 
@@ -98,27 +99,35 @@ class Rental < ApplicationRecord
   end
 
   def tax_collectable
-    rates.sum(&:tax_collectable)
+    rental_rates.sum(&:tax_collectable)
   end
 
   def sub_total
-    rates.sum(&:sub_total)
+    rental_rates.sum(&:sub_total)
   end
 
   def total
-    rates.sum(&:total)
+    rental_rates.sum(&:total)
   end
 
-  def last_rental_rate
-    rates.order(date: :desc).first.try(:amount)
+  def last_rental_rate_amount
+    last_rental_rate.try(:amount)
   end
 
   def miles_driven
-    drop_off_odometer - pickup_odometer if drop_off_odometer
+    drop_off_odometer - pickup_odometer if closed?
+  end
+
+  def days_rented
+    rental_rates.count
+  end
+
+  def average_miles_per_day
+    miles_driven/days_rented if miles_driven
   end
 
   def average_rate
-    sub_total/rates.count if rates.present?
+    sub_total/days_rented if rental_rates.present?
   end
 
   def average_price_per_mile
@@ -138,7 +147,11 @@ class Rental < ApplicationRecord
   end
 
   def can_return_deposit?
-    closed? && deposit.present?
+    closed? && deposit?
+  end
+
+  def deposit?
+    deposit.present?
   end
 
   private

@@ -12,9 +12,12 @@ describe 'Return Deposit', type: :system, js: true do
     deposit_amount = 4000
     charge_amount  = 2000
     amount         = deposit_amount + charge_amount
-    rental         = create(:rental, :closed)
+    rental         = create(:rental, :closed, pickup_odometer: 100, drop_off_odometer: 1400)
     charge         = create(:charge, :create_stripe_charge, amount: amount, owner: rental)
     line_item      = create(:line_item, :deposit, total: deposit_amount, charge: charge, invoice: rental)
+    line_item      = create(:line_item, :rental_rate, total: charge_amount, charge: charge, invoice: rental)
+
+    expect(LineItem.count).to eq(2)
 
     visit_command command_rental_path(id: rental.number)
 
@@ -36,7 +39,7 @@ describe 'Return Deposit', type: :system, js: true do
     expect(stripe_charge['amount']).to eq(amount)
     expect(stripe_charge['amount_refunded']).to eq(deposit_amount)
 
-    expect(LineItem.count).to eq(0)
+    expect(LineItem.count).to eq(1)
 
     rental = Rental.first
     expect(rental.deposit).to eq(nil)

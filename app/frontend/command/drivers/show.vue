@@ -44,7 +44,6 @@
     },
     created () {
       this.getData()
-      this.tab = 'insurance-policies'
     },
     watch: {
       '$route': 'getData',
@@ -63,7 +62,6 @@
       getData () {
         this.$http.get(this.$route.path).then(response => {
           this.driver = response.data
-          this.insurance_policies = this.driver.insurance_policies
         })
       },
       refreshData () {
@@ -101,6 +99,32 @@
                 button.link(@click='addCard') Add Card
 
       driver-information.left(:driver='driver')
+
+    .panel.panel-base(v-if='driver.days_rented > 0')
+      table.panel-table.panel-table-key-pair
+        thead
+          tr
+            th(colspan='2') Metrics
+        tbody
+          tr
+            td Revenue
+            td {{ driver.sub_total | currency }}
+          tr
+            td Days
+            td {{ driver.days_rented }}
+          tr
+            td Avg. Rate
+            td {{ driver.average_rate | currency }}
+          tr
+            td Miles Driven
+            td {{ driver.miles_driven }}
+          tr
+            td Avg. Miles / Day
+            td {{ driver.average_miles_per_day }}
+          tr
+            td Avg. Price / Mile
+            td {{ driver.average_price_per_mile | currency }}
+
 
     .sub-navigation
       ul.list-horizontal

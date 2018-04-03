@@ -16,6 +16,7 @@
         rentals: {},
         revenue: {},
         tab: '',
+        loading: true,
       }
     },
     components: {
@@ -56,6 +57,7 @@
       getData () {
         this.$http.get(this.$route.path).then(response => {
           this.vehicle = response.data
+          this.loading = false
         })
       },
     },
@@ -63,7 +65,7 @@
 </script>
 
 <template lang='pug'>
-  div
+  div(v-if='!loading')
     .panel.panel-base
       .panel-base-header
         h2 {{ vehicle.make }} {{ vehicle.model }}

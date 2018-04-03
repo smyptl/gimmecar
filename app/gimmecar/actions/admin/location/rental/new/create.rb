@@ -92,7 +92,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
     @charge.owner = @rental
     @charge.save
 
-    rates.fetch(:rates).each do |l|
+    rates.fetch(:rental_rates).each do |l|
       @rental.line_items.create(l.merge(charge: @charge, item_type: 'rental_rate'))
     end
 
@@ -102,12 +102,14 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
 
   def driver_attributes
     a = driver.except(:insurance)
+    a[:email] = a[:email].downcase
     a[:stripe_id] = stripe_customer_id if paid_by_driver?
     a
   end
 
   def additional_driver_attributes
     a = additional_driver
+    a[:email] = a[:email].downcase
     a[:stripe_id] = stripe_customer_id if !paid_by_driver?
     a
   end

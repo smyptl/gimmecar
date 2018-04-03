@@ -30,10 +30,10 @@ class Vehicle < ApplicationRecord
   TYPES = ['subcompact', 'compact', 'mid_size']
 
   has_many :rentals
-  has_one :open_rental,   -> { where(status: Rental::OPEN) }, class_name: 'Rental'
-  has_one :last_rental,   -> { past }, class_name: 'Rental'
-  has_one :latest_rental, -> { order(drop_off: :desc) }, class_name: 'Rental'
-  has_many :rates, through: :rentals
+  has_one :open_rental,   -> { open_status },                 class_name: 'Rental'
+  has_one :last_rental,   -> { past.order(drop_off: :desc) }, class_name: 'Rental'
+  has_one :latest_rental, -> { order(drop_off: :desc) },      class_name: 'Rental'
+  has_many :rental_rates, through: :rentals
   has_many :line_items, through: :rentals
 
   belongs_to :original_location, class_name: 'Location'

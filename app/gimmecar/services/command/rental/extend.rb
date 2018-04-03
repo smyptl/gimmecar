@@ -8,11 +8,11 @@ class Services::Command::Rental::Extend < Lib::Services::Base
 
   output do
     object :rental do |o|
-      o.attributes :last_rental_rate, :drop_off
+      o.attributes :last_rental_rate_amount, :drop_off
     end
   end
 
   def query
-    Rental.includes(:rates).find_by(number: number)
+    Rental.includes(:rental_rates).find_by(number: number)
   end
 end

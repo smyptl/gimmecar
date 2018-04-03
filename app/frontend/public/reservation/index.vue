@@ -6,7 +6,7 @@
   import InputErrorMessage from 'Components/inputs/error_message'
   import InputSubmit       from 'Components/inputs/submit'
 
-  import Rates from 'Admin/location/components/rental_invoice'
+  import RentalInvoice from 'Admin/location/components/rental_invoice'
 
   import SlideTransition from 'Utils/transitions/slide'
   import ErrorTransition from 'Utils/transitions/shake'
@@ -36,7 +36,7 @@
       InputDateTime,
       InputErrorMessage,
       InputSubmit,
-      Rates,
+      RentalInvoice,
     },
     directives: {
       error: InputError,
@@ -158,7 +158,7 @@
               input-submit.btn.btn-full.btn-primary(@click.native.prevent='viewRates' :loading='loading_button') View Rates
 
       #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
-        rates.input-block.mt-default(:summary='summary')
+        rental-invoice.input-block.mt-default(:summary='summary')
 
         .input-submit.input-flex-container
           .input-block.input-element-fixed
@@ -233,7 +233,7 @@
         h2.emoji :]
         p.text-center Thanks for choosing us, {{ form.name_first }}!!! You should receive a email shortly summarizing your rental. Additionally, we will give you a call shortly to confirm your reservation.
 
-        rates(:summary='summary')
+        rental-invoice(:summary='summary')
 </template>
 
 

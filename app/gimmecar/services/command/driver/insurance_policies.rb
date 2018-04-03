@@ -13,6 +13,6 @@ class Services::Command::Driver::InsurancePolicies < Lib::Services::Base
   private
 
   def query
-    ::Driver.includes(:insurance_policies).find(id).insurance_policies
+    ::Driver.includes(:insurance_policies).find(id).insurance_policies.order(created_at: :desc)
   end
 end

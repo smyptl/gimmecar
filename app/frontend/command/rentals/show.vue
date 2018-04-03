@@ -21,6 +21,7 @@
     data () {
       return {
         rental: {},
+        loading: true,
         action: '',
         action_url: ''
       }
@@ -55,6 +56,7 @@
       getData () {
         this.$http.get(this.$route.path).then(response => {
           this.rental = response.data
+          this.loading = false
         })
       },
       loadAction (action) {
@@ -75,7 +77,7 @@
 </script>
 
 <template lang='pug'>
-  div
+  div(v-if='!loading')
     .panel.panel-base
       .panel-base-header
         h2 {{ rental.number }}
@@ -164,12 +166,18 @@
             td Revenue
             td {{ rental.sub_total | currency }}
           tr
+            td Days
+            td {{ rental.days_rented }}
+          tr
             td Avg. Rate
             td {{ rental.average_rate | currency }}
           template(v-if='is_closed')
             tr
               td Miles Driven
               td {{ rental.miles_driven }}
+            tr
+              td Avg. Miles / Day
+              td {{ rental.average_miles_per_day }}
             tr
               td Avg. Price / Mile
               td {{ rental.average_price_per_mile | currency }}
