@@ -44,7 +44,6 @@
     },
     created () {
       this.getData()
-      this.tab = 'insurance-policies'
     },
     watch: {
       '$route': 'getData',
@@ -63,7 +62,6 @@
       getData () {
         this.$http.get(this.$route.path).then(response => {
           this.driver = response.data
-          this.insurance_policies = this.driver.insurance_policies
         })
       },
       refreshData () {

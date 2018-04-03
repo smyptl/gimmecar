@@ -19,7 +19,7 @@ class Services::Builders::RentalPrint < Lib::Services::Builder
       :driver_signature,
       :additional_driver_signature
 
-    c.collection :rates, nested: true, component: Services::Builders::LineItem
+    c.collection :rental_rates, nested: true, component: Services::Builders::LineItem
 
     c.object :deposit, component: Services::Builders::LineItem
 

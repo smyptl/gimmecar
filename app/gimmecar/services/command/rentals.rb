@@ -8,6 +8,6 @@ class Services::Command::Rentals < Lib::Services::Base
   end
 
   def query
-    ::Rental.includes(:pickup_location, :vehicle, :driver).open
+    ::Rental.includes(:pickup_location, :vehicle, :driver).open_status
   end
 end

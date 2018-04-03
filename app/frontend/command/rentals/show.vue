@@ -21,6 +21,7 @@
     data () {
       return {
         rental: {},
+        loading: true,
         action: '',
         action_url: ''
       }
@@ -55,6 +56,7 @@
       getData () {
         this.$http.get(this.$route.path).then(response => {
           this.rental = response.data
+          this.loading = false
         })
       },
       loadAction (action) {
@@ -75,7 +77,7 @@
 </script>
 
 <template lang='pug'>
-  div
+  div(v-if='!loading')
     .panel.panel-base
       .panel-base-header
         h2 {{ rental.number }}

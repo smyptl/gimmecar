@@ -25,7 +25,7 @@
     },
     mounted () {
       this.$http.get(this.url).then(response => {
-        this.form.amount = response.data.last_rental_rate
+        this.form.amount = response.data.last_rental_rate_amount
         this.form.date   = response.data.drop_off
       })
 
