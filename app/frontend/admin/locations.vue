@@ -29,7 +29,7 @@
       },
       selectLocation (location) {
         window.location_name = location.name
-        this.$router.push({ name: 'dashboard', params: { location: location.slug } })
+        this.$router.push({ name: 'rentals', params: { location: location.slug } })
       },
     },
   }

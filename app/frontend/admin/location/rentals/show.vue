@@ -1,6 +1,7 @@
 <script>
   import FDate from 'Filters/date'
   import FTime from 'Filters/time'
+  import Percent from 'Filters/percent'
   import Capitalize from 'lodash/capitalize'
 
   import Dropdown from 'Components/dropdown'
@@ -23,6 +24,7 @@
     filters: {
       date: FDate,
       time: FTime,
+      Percent,
       Capitalize,
     },
     components: {

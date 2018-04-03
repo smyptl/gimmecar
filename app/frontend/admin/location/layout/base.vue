@@ -48,8 +48,8 @@
         nav.left
           #navigation
             ul.list-horizontal
-              li
-                router-link(:to="{ name: 'dashboard' }") Dashboard
+              <!--li-->
+                <!--router-link(:to="{ name: 'dashboard' }") Dashboard-->
               li
                 router-link(:to="{ name: 'rentals' }") Rentals
               li

@@ -5,7 +5,7 @@
     name: 'Rentals',
     data () {
       return {
-        rentals: [],
+        rentals: {},
       }
     },
     components: {

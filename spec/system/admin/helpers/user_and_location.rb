@@ -20,6 +20,5 @@ shared_context :login_user_and_select_location do
     click_button 'Login'
 
     expect(page).to have_content(location.name)
-    expect(current_path).to eq(admin_location_dashboard_path(slug: location.slug))
   end
 end
