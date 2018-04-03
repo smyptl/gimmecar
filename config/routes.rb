@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       post 'rentals/new/validate-vehicle'                  => 'rentals/new#validate_vehicle'
       post 'rentals/new/validate-financial-responsibility' => 'rentals/new#validate_financial_responsibility'
       post 'rentals/new/validate-terms-and-conditions'     => 'rentals/new#validate_terms_and_conditions'
+      post 'rentals/new/driver-payment'                    => 'rentals/new#driver_payment'
       post 'rentals/new'                                   => 'rentals/new#create'
 
       resources :reservations, except: [:new, :create] do

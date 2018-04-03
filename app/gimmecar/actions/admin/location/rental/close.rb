@@ -1,7 +1,5 @@
 class Actions::Admin::Location::Rental::Close < Lib::Actions::Base
 
-  attr_reader :rental
-
   attributes do |a|
     a.time    :drop_off
     a.integer :drop_off_odometer
@@ -9,10 +7,12 @@ class Actions::Admin::Location::Rental::Close < Lib::Actions::Base
   end
 
   validates :drop_off,
-    presence: true
+    presence: true,
+    after_date: { with: -> { pickup }, message: 'must be after pickup' }
 
   validates :drop_off_odometer,
-    presence: true
+    presence: true,
+    numericality: { greater_than: :pickup_odometer, message: 'must be greater than pickup odometer' }
 
   validates :drop_off_fuel,
     presence: true
@@ -20,10 +20,14 @@ class Actions::Admin::Location::Rental::Close < Lib::Actions::Base
   private
 
   def save
-    @rental = Rental.find_by(number: params.fetch(:number))
-    @rental.close(attributes)
-    @rental.vehicle.update_status_dirty
+    rental.close(attributes)
+    rental.vehicle.update_status_dirty
   end
+
+  def rental
+    @rental ||= Rental.find_by(number: params.fetch(:number))
+  end
+  delegate :pickup, :pickup_odometer, to: :rental
 
   def success_args
     {
