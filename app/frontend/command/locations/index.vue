@@ -1,10 +1,15 @@
 <script>
+  import AddressFormat from 'Components/address'
+
   export default {
     name: 'Locations',
     data () {
       return {
         locations: {},
       }
+    },
+    components: {
+      AddressFormat,
     },
     created () {
       this.getData()
@@ -42,11 +47,14 @@
             th Address
             th Phone #
         tbody
-          tr.clickable(v-for='location in sorted_locations')
+          tr.clickable(
+            v-for='location in sorted_locations'
+            :key='location.slug'
+            @click.prevent='viewLocation(location.slug)'
+          )
             td {{ location.name }}
             td
-              span.block {{ location.address_1 }} {{ location.address_2 }}
-              span.block {{ location.city }}, {{ location.state }} {{ location.zip_code }}
+              address-format(:address='location')
             td.text-nowrap
               a(v-bind:href="'tel:' + location.phone_number") {{ location.phone_number }}
 </template>

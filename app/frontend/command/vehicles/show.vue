@@ -68,14 +68,13 @@
       .panel-base-header
         h2 {{ vehicle.make }} {{ vehicle.model }}
 
-      vehicle-information(v-bind:vehicle='vehicle')
+      vehicle-information(v-bind:vehicle='vehicle' :show_location='true')
         tr
           td Odometer
           td {{ vehicle.odometer }}
         tr
           td Fuel
           td {{ vehicle.fuel_level/10 | percent }}
-
 
     .sub-navigation
       ul.list-horizontal

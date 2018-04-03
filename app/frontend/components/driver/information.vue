@@ -1,4 +1,5 @@
 <script>
+  import AddressFormat from 'Components/address'
   import Capitalize from 'lodash/capitalize'
   import TDate from 'Filters/date'
 
@@ -9,6 +10,9 @@
         required: true,
         type: Object,
       },
+    },
+    components: {
+      AddressFormat,
     },
     filters: {
       Capitalize,
@@ -25,8 +29,7 @@
       tbody
         tr
           td Full Name
-          td
-            | {{ driver.name_first }} {{ driver.name_middle }} {{ driver.name_last }}
+          td {{ driver.name_first }} {{ driver.name_middle }} {{ driver.name_last }}
 
     table.panel-table.panel-table-key-pair
       thead
@@ -48,10 +51,7 @@
         tr
           td Address
           td
-            address
-              span.block {{ driver.address_1 }}
-              span.block(v-if='driver.address_2') {{ driver.address_2 }}
-              span.block {{ driver.city }}, {{ driver.state }} {{ driver.zip_code }}
+            address-format(:address='driver')
 
     table.panel-table.panel-table-key-pair
       thead

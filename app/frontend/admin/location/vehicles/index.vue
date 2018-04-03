@@ -1,31 +1,23 @@
 <script>
-  import VehicleStatusIcons from 'Components/vehicle/status'
+  import VehicleTable from 'Components/vehicle/table'
 
   export default {
     name: 'Vehicles',
     data () {
       return {
-        vehicles: [],
+        vehicles: {},
       }
     },
     created () {
       this.getData()
     },
     components: {
-      VehicleStatusIcons,
+      VehicleTable,
     },
     watch: {
       '$route': 'getData',
     },
-    computed: {
-      sorted_vehicles () {
-        return this.vehicles.data
-      },
-    },
     methods: {
-      lastFive (vin) {
-        return vin.slice(-5)
-      },
       getData () {
         this.$http
           .get(this.$route.path)
@@ -41,30 +33,5 @@
 </script>
 
 <template lang='pug'>
-  .panel.panel-base
-    .gimmecar-app-vertical-scroll
-      table.panel-table
-        thead
-          tr
-            th Vehicle
-            th Type
-            th License #
-            th Status
-        tbody
-          tr.clickable(v-for='vehicle in sorted_vehicles' @click.prevent='viewVehicle(vehicle.vin)')
-            td {{ vehicle.make_model }}
-            td {{ vehicle.vehicle_type }}
-            td
-              template(v-if='vehicle.license_number') {{ vehicle.license_number }}
-              template(v-else)
-                i VIN: {{ lastFive(vehicle.vin) }}
-            td.status
-              vehicle-status-icons(:status='vehicle.status')
+  vehicle-table(:vehicles='vehicles' v-on:view-vehicle='viewVehicle($event)')
 </template>
-
-<style lang='stylus' scoped>
-  @import '~Styles/components/panels/table'
-
-  .status
-    vertical-align: center
-</style>

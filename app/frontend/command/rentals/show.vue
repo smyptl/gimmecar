@@ -105,7 +105,8 @@
           template(v-if="rental.pickup_location_id == rental.drop_off_location_id")
             tr
               td Location
-              td {{ rental.pickup_location_name }}
+              td
+                router-link.right(:to="{ name: 'location', params: { slug: rental.pickup_location_slug } }") {{ rental.pickup_location_name }}
           template(v-else)
             tr
               td Pick Up Location

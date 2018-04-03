@@ -1,7 +1,7 @@
 class Services::Admin::Location::Rentals < Lib::Services::Base
 
   output do
-    collection :rental, component: Services::Builders::RentalsTable
+    collection :rentals, component: Services::Builders::RentalsTable
   end
 
   def query

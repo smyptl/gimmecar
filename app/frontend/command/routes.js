@@ -27,7 +27,11 @@ export default {
           ],
         },
         {
-          path: '/locations', name: 'locations', component: require('./locations/index').default
+          path: '/locations', component: require('./base').default,
+          children: [
+            { path: '',      name: 'locations', component: require('./locations/index').default },
+            { path: ':slug', name: 'location',  component: require('./locations/show').default },
+          ],
         },
         {
           path: '/reports', name: 'reports', component: require('./reports/index').default

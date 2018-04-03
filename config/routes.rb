@@ -83,7 +83,11 @@ Rails.application.routes.draw do
       post 'add-card',          to: 'drivers/add_card#create'
     end
 
-    resources :locations, only: [:index, :show]
+    resources :locations, only: [:index, :show] do
+      get 'vehicles', to: 'locations/vehicles#index'
+      get 'rentals',  to: 'locations/rentals#index'
+      get 'revenue',  to: 'locations/revenue#index'
+    end
 
     get '/reports',   to: 'reports#index'
 

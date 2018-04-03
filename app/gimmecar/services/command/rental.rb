@@ -6,7 +6,7 @@ class Services::Command::Rental < Lib::Services::Base
 
   output do
     object :rental, component: Services::Builders::Rental do |o|
-      o.attribute :pickup_location_name
+      o.attributes :pickup_location_name, :pickup_location_slug
       o.attributes :sub_total, :miles_driven, :average_rate, :average_price_per_mile
 
       o.nested :actions do |n|

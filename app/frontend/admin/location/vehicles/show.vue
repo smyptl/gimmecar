@@ -55,7 +55,7 @@
             li
               button.link(@click='changeStatus') Change Status
 
-    vehicle-information(v-bind:vehicle='vehicle')
+    vehicle-information(:vehicle='vehicle')
     vehicle-status(v-on:close='statusChanged' v-if='change_status')
 
 </template>

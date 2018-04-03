@@ -10,6 +10,11 @@
         required: true,
         type: Object,
       },
+      show_location: {
+        required: false,
+        type: Boolean,
+        default: true,
+      },
     },
     filters: {
       Capitalize,
@@ -30,9 +35,10 @@
       tr
         td Type
         td {{ vehicle.vehicle_type }}
-      tr(v-if='vehicle.location_name')
+      tr(v-if='show_location')
         td Location
-        td {{ vehicle.location_name }}
+        td
+          router-link.right(:to="{ name: 'location', params: { slug: vehicle.location_slug } }") {{ vehicle.location_name }}
       tr(v-if='vehicle.license_number')
         td License Number
         td {{ vehicle.license_number }}

@@ -6,17 +6,17 @@ class Command::LocationsController < Command::BaseController
     Services::Command::Locations.retrieve(success, failure)
   end
 
-  #def show
-    #Services::Command::Rental.new(number: number).retrieve(success, failure)
-  #end
+  def show
+    Services::Command::Location.new(slug: slug).retrieve(success, failure)
+  end
 
-  #private
+  private
 
-  #def authorize_rental
-    #raise Error404 unless ::Rental.exists?(number: number)
-  #end
+  def authorize_location
+    raise Error404 unless ::Location.exists?(slug: slug)
+  end
 
-  #def number
-    #params[:id]
-  #end
+  def slug
+    params[:id]
+  end
 end

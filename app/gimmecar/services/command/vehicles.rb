@@ -10,6 +10,6 @@ class Services::Command::Vehicles < Lib::Services::Base
   private
 
   def query
-    ::Vehicle.includes(:location).all
+    ::Vehicle.includes(:location).order(created_at: :asc).all
   end
 end

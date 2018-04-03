@@ -39,7 +39,7 @@ class Vehicle < ApplicationRecord
   belongs_to :original_location, class_name: 'Location'
   belongs_to :location
 
-  delegate :name, to: :location, prefix: true
+  delegate :name, :slug, to: :location, prefix: true
 
   def update_status_dirty
     update(status: 'dirty')

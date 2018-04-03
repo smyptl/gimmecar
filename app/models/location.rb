@@ -27,6 +27,7 @@ class Location < ApplicationRecord
 
   has_many :open_rentals, -> { where(status: Rental::OPEN) }, class_name: 'Rental', foreign_key: 'pickup_location_id'
   has_many :line_items, through: :rentals
+  has_many :rental_rates, through: :rentals, source: :rates
 
   has_many :today_drop_offs, -> { drop_off_rentals.where(date: Time.current) }
 
