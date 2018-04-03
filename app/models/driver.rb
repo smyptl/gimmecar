@@ -40,6 +40,10 @@ class Driver < ApplicationRecord
     Rental.where(driver: self).or(Rental.where(additional_driver: self))
   end
 
+  def rentals_closed
+    rentals.closed_status
+  end
+
   def retrieve_or_create_stripe_customer
     if stripe_id
       stripe_customer
@@ -72,5 +76,29 @@ class Driver < ApplicationRecord
 
   def do_not_rent?
     Lib::Attributes::TypeCast.boolean(do_not_rent)
+  end
+
+  def sub_total
+    rentals_closed.sum(&:sub_total)
+  end
+
+  def miles_driven
+    rentals_closed.sum(&:miles_driven)
+  end
+
+  def days_rented
+    rentals_closed.sum(&:days_rented)
+  end
+
+  def average_miles_per_day
+    miles_driven/days_rented if days_rented > 0
+  end
+
+  def average_rate
+    sub_total/days_rented if days_rented > 0
+  end
+
+  def average_price_per_mile
+    sub_total/miles_driven if miles_driven > 0
   end
 end

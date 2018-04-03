@@ -5,9 +5,10 @@ class Services::Command::Driver < Lib::Services::Base
   end
 
   output do
-    object :driver, component: Services::Builders::Driver
+    object :driver, component: Services::Builders::Driver do |o|
+      o.attributes :days_rented, :sub_total, :miles_driven, :average_miles_per_day, :average_rate, :average_price_per_mile
+    end
   end
-
 
   private
 

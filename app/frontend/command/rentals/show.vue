@@ -166,12 +166,18 @@
             td Revenue
             td {{ rental.sub_total | currency }}
           tr
+            td Days
+            td {{ rental.days_rented }}
+          tr
             td Avg. Rate
             td {{ rental.average_rate | currency }}
           template(v-if='is_closed')
             tr
               td Miles Driven
               td {{ rental.miles_driven }}
+            tr
+              td Avg. Miles / Day
+              td {{ rental.average_miles_per_day }}
             tr
               td Avg. Price / Mile
               td {{ rental.average_price_per_mile | currency }}

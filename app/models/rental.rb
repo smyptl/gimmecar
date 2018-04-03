@@ -114,12 +114,16 @@ class Rental < ApplicationRecord
     last_rental_rate.try(:amount)
   end
 
+  def miles_driven
+    drop_off_odometer - pickup_odometer if closed?
+  end
+
   def days_rented
     rental_rates.count
   end
 
-  def miles_driven
-    drop_off_odometer - pickup_odometer if drop_off_odometer
+  def average_miles_per_day
+    miles_driven/days_rented if miles_driven
   end
 
   def average_rate
