@@ -16,9 +16,21 @@ class Actions::Command::Driver::AddCard < Lib::Actions::Base
     }
   end
 
+  def valid?
+    if super
+      begin
+        customer = driver.retrieve_or_create_stripe_customer
+        customer.sources.create(source: token)
+      rescue Stripe::CardError => e
+        errors.add(:token, e.message)
+        false
+      else
+        true
+      end
+    end
+  end
+
   def save
-    customer = driver.retrieve_or_create_stripe_customer
-    customer.sources.create(source: token)
   end
 
   def driver

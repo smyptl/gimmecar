@@ -367,7 +367,10 @@
           | Card Number
           .input-label-note.right DO NOT accept prepaid cards.
         .input-block.whole
-          payment(v-error='rental.errors.has("card")' @click='rental.errors.clear("card")')
+          payment(
+            @add-error='rental.errors.record({ card: [$event] })'
+            @clear-error="rental.errors.clear()"
+            v-error='rental.errors.has("card")')
         input-error-message(v-bind:errors='rental.errors.get("card")')
 
       .input-block.input-submit
