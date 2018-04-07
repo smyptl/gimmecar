@@ -3,12 +3,14 @@
 
   import RentalInvoice from 'Admin/location/components/rental_invoice'
 
-  import Submit from 'Components/inputs/submit'
+  import InputSubmit from 'Mixins/input_submit'
+
   import InputDateTime from 'Components/inputs/date_time'
-  import Signature from 'Components/inputs/signature'
-  import Payment from 'Components/inputs/payment'
+  import Signature     from 'Components/inputs/signature'
+  import Payment       from 'Components/inputs/payment'
+
   import FinancialResponsibilitySignatures from 'Admin/location/components/financial_responsibility_signatures'
-  import TermsAndConditionsSignatures from 'Admin/location/components/terms_and_conditions_signatures'
+  import TermsAndConditionsSignatures      from 'Admin/location/components/terms_and_conditions_signatures'
 
   import DriversForm from './drivers'
   import VehicleForm from './vehicles'
@@ -88,9 +90,11 @@
         current_step: 'Details',
         vehicles: [],
         summary: {},
-        loading_button: false,
       }
     },
+    mixins: [
+      InputSubmit,
+    ],
     components: {
       DriversForm,
       InputDateTime,
@@ -100,7 +104,6 @@
       Signature,
       TermsAndConditionsSignatures,
       VehicleForm,
-      Submit
     },
     computed: {
       pickup () {
@@ -133,15 +136,15 @@
       },
       successResponse () {
         this.rental.errors.clear
-        this.loading_button = false
+        this.inputSubmitFinish()
       },
       errorResponse (error) {
         Shake(this.$refs.form)
-        this.loading_button = false
+        this.inputSubmitFinish()
         this.rental.errors.record(error.response.data.errors)
       },
       getRates () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.$route.path + '/rates', {
           rental: this.rental.data(),
@@ -156,7 +159,7 @@
         })
       },
       validateDrivers () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.$route.path + '/validate-drivers', {
           rental: this.rental.data(),
@@ -183,7 +186,7 @@
         })
       },
       validateVehicle () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.$route.path + '/validate-vehicle', {
           rental: this.rental.data(),
@@ -197,7 +200,7 @@
         })
       },
       validateFinancialResponsibility () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.$route.path + '/validate-financial-responsibility', {
           rental: this.rental.data(),
@@ -211,7 +214,7 @@
         })
       },
       validateTermsAndConditions () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.$route.path + '/validate-terms-and-conditions', {
           rental: this.rental.data(),
@@ -225,13 +228,13 @@
         })
       },
       validatePayment () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         stripe.createToken(window.card).then(result => {
           if (result.error) {
             Shake(this.$refs.form)
             this.rental.errors.record({ card: [result.error.message] })
-            this.loading_button = false
+            this.inputSubmitFinish()
           } else {
             this.rental.errors.clear
             // Send the token to your server
@@ -241,7 +244,7 @@
         });
       },
       createRental () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.$route.path, {
           rental: this.rental.data(),
@@ -297,7 +300,7 @@
           input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
 
       .input-submit.input-block
-        submit.btn.btn-primary.right(@click.native.prevent='getRates()' :loading='loading_button') Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='getRates()' :loading='input_submit_loading') Continue
 
     template(v-if='current_step == "Rates"')
       rental-invoice.input-block.mt-sm(v-bind:summary='summary' v-bind:estimated='true')
@@ -311,21 +314,21 @@
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
-        submit.btn.btn-primary.right(@click.native.prevent='validateDrivers()' :loading='loading_button') Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='validateDrivers()' :loading='input_submit_loading') Continue
 
     template(v-if='current_step == "Vehicle"')
       vehicle-form(v-bind:form='rental' v-bind:vehicles='vehicles')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
-        submit.btn.btn-primary.right(@click.native.prevent='validateVehicle()' :loading='loading_button') Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='validateVehicle()' :loading='input_submit_loading') Continue
 
     template(v-if='current_step == "Financial Responsibility"')
       financial-responsibility-signatures(v-bind:form='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        submit.btn.btn-primary.right(@click.native.prevent='validateFinancialResponsibility()' :loading='loading_button') Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='validateFinancialResponsibility()' :loading='input_submit_loading') Continue
 
     template(v-if='current_step == "Terms & Conditions"')
       rental-invoice.input-block.mt-sm(v-bind:summary='summary')
@@ -333,7 +336,7 @@
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        submit.btn.btn-primary.right(@click.native.prevent='validateTermsAndConditions()' :loading='loading_button')  Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='validateTermsAndConditions()' :loading='input_submit_loading')  Continue
 
     template(v-if='current_step == "Payment"')
       .input-row
@@ -369,7 +372,7 @@
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
-        submit.btn.btn-primary.right(@click.native.prevent='validatePayment()' :loading='loading_button') Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='validatePayment()' :loading='input_submit_loading') Continue
 </template>
 
 <style lang='stylus'>

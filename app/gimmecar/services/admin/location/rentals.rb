@@ -5,6 +5,6 @@ class Services::Admin::Location::Rentals < Lib::Services::Base
   end
 
   def query
-    Location.includes(open_rentals: [:vehicle, :driver]).find(params.fetch(:location_id)).open_rentals
+    Location.find(params.fetch(:location_id)).rentals_open
   end
 end

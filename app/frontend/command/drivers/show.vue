@@ -101,18 +101,21 @@
 
       driver-information.left(:driver='driver')
 
-    .panel.panel-base(v-if='driver.days_rented > 0')
+    .panel.panel-base(v-if='driver.days_paid > 0')
       table.panel-table.panel-table-key-pair
         thead
           tr
             th(colspan='2') Metrics
         tbody
           tr
+            td Rentals
+            td {{ driver.rentals_closed_count }}
+          tr
             td Revenue
             td {{ driver.sub_total | currency }}
           tr
-            td Days
-            td {{ driver.days_rented }}
+            td Days Paid
+            td {{ driver.days_paid }}
           tr
             td Avg. Rate
             td {{ driver.average_rate | currency }}

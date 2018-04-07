@@ -9,6 +9,6 @@ class Services::Command::Location::Rentals < Lib::Services::Base
   end
 
   def query
-    Location.includes(open_rentals: [:vehicle, :driver]).find_by(slug: slug).open_rentals
+    Location.find_by(slug: slug).rentals_open
   end
 end

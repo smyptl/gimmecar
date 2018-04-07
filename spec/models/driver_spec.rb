@@ -75,6 +75,15 @@ describe Driver do
     end
   end
 
+  describe '#rentals_closed' do
+    it 'returns closed rental as additional driver' do
+      driver = create(:driver)
+      rental = create(:rental, :closed, additional_driver: driver)
+
+      expect(driver.rentals_closed).to include(rental)
+    end
+  end
+
   describe '#retrieve_or_create_stripe_customer' do
     it 'retrieves customer' do
       driver = create(:driver, create_stripe_id: true)

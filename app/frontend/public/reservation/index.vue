@@ -1,10 +1,11 @@
 <script>
   import Form from 'Utils/form'
 
+  import InputSubmit from 'Mixins/input_submit'
+
   import InputDateTime     from 'Components/inputs/date_time'
   import InputError        from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
-  import InputSubmit       from 'Components/inputs/submit'
 
   import RentalInvoice from 'Admin/location/components/rental_invoice'
 
@@ -12,7 +13,7 @@
   import ErrorTransition from 'Utils/transitions/shake'
 
   export default {
-    name: 'reservation',
+    name: 'Reservation',
     data() {
       return {
         form: new Form({
@@ -28,14 +29,15 @@
         summary: {},
         current_step: 'rental-details',
         transition_type: 'forward',
-        loading_button: false,
         errors: {}
       }
     },
+    mixins: [
+      InputSubmit,
+    ],
     components: {
       InputDateTime,
       InputErrorMessage,
-      InputSubmit,
       RentalInvoice,
     },
     directives: {
@@ -43,7 +45,7 @@
     },
     methods: {
       viewRates() {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.get('/reservation', {
             params: {
@@ -56,13 +58,13 @@
           .then(response => {
             this.summary = response.data
             this.form.errors.clear()
-            this.loading_button = false
+            this.inputSubmitFinish()
             this.transition_type = 'forward'
             this.current_step = 'rental-summary'
             this.errors = {}
           })
           .catch(error => {
-            this.loading_button =  false
+            this.inputSubmitFinish()
             this.form.errors.record(error.response.data.errors)
             ErrorTransition(this.$el)
           })
@@ -72,18 +74,18 @@
         this.current_step = 'rental-reserve'
       },
       createReservation() {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post('/reservation', this.form.data())
           .then(response => {
             this.summary = response.data
             this.transition_type = 'forward'
-            this.loading_button = false
+            this.inputSubmitFinish()
             this.current_step = 'rental-confirmation'
             this.errors = {}
           })
           .catch(error => {
-            this.loading_button = false
+            this.inputSubmitFinish()
             this.form.errors.record(error.response.data.errors)
             ErrorTransition(this.$el)
           })
@@ -155,7 +157,7 @@
 
           .input-submit
             .input-block.whole
-              input-submit.btn.btn-full.btn-primary(@click.native.prevent='viewRates' :loading='loading_button') View Rates
+              input-submit.btn.btn-full.btn-primary(@click.native.prevent='viewRates' :loading='input_submit_loading') View Rates
 
       #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
         rental-invoice.input-block.mt-default(:summary='summary')

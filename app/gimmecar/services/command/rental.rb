@@ -5,9 +5,9 @@ class Services::Command::Rental < Lib::Services::Base
   end
 
   output do
-    object :rental, component: Services::Builders::Rental do |o|
+    object :rental, component: Services::Builders::Rental, logic: Logic::Metrics::Rental do |o|
       o.attributes :pickup_location_name, :pickup_location_slug
-      o.attributes :days_rented, :sub_total, :miles_driven, :average_miles_per_day, :average_rate, :average_price_per_mile
+      o.attributes :sub_total, :days_paid, :miles_driven, :average_miles_per_day, :average_rate, :average_price_per_mile
 
       o.nested :actions do |n|
         n.nested :extend,         if: -> (r) { r.can_extend_rental? }  do |n|

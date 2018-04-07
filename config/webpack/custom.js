@@ -4,6 +4,7 @@ module.exports =  {
   resolve: {
     alias: {
       Components: resolve('app/frontend/', 'components'),
+      Mixins:     resolve('app/frontend/', 'mixins'),
       Filters:    resolve('app/frontend/', 'filters'),
       Utils:      resolve('app/frontend/', 'utils'),
       Styles:     resolve('app/frontend/', 'styles'),

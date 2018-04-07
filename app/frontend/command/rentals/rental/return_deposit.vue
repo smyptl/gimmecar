@@ -1,9 +1,10 @@
 <script>
   import Shake from 'Utils/transitions/shake'
 
+  import InputSubmit from 'Mixins/input_submit'
+
   import InputDate from 'Components/inputs/date'
-  import Submit from 'Components/inputs/submit'
-  import Popup from 'Components/popup'
+  import Popup     from 'Components/popup'
 
   export default {
     props: {
@@ -18,8 +19,13 @@
         form: new this.$form({
           amount: '',
         }),
-        loading_button: false,
       }
+    },
+    mixins: [
+      InputSubmit,
+    ],
+    components: {
+      Popup,
     },
     mounted () {
       this.$http.get(this.url).then(response => {
@@ -28,16 +34,12 @@
 
       this.open = true
     },
-    components: {
-      Submit,
-      Popup,
-    },
     methods: {
       close () {
         this.$emit('close')
       },
       returnDeposit () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.url, {
           return_deposit: this.form.data(),
@@ -48,7 +50,7 @@
         })
         .catch(error => {
           this.form.errors.record(error.response.data.errors)
-          this.loading_button = false
+          this.inputSubmitFinish()
         })
       },
     },
@@ -74,7 +76,7 @@
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
-          submit.btn.btn-primary.right(@click.native.prevent='returnDeposit()' :loading='loading_button') Return
+          input-submit.btn.btn-primary.right(@click.native.prevent='returnDeposit()' :loading='input_submit_loading') Return
 </template>
 
 <style lang='stylus' scoped>
