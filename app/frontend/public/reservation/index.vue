@@ -109,55 +109,56 @@
       v-on:leave='leave')
 
       #rental-details(v-if="current_step == 'rental-details'" key='details')
-        .input-row.mt-ex-sm
-          label.input-label(for='location_id') Where:
-          .input-block.whole
-            select.input-field#location_id(
-                v-model='form.location_id'
-                v-error='form.errors.has("location_id")'
-                @input='form.errors.clear("location_id")')
-              option(value='' disabled) -- Select Location --
-              option(value='2') Adelanto, CA - California Inn - 11628 Bartlett Ave., Adelanto, CA 92301
-              option(value='3') Hesperia, CA - Day & Night Inn - 14865 Bear Valley Rd., Hesperia, CA 92345
-              option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
-          input-error-message(v-bind:errors='form.errors.get("location_id")')
-
-        .input-row
-          .input-container.one-half
-            label.input-label(for='pickup') From:
+        form(@submit.prevent='viewRates()')
+          .input-row.mt-ex-sm
+            label.input-label(for='location_id') Where:
             .input-block.whole
-              input-date-time(
-                v-model='form.pickup'
-                v-error='form.errors.has("pickup")'
-                @input='form.errors.clear("pickup")')
-            input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
+              select.input-field#location_id(
+                  v-model='form.location_id'
+                  v-error='form.errors.has("location_id")'
+                  @input='form.errors.clear("location_id")')
+                option(value='' disabled) -- Select Location --
+                option(value='2') Adelanto, CA - California Inn - 11628 Bartlett Ave., Adelanto, CA 92301
+                option(value='3') Hesperia, CA - Day & Night Inn - 14865 Bear Valley Rd., Hesperia, CA 92345
+                option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
+            input-error-message(v-bind:errors='form.errors.get("location_id")')
 
-          .input-container.one-half
-            label.input-label(for='drop_off') To:
-            .input-block.whole
-              input-date-time#drop_off(
-                v-model='form.drop_off'
-                v-error='form.errors.has("drop_off")'
-                @input='form.errors.clear("drop_off")')
-            input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
+          .input-row
+            .input-container.one-half
+              label.input-label(for='pickup') From:
+              .input-block.whole
+                input-date-time(
+                  v-model='form.pickup'
+                  v-error='form.errors.has("pickup")'
+                  @input='form.errors.clear("pickup")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
 
-          .input-container.whole
-            label.input-label(for='vehicle_type') Vehicle Type
-            .input-block.whole
-              select.input-field#vehicle_type(
-                v-model='form.vehicle_type'
-                v-error='form.errors.has("vehicle_type")'
-                @input='form.errors.clear("vehicle_type")')
+            .input-container.one-half
+              label.input-label(for='drop_off') To:
+              .input-block.whole
+                input-date-time#drop_off(
+                  v-model='form.drop_off'
+                  v-error='form.errors.has("drop_off")'
+                  @input='form.errors.clear("drop_off")')
+              input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
 
-                option(value='' disabled) -- Select Vehicle Type --
-                option(value='subcompact') Subcompact (Toyota Yaris iA)
-                option(value='compact') Compact (Toyota Corolla)
-                option(value='mid_size') Mid-Size (Toyota Camry)
-            input-error-message(v-bind:errors='form.errors.get("vehicle_type")')
+            .input-container.whole
+              label.input-label(for='vehicle_type') Vehicle Type
+              .input-block.whole
+                select.input-field#vehicle_type(
+                  v-model='form.vehicle_type'
+                  v-error='form.errors.has("vehicle_type")'
+                  @input='form.errors.clear("vehicle_type")')
 
-          .input-submit
-            .input-block.whole
-              input-submit.btn.btn-full.btn-primary(@click.native.prevent='viewRates' :loading='input_submit_loading') View Rates
+                  option(value='' disabled) -- Select Vehicle Type --
+                  option(value='subcompact') Subcompact (Toyota Yaris iA)
+                  option(value='compact') Compact (Toyota Corolla)
+                  option(value='mid_size') Mid-Size (Toyota Camry)
+              input-error-message(v-bind:errors='form.errors.get("vehicle_type")')
+
+            .input-submit
+              .input-block.whole
+                input-submit.btn.btn-full.btn-primary(:loading='input_submit_loading') View Rates
 
       #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
         rental-invoice.input-block.mt-default(:summary='summary')
@@ -169,7 +170,7 @@
             button.btn.btn-full.btn-primary(@click='newReservation') Reserve
 
       #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
-        form(@submit.prevent='createReservation')
+        form(@submit.prevent='createReservation()')
           .input-row.mt-ex-sm
             label.input-label(for='name_first') Name
             .input-container.one-half.fixed
@@ -229,7 +230,7 @@
             .input-block.input-element-fixed
               button.btn(@click.prevent="current_step = 'rental-summary', transition_type = 'backward'") Go Back
             .input-block.input-element-flex
-              input.btn.btn-full.btn-primary(type='submit' value='Reserve Car')
+              input-submit.btn.btn-full.btn-primary(:loading='input_submit_loading') Reserve Car
 
       #rental-confirmation(v-if="current_step == 'rental-confirmation'" key='confirmation')
         h2.emoji :]
