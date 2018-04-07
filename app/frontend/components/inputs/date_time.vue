@@ -203,9 +203,7 @@
 
 <template lang='pug'>
   .whole.left
-    button.input-field.date-field(:class='{ focus: calendar, disabled: disabled }' @click='toggleCalendar')
-      | {{ date_time_formatted }}
-      span.right(v-if='calendar')
+    span.input-field.date-field(type='text' :class='{ focus: calendar, disabled: disabled }' @click='toggleCalendar') {{ date_time_formatted }}
 
     .calendar(v-if='calendar')
       .calendar-header
