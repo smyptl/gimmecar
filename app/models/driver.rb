@@ -29,7 +29,7 @@
 #
 
 class Driver < ApplicationRecord
-  
+
   has_many :rentals,        -> (driver) { as(:driver, :additional_driver, id: driver.id) }
   has_many :rentals_closed, -> (driver) { as(:driver, :additional_driver, id: driver.id).closed_status }, class_name: 'Rental'
   has_many :insurance_policies
