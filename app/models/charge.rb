@@ -29,14 +29,13 @@ class Charge < ApplicationRecord
           currency: 'usd',
           customer: customer_id,
         })
-
-        write_attribute(:stripe_charge_id, charge['id'])
       end
 
       success.call(charge: self, customer_id: customer_id)
-
     rescue Stripe::CardError => e
       failure.call(message: e.message, customer_id: customer_id)
+    else
+      write_attribute(:stripe_charge_id, charge['id'])
     end
   end
 

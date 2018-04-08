@@ -22,16 +22,14 @@ class Location < ApplicationRecord
 
   has_and_belongs_to_many :users
 
-  has_many :rentals, foreign_key: 'pickup_location_id'
-  has_many :drop_off_rentals, class_name: 'Rental', foreign_key: 'drop_off_location_id'
+  has_many :rentals,      -> (location) { as(:pickup_location, :drop_off_location, id: location.id) }
+  has_many :rentals_open, -> (location) { as(:pickup_location, :drop_off_location, id: location.id).open_status }, class_name: 'Rental'
 
-  has_many :open_rentals, -> { open_status }, class_name: 'Rental', foreign_key: 'pickup_location_id'
   has_many :line_items,   through: :rentals
   has_many :rental_rates, through: :rentals
 
-  has_many :today_drop_offs, -> { drop_off_rentals.where(date: Time.current) }
-
   has_many :vehicles
+  has_many :vehicles_with_type, -> (vehicle_type) { vehicles.where(vehicle_type: vehicle_type) }
 
   has_many :rates
   has_many :tax_rates
@@ -50,7 +48,7 @@ class Location < ApplicationRecord
   end
 
   def calendar
-    open_rentals + reservations
+    rentals_open + reservations
   end
 
   def available_vehicles(vehicle_type:)

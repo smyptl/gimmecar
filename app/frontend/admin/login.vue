@@ -1,5 +1,6 @@
 <script>
   import Shake from 'Utils/transitions/shake'
+  import InputSubmit from 'Mixins/input_submit'
 
   export default {
     name: 'login',
@@ -11,16 +12,23 @@
         }),
       }
     },
+    mixins: [
+      InputSubmit,
+    ],
     methods: {
       loginUser () {
+        this.inputSubmitStart()
+
         this.$http.post('/', {
             login: this.login.data()
           })
           .then(response => {
+            this.inputSubmitFinish()
             this.$router.push({ name: 'locations' })
           })
           .catch(error => {
             Shake(document.getElementById('login-form'))
+            this.inputSubmitFinish()
             this.login.errors.record(error.response.data.errors)
           })
       },
@@ -65,7 +73,7 @@
             input-error-message(v-bind:errors='login.errors.get("password")')
 
           .input-submit.input-block
-            input.btn.btn-primary.right(type='submit' value='Login')
+            input-submit.btn.btn-primary.right(:loading='input_submit_loading') Login
 
 </template>
 

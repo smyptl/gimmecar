@@ -166,8 +166,8 @@
             td Revenue
             td {{ rental.sub_total | currency }}
           tr
-            td Days
-            td {{ rental.days_rented }}
+            td Days Paid
+            td {{ rental.days_paid }}
           tr
             td Avg. Rate
             td {{ rental.average_rate | currency }}

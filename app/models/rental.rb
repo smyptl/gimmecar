@@ -59,11 +59,13 @@ class Rental < ApplicationRecord
   scope :in_between, -> (date) { where('pickup <= :date and drop_off >= :date', date: date) }
   scope :past,       -> { where('drop_off < ?', Time.current) }
 
+  scope :vehicle_type, -> (type) { where(vehicle: Vehicle.vehicle_type(type)) }
+
   before_create :create_number
 
-  delegate :name,       to: :driver,            prefix: true
-  delegate :name,       to: :additional_driver, prefix: true, allow_nil: true
-  delegate :make_model, to: :vehicle,           prefix: true
+  delegate :name,                      to: :driver,            prefix: true
+  delegate :name,                      to: :additional_driver, prefix: true, allow_nil: true
+  delegate :make_model, :vehicle_type, to: :vehicle,           prefix: true
 
   delegate :name, :slug, :description, to: :pickup_location,   prefix: true
   delegate :name, :slug,               to: :drop_off_location, prefix: true
@@ -112,26 +114,6 @@ class Rental < ApplicationRecord
 
   def last_rental_rate_amount
     last_rental_rate.try(:amount)
-  end
-
-  def miles_driven
-    drop_off_odometer - pickup_odometer if closed?
-  end
-
-  def days_rented
-    rental_rates.count
-  end
-
-  def average_miles_per_day
-    miles_driven/days_rented if miles_driven
-  end
-
-  def average_rate
-    sub_total/days_rented if rental_rates.present?
-  end
-
-  def average_price_per_mile
-    sub_total/miles_driven if miles_driven
   end
 
   def deposit_amount

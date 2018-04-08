@@ -23,6 +23,8 @@ class Lib::Services::Generator
 
     output = {}
 
+    query = apply_logic(rules: rules, query: query)
+
     unless nested?(rules)
       output[:object] = name(rules)
       output[:id]     = id(rules, query)
@@ -32,7 +34,7 @@ class Lib::Services::Generator
   end
 
   def create_nested(rules:, query:)
-    create_attributes(output: {}, rules: rules, query: query)
+    create_attributes(output: {}, rules: rules, query: apply_logic(rules: rules, query: query))
   end
 
   def create_collection(rules:, query:)
@@ -79,6 +81,11 @@ class Lib::Services::Generator
 
   def include_attribute?(rules:, query:)
     (rules[:options][:if] && run(rules[:options][:if], query)) || rules[:options][:if].blank?
+  end
+
+  def apply_logic(rules:, query:)
+    logic = rules[:options][:logic]
+    logic ? logic.new(query) : query
   end
 
   def query_name(rules:)

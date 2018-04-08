@@ -1,8 +1,9 @@
 <script>
   import Shake from 'Utils/transitions/shake'
 
+  import InputSubmit from 'Mixins/input_submit'
+
   import InputDate from 'Components/inputs/date'
-  import Submit from 'Components/inputs/submit'
   import Popup from 'Components/popup'
 
   export default {
@@ -20,8 +21,14 @@
           days: 1,
           amount: '',
         }),
-        loading_button: false,
       }
+    },
+    mixins: [
+      InputSubmit,
+    ],
+    components: {
+      InputDate,
+      Popup,
     },
     mounted () {
       this.$http.get(this.url).then(response => {
@@ -31,28 +38,24 @@
 
       this.open = true
     },
-    components: {
-      InputDate,
-      Submit,
-      Popup,
-    },
     methods: {
       close () {
         this.$emit('close')
       },
       extendRental () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.url, {
           extend: this.form.data(),
         })
         .then(response => {
-          this.form.errors.clear
+          this.form.errors.clear()
+          this.inputSubmitFinish()
           this.close()
         })
         .catch(error => {
           this.form.errors.record(error.response.data.errors)
-          this.loading_button = false
+          this.inputSubmitFinish()
         })
       },
     },
@@ -101,7 +104,7 @@
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
-          submit.btn.btn-primary.right(@click.native.prevent='extendRental()' :loading='loading_button') Extend
+          input-submit.btn.btn-primary.right(@click.native.prevent='extendRental()' :loading='input_submit_loading') Extend
 </template>
 
 <style lang='stylus' scoped>

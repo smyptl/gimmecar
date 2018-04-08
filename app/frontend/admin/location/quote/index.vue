@@ -1,9 +1,10 @@
 <script>
   import Shake from 'Utils/transitions/shake'
 
+  import InputSubmit from 'Mixins/input_submit'
+
   import RentalInvoice from 'Admin/location/components/rental_invoice'
   import InputDateTime from 'Components/inputs/date_time'
-  import Submit        from 'Components/inputs/submit'
 
   export default {
     name: 'Quote',
@@ -14,30 +15,31 @@
           drop_off: new Date().setDate(new Date().getDate() + 1),
           vehicle_type: '',
         }),
-        loading_button: false,
         summary: null,
       }
     },
+    mixins: [
+      InputSubmit,
+    ],
     components: {
       InputDateTime,
       RentalInvoice,
-      Submit,
     },
     methods: {
       getQuote () {
-        this.loading_button = true
+        this.inputSubmitStart()
 
         this.$http.post(this.$route.path, {
           quote: this.quote.data(),
         })
         .then(response => {
           this.quote.errors.clear
-          this.loading_button = false
+          this.inputSubmitFinish()
           this.summary = response.data
         })
         .catch(error => {
           Shake(this.$refs.form)
-          this.loading_button = false
+          this.inputSubmitFinish()
           this.quote.errors.record(error.response.data.errors)
         })
       },
@@ -94,6 +96,6 @@
           input-error-message(v-bind:errors='quote.errors.get("vehicle_type")')
 
       .input-block.input-submit
-        submit.btn.btn-primary.right(@click.native.prevent='getQuote' :loading='loading_button') Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='getQuote' :loading='button_loading') Continue
 
 </template>

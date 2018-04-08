@@ -188,62 +188,6 @@ describe 'create rental', type: :system, js: true do
     expect(stripe_charge['amount']).to eq(charge.amount)
   end
 
-  scenario 'credit card fails' do
-    create(:tax_rate, location: location)
-    vehicle_1 = create(:vehicle, vehicle_type: :compact, original_location: location, location: location)
-
-    create(:rate, vehicle_type: :compact, location: location, amount: 3500)
-
-    visit_admin admin_location_rentals_new_path(slug: location.slug)
-
-    expect(page).to have_content('Rental: Details')
-    select 'Compact', from: 'Vehicle Type'
-    click_on 'Continue'
-
-    check_rental_rates
-    click_on 'Continue'
-
-    expect(page).to have_content('Rental: Drivers')
-    driver_stub = build_stubbed(:driver)
-    driver_insurance_stub = build_stubbed(:insurance_policy)
-    fill_in_driver(driver: driver_stub, insurance: driver_insurance_stub)
-
-    click_on 'Continue'
-
-    expect(page).to have_content('Rental: Vehicle')
-    expect(page).to have_content(vehicle_1.license_number)
-    find('td', text: vehicle_1.license_number).click
-    fill_in 'Vehicle Odometer', with: 40512
-    expect(page).to have_content('100%')
-    click_on 'Continue'
-
-    #expect(page).to have_content('Rental: Add-Ons')
-    #click_on 'Continue'
-
-    check_financial_responsibility(driver: driver_stub)
-    click_on 'Continue'
-
-    check_rental_terms(driver: driver_stub)
-    click_on 'Continue'
-
-    expect(page).to have_content('Rental: Payment')
-
-    fill_in_payment(number: INVALID_CREDIT_CARD_REASONS[:zip_code], expiration_date: '01/10')
-    click_on 'Continue'
-
-    expect(page).to have_content("Your card's expiration year is in the past.")
-
-    fill_in_payment(number: INVALID_CREDIT_CARD_REASONS[:zip_code])
-    click_on 'Continue'
-    expect(page).to_not have_content("Your card's expiration year is in the past.")
-    expect(page).to have_content("The zip code you supplied failed validation.")
-
-    fill_in_payment
-    click_on 'Continue'
-
-    expect(page).to have_content("#{driver_stub.name_first} #{driver_stub.name_middle} #{driver_stub.name_last}", wait: 10)
-  end
-
   scenario 'success in creating a additional driver' do
     create(:tax_rate, location: location)
     vehicle_1 = create(:vehicle, vehicle_type: 'compact', original_location: location, location: location)

@@ -37,18 +37,34 @@ describe Location do
     end
   end
 
-  describe '#open_rentals' do
+  describe '#rentals' do
+    it 'returns pickup_locations that much location' do
+      location = create(:location)
+      rental = create(:rental, pickup_location: location)
 
+      expect(location.rentals.count).to eq(1)
+      expect(location.rentals).to include(rental)
+    end
+
+    it 'returns drop_off_locations that much location' do
+      location = create(:location)
+      rental = create(:rental, drop_off_location: location)
+
+      expect(location.rentals.count).to eq(1)
+      expect(location.rentals).to include(rental)
+    end
+  end
+
+  describe '#rentals_open' do
     it 'returns all cars currently rented' do
       location = create(:location)
       open_rental = create(:rental, :open, pickup_location: location, drop_off_location: location)
 
-      expect(location.open_rentals).to eq([open_rental])
+      expect(location.rentals_open).to eq([open_rental])
     end
   end
 
   describe '#available_vehicles' do
-
     it 'returns list of available vehicles' do
       location = create(:location)
 
