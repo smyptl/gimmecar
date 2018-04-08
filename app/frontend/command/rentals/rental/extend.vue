@@ -21,7 +21,6 @@
           days: 1,
           amount: '',
         }),
-        input_submit_loading: false,
       }
     },
     mixins: [
