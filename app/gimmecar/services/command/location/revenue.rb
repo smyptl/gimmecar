@@ -11,6 +11,6 @@ class Services::Command::Location::Revenue < Lib::Services::Base
   end
 
   def query
-    Location.includes(:rental_rates).find_by(slug: slug).rental_rates.group_by_month(:date, format: '%b %Y').sum(:sub_total)
+    Location.find_by(slug: slug).rental_rates.group_by_month(:date, format: '%b %Y').sum(:sub_total)
   end
 end

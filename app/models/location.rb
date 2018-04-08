@@ -24,6 +24,7 @@ class Location < ApplicationRecord
 
   has_many :rentals,      -> (location) { as(:pickup_location, :drop_off_location, id: location.id) }
   has_many :rentals_open, -> (location) { as(:pickup_location, :drop_off_location, id: location.id).open_status }, class_name: 'Rental'
+  has_many :rentals_pickup, class_name: 'Rental', foreign_key: 'pickup_location_id'
 
   has_many :line_items,   through: :rentals
   has_many :rental_rates, through: :rentals
@@ -63,8 +64,8 @@ class Location < ApplicationRecord
     vehicles.ids
   end
 
-  def convert_date_to_time_zone(time)
-    convert_time_to_time_zone(time).to_date
+  def convert_date_to_time_zone(date)
+    convert_time_to_time_zone(date).to_date
   end
 
   def convert_time_to_time_zone(time)

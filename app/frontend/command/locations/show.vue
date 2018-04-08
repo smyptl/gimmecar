@@ -3,6 +3,7 @@
   import RentalsTable from 'Components/rental/table'
   import VehicleTable from 'Components/vehicle/table'
   import MonthlyRevenue from 'Command/vehicles/vehicle/monthly_revenue'
+  import MetricsTable from './metrics'
 
   export default {
     name: 'Location',
@@ -12,12 +13,14 @@
         rentals: {},
         vehicles: {},
         revenue: {},
+        metrics: {},
         tab: '',
       }
     },
     components: {
       AddressFormat,
       MonthlyRevenue,
+      MetricsTable,
       RentalsTable,
       VehicleTable,
     },
@@ -77,6 +80,8 @@
           a(@click.prevent='view("vehicles")' v-bind:class='{ active: tabActive("vehicles") }') Vehicles
         li
           a(@click.prevent='view("revenue")' v-bind:class='{ active: tabActive("revenue") }') Revenue
+        li
+          a(@click.prevent='view("metrics")' v-bind:class='{ active: tabActive("metrics") }') Metrics
 
     rentals-table(
       v-if='tabActive("rentals")'
@@ -92,7 +97,15 @@
       v-on:view-vehicle='viewVehicle($event)'
     )
 
-    monthly-revenue(v-else-if='tabActive("revenue")' :revenue='revenue')
+    monthly-revenue(
+      v-else-if='tabActive("revenue")'
+      :revenue='revenue'
+    )
+
+    metrics-table(
+      v-else-if='tabActive("metrics")'
+      :metrics='metrics'
+    )
 </template>
 
 <style lang='stylus' scoped>

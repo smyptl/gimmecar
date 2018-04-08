@@ -88,6 +88,7 @@ Rails.application.routes.draw do
       get 'vehicles', to: 'locations/vehicles#index'
       get 'rentals',  to: 'locations/rentals#index'
       get 'revenue',  to: 'locations/revenue#index'
+      get 'metrics',  to: 'locations/metrics#index'
     end
 
     get '/reports',   to: 'reports#index'
