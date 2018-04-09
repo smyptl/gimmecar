@@ -1,5 +1,5 @@
 <script>
-  import RentalInvoice from 'Admin/location/components/rental_invoice'
+  import RentalInvoice from 'Components/quote'
   import FinancialResponsibility from 'Components/financial_responsibility'
   import TermsAndConditions from 'Components/terms_and_conditions'
 

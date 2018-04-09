@@ -63,7 +63,7 @@ class Rental < ApplicationRecord
 
   before_create :create_number
 
-  delegate :name,                      to: :driver,            prefix: true
+  delegate :name, :license_number,     to: :driver,            prefix: true
   delegate :name,                      to: :additional_driver, prefix: true, allow_nil: true
   delegate :make_model, :vehicle_type, to: :vehicle,           prefix: true
 

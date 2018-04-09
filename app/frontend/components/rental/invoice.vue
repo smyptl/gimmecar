@@ -1,0 +1,100 @@
+<script>
+  import RentalInvoice           from 'Components/quote'
+  import FinancialResponsibility from 'Components/financial_responsibility'
+  import TermsAndConditions      from 'Components/terms_and_conditions'
+  import AddressD                from 'Components/address'
+
+  export default {
+    name: 'Invoice',
+    data () {
+      return {
+        summary: {}
+      }
+    },
+    components: {
+      AddressD,
+      RentalInvoice,
+      FinancialResponsibility,
+      TermsAndConditions,
+    },
+    mounted () {
+      this.$http.get(window.location.pathname)
+        .then(response => {
+          this.summary = response.data
+        })
+    },
+    methods: {
+      goBack () {
+        this.$router.push({ name: 'rental', params: { number: this.$route.params.number }})
+      }
+    },
+  }
+</script>
+
+<template lang='pug'>
+  .left
+    button.btn.btn-purple(@click='goBack()') Go Back
+
+    .whole
+      h1.logo.left GimmeCar
+
+    .whole
+      b.text-light Invoice For:
+      h4 {{ summary.driver.name }}
+      p
+        | License #:&nbsp;
+        b {{ summary.driver.license_number }}
+      p
+        span.block Address:&nbsp;
+        b
+          address-d(:address='summary.driver')
+
+    .whole.mt-default.rental-invoice-summary
+      h4.invoice-one-line We appreicate your business!
+      p Thanks for being a customer. A detailed summary of your invoice is below. If you have any questions, we are happy to help. Email support@gimmecar.com or call 909.318.0450.
+      h4.invoice-one-line.mb-default
+
+    rental-invoice.page-break(v-bind:summary='summary')
+
+    .page-break
+      financial-responsibility.whole.left
+
+      .one-half.left
+        img.signature(:src='this.summary.driver_financial_responsibility_signature')
+        h5 {{ this.summary.driver.name }}
+      .one-half.left(v-if='this.summary.additional_driver_name')
+        img.signature(:src='this.summary.additional_driver_financial_responsibility_signature')
+        h5 {{ this.summary.additional_driver.name }}
+
+
+    .page-break
+      terms-and-conditions.whole.left
+      .one-half.left
+        img.signature(:src='this.summary.driver_signature')
+        h5 {{ this.summary.driver.name }}
+      .one-half.left(v-if='this.summary.additional_driver_name')
+        img.signature(:src='this.summary.additional_driver_signature')
+        h5 {{ this.summary.additional_driver.name }}
+
+
+</template>
+
+<style lang='stylus'>
+  @media print
+    header
+      display: none !important
+
+    button
+      display: none !important
+
+    html
+      font-size: 90% !important
+
+  .page-break
+    page-break-after: always
+
+  img.signature
+    max-height: 12rem
+    max-width: 100%
+
+</style>

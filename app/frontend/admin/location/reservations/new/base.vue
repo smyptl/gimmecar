@@ -1,7 +1,7 @@
 <script>
   import Shake from 'Utils/transitions/shake'
 
-  import Quote from 'Admin/location/components/rental_invoice'
+  import Quote from 'Components/quote'
 
   import InputDateTime from 'Components/inputs/date_time'
 

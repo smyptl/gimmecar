@@ -70,7 +70,7 @@
       emailInvoice () {
       },
       printInvoice () {
-        window.open(this.$route.path + '/receipt/print')
+        this.$router.push({ name: 'rental_print', params: { number: this.rental.number }})
       },
     },
   }

@@ -55,6 +55,6 @@ describe 'Add card to driver file', type: :system, js: true do
     within('div.popup') do
       click_button('Add')
     end
-    expect(page).to_not have_content("The zip code you supplied failed validation.")
+    expect(page).to_not have_content("The zip code you supplied failed validation.", wait: 5)
   end
 end
