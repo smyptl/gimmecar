@@ -42,10 +42,7 @@ class Lib::Services::Generator
     output[:object] = :list
     output[:count]  = query.count
 
-    output[:data] = []
-    query.each do |query_item|
-      output[:data] << create_object(rules: rules, query: query_item)
-    end
+    output[:data] = query.map { |query_item| create_object(rules: rules, query: query_item) }
 
     if nested?(rules)
       output[:data]
@@ -66,7 +63,8 @@ class Lib::Services::Generator
     rules.except(:id).fetch(:attributes).each do |_, rule|
       if include_attribute?(rules: rule, query: query)
 
-        run_query = if [:collection, :object].include?(rule.fetch(:type))
+        run_query = case
+                    when [:collection, :object].include?(rule.fetch(:type))
                       query.send(query_name(rules: rule))
                     else
                       query

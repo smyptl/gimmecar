@@ -1,7 +1,7 @@
 <script>
   import Shake from 'Utils/transitions/shake'
 
-  import RentalInvoice from 'Admin/location/components/rental_invoice'
+  import RentalInvoice from 'Components/quote'
 
   import InputSubmit from 'Mixins/input_submit'
 

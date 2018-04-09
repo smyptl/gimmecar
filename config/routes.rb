@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       get '/new', to: 'new#index'
 
       resources :rentals, except: [:new, :create] do
-        get 'receipt/print', to: 'rentals/receipt#print'
+        get 'print', to: 'rentals/invoice#print'
 
         get 'close', to: 'rentals/close#index'
         post 'close', to: 'rentals/close#create'
@@ -68,7 +68,7 @@ Rails.application.routes.draw do
       get 'return-deposit', to: 'rentals/return_deposit#index'
       post 'return-deposit', to: 'rentals/return_deposit#create'
 
-      get 'receipt/print', to: 'rentals/receipt#print'
+      get 'print', to: 'rentals/invoice#index'
     end
 
     resources :vehicles, only: [:index, :show] do
@@ -103,7 +103,5 @@ Rails.application.routes.draw do
 
     get  'reservation', to: 'reservation#index'
     post 'reservation', to: 'reservation#create'
-
-    get 'receipt', to: 'landing#r'
   end
 end
