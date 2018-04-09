@@ -1,4 +1,5 @@
 class Logic::Metrics::Rental < SimpleDelegator
+  include Lib::Wrap
 
   def miles_driven
     drop_off_odometer - pickup_odometer if closed?

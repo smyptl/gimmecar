@@ -27,4 +27,10 @@ class Logic::Metrics::Driver < SimpleDelegator
   def average_price_per_mile
     sub_total/miles_driven if miles_driven > 0
   end
+
+  private
+
+  def rentals_closed
+    @rentals_closed ||= Lib::Metrics::Rental.wrap(__getobj__.rentals_closed)
+  end
 end
