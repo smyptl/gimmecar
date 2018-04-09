@@ -13,6 +13,12 @@ class Lib::Services::Builder
       self._output
     end
 
+    def nested(name, **options)
+      n = self.new(type: :nested, name: name, **options)
+      yield n if block_given?
+      self._output = n.retrieve
+    end
+
     def object(name, **options)
       n = self.new(type: :object, name: name, **options)
       yield n if block_given?

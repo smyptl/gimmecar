@@ -31,6 +31,6 @@ class Logic::Metrics::Driver < SimpleDelegator
   private
 
   def rentals_closed
-    @rentals_closed ||= Lib::Metrics::Rental.wrap(__getobj__.rentals_closed)
+    @rentals_closed ||= Logic::Metrics::Rental.wrap(__getobj__.rentals_closed)
   end
 end

@@ -4,7 +4,7 @@ class Logic::Metrics::Location < SimpleDelegator
     Vehicle::TYPES.map do |vehicle_type|
       {
         vehicle_type: vehicle_type,
-        metrics:      Logic::Metrics::Rentals::Rates.new(rental_rates.where(invoice: rentals_pickup.vehicle_type(vehicle_type), date: last_12_months)).average_per_month
+        metrics:      Logic::Metrics::Rentals.new(rental_rates.where(invoice: rentals_pickup.vehicle_type(vehicle_type), date: last_12_months)).average_per_month
       }
 
     end

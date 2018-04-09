@@ -20,6 +20,7 @@
         insurance_policies: {},
         sources: {},
         rentals: {},
+        metrics: {},
         action: '',
         tab: '',
       }
@@ -101,39 +102,12 @@
 
       driver-information.left(:driver='driver')
 
-    .panel.panel-base(v-if='driver.days_paid > 0')
-      table.panel-table.panel-table-key-pair
-        thead
-          tr
-            th(colspan='2') Metrics
-        tbody
-          tr
-            td Rentals
-            td {{ driver.rentals_closed_count }}
-          tr
-            td Revenue
-            td {{ driver.sub_total | currency }}
-          tr
-            td Days Paid
-            td {{ driver.days_paid }}
-          tr
-            td Avg. Rate
-            td {{ driver.average_rate | currency }}
-          tr
-            td Miles Driven
-            td {{ driver.miles_driven }}
-          tr
-            td Avg. Miles / Day
-            td {{ driver.average_miles_per_day }}
-          tr
-            td Avg. Price / Mile
-            td {{ driver.average_price_per_mile | currency }}
-
-
     .sub-navigation
       ul.list-horizontal
         li
           a(@click.prevent='view("insurance-policies")' v-bind:class='{ active: tabActive("insurance-policies") }') Insurance Policies
+        li(v-if='driver.rentals_closed_count > 0')
+          a(@click.prevent='view("metrics")' v-bind:class='{ active: tabActive("metrics") }') Metrics
         li
           a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
         li(v-if='driver.stripe_id')
@@ -215,6 +189,36 @@
                 td
                 td
                 td
+
+    .panel.panel-base(v-if='tabActive("metrics")')
+      table.panel-table.panel-table-key-pair
+        thead
+          tr
+            th(colspan='2') Metrics
+        tbody
+          tr
+            td Rentals
+            td {{ metrics.rentals_count }}
+          tr
+            td Revenue
+            td {{ metrics.sub_total | currency }}
+          tr
+            td Days Paid
+            td {{ metrics.days_paid }}
+          tr
+            td Avg. Rate
+            td {{ metrics.average_rate | currency }}
+          tr
+            td Miles Driven
+            td {{ metrics.miles_driven }}
+          tr
+            td Avg. Miles / Day
+            td {{ metrics.average_miles_per_day }}
+          tr
+            td Avg. Price / Mile
+            td {{ metrics.average_price_per_mile | currency }}
+
+
 
     component(v-bind:is='action' v-on:close='refreshData')
 </template>

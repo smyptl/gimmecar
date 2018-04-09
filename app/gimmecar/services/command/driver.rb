@@ -5,15 +5,8 @@ class Services::Command::Driver < Lib::Services::Base
   end
 
   output do
-    object :driver, component: Services::Builders::Driver, logic: Logic::Metrics::Driver do |o|
-      o.attributes :rentals_closed_count,
-        :days_paid,
-        :sub_total,
-        :miles_driven,
-        :average_miles_per_day,
-        :average_rate,
-        :average_price_per_mile
-
+    object :driver, component: Services::Builders::Driver do |o|
+      o.attribute :rentals_closed_count, output: -> (driver) { driver.rentals_closed.count }
     end
   end
 
