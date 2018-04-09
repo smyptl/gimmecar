@@ -26,14 +26,19 @@
     methods: {
       goBack () {
         this.$router.push({ name: 'rental', params: { number: this.$route.params.number }})
-      }
+      },
+      print () {
+        window.print()
+      },
     },
   }
 </script>
 
 <template lang='pug'>
   .left
-    button.btn.btn-purple(@click='goBack()') Go Back
+    .whole
+      button.left.btn(@click='goBack()') Go Back
+      button.right.btn.btn-primary(@click='print()') Print
 
     .whole
       h1.logo.left GimmeCar
