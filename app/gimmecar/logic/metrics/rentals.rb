@@ -1,9 +1,5 @@
 class Logic::Metrics::Rentals < SimpleDelegator
 
-  def average_per_month
-    group_by_month(:date, format: '%b %Y').average(:sub_total)
-  end
-
   def rentals_count
     rentals.count
   end
