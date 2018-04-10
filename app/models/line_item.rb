@@ -34,10 +34,11 @@ class LineItem < ApplicationRecord
   belongs_to :invoice, polymorphic: true
   belongs_to :charge
 
-  scope :rental_rates, -> { where(item_type: 'rental_rate') }
-  scope :deposits,     -> { where(item_type: 'deposit') }
-  scope :gas,          -> { where(item_type: 'gas') }
-  scope :cleaning,     -> { where(item_type: 'cleaning') }
+  scope :rental_rates,   -> { where(item_type: 'rental_rate') }
+  scope :deposits,       -> { where(item_type: 'deposit') }
+  scope :gas,            -> { where(item_type: 'gas') }
+  scope :cleaning,       -> { where(item_type: 'cleaning') }
+  scope :processing_fee, -> { where(item_type: 'processing_fee') }
   scope :deposits_unreturned, -> { includes(:invoice).deposits.where(invoice_type: 'Rental').select(&:invoice_closed?) }
 
   delegate :number, :closed?, to: :invoice, prefix: true
