@@ -44,11 +44,10 @@
       h1.logo.left GimmeCar
 
     .whole
-      b.text-light Invoice For:
       h4 {{ summary.driver.name }}
       p
-        | License #:&nbsp;
-        b {{ summary.driver.license_number }}
+        span.block License #:&nbsp;
+        b.block {{ summary.driver.license_number }}
       p
         span.block Address:&nbsp;
         b
@@ -95,8 +94,8 @@
     html
       font-size: 90% !important
 
-  .page-break
-    page-break-after: always
+    .page-break
+      page-break-after: always
 
   img.signature
     max-height: 12rem
