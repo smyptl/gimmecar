@@ -5,18 +5,20 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
 Rails.application.config.content_security_policy do |p|
-  p.font_src    :self, :https, :data
+  p.font_src    :self, :https, :data, 'http://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/'
   p.img_src     :self, :https, :data
   p.object_src  :none
-  p.style_src   :self, :https, :unsafe_inline
+  p.style_src   :self, :https, :unsafe_inline, 'http://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css'
+  p.frame_src   :self, :https, 'https://js.stripe.com'
 
   if Rails.env.development?
-    p.script_src :self, :https, :unsafe_eval
+    p.script_src :self, :https, :unsafe_inline, :unsafe_eval, 'https://js.stripe.com'
     p.default_src :self, :https, :unsafe_eval
-    p.connect_src :self, :https, 'http://localhost:3035', 'ws://localhost:3035'
+    p.connect_src :self, :https, 'https://api.stripe.com', 'http://localhost:3035', 'ws://localhost:3035'
   else
-    p.script_src :self, :https
+    p.script_src :self, :https, :unsafe_inline, 'https://js.stripe.com'
     p.default_src :self, :https
+    p.connect_src :self, :https, 'https://api.stripe.com'
   end
 
   # Specify URI for violation reports
