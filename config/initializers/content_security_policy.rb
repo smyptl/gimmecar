@@ -16,7 +16,7 @@ Rails.application.config.content_security_policy do |p|
     p.default_src :self, :https, :unsafe_eval
     p.connect_src :self, :https, 'https://api.stripe.com', 'http://localhost:3035', 'ws://localhost:3035'
   else
-    p.script_src :self, :https, :unsafe_inline, 'https://js.stripe.com'
+    p.script_src :self, :https, :unsafe_inline, 'https://js.stripe.com', 'https://www.google-analytics.com'
     p.default_src :self, :https
     p.connect_src :self, :https, 'https://api.stripe.com'
   end
