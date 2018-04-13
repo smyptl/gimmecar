@@ -63,7 +63,6 @@
     background: $red
     border-radius: 0.125rem
 
-    font-size: 80%
     font-weight: 700
     color: #ffffff
 

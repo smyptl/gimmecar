@@ -107,7 +107,6 @@
 
     background: $red
 
-    font-size: 80%
     font-weight: 700
     color: #ffffff
 
