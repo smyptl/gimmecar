@@ -14,10 +14,6 @@ class Logic::Metrics::Location::PricePerMile < SimpleDelegator
   private
 
   def price_per_mile(vehicle_type)
-    rentals(vehicle_type).average_price_per_mile
-  end
-
-  def rentals(vehicle_types)
-    Logic::Metrics::Rentals.new(rentals_closed.vehicle_type(vehicle_type))
+    Logic::Metrics::Rentals.new(rentals_closed.vehicle_type(vehicle_type)).average_price_per_mile
   end
 end

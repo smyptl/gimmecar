@@ -39,5 +39,13 @@ FactoryBot.define do
     vin { Faker::Vehicle.vin }
     license_number { SecureRandom.hex(4) }
     status :clean
+
+    trait :compact do
+      vehicle_type :compact
+    end
+
+    trait :subcompact do
+      vehicle_type :subcompact
+    end
   end
 end

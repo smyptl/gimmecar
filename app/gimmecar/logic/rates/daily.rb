@@ -1,9 +1,9 @@
 class Logic::Rates::Daily < Logic::Rates::Base
 
-  PREMIUM_ONE_DAY    = 0.075
-  PREMIUM_DAILY      = 0.175
+  PREMIUM_ONE_DAY    = 0.125
+  PREMIUM_DAILY      = 0.135
   PREMIUM_WEEKEND    = 0.125
-  PREMIUM_OFF_HOURS  = 0.075
+  PREMIUM_OFF_HOURS  = 0.080
 
   OFF_HOURS_WEEKDAY  =                 [17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7]
   OFF_HOURS_SATURDAY =         [15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7]
