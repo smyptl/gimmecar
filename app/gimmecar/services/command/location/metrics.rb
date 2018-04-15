@@ -5,7 +5,10 @@ class Services::Command::Location::Metrics < Lib::Services::Base
   end
 
   def output
-    Logic::Metrics::Location.new(location).average_rental_rate_per_month_by_vehicle_type
+    {
+      price_per_mile: Logic::Metrics::Location::PricePerMile.new(location).calculate,
+    }
+
   end
 
   def location

@@ -22,8 +22,9 @@ class Location < ApplicationRecord
 
   has_and_belongs_to_many :users
 
-  has_many :rentals,      -> (location) { as(:pickup_location, :drop_off_location, id: location.id) }
-  has_many :rentals_open, -> (location) { as(:pickup_location, :drop_off_location, id: location.id).open_status }, class_name: 'Rental'
+  has_many :rentals,        -> (location) { as(:pickup_location, :drop_off_location, id: location.id) }
+  has_many :rentals_open,   -> (location) { as(:pickup_location, :drop_off_location, id: location.id).open_status },   class_name: 'Rental'
+  has_many :rentals_closed, -> (location) { as(:pickup_location, :drop_off_location, id: location.id).closed_status }, class_name: 'Rental'
   has_many :rentals_pickup, class_name: 'Rental', foreign_key: 'pickup_location_id'
 
   has_many :line_items,   through: :rentals

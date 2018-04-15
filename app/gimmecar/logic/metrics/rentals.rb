@@ -12,6 +12,10 @@ class Logic::Metrics::Rentals < SimpleDelegator
     rentals.sum(&:sub_total)
   end
 
+  def rental_rates_sub_total
+    rentals.sum(&:rental_rates_sub_total)
+  end
+
   def miles_driven
     rentals.sum(&:miles_driven)
   end
@@ -25,11 +29,11 @@ class Logic::Metrics::Rentals < SimpleDelegator
   end
 
   def average_rate
-    sub_total/days_paid if days_paid > 0
+    rental_rates_sub_total/days_paid if days_paid > 0
   end
 
   def average_price_per_mile
-    sub_total/miles_driven if miles_driven > 0
+    rental_rates_sub_total/miles_driven if miles_driven > 0
   end
 
   private
