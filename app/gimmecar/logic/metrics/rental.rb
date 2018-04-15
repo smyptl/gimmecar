@@ -1,6 +1,10 @@
 class Logic::Metrics::Rental < SimpleDelegator
   include Lib::Wrap
 
+  def latest_odometer
+    drop_off_odometer || pickup_odometer
+  end
+
   def miles_driven
     drop_off_odometer - pickup_odometer if closed?
   end
@@ -11,6 +15,10 @@ class Logic::Metrics::Rental < SimpleDelegator
 
   def average_miles_per_day
     miles_driven/days_paid if miles_driven
+  end
+
+  def rental_rates_sub_total
+    rental_rates.sum(&:sub_total)
   end
 
   def average_rate

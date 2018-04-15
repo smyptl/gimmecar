@@ -1,4 +1,4 @@
-class Services::Admin::Location::Rental::Print < Lib::Services::Base
+class Services::Admin::Location::Rental::Invoice < Lib::Services::Base
 
   attr_reader :rental
 
@@ -7,7 +7,7 @@ class Services::Admin::Location::Rental::Print < Lib::Services::Base
   end
 
   output do
-    object :rental, component: Services::Builders::RentalPrint
+    object :rental, component: Services::Builders::RentalInvoice
   end
 
   def query

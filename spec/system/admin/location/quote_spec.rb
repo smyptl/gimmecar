@@ -18,7 +18,6 @@ describe 'quote', type: :system, js: true do
     select 'Compact (Toyota Corolla)', from: 'Vehicle Type'
     click_on 'Continue'
 
-    expect(page).to have_content(location.description)
     expect(page).to have_content('Rental Details')
     expect(page).to have_content('Sales Tax')
   end

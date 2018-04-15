@@ -7,7 +7,7 @@
     props: {
       metrics: {
         required: true,
-        type: Array,
+        type: Object,
       },
     },
     filters: {
@@ -18,21 +18,16 @@
 </script>
 
 <template lang='pug'>
-  .left
-    .panel.panel-base(
-      v-for='metric in metrics',
-      :key='metric.vehicle_type'
-    )
-      .gimmecar-app-vertical-scroll
-        table.panel-table
-          thead
-            tr
-              th
-              th.text-right(v-for='(_, month) in metric.metrics') {{ month }}
-          tbody
-            tr
-              td {{ metric.vehicle_type | capitalize }}
-              td.text-right(v-for='amount in metric.metrics') {{ amount | currency }}
+  .panel.panel-base
+    table.panel-table.panel-table-key-pair
+      thead
+        tr
+          th Vehicle Type
+          th Price / Mile
+      tbody
+        tr(v-for='price_per_mile in metrics.price_per_mile')
+          td {{ price_per_mile.vehicle_type | capitalize }}
+          td {{ price_per_mile.metrics | currency }}
 </template>
 
 <style lang='stylus' scoped>

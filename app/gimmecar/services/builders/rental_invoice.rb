@@ -1,4 +1,4 @@
-class Services::Builders::RentalPrint < Lib::Services::Builder
+class Services::Builders::RentalInvoice < Lib::Services::Builder
 
   component do |c|
     c.object :vehicle, component: Services::Builders::Vehicle
@@ -7,7 +7,18 @@ class Services::Builders::RentalPrint < Lib::Services::Builder
       o.attribute :description
     end
 
-    c.attributes :driver_name, :additional_driver_name
+    c.object :driver do |o|
+      o.attribute :name, as: :name_full
+      o.attribute :license_number
+      o.component Services::Builders::Address
+    end
+
+    c.object :additional_driver do |o|
+      o.attribute :name, as: :name_full
+      o.attribute :license_number
+      o.component Services::Builders::Address
+    end
+
     c.attributes :pickup,
       :pickup_fuel,
       :pickup_odometer,
