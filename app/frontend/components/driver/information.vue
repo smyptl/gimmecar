@@ -67,7 +67,7 @@
           td {{ driver.license_state }}
         tr
           td Expiration Date
-          td {{ driver.license_expiration_Date | date }}
+          td {{ driver.license_expiration_date | date }}
         tr
           td Gender
           td
