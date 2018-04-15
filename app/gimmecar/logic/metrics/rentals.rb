@@ -1,7 +1,7 @@
 class Logic::Metrics::Rentals < SimpleDelegator
 
   def rentals_count
-    rentals.count
+    count
   end
 
   def sub_total

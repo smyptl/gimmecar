@@ -1,7 +1,7 @@
 class Logic::Rates::Daily < Logic::Rates::Base
 
-  PREMIUM_ONE_DAY    = 0.125
-  PREMIUM_DAILY      = 0.135
+  PREMIUM_ONE_DAY    = 0.175
+  PREMIUM_DAILY      = 0.14
   PREMIUM_WEEKEND    = 0.125
   PREMIUM_OFF_HOURS  = 0.080
 
