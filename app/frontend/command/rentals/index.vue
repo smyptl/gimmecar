@@ -33,5 +33,6 @@
 </script>
 
 <template lang='pug'>
-  rentals-table(:rentals='rentals' v-on:view-rental='viewRental($event)')
+  rentals-table(:rentals='rentals'
+                @view-rental='viewRental($event)')
 </template>

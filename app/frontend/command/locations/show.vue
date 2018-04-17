@@ -87,14 +87,14 @@
       v-if='tabActive("rentals")'
       :rentals='rentals'
       :show_location='false'
-      v-on:view-rental='viewRental($event)'
+      @view-rental='viewRental($event)'
     )
 
     vehicle-table(
       v-else-if='tabActive("vehicles")'
       :vehicles='vehicles'
       :show_location='false'
-      v-on:view-vehicle='viewVehicle($event)'
+      @view-vehicle='viewVehicle($event)'
     )
 
     monthly-revenue(

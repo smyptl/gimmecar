@@ -131,7 +131,7 @@
       h6.left.pt-sm.pl-default Additional Driver
       driver-info(v-bind:driver='rental.additional_driver')
 
-    close(v-on:close='rentalClosed' v-if='close')
+    close(@close='rentalClosed' v-if='close')
 </template>
 
 <style lang='stylus' scoped>

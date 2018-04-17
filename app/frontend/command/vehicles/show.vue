@@ -1,10 +1,11 @@
 <script>
   import Moment from 'moment'
 
-  import Dropdown from 'Components/dropdown'
-  import ActionsIcon from 'Components/icons/actions'
+  import Dropdown           from 'Components/dropdown'
+  import ActionsIcon        from 'Components/icons/actions'
   import VehicleInformation from 'Components/vehicle/information'
-  import MonthlyRevenue from 'Command/vehicles/vehicle/monthly_revenue'
+  import RentalsTable       from 'Components/rental/table'
+  import MonthlyRevenue     from 'Command/vehicles/vehicle/monthly_revenue'
 
   import Percent from 'Filters/percent'
 
@@ -23,6 +24,7 @@
       ActionsIcon,
       Dropdown,
       MonthlyRevenue,
+      RentalsTable,
       VehicleInformation,
     },
     filters: {
@@ -83,30 +85,14 @@
         li
           a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
         li
+          a(@click.prevent='view("registrations")' v-bind:class='{ active: tabActive("registrations") }') Registrations
+        li
           a(@click.prevent='view("revenue")' v-bind:class='{ active: tabActive("revenue") }') Revenue
 
-    .panel.panel-base(v-if='tabActive("rentals")')
-      .gimmecar-app-vertical-scroll
-        table.panel-table
-          thead
-            tr
-              th #
-              th Name
-              th Location
-              th Pickup
-              th Drop Off
-          tbody
-            tr.clickable(
-              v-for='rental in rentals.data'
-              :key='rental.id'
-              @click.prevent='viewRental(rental.number)'
-            )
-
-              td {{ rental.number }}
-              td {{ rental.driver_name }}
-              td {{ rental.pickup_location_name }}
-              td {{ rental.pickup | time }}
-              td {{ rental.drop_off | time }}
+    rentals-table(v-if='tabActive("rentals")'
+                  :rentals='rentals'
+                  :show_vehicle='false'
+                  @view-rental='viewRental($event)')
 
     monthly-revenue(v-if='tabActive("revenue")' :revenue='revenue')
 </template>

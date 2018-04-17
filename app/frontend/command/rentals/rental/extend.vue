@@ -32,7 +32,7 @@
     },
     mounted () {
       this.$http.get(this.url).then(response => {
-        this.form.amount = response.data.last_rental_rate_amount
+        this.form.amount = response.data.rental_last_rate_amount
         this.form.date   = response.data.drop_off
       })
 
@@ -63,7 +63,7 @@
 </script>
 
 <template lang='pug'>
-  popup(v-if='open' v-on:closed='close')
+  popup(v-if='open' @closed='close')
     .panel-form-popup
       .panel-form.panel-form-padding
         h4.panel-form-popup-header Extend

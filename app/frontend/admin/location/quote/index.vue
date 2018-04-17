@@ -96,6 +96,6 @@
           input-error-message(v-bind:errors='quote.errors.get("vehicle_type")')
 
       .input-block.input-submit
-        input-submit.btn.btn-primary.right(@click.native.prevent='getQuote' :loading='button_loading') Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='getQuote' :loading='input_submit_loading') Continue
 
 </template>

@@ -31,14 +31,14 @@ require 'factories/rentals'
 
 describe Vehicle do
 
-  describe '.latest_rental' do
+  describe '.rental_lastest' do
 
     it 'returns latest rental' do
       vehicle = create(:vehicle)
       create(:rental, vehicle: vehicle, drop_off: Date.new(2018, 1, 15))
       rental = create(:rental, vehicle: vehicle, drop_off: Date.new(2018, 2, 15))
 
-      expect(vehicle.latest_rental).to eq(rental)
+      expect(vehicle.rental_lastest).to eq(rental)
     end
   end
 end

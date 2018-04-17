@@ -60,7 +60,7 @@
 </script>
 
 <template lang='pug'>
-  popup(v-if='open' v-on:closed='close')
+  popup(v-if='open' @closed='close')
     .panel-form-popup
       .panel-form.panel-form-padding
         h4.panel-form-popup-header Add Card

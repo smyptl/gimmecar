@@ -48,7 +48,7 @@ class Rental < ApplicationRecord
 
   has_many :line_items, as: :invoice
   has_many :rental_rates, -> { rental_rates }, class_name: 'LineItem', as: :invoice
-  has_one :last_rental_rate, -> { rental_rates.order(date: :desc) }, class_name: 'LineItem', as: :invoice
+  has_one :rental_last_rate, -> { rental_rates.order(date: :desc) }, class_name: 'LineItem', as: :invoice
   has_one :deposit, -> { deposits }, class_name: 'LineItem', as: :invoice
 
   has_many :charges, as: :owner
@@ -112,8 +112,8 @@ class Rental < ApplicationRecord
     rental_rates.sum(&:total)
   end
 
-  def last_rental_rate_amount
-    last_rental_rate.try(:amount)
+  def rental_last_rate_amount
+    rental_last_rate.try(:amount)
   end
 
   def deposit_amount

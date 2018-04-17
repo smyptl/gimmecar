@@ -13,6 +13,6 @@ class Services::Command::Vehicle < Lib::Services::Base
   private
 
   def query
-    Vehicle.includes(:location, :latest_rental).find_by(vin: vin)
+    Vehicle.includes(:location, :rental_lastest).find_by(vin: vin)
   end
 end

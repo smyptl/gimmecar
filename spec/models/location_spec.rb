@@ -58,9 +58,9 @@ describe Location do
   describe '#rentals_open' do
     it 'returns all cars currently rented' do
       location = create(:location)
-      open_rental = create(:rental, :open, pickup_location: location, drop_off_location: location)
+      rental_open = create(:rental, :open, pickup_location: location, drop_off_location: location)
 
-      expect(location.rentals_open).to eq([open_rental])
+      expect(location.rentals_open).to eq([rental_open])
     end
   end
 

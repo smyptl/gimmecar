@@ -182,7 +182,9 @@
               td Avg. Price / Mile
               td {{ rental.average_price_per_mile | currency }}
 
-    component(:is='action' :url='action_url' v-on:close='refreshData')
+    component(:is='action'
+              :url='action_url'
+              @close='refreshData')
 
 </template>
 

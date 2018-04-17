@@ -10,7 +10,17 @@
         required: true,
         type: Object,
       },
+      show_driver: {
+        required: false,
+        type: Boolean,
+        default: true,
+      },
       show_location: {
+        required: false,
+        type: Boolean,
+        default: true,
+      },
+      show_vehicle: {
         required: false,
         type: Boolean,
         default: true,
@@ -40,9 +50,9 @@
         thead
           tr
             th #
-            th Name
+            th(v-if='show_driver') Name
             th(v-if='show_location') Location
-            th Vehicle
+            th(v-if='show_vehicle') Vehicle
             th Pickup
             th Drop Off
         tbody
@@ -53,9 +63,9 @@
           )
 
             td {{ rental.number }}
-            td {{ rental.driver_name }}
+            td(v-if='show_driver') {{ rental.driver_name }}
             td(v-if='show_location') {{ rental.pickup_location_name }}
-            td {{ rental.vehicle_make_model }}
+            td(v-if='show_vehicle') {{ rental.vehicle_make_model }}
             td {{ rental.pickup | time }}
             td {{ rental.drop_off | time }}
 </template>

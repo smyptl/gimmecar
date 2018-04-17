@@ -33,5 +33,6 @@
 </script>
 
 <template lang='pug'>
-  vehicle-table(:vehicles='vehicles' v-on:view-vehicle='viewVehicle($event)')
+  vehicle-table(:vehicles='vehicles'
+                @view-vehicle='viewVehicle($event)')
 </template>

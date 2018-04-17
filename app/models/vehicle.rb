@@ -29,16 +29,18 @@ class Vehicle < ApplicationRecord
   STATUS = ['clean', 'dirty', 'service']
   TYPES = ['subcompact', 'compact', 'mid_size']
 
-  has_many :rentals
-  has_many :rentals_closed, -> { closed },                      class_name: 'Rental'
-  has_one :open_rental,     -> { open_status },                 class_name: 'Rental'
-  has_one :last_rental,     -> { past.order(drop_off: :desc) }, class_name: 'Rental'
-  has_one :latest_rental,   -> { order(drop_off: :desc) },      class_name: 'Rental'
-  has_many :rental_rates, through: :rentals
-  has_many :line_items, through: :rentals
-
   belongs_to :original_location, class_name: 'Location'
   belongs_to :location
+
+  has_many :vehicle_registrations
+
+  has_many :rentals
+  has_many :rentals_closed, -> { closed },                      class_name: 'Rental'
+  has_one :rental_open,     -> { open_status },                 class_name: 'Rental'
+  has_one :rental_last,     -> { past.order(drop_off: :desc) }, class_name: 'Rental'
+  has_one :rental_lastest,   -> { order(drop_off: :desc) },      class_name: 'Rental'
+  has_many :rental_rates, through: :rentals
+  has_many :line_items, through: :rentals
 
   scope :vehicle_type, -> (type) { where(vehicle_type: type) }
 
@@ -49,15 +51,15 @@ class Vehicle < ApplicationRecord
   end
 
   def available?
-    !open_rental?
+    !rental_open?
   end
 
   def dirty?
     status == 'dirty'
   end
 
-  def open_rental?
-    open_rental.present?
+  def rental_open?
+    rental_open.present?
   end
 
   def make_model
@@ -65,15 +67,15 @@ class Vehicle < ApplicationRecord
   end
 
   def odometer
-    latest_rental.drop_off_odometer || latest_rental.pickup_odometer
+    rental_lastest.drop_off_odometer || rental_lastest.pickup_odometer
   end
 
   def fuel_level
-    latest_rental.drop_off_fuel || latest_rental.pickup_fuel
+    rental_lastest.drop_off_fuel || rental_lastest.pickup_fuel
   end
 
   def status
-    return 'rented' if open_rental?
+    return 'rented' if rental_open?
     super
   end
 end
