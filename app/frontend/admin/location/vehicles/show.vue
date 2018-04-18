@@ -4,10 +4,10 @@
   import ActionsIcon from 'Components/icons/actions'
   import VehicleInformation from 'Components/vehicle/information'
 
-  import VehicleStatus from './vehicle/_status'
+  import VehicleStatus from './vehicle/status'
 
   export default {
-    name: 'vehicle',
+    name: 'Vehicle',
     data () {
       return {
         vehicle: {},

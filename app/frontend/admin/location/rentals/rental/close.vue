@@ -1,10 +1,13 @@
 <script>
   import Shake from 'Utils/transitions/shake'
 
+  import InputSubmit from 'Mixins/input_submit'
+
   import InputDateTime from 'Components/inputs/date_time'
   import Popup from 'Components/popup'
 
   export default {
+    name: 'RentalClose',
     data () {
       return {
         open: false,
@@ -15,27 +18,34 @@
         })
       }
     },
-    mounted () {
-      this.open = true
-    },
+    mixins: [
+      InputSubmit,
+    ],
     components: {
       InputDateTime,
       Popup,
+    },
+    mounted () {
+      this.open = true
     },
     methods: {
       close () {
         this.$emit('close')
       },
       closeRental () {
+        this.inputSubmitStart()
+
         this.$http.post(this.$route.path + '/close', {
           close: this.form.data(),
         })
         .then(response => {
           this.form.errors.clear
+          this.inputSubmitFinish()
           this.close()
         })
         .catch(error => {
           this.form.errors.record(error.response.data.errors)
+          this.inputSubmitFinish()
         })
       },
     },
@@ -86,7 +96,7 @@
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
-          button.btn.btn-primary.right(@click.prevent='closeRental()') Close
+          input-submit.btn.btn-primary.right(@click.native.prevent='closeRental()' :loading='input_submit_loading') Close
 </template>
 
 <style lang='stylus' scoped>

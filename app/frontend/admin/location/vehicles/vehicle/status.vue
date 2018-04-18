@@ -1,9 +1,10 @@
 <script>
   import Shake from 'Utils/transitions/shake'
-
+  import InputSubmit from 'Mixins/input_submit'
   import Popup from 'Components/popup'
 
   export default {
+    name: 'VehicleStatus',
     data () {
       return {
         open: false,
@@ -12,26 +13,33 @@
         })
       }
     },
-    mounted () {
-      this.open = true
-    },
+    mixins: [
+      InputSubmit,
+    ],
     components: {
       Popup,
+    },
+    mounted () {
+      this.open = true
     },
     methods: {
       close () {
         this.$emit('close')
       },
       changeVehicleStatus () {
+        this.inputSubmitStart()
+
         this.$http.post(this.$route.path + '/status', {
           status: this.form.data(),
         })
         .then(response => {
           this.form.errors.clear
+          this.inputSubmitFinish()
           this.close()
         })
         .catch(error => {
           this.form.errors.record(error.response.data.errors)
+          this.inputSubmitFinish()
         })
       },
     },
@@ -61,7 +69,7 @@
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
-          button.btn.btn-primary.right(@click.prevent='changeVehicleStatus()') Update
+          input-submit.btn.btn-primary.right(@click.native.prevent='changeVehicleStatus()' :loading='input_submit_loading') Change
 </template>
 
 <style lang='stylus' scoped>
