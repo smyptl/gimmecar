@@ -9,6 +9,8 @@
 
   import Percent from 'Filters/percent'
 
+  import AddRegistration from './vehicle/add_registration'
+
   export default {
     name: 'Vehicle',
     data () {
@@ -18,10 +20,13 @@
         revenue: {},
         tab: '',
         loading: true,
+        action: '',
+        action_url: ''
       }
     },
     components: {
       ActionsIcon,
+      AddRegistration,
       Dropdown,
       MonthlyRevenue,
       RentalsTable,
@@ -50,6 +55,15 @@
           this.tab = tab
         })
       },
+      refreshData () {
+        this.getData()
+        this.action = ''
+        this.view(this.tab)
+      },
+      addRegistration () {
+        this.action_url = this.vehicle.actions['add_registration'].url
+        this.action = 'addRegistration'
+      },
       viewRental (number) {
         this.$router.push({ name: 'rental', params: { number: number }})
       },
@@ -71,6 +85,13 @@
     .panel.panel-base
       .panel-base-header
         h2 {{ vehicle.make }} {{ vehicle.model }}
+        dropdown.flex-element.right
+          a.right(href='#' data-toggle='dropdown')
+            actions-icon.action-icon
+          .dropdown-menu.right(slot='dropdown-menu')
+            ul
+              li
+                button.link(@click='addRegistration()') Add Registration
 
       vehicle-information(v-bind:vehicle='vehicle' :show_location='true')
         tr
@@ -94,7 +115,12 @@
                   :show_vehicle='false'
                   @view-rental='viewRental($event)')
 
-    monthly-revenue(v-if='tabActive("revenue")' :revenue='revenue')
+    monthly-revenue(v-if='tabActive("revenue")'
+                    :revenue='revenue')
+
+    component(:is='action'
+              :url='action_url'
+              @close='refreshData')
 </template>
 
 <style lang='stylus' scoped>

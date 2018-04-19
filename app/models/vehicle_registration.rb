@@ -15,4 +15,5 @@ class VehicleRegistration < ApplicationRecord
 
   belongs_to :vehicle
 
+  has_one_attached :document
 end

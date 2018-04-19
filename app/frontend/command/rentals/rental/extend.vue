@@ -17,9 +17,9 @@
       return {
         open: false,
         form: new this.$form({
-          date: new Date(),
+          date: null,
           days: 1,
-          amount: '',
+          amount: null,
         }),
       }
     },
@@ -69,7 +69,7 @@
         h4.panel-form-popup-header Extend
 
       .panel-form.panel-form-padding.panel-popup-form-content
-        .input-block.mt-default.mb-sm(v-if='form.errors.has("base")')
+        .input-block.whole.mt-default.mb-sm(v-if='form.errors.has("base")')
           input-error-message(v-bind:base='true' v-bind:errors='form.errors.get("base")')
 
         .input-row

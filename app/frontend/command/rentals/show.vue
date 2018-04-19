@@ -1,10 +1,10 @@
 <script>
-  import FDate from 'Filters/date'
-  import FTime from 'Filters/time'
-  import Percent from 'Filters/percent'
-  import Currency from 'Filters/currency'
+  import FDate      from 'Filters/date'
+  import FTime      from 'Filters/time'
+  import Percent    from 'Filters/percent'
+  import Currency   from 'Filters/currency'
   import Capitalize from 'lodash/capitalize'
-  import Camelcase from 'lodash/camelCase'
+  import Camelcase  from 'lodash/camelCase'
 
   import Dropdown from 'Components/dropdown'
 
@@ -87,7 +87,7 @@
           .dropdown-menu.right(slot='dropdown-menu')
             ul
               li
-                button.link(@click='printInvoice') Print Invoice
+                button.link(@click='printInvoice()') Print Invoice
               li(v-if='rental.actions.extend')
                 button.link(@click='loadAction("extend")') Extend Rental
               li(v-if='rental.actions.return_deposit')
