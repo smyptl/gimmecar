@@ -38,7 +38,7 @@ class Vehicle < ApplicationRecord
   has_many :rentals_closed, -> { closed },                      class_name: 'Rental'
   has_one :rental_open,     -> { open_status },                 class_name: 'Rental'
   has_one :rental_last,     -> { past.order(drop_off: :desc) }, class_name: 'Rental'
-  has_one :rental_lastest,   -> { order(drop_off: :desc) },      class_name: 'Rental'
+  has_one :rental_latest,   -> { order(drop_off: :desc) },      class_name: 'Rental'
   has_many :rental_rates, through: :rentals
   has_many :line_items, through: :rentals
 
@@ -67,11 +67,11 @@ class Vehicle < ApplicationRecord
   end
 
   def odometer
-    rental_lastest.drop_off_odometer || rental_lastest.pickup_odometer
+    rental_latest.drop_off_odometer || rental_latest.pickup_odometer
   end
 
   def fuel_level
-    rental_lastest.drop_off_fuel || rental_lastest.pickup_fuel
+    rental_latest.drop_off_fuel || rental_latest.pickup_fuel
   end
 
   def status
