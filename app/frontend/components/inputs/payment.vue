@@ -2,7 +2,7 @@
   import IsUndefined from 'lodash/isUndefined'
 
   export default {
-    mounted () {
+    mounted() {
       window.card.mount(this.$el)
 
       let self = this
@@ -15,7 +15,7 @@
         }
       });
     },
-    beforeDestroy () {
+    beforeDestroy() {
       window.card.unmount()
     },
   }

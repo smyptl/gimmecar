@@ -45,14 +45,18 @@ export default class Form {
     this.errors = new Errors()
   }
 
-  data() {
-    let data = {}
+  data(namespace = null) {
+    let data = new FormData()
 
     for (let property in this.originalData) {
-      data[property] = this[property]
+      data.append(property, this[property])
     }
 
     return data
+  }
+
+  toFormData() {
+
   }
 
   populate(data) {

@@ -10,7 +10,7 @@ class Services::Command::Vehicle < Lib::Services::Base
 
       o.nested :actions do |n|
         n.nested :add_registration do |n|
-          n.attribute :url, output: -> (v) { urls.command_vehicle_add_registration(vehicle_id: v.vin) }
+          n.attribute :url, output: -> (v) { urls.command_vehicle_add_registration_path(vehicle_id: v.vin) }
         end
       end
     end

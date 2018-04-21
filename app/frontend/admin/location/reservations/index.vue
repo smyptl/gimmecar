@@ -3,13 +3,13 @@
 
   export default {
     name: 'index',
-    data () {
+    data() {
       return {
         reservations: [],
       }
     },
     filters: {
-      time (val) {
+      time(val) {
         var val = Moment(val)
 
         if (val.isValid()) {
@@ -17,21 +17,21 @@
         }
       },
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     methods: {
-      getData () {
+      getData() {
         this.$http
           .get(this.$route.path)
           .then(response => {
             this.reservations = response.data
         })
       },
-      viewRental (number) {
+      viewRental(number) {
         this.$router.push({ name: 'rental', params: { number: number }})
       },
     },

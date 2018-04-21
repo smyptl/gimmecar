@@ -11,7 +11,7 @@
         default: false,
       },
     },
-    data () {
+    data() {
       return {
         show: false,
       }
@@ -19,11 +19,11 @@
     components: {
       IconCancel,
     },
-    mounted () {
+    mounted() {
       this.show = true
     },
     methods: {
-      closePopup () {
+      closePopup() {
         return this.show = false
       },
       afterLeave(el) {

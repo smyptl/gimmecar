@@ -5,6 +5,6 @@ class Command::Rentals::ExtendController < Command::Rentals::BaseController
   end
 
   def create
-    Actions::Command::Rental::Extend.new(params.require(:extend).merge(number: number)).execute(success, failure)
+    Actions::Command::Rental::Extend.new(params.merge(number: number)).execute(success, failure)
   end
 end

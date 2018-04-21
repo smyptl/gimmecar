@@ -18,7 +18,7 @@
 
   export default {
     name: 'Rental',
-    data () {
+    data() {
       return {
         rental: {},
         loading: true,
@@ -41,35 +41,35 @@
       ReturnDeposit,
       RightArrowIcon,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     computed: {
-      is_closed () {
+      is_closed() {
         return this.rental.status == "closed"
       },
     },
     methods: {
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.rental = response.data
           this.loading = false
         })
       },
-      loadAction (action) {
+      loadAction(action) {
         this.action_url = this.rental.actions[action].url
         this.action = Camelcase(action)
       },
-      refreshData () {
+      refreshData() {
         this.getData()
         this.action = ''
       },
-      emailInvoice () {
+      emailInvoice() {
       },
-      printInvoice () {
+      printInvoice() {
         this.$router.push({ name: 'rental_print', params: { number: this.rental.number }})
       },
     },
@@ -194,5 +194,4 @@
   .action-icon
     float: right
     height: 1.25rem
-
 </style>

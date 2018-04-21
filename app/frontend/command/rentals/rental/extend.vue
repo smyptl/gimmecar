@@ -13,7 +13,7 @@
         required: true
       }
     },
-    data () {
+    data() {
       return {
         open: false,
         form: new this.$form({
@@ -30,7 +30,7 @@
       InputDate,
       Popup,
     },
-    mounted () {
+    mounted() {
       this.$http.get(this.url).then(response => {
         this.form.amount = response.data.rental_last_rate_amount
         this.form.date   = response.data.drop_off
@@ -39,24 +39,22 @@
       this.open = true
     },
     methods: {
-      close () {
+      close() {
         this.$emit('close')
       },
-      extendRental () {
+      extendRental() {
         this.inputSubmitStart()
 
-        this.$http.post(this.url, {
-          extend: this.form.data(),
-        })
-        .then(response => {
-          this.form.errors.clear()
-          this.inputSubmitFinish()
-          this.close()
-        })
-        .catch(error => {
-          this.form.errors.record(error.response.data.errors)
-          this.inputSubmitFinish()
-        })
+        this.$http.post(this.url, this.form.data())
+          .then(response => {
+            this.form.errors.clear()
+            this.inputSubmitFinish()
+            this.close()
+          })
+          .catch(error => {
+            this.form.errors.record(error.response.data.errors)
+            this.inputSubmitFinish()
+          })
       },
     },
   }

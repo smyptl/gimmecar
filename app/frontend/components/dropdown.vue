@@ -3,20 +3,20 @@
   import EventListener from 'Utils/event_listener.js';
 
   export default {
-    data () {
+    data() {
       return {
         open: false,
       }
     },
     methods: {
-      close () {
+      close() {
         this.open = false
       },
-      toggleDropdown (e) {
+      toggleDropdown(e) {
         e.preventDefault();
-        this.open = (this.open == false)
+        this.open =(this.open == false)
       },
-      openDropdown (el, done) {
+      openDropdown(el, done) {
         Snabbt(el, {
           scale: [1, 1],
           fromScale: [0.95, 0.95],
@@ -30,7 +30,7 @@
           },
         })
       },
-      closeDropdown (el, done) {
+      closeDropdown(el, done) {
         Snabbt(el, {
           scale: [0.95, 0.95],
           fromScale: [1, 1],
@@ -45,7 +45,7 @@
         })
       },
     },
-    mounted () {
+    mounted() {
       const el = this.$el;
       const toggle = el.querySelector('[data-toggle="dropdown"]');
 
@@ -58,7 +58,7 @@
         }
       });
     },
-    beforeDestroy () {
+    beforeDestroy() {
       if (this._closeEvent) {
         this._closeEvent.remove();
       }

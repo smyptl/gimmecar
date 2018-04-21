@@ -8,7 +8,7 @@
 
   export default {
     name: 'Quote',
-    data () {
+    data() {
       return {
         quote: new this.$form({
           location_id: '',
@@ -27,33 +27,31 @@
       InputDateTime,
       RentalInvoice,
     },
-    created () {
+    created() {
       this.getLocations()
     },
     methods: {
-      getLocations () {
+      getLocations() {
         this.$http
           .get(this.$route.path)
           .then(response => {
             this.locations = response.data
         })
       },
-      getQuote () {
+      getQuote() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path, {
-          quote: this.quote.data(),
-        })
-        .then(response => {
-          this.quote.errors.clear
-          this.inputSubmitFinish()
-          this.summary = response.data
-        })
-        .catch(error => {
-          Shake(this.$refs.form)
-          this.inputSubmitFinish()
-          this.quote.errors.record(error.response.data.errors)
-        })
+        this.$http.post(this.$route.path, this.quote.data)
+          .then(response => {
+            this.quote.errors.clear
+            this.inputSubmitFinish()
+            this.summary = response.data
+          })
+          .catch(error => {
+            Shake(this.$refs.form)
+            this.inputSubmitFinish()
+            this.quote.errors.record(error.response.data.errors)
+          })
       },
       resetSummary() {
         this.summary = null

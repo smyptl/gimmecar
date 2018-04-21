@@ -17,7 +17,7 @@
       Capitalize,
     },
     computed: {
-      sorted_vehicles () {
+      sorted_vehicles() {
         return this.vehicles.data
       },
     },

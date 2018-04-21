@@ -1,7 +1,7 @@
 <script>
   export default {
     name: 'Dashboard',
-    created () {
+    created() {
       this.$router.push({ name: 'rentals' })
     },
   }

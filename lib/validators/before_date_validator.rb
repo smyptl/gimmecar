@@ -7,6 +7,8 @@ class BeforeDateValidator < ActiveModel::EachValidator
     return if options[:allow_nil] && date.nil?
     raise ArgumentError if date.nil?
 
-    record.errors.add(attribute, (options[:message] || "must be before #{date.strftime('%m/%d/%Y')}")) unless value.before?(date)
+    unless value.before?(date)
+      record.errors.add(attribute, (options[:message] || "must be before #{date.strftime('%m/%d/%Y')}"))
+    end
   end
 end

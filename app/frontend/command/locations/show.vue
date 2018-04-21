@@ -7,7 +7,7 @@
 
   export default {
     name: 'Location',
-    data () {
+    data() {
       return {
         location: {},
         rentals: {},
@@ -24,29 +24,29 @@
       RentalsTable,
       VehicleTable,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     methods: {
-      view (tab) {
+      view(tab) {
         this.$http.get(this.$route.path + '/' + tab).then(response => {
           this[tab] = response.data
           this.tab = tab
         })
       },
-      viewRental (number) {
+      viewRental(number) {
         this.$router.push({ name: 'rental', params: { number: number }})
       },
-      viewVehicle (vin) {
+      viewVehicle(vin) {
         this.$router.push({ name: 'vehicle', params: { vin: vin }})
       },
-      tabActive (value) {
+      tabActive(value) {
         return this.tab === value;
       },
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.location = response.data
         })

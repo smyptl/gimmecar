@@ -8,7 +8,7 @@
 
   export default {
     name: 'RentalClose',
-    data () {
+    data() {
       return {
         open: false,
         form: new this.$form({
@@ -25,28 +25,26 @@
       InputDateTime,
       Popup,
     },
-    mounted () {
+    mounted() {
       this.open = true
     },
     methods: {
-      close () {
+      close() {
         this.$emit('close')
       },
-      closeRental () {
+      closeRental() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path + '/close', {
-          close: this.form.data(),
-        })
-        .then(response => {
-          this.form.errors.clear
-          this.inputSubmitFinish()
-          this.close()
-        })
-        .catch(error => {
-          this.form.errors.record(error.response.data.errors)
-          this.inputSubmitFinish()
-        })
+        this.$http.post(this.$route.path + '/close', this.form.data())
+          .then(response => {
+            this.form.errors.clear
+            this.inputSubmitFinish()
+            this.close()
+          })
+          .catch(error => {
+            this.form.errors.record(error.response.data.errors)
+            this.inputSubmitFinish()
+          })
       },
     },
   }

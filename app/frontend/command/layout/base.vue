@@ -1,26 +1,26 @@
 <script>
   export default {
     name: 'Command',
-    data () {
+    data() {
       return {
         nav: false,
         add: false,
       }
     },
     methods: {
-      toggleNav () {
+      toggleNav() {
         this.nav = this.nav === false
       },
-      closeNav () {
+      closeNav() {
         this.nav = false
       },
-      toggleAdd () {
+      toggleAdd() {
         this.add = this.add === false
       },
-      closeAdd () {
+      closeAdd() {
         this.add = false
       },
-      search () {
+      search() {
       },
     },
   }

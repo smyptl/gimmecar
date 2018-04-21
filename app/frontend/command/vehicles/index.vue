@@ -3,7 +3,7 @@
 
   export default {
     name: 'Vehicles',
-    data () {
+    data() {
       return {
         vehicles: {},
       }
@@ -11,21 +11,21 @@
     components: {
       VehicleTable,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     methods: {
-      getData () {
+      getData() {
         this.$http
           .get(this.$route.path)
           .then(response => {
             this.vehicles = response.data
         })
       },
-      viewVehicle (vin) {
+      viewVehicle(vin) {
         this.$router.push({ name: 'vehicle', params: { vin: vin }})
       },
     },

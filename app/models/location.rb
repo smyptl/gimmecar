@@ -34,6 +34,7 @@ class Location < ApplicationRecord
   has_many :vehicles_with_type, -> (vehicle_type) { vehicles.where(vehicle_type: vehicle_type) }
 
   has_many :rates
+
   has_many :tax_rates
   has_one :latest_tax_rate, -> { order(created_at: :desc) }, class_name: 'TaxRate'
 

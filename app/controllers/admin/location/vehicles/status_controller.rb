@@ -7,6 +7,6 @@ class Admin::Location::Vehicles::StatusController < Admin::Location::Vehicles::B
   end
 
   def create
-    Actions::Admin::Vehicles::ChangeStatus.new(params.require(:status)).execute(success, failure, { vin: vin })
+    Actions::Admin::Vehicles::ChangeStatus.new(params).execute(success, failure, { vin: vin })
   end
 end

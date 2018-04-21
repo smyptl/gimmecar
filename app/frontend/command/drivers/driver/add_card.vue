@@ -8,7 +8,7 @@
 
   export default {
     name: 'Add-Card',
-    data () {
+    data() {
       return {
         open: false,
         form: new this.$form({
@@ -23,14 +23,14 @@
       Payment,
       Popup,
     },
-    mounted () {
+    mounted() {
       this.open = true
     },
     methods: {
-      close () {
+      close() {
         this.$emit('close')
       },
-      addToken () {
+      addToken() {
         this.inputSubmitStart()
 
         stripe.createToken(window.card).then(result => {

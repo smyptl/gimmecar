@@ -3,7 +3,7 @@ module Actions::Admin::Location::Rental::New::Concerns::TermsAndConditions
 
   included do
     attributes do |a|
-      a.boolean :add_additional_driver
+      a.boolean   :add_additional_driver
       a.signature :driver_signature
       a.signature :additional_driver_signature
     end

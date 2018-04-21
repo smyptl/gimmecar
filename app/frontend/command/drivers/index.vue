@@ -1,31 +1,31 @@
 <script>
   export default {
     name: 'Drivers',
-    data () {
+    data() {
       return {
         drivers: {},
       }
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     computed: {
-      sorted_drivers () {
+      sorted_drivers() {
         return this.drivers.data
       },
     },
     methods: {
-      getData () {
+      getData() {
         this.$http
           .get(this.$route.path)
           .then(response => {
             this.drivers = response.data
         })
       },
-      viewDriver (id) {
+      viewDriver(id) {
         this.$router.push({ name: 'driver', params: { id: id } })
       },
     },

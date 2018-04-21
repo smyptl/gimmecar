@@ -23,7 +23,7 @@
       },
       time_zone: {
         type: String,
-        default () {
+        default() {
           return Moment.tz.guess()
         }
       },
@@ -33,12 +33,12 @@
       },
       classes: {
         type: Array,
-        default () {
+        default() {
           return []
         },
       },
     },
-    data () {
+    data() {
       return {
         current_date_time: '',
         date_time_formatted: '',
@@ -46,7 +46,7 @@
         calendar_date_time: '',
       }
     },
-    mounted () {
+    mounted() {
       this.parseValue(this.value)
 
       let month_year = this.current_date_time.clone()
@@ -62,42 +62,42 @@
         }
       });
     },
-    beforeDestroy () {
+    beforeDestroy() {
       if (this._closeEvent) {
         this._closeEvent.remove();
       }
     },
     watch: {
-      value (val, oldVal) {
+      value(val, oldVal) {
         this.parseValue(val)
       },
     },
     computed: {
-      current_date () {
+      current_date() {
         return Moment(new Date(this.current_date_time.year(), this.current_date_time.month(), this.current_date_time.date()))
       },
-      calendar_month_name () {
+      calendar_month_name() {
         return MONTH_NAMES[this.calendar_date_time.month()]
       },
-      calendar_year () {
+      calendar_year() {
         return this.calendar_date_time.year()
       },
-      calendar_dates () {
+      calendar_dates() {
         return Times(this.calendar_days_in_month, (day) => {
           return Moment(new Date(this.calendar_date_time.year(), this.calendar_date_time.month(), day + 1))
         })
       },
-      calendar_days_in_month () {
+      calendar_days_in_month() {
         return new Date(this.calendar_date_time.year(), this.calendar_date_time.month() + 1, 0).getDate()
       },
-      calendar_beginning_blank_dates () {
+      calendar_beginning_blank_dates() {
         if (this.calendar_date_time.day() == 0) {
           return 0
         }
 
         return this.calendar_date_time.day()
       },
-      calendar_ending_blank_dates () {
+      calendar_ending_blank_dates() {
         let days_remaining = (this.calendar_beginning_blank_dates + this.calendar_dates.length) % 7
 
         if (days_remaining != 0) {
@@ -106,27 +106,27 @@
 
         return 0
       },
-      calendar_clock_hour () {
+      calendar_clock_hour() {
         return this.current_date_time.format('h')
       },
-      calendar_clock_minute () {
+      calendar_clock_minute() {
         return this.current_date_time.format('mm')
       },
-      calendar_clock_period () {
+      calendar_clock_period() {
         return this.current_date_time.format('A')
       },
     },
     methods: {
-      calendar_one_month_back () {
+      calendar_one_month_back() {
         return this.calendar_date_time = this.calendar_date_time.subtract(1, 'months').clone()
       },
-      calendar_one_month_forward () {
+      calendar_one_month_forward() {
         return this.calendar_date_time = this.calendar_date_time.add(1, 'months').clone()
       },
       calendar_selected_date (d) {
         return d.format() == this.current_date.format()
       },
-      calendarAddHour () {
+      calendarAddHour() {
         if (this.current_date_time.hour() == 23) {
           this.current_date_time.hour(0)
         } else {
@@ -135,7 +135,7 @@
 
         this.formatDateTime()
       },
-      calendarSubtractHour () {
+      calendarSubtractHour() {
         if (this.current_date_time.hour() == 0) {
           this.current_date_time.hour(23)
         } else {
@@ -144,7 +144,7 @@
 
         this.formatDateTime()
       },
-      calendarAddMinute () {
+      calendarAddMinute() {
         if (this.current_date_time.minute() == 59) {
           this.current_date_time.minute(0)
         } else {
@@ -153,7 +153,7 @@
 
         this.formatDateTime()
       },
-      calendarSubtractMinute () {
+      calendarSubtractMinute() {
         if (this.current_date_time.minute() == 0) {
           this.current_date_time.minute(59)
         } else {
@@ -162,35 +162,35 @@
 
         this.formatDateTime()
       },
-      selectDate (val) {
+      selectDate(val) {
         this.current_date_time.year(val.year())
         this.current_date_time.month(val.month())
         this.current_date_time.date(val.date())
 
         this.formatDateTime()
       },
-      parseValue (val) {
+      parseValue(val) {
         this.current_date_time = Moment.tz(val, this.time_zone)
         this.formatDateTime()
       },
-      formatDateTime () {
+      formatDateTime() {
         this.date_time_formatted = this.current_date_time.format('M/D/YYYY @ h:mm A')
         this.emitInput()
       },
-      emitInput () {
+      emitInput() {
         this.$emit('input', this.current_date_time.format())
       },
-      toggleCalendar () {
+      toggleCalendar() {
         if (this.disabled) {
           return
         }
 
         this.calendar = (false == this.calendar)
       },
-      closeCalendar () {
+      closeCalendar() {
         this.calendar = false
       },
-      showCalendar () {
+      showCalendar() {
         if (this.disabled) {
           return
         }

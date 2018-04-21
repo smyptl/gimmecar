@@ -67,11 +67,11 @@ class Vehicle < ApplicationRecord
   end
 
   def odometer
-    rental_latest.drop_off_odometer || rental_latest.pickup_odometer
+    (rental_latest.drop_off_odometer || rental_latest.pickup_odometer) if rental_latest
   end
 
   def fuel_level
-    rental_latest.drop_off_fuel || rental_latest.pickup_fuel
+    (rental_latest.drop_off_fuel || rental_latest.pickup_fuel) if rental_latest
   end
 
   def status

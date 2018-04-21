@@ -24,7 +24,7 @@
       time: FTime,
     },
     computed: {
-      rates () {
+      rates() {
         return SortBy(this.summary.rental_rates, ['date'])
       },
     },

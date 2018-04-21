@@ -27,7 +27,7 @@
       },
     },
     filters: {
-      time (val) {
+      time(val) {
         var val = Moment(val)
 
         if (val.isValid()) {
@@ -36,7 +36,7 @@
       },
     },
     computed: {
-      sorted_rentals () {
+      sorted_rentals() {
         return SortBy(this.rentals.data, ['pickup'])
       }
     },

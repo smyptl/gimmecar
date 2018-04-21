@@ -7,6 +7,8 @@ class AfterDateValidator < ActiveModel::EachValidator
     return if options[:allow_nil] && date.nil?
     raise ArgumentError if date.nil?
 
-    record.errors.add(attribute, (options[:message] || "must be after #{date.strftime('%m/%d/%Y')}")) unless value.after?(date)
+    unless value.after?(date)
+      record.errors.add(attribute, (options[:message] || "must be after #{date.strftime('%m/%d/%Y')}"))
+    end
   end
 end

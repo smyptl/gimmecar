@@ -16,7 +16,7 @@
 
   export default {
     name: 'Driver',
-    data () {
+    data() {
       return {
         driver: {},
         insurance_policies: {},
@@ -39,7 +39,7 @@
       Capitalize,
       Currency,
       date: TDate,
-      time (val) {
+      time(val) {
         var val = Moment(val)
 
         if (val.isValid()) {
@@ -47,43 +47,43 @@
         }
       },
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     computed: {
-      card_sources () {
+      card_sources() {
         return(this.sources.data, n => {
           return n.object != 'card'
         })
       },
     },
     methods: {
-      addCard () {
+      addCard() {
         return this.action = 'add-card'
       },
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.driver = response.data
         })
       },
-      refreshData () {
+      refreshData() {
         this.getData()
         this.view(this.tab)
         this.action = ''
       },
-      tabActive (value) {
+      tabActive(value) {
         return this.tab === value;
       },
-      view (tab) {
+      view(tab) {
         this.$http.get(this.$route.path + '/' + tab).then(response => {
           this[SnackCase(tab)] = response.data
           this.tab = tab
         })
       },
-      viewRental (number) {
+      viewRental(number) {
         this.$router.push({ name: 'rental', params: { number: number }})
       },
     },

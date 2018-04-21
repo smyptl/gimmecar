@@ -17,10 +17,10 @@
       Currency,
     },
     computed: {
-      total () {
+      total() {
         return SumBy(Values(this.revenue), v => { return parseInt(v) })
       },
-      average () {
+      average() {
         return this.total/Size(this.revenue)
       }
     },

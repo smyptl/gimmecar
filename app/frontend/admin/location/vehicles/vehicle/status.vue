@@ -5,7 +5,7 @@
 
   export default {
     name: 'VehicleStatus',
-    data () {
+    data() {
       return {
         open: false,
         form: new this.$form({
@@ -19,28 +19,26 @@
     components: {
       Popup,
     },
-    mounted () {
+    mounted() {
       this.open = true
     },
     methods: {
-      close () {
+      close() {
         this.$emit('close')
       },
-      changeVehicleStatus () {
+      changeVehicleStatus() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path + '/status', {
-          status: this.form.data(),
-        })
-        .then(response => {
-          this.form.errors.clear
-          this.inputSubmitFinish()
-          this.close()
-        })
-        .catch(error => {
-          this.form.errors.record(error.response.data.errors)
-          this.inputSubmitFinish()
-        })
+        this.$http.post(this.$route.path + '/status', this.form.data())
+          .then(response => {
+            this.form.errors.clear
+            this.inputSubmitFinish()
+            this.close()
+          })
+          .catch(error => {
+            this.form.errors.record(error.response.data.errors)
+            this.inputSubmitFinish()
+          })
       },
     },
   }

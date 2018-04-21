@@ -13,7 +13,7 @@
 
   export default {
     name: 'Vehicle',
-    data () {
+    data() {
       return {
         vehicle: {},
         rentals: {},
@@ -34,7 +34,7 @@
     },
     filters: {
       Percent,
-      time (val) {
+      time(val) {
         var val = Moment(val)
 
         if (val.isValid()) {
@@ -42,35 +42,35 @@
         }
       },
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     methods: {
-      view (tab) {
+      view(tab) {
         this.$http.get(this.$route.path + '/' + tab).then(response => {
           this[tab] = response.data
           this.tab = tab
         })
       },
-      refreshData () {
+      refreshData() {
         this.getData()
         this.action = ''
         this.view(this.tab)
       },
-      addRegistration () {
+      addRegistration() {
         this.action_url = this.vehicle.actions['add_registration'].url
         this.action = 'addRegistration'
       },
-      viewRental (number) {
+      viewRental(number) {
         this.$router.push({ name: 'rental', params: { number: number }})
       },
-      tabActive (value) {
+      tabActive(value) {
         return this.tab === value;
       },
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.vehicle = response.data
           this.loading = false
@@ -126,4 +126,8 @@
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/table'
   @import '~Styles/components/panels/sub_navigation'
+
+  .action-icon
+    float: right
+    height: 1.25rem
 </style>

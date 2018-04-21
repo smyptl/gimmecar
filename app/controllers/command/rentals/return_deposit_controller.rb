@@ -5,6 +5,6 @@ class Command::Rentals::ReturnDepositController < Command::Rentals::BaseControll
   end
 
   def create
-    Actions::Command::Rental::ReturnDeposit.new(params.require(:return_deposit).merge(number: number)).execute(success, failure)
+    Actions::Command::Rental::ReturnDeposit.new(params.merge(number: number)).execute(success, failure)
   end
 end

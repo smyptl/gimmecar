@@ -8,7 +8,7 @@
 
   export default {
     name: 'Vehicle',
-    data () {
+    data() {
       return {
         vehicle: {},
         change_status: false,
@@ -20,23 +20,23 @@
       VehicleInformation,
       VehicleStatus,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     methods: {
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.vehicle = response.data
         })
       },
-      statusChanged () {
+      statusChanged() {
         this.getData()
         this.change_status = false
       },
-      changeStatus () {
+      changeStatus() {
         this.change_status = true
       },
     },

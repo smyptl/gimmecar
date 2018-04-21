@@ -6,7 +6,7 @@
 
   export default {
     name: 'Invoice',
-    data () {
+    data() {
       return {
         summary: {}
       }
@@ -17,17 +17,17 @@
       FinancialResponsibility,
       TermsAndConditions,
     },
-    mounted () {
+    mounted() {
       this.$http.get(window.location.pathname)
         .then(response => {
           this.summary = response.data
         })
     },
     methods: {
-      goBack () {
+      goBack() {
         this.$router.push({ name: 'rental', params: { number: this.$route.params.number }})
       },
-      print () {
+      print() {
         window.print()
       },
     },

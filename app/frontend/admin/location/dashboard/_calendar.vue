@@ -6,12 +6,12 @@
   export default {
     name: 'calendar',
     computed: {
-      date_range () {
+      dateRange() {
         return Times(62, n => {
           return Moment().add(n, 'days')
         })
       },
-      vehicles () {
+      vehicles() {
         return []
       },
     },
@@ -38,7 +38,7 @@
     #calendar-content
       .calendar-scroll
         .calendar-header
-          .calendar-header-date(v-for='date in date_range')
+          .calendar-header-date(v-for='date in dateRange')
             span.date {{ date.format('D') }}
 
         .calendar-rentals

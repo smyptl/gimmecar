@@ -3,7 +3,7 @@
 
   export default {
     name: 'Location',
-    data () {
+    data() {
       return {
         nav: false,
         add: false,
@@ -13,24 +13,24 @@
       Add,
     },
     computed: {
-      location_name () {
-        return window.location_name
+      locationName() {
+        return window.locationName
       },
     },
     methods: {
-      toggleNav () {
+      toggleNav() {
         this.nav = this.nav === false
       },
-      closeNav () {
+      closeNav() {
         this.nav = false
       },
-      toggleAdd () {
+      toggleAdd() {
         this.add = this.add === false
       },
-      closeAdd () {
+      closeAdd() {
         this.add = false
       },
-      search () {
+      search() {
       },
     },
   }
@@ -42,7 +42,7 @@
       .gimmecar-app-container
         h1.logo
           | GimmeCar
-          small {{ location_name }}
+          small {{ locationName }}
 
 
         nav.left

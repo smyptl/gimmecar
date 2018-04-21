@@ -26,7 +26,7 @@ class Admin::LoginController < ApplicationController
       render json: {}, status: 200
     end
 
-    Actions::Admin::User::Login.new(params.require(:login)).execute(success, failure)
+    Actions::Admin::User::Login.new(params).execute(success, failure)
   end
 
   #def destroy

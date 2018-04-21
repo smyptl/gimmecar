@@ -1,10 +1,10 @@
-class Action::Command::Vehicle::AddRegistration < Lib::Actions::Base
+class Actions::Command::Vehicle::AddRegistration < Lib::Actions::Base
 
   attributes do |a|
-    a.date :date_effective
-    a.date :date_expiration
+    a.date   :date_effective
+    a.date   :date_expiration
     #a.document :registration
-    a.text :notes
+    a.string :notes
   end
 
   validates :date_effective,

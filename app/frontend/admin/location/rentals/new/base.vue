@@ -17,7 +17,7 @@
 
   export default {
     name: 'Rental-New',
-    data () {
+    data() {
       return {
         rental: new this.$form({
           drop_off: new Date().setDate(new Date().getDate() + 1),
@@ -106,10 +106,10 @@
       VehicleForm,
     },
     computed: {
-      pickup () {
+      pickup() {
         return new Date()
       },
-      steps () {
+      steps() {
         return [
           'Details',
           'Rates',
@@ -120,114 +120,102 @@
           'Payment',
         ]
       },
-      number_of_steps () {
+      number_of_steps() {
         return this.steps.length
       },
-      current_step_number () {
+      current_step_number() {
         return this.steps.indexOf(this.current_step) + 1
       },
     },
     methods: {
-      nextStep () {
+      nextStep() {
         this.current_step = this.steps[this.steps.indexOf(this.current_step) + 1]
       },
-      goBack () {
+      goBack() {
         this.current_step = this.steps[this.steps.indexOf(this.current_step) - 1]
       },
-      successResponse () {
+      successResponse() {
         this.rental.errors.clear
         this.inputSubmitFinish()
       },
-      errorResponse (error) {
+      errorResponse(error) {
         Shake(this.$refs.form)
         this.inputSubmitFinish()
         this.rental.errors.record(error.response.data.errors)
       },
-      getRates () {
+      getRates() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path + '/rates', {
-          rental: this.rental.data(),
-        })
-        .then(response => {
-          this.successResponse()
-          this.summary = response.data
-          this.nextStep()
-        })
-        .catch(error => {
-          this.errorResponse(error)
-        })
+        this.$http.post(this.$route.path + '/rates', this.rental.data())
+          .then(response => {
+            this.successResponse()
+            this.summary = response.data
+            this.nextStep()
+          })
+          .catch(error => {
+            this.errorResponse(error)
+          })
       },
-      validateDrivers () {
+      validateDrivers() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path + '/validate-drivers', {
-          rental: this.rental.data(),
-        })
-        .then(response => {
-          this.rental.errors.clear
-          this.getVehicles()
-        })
-        .catch(error => {
-          this.errorResponse(error)
-        })
+        this.$http.post(this.$route.path + '/validate-drivers', this.rental.data())
+          .then(response => {
+            this.rental.errors.clear
+            this.getVehicles()
+          })
+          .catch(error => {
+            this.errorResponse(error)
+          })
       },
-      getVehicles () {
-        this.$http.post(this.$route.path + '/vehicles', {
-          rental: this.rental.data(),
-        })
-        .then(response => {
-          this.successResponse()
-          this.vehicles = response.data
-          this.nextStep()
-        })
-        .catch(error => {
-          this.errorResponse(error)
-        })
+      getVehicles() {
+        this.$http.post(this.$route.path + '/vehicles', this.rental.data())
+          .then(response => {
+            this.successResponse()
+            this.vehicles = response.data
+            this.nextStep()
+          })
+          .catch(error => {
+            this.errorResponse(error)
+          })
       },
-      validateVehicle () {
+      validateVehicle() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path + '/validate-vehicle', {
-          rental: this.rental.data(),
-        })
-        .then(response => {
-          this.successResponse()
-          this.nextStep()
-        })
-        .catch(error => {
-          this.errorResponse(error)
-        })
+        this.$http.post(this.$route.path + '/validate-vehicle', this.rental.data())
+          .then(response => {
+            this.successResponse()
+            this.nextStep()
+          })
+          .catch(error => {
+            this.errorResponse(error)
+          })
       },
-      validateFinancialResponsibility () {
+      validateFinancialResponsibility() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path + '/validate-financial-responsibility', {
-          rental: this.rental.data(),
-        })
-        .then(response => {
-          this.successResponse()
-          this.nextStep()
-        })
-        .catch(error => {
-          this.errorResponse(error)
-        })
+        this.$http.post(this.$route.path + '/validate-financial-responsibility', this.rental.data())
+          .then(response => {
+            this.successResponse()
+            this.nextStep()
+          })
+          .catch(error => {
+            this.errorResponse(error)
+          })
       },
-      validateTermsAndConditions () {
+      validateTermsAndConditions() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path + '/validate-terms-and-conditions', {
-          rental: this.rental.data(),
-        })
-        .then(response => {
-          this.successResponse()
-          this.nextStep()
-        })
-        .catch(error => {
-          this.errorResponse(error)
-        })
+        this.$http.post(this.$route.path + '/validate-terms-and-conditions', this.rental.data())
+          .then(response => {
+            this.successResponse()
+            this.nextStep()
+          })
+          .catch(error => {
+            this.errorResponse(error)
+          })
       },
-      validatePayment () {
+      validatePayment() {
         this.inputSubmitStart()
 
         stripe.createToken(window.card).then(result => {
@@ -243,19 +231,17 @@
           }
         });
       },
-      createRental () {
+      createRental() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path, {
-          rental: this.rental.data(),
-        })
-        .then(response => {
-          this.$router.push({ name: 'rental', params: { number: response.data.number }})
-        })
-        .catch(error => {
-          this.errorResponse(error)
-          this.rental.stripe_customer_id = error.response.data.stripe_customer_id
-        })
+        this.$http.post(this.$route.path, this.rental.data())
+          .then(response => {
+            this.$router.push({ name: 'rental', params: { number: response.data.number }})
+          })
+          .catch(error => {
+            this.errorResponse(error)
+            this.rental.stripe_customer_id = error.response.data.stripe_customer_id
+          })
       },
     },
   }

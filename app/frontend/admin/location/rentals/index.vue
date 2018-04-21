@@ -3,7 +3,7 @@
 
   export default {
     name: 'Rentals',
-    data () {
+    data() {
       return {
         rentals: {},
       }
@@ -11,21 +11,21 @@
     components: {
       RentalsTable,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     methods: {
-      getData () {
+      getData() {
         this.$http
           .get(this.$route.path)
           .then(response => {
             this.rentals = response.data
         })
       },
-      viewRental (number) {
+      viewRental(number) {
         this.$router.push({ name: 'rental', params: { number: number }})
       },
     },

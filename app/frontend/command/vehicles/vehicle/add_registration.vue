@@ -4,6 +4,7 @@
   import InputSubmit from 'Mixins/input_submit'
 
   import InputDate from 'Components/inputs/date'
+  import InputFile from 'Components/inputs/file'
   import Popup from 'Components/popup'
 
   export default {
@@ -14,14 +15,14 @@
         required: true
       }
     },
-    data () {
+    data() {
       return {
         open: false,
         form: new this.$form({
-          date_effective: null,
+          date_effective:  null,
           date_expiration: null,
-          registration: null,
-          notes: null,
+          registration:    null,
+          notes:           null,
         }),
       }
     },
@@ -30,30 +31,29 @@
     ],
     components: {
       InputDate,
+      InputFile,
       Popup,
     },
-    mounted () {
+    mounted() {
       this.open = true
     },
     methods: {
-      close () {
+      close() {
         this.$emit('close')
       },
-      addRegistration () {
+      addRegistration() {
         this.inputSubmitStart()
 
-        this.$http.post(this.url, {
-          extend: this.form.data(),
-        })
-        .then(response => {
-          this.form.errors.clear()
-          this.inputSubmitFinish()
-          this.close()
-        })
-        .catch(error => {
-          this.form.errors.record(error.response.data.errors)
-          this.inputSubmitFinish()
-        })
+        this.$http.post(this.url, this.form.data())
+          .then(response => {
+            this.form.errors.clear()
+            this.inputSubmitFinish()
+            this.close()
+          })
+          .catch(error => {
+            this.form.errors.record(error.response.data.errors)
+            this.inputSubmitFinish()
+          })
       },
     },
   }
@@ -71,7 +71,7 @@
             label.input-label(for='date_effective') Effective Date *
             .input-block.whole
               input-date#date_effective(
-                v-model='form.date'
+                v-model='form.date_effective'
                 v-error='form.errors.has("date_effective")'
                 @input='form.errors.clear("date_effective")')
             input-error-message(v-bind:errors='form.errors.get("date_effective")')
@@ -80,7 +80,7 @@
             label.input-label(for='date_expiration') Expiration Date *
             .input-block.whole
               input-date#date_expiration(
-                v-model='form.date'
+                v-model='form.date_expiration'
                 v-error='form.errors.has("date_expiration")'
                 @input='form.errors.clear("date_expiration")')
             input-error-message(v-bind:errors='form.errors.get("date_expiration")')
@@ -88,7 +88,11 @@
         .input-row
           label.input-label(for='registration') Registration *
           .input-block.whole
-            input(type='file' name='registration')
+            input-file#registration(
+              v-model='form.registration'
+              v-error='form.errors.has("registration")'
+              @input='form.errors.clear("registration")')
+          input-error-message(v-bind:errors='form.errors.get("registration")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
