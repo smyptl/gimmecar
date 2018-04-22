@@ -19,10 +19,10 @@
       return {
         open: false,
         form: new this.$form({
-          date_effective:  null,
-          date_expiration: null,
-          registration:    null,
-          notes:           null,
+          date_effective:  '',
+          date_expiration: '',
+          registration:    '',
+          notes:           '',
         }),
       }
     },

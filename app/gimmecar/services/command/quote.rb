@@ -38,6 +38,6 @@ class Services::Command::Quote < Lib::Services::Base
   end
 
   def location
-    @location ||= Location.find(location_id)
+    @location ||= ::Location.find(location_id)
   end
 end

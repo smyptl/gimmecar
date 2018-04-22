@@ -17,9 +17,9 @@
       return {
         open: false,
         form: new this.$form({
-          date: null,
+          date: '',
           days: 1,
-          amount: null,
+          amount: '',
         }),
       }
     },

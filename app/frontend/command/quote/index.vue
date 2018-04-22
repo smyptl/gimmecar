@@ -41,7 +41,7 @@
       getQuote() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path, this.quote.data)
+        this.$http.post(this.$route.path, this.quote.data())
           .then(response => {
             this.quote.errors.clear
             this.inputSubmitFinish()
@@ -81,6 +81,7 @@
 
             option(value='') --
             option(v-for='location in locations.data' :key='location.id' :value='location.id') {{ location.name }} -- {{ location.city }}, {{ location.state }}
+        input-error-message(v-bind:errors='quote.errors.get("location_id")')
 
       .input-row
         .input-container.one-half

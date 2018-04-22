@@ -1,4 +1,4 @@
-class Services::Command::Location < Lib::Services::Base
+class Services::Command::Location::Information < Lib::Services::Base
 
   attributes do |a|
     a.string :slug
@@ -20,6 +20,6 @@ class Services::Command::Location < Lib::Services::Base
   private
 
   def query
-    Location.find_by(slug: slug)
+    ::Location.find_by(slug: slug)
   end
 end
