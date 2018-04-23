@@ -3,6 +3,14 @@ class Lib::Attributes::Parser
   attr_reader :attributes
 
   class << self
+    def attribute_types(*types)
+      types.each do |type|
+        define_method(type) do |name, **options|
+          attributes[name] = { type: type, options: options }
+        end
+      end
+    end
+
     def parse(value, settings)
       if settings.fetch(:options)[:array]
         return [] if value.blank?
@@ -41,42 +49,21 @@ class Lib::Attributes::Parser
     @attributes = ActiveSupport::HashWithIndifferentAccess.new
   end
 
-  def string(name, options = {})
-    @attributes[name] = { type: :string, options: options }
-  end
-
-  def symbol(name, options = {})
-    @attributes[name] = { type: :symbol, options: options }
-  end
-
-  def boolean(name, options = {})
-    @attributes[name] = { type: :boolean, options: options }
-  end
-
-  def date(name, options = {})
-    @attributes[name] = { type: :date, options: options }
-  end
-
-  def time(name, options = {})
-    @attributes[name] = { type: :time, options: options }
-  end
-
-  def integer(name, options = {})
-    @attributes[name] = { type: :integer, options: options }
-  end
-
-  def signature(name, options = {})
-    @attributes[name] = { type: :signature, options: options }
-  end
-
-  def value(name, options = {})
-    @attributes[name] = { type: :value, options: options }
-  end
+  attribute_types :string,
+                  :symbol,
+                  :boolean,
+                  :date,
+                  :time,
+                  :integer,
+                  :signature,
+                  :document,
+                  :image,
+                  :value
 
   def nested(name, options = {})
     form = Lib::Attributes::Parser.new
     yield form
-    @attributes[name] = { type: :nested, options: options, attributes: form.retrieve }
+    attributes[name] = { type: :nested, options: options, attributes: form.retrieve }
   end
 
   def retrieve

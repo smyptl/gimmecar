@@ -1,6 +1,7 @@
 class Services::Builders::Vehicle < Lib::Services::Builder
 
   component do |c|
+    c.id :vin
     c.attributes :status,
       :vin,
       :license_number,

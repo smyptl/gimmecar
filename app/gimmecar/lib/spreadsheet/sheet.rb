@@ -26,7 +26,7 @@ class Lib::Spreadsheet::Sheet
     items.each do |item|
       row = new_row(options)
       yield row, item if block_given?
-      add_row(row.fetch)
+      add_row(row.retrieve)
     end
   end
 
@@ -34,17 +34,17 @@ class Lib::Spreadsheet::Sheet
     items.each_with_index do |item, item_index|
       row = new_row(options)
       yield row, item, item_index if block_given?
-      add_row(row.fetch)
+      add_row(row.retrieve)
     end
   end
 
   def row(options = {})
     row = new_row(options)
     yield row if block_given?
-    add_row(row.fetch)
+    add_row(row.retrieve)
   end
 
-  def fetch
+  def retrieve
     {
       name:    @name,
       id:      @id,

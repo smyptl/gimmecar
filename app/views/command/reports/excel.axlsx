@@ -1,3 +1,2 @@
 wb = xlsx_package.workbook
-
 @report.compile(wb)

@@ -1,13 +1,12 @@
 class Actions::Command::Vehicle::AddRegistration < Lib::Actions::Base
 
   attributes do |a|
-    a.date   :date_effective
-    a.date   :date_expiration
-    #a.document :registration
-    a.string :notes
+    a.date     :date_effective
+    a.date     :date_expiration
+    a.document :registration
   end
 
-  validates :date_effective,
+  validates :date_effective, :registration,
     presence: true
 
   validates :date_expiration,
@@ -16,14 +15,23 @@ class Actions::Command::Vehicle::AddRegistration < Lib::Actions::Base
 
   private
 
+  def success_args
+    {
+      message: 'Registration added.'
+    }
+  end
+
   def save
     vehicle_registration = VehicleRegistration.create({
       vehicle_id:      vehicle,
       date_effective:  date_effective,
       date_expiration: date_expiration,
-      notes:           notes
     })
 
     vehicle_registration.document.attach(:registration)
+  end
+
+  def vehicle
+    Vehicle.find_by(vin: params.fetch(:vin))
   end
 end

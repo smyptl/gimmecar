@@ -3,7 +3,7 @@ class Services::Command::Reports::Spreadsheets::Revenue < Lib::Services::Base
   def output
     spreadsheet = Lib::Spreadsheet::Base.new('Revenue') do |ss|
 
-      Location.all.each do |location|
+      ::Location.all.each do |location|
 
         ss.add_sheet(location.name) do |s|
 
@@ -15,27 +15,27 @@ class Services::Command::Reports::Spreadsheets::Revenue < Lib::Services::Base
           s.blank_row 1, style: :head, merge_cells: :to_end
 
           s.row(style: :head_header, height: nil) do |r|
-            r.column "Rental #", :rental, style: :align_left
-            r.column "Item", :item_type, style: :align_right
-            r.column "Charge ID", :charge_id, style: :align_right
-            r.column "Details", :details, style: :align_right
-            r.column "Date", :date, style: :align_right
-            r.column "Quantity", :quantity, style: :align_right
-            r.column "Total", :total, style: :align_right
-            r.column "Amount", :amount, style: :align_right
-            r.column "Discount", :discount, style: :align_right
-            r.column "Sub Total", :sub_total, style: :align_right
-            r.column "Taxable Amount", :taxable_amount, style: :align_right
-            r.column "Tax Collectable", :tax_collectable, style: :align_right
-            r.column "State Taxable Amount", :state_taxable_amount, style: :align_right
-            r.column "State Amount", :state_amount, style: :align_right
-            r.column "County Taxable Amount", :county_taxable_amount, style: :align_right
-            r.column "County Amount", :county_amount, style: :align_right
-            r.column "City Taxable Amount", :city_taxable_amount, style: :align_right
-            r.column "City Amount", :city_amount, style: :align_right
+            r.column "Rental #",                :rental,                  style: :align_left
+            r.column "Item",                    :item_type,               style: :align_right
+            r.column "Charge ID",               :charge_id,               style: :align_right
+            r.column "Details",                 :details,                 style: :align_right
+            r.column "Date",                    :date,                    style: :align_right
+            r.column "Quantity",                :quantity,                style: :align_right
+            r.column "Total",                   :total,                   style: :align_right
+            r.column "Amount",                  :amount,                  style: :align_right
+            r.column "Discount",                :discount,                style: :align_right
+            r.column "Sub Total",               :sub_total,               style: :align_right
+            r.column "Taxable Amount",          :taxable_amount,          style: :align_right
+            r.column "Tax Collectable",         :tax_collectable,         style: :align_right
+            r.column "State Taxable Amount",    :state_taxable_amount,    style: :align_right
+            r.column "State Amount",            :state_amount,            style: :align_right
+            r.column "County Taxable Amount",   :county_taxable_amount,   style: :align_right
+            r.column "County Amount",           :county_amount,           style: :align_right
+            r.column "City Taxable Amount",     :city_taxable_amount,     style: :align_right
+            r.column "City Amount",             :city_amount,             style: :align_right
             r.column "District Taxable Amount", :district_taxable_amount, style: :align_right
-            r.column "District Amount", :district_amount, style: :align_right
-            r.column "Description", :description, style: :align_right
+            r.column "District Amount",         :district_amount,         style: :align_right
+            r.column "Description",             :description,             style: :align_right
           end
 
           line_items = line_items(location)

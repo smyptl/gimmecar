@@ -13,7 +13,7 @@
       '$route': 'getData',
     },
     computed: {
-      sorted_drivers() {
+      sortedDrivers() {
         return this.drivers.data
       },
     },
@@ -42,7 +42,7 @@
             th
         tbody
           tr.clickable(
-            v-for='driver in sorted_drivers'
+            v-for='driver in sortedDrivers'
             :key='driver.id'
             @click.prevent='viewDriver(driver.id)'
           )

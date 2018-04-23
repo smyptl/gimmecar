@@ -1,4 +1,4 @@
-class Services::Command::Vehicle < Lib::Services::Base
+class Services::Command::Vehicle::Information < Lib::Services::Base
 
   attributes do |a|
     a.string :vin

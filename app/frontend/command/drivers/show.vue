@@ -54,7 +54,7 @@
       '$route': 'getData',
     },
     computed: {
-      card_sources() {
+      cardSources() {
         return(this.sources.data, n => {
           return n.object != 'card'
         })

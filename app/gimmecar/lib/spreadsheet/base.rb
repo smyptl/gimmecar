@@ -15,7 +15,7 @@ class Lib::Spreadsheet::Base
     Lib::Spreadsheet::Compiler::Base.new(workbook).retrieve(sheets: sheets)
   end
 
-  def file_name
+  def filename
     @name.to_slug
   end
 
