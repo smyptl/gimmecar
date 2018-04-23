@@ -93,6 +93,6 @@ class Services::Command::Reports::Spreadsheets::Revenue < Lib::Services::Base
   private
 
   def line_items(location)
-    location.line_items.where(date: Date.new(2017, 10, 1)..Date.new(2017, 12, 31))
+    location.line_items.where(date: Date.new(2018, 1, 1)..Date.new(2018, 3, 31))
   end
 end
