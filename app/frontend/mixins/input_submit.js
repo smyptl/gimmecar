@@ -1,7 +1,7 @@
 import InputSubmit from 'Components/inputs/submit'
 
 export default {
-  data () {
+  data() {
     return {
       input_submit_loading: false,
     }
@@ -10,10 +10,10 @@ export default {
     InputSubmit,
   },
   methods: {
-    inputSubmitStart () {
+    inputSubmitStart() {
       return this.input_submit_loading = true
     },
-    inputSubmitFinish () {
+    inputSubmitFinish() {
       return this.input_submit_loading = false
     }
   }

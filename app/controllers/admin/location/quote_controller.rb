@@ -4,6 +4,6 @@ class Admin::Location::QuoteController < Admin::Location::BaseController
   end
 
   def create
-    Services::Admin::Location::Quote.new(params.require(:quote)).retrieve(success, failure, location_id: location.id)
+    Services::Admin::Location::Quote.new(params).retrieve(success, failure, location_id: location.id)
   end
 end

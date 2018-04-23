@@ -13,7 +13,7 @@
         required: true,
       }
     },
-    data () {
+    data() {
       return {
         open: false,
         form: new this.$form({
@@ -27,7 +27,7 @@
     components: {
       Popup,
     },
-    mounted () {
+    mounted() {
       this.$http.get(this.url).then(response => {
         this.form.amount = response.data.deposit_amount
       })
@@ -35,30 +35,28 @@
       this.open = true
     },
     methods: {
-      close () {
+      close() {
         this.$emit('close')
       },
-      returnDeposit () {
+      returnDeposit() {
         this.inputSubmitStart()
 
-        this.$http.post(this.url, {
-          return_deposit: this.form.data(),
-        })
-        .then(response => {
-          this.form.errors.clear
-          this.close()
-        })
-        .catch(error => {
-          this.form.errors.record(error.response.data.errors)
-          this.inputSubmitFinish()
-        })
+        this.$http.post(this.url, this.form.data())
+          .then(response => {
+            this.form.errors.clear
+            this.close()
+          })
+          .catch(error => {
+            this.form.errors.record(error.response.data.errors)
+            this.inputSubmitFinish()
+          })
       },
     },
   }
 </script>
 
 <template lang='pug'>
-  popup(v-if='open' v-on:closed='close')
+  popup(v-if='open' @closed='close')
     .panel-form-popup
       .panel-form.panel-form-padding
         h4.panel-form-popup-header Return Deposit

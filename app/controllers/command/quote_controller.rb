@@ -5,6 +5,6 @@ class Command::QuoteController < Command::BaseController
   end
 
   def create
-    Services::Command::Quote.new(params.require(:quote)).retrieve(success, failure)
+    Services::Command::Quote.new(params).retrieve(success, failure)
   end
 end

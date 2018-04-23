@@ -1,6 +1,7 @@
 class Services::Builders::Rental < Lib::Services::Builder
 
   component do |c|
+    c.id :number
     c.attributes :number,
       :status,
       :notes,

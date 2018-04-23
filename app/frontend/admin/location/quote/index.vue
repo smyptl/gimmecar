@@ -8,7 +8,7 @@
 
   export default {
     name: 'Quote',
-    data () {
+    data() {
       return {
         quote: new this.$form({
           pickup: new Date(),
@@ -26,22 +26,20 @@
       RentalInvoice,
     },
     methods: {
-      getQuote () {
+      getQuote() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path, {
-          quote: this.quote.data(),
-        })
-        .then(response => {
-          this.quote.errors.clear
-          this.inputSubmitFinish()
-          this.summary = response.data
-        })
-        .catch(error => {
-          Shake(this.$refs.form)
-          this.inputSubmitFinish()
-          this.quote.errors.record(error.response.data.errors)
-        })
+        this.$http.post(this.$route.path, this.quote.data())
+          .then(response => {
+            this.quote.errors.clear
+            this.inputSubmitFinish()
+            this.summary = response.data
+          })
+          .catch(error => {
+            Shake(this.$refs.form)
+            this.inputSubmitFinish()
+            this.quote.errors.record(error.response.data.errors)
+          })
       },
       resetSummary() {
         this.summary = null
@@ -96,6 +94,6 @@
           input-error-message(v-bind:errors='quote.errors.get("vehicle_type")')
 
       .input-block.input-submit
-        input-submit.btn.btn-primary.right(@click.native.prevent='getQuote' :loading='button_loading') Continue
+        input-submit.btn.btn-primary.right(@click.native.prevent='getQuote' :loading='input_submit_loading') Continue
 
 </template>

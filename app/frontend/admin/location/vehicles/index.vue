@@ -3,12 +3,12 @@
 
   export default {
     name: 'Vehicles',
-    data () {
+    data() {
       return {
         vehicles: {},
       }
     },
-    created () {
+    created() {
       this.getData()
     },
     components: {
@@ -18,14 +18,14 @@
       '$route': 'getData',
     },
     methods: {
-      getData () {
+      getData() {
         this.$http
           .get(this.$route.path)
           .then(response => {
             this.vehicles = response.data
         })
       },
-      viewVehicle (vin) {
+      viewVehicle(vin) {
         this.$router.push({ name: 'vehicle', params: { vin: vin }})
       },
     },
@@ -33,5 +33,7 @@
 </script>
 
 <template lang='pug'>
-  vehicle-table(:vehicles='vehicles' :show_location='false' v-on:view-vehicle='viewVehicle($event)')
+  vehicle-table(:vehicles='vehicles'
+                :show_location='false'
+                @view-vehicle='viewVehicle($event)')
 </template>

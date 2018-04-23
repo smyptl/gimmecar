@@ -14,9 +14,9 @@ gem 'autoprefixer-rails'
 gem 'slim'
 gem 'slim-rails'
 # Excel generator
-gem 'zip-zip'
-gem 'axlsx'
-gem 'axlsx_rails'
+gem 'axlsx', '~>2.1.0.pre'
+gem 'axlsx_rails', '~>0.5.1'
+gem 'rubyzip'
 # Webpack
 gem 'webpacker'
 # Use Redis adapter to run Action Cable in production

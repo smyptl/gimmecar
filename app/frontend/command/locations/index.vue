@@ -3,7 +3,7 @@
 
   export default {
     name: 'Locations',
-    data () {
+    data() {
       return {
         locations: {},
       }
@@ -11,26 +11,26 @@
     components: {
       AddressFormat,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     computed: {
-      sorted_locations () {
+      sorted_locations() {
         return this.locations.data
       },
     },
     methods: {
-      getData () {
+      getData() {
         this.$http
           .get(this.$route.path)
           .then(response => {
             this.locations = response.data
         })
       },
-      viewLocation (slug) {
+      viewLocation(slug) {
         this.$router.push({ name: 'location', params: { slug: slug }})
       },
     },

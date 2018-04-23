@@ -72,6 +72,9 @@ Rails.application.routes.draw do
     end
 
     resources :vehicles, only: [:index, :show] do
+      get 'add_registration', to: 'vehicles/add_registration#index'
+      post 'add_registration', to: 'vehicles/add_registration#create'
+
       get 'rentals', to: 'vehicles/rentals#index'
       get 'revenue', to: 'vehicles/revenue#index'
     end
@@ -92,7 +95,8 @@ Rails.application.routes.draw do
       get 'metrics',  to: 'locations/metrics#index'
     end
 
-    get '/reports',   to: 'reports#index'
+    get '/reports',     to: 'reports#index'
+    get '/reports/tax', to: 'reports#tax'
 
     get '/quote',   to: 'quote#index'
     post  '/quote', to: 'quote#create'

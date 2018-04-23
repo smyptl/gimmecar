@@ -83,7 +83,9 @@ class Lib::Attributes::Base
 
   def assign_attributes(attrs = {})
     attrs.each do |attr_name, value|
-      self.public_send("#{attr_name}=", value)
+      if _form_attributes.fetch(attr_name, false)
+        self.public_send("#{attr_name}=", value)
+      end
     end
     self
   end

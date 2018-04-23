@@ -8,7 +8,7 @@ class Services::Command::Rental::Extend < Lib::Services::Base
 
   output do
     object :rental do |o|
-      o.attributes :last_rental_rate_amount, :drop_off
+      o.attributes :rental_last_rate_amount, :drop_off
     end
   end
 

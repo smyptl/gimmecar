@@ -1,13 +1,13 @@
 <script>
   export default {
     name: 'Locations',
-    data () {
+    data() {
       return {
         loading: false,
         locations: [],
       }
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
@@ -27,8 +27,8 @@
             this.$router.push({ name: 'login' })
           })
       },
-      selectLocation (location) {
-        window.location_name = location.name
+      selectLocation(location) {
+        window.locationName = location.name
         this.$router.push({ name: 'rentals', params: { location: location.slug } })
       },
     },

@@ -4,9 +4,9 @@
 
   export default {
     name: 'login',
-    data () {
+    data() {
       return {
-        login: new this.$form({
+        form: new this.$form({
           email: '',
           password: '',
         }),
@@ -16,12 +16,10 @@
       InputSubmit,
     ],
     methods: {
-      loginUser () {
+      loginUser() {
         this.inputSubmitStart()
 
-        this.$http.post('/', {
-            login: this.login.data()
-          })
+        this.$http.post('/', this.form.data())
           .then(response => {
             this.inputSubmitFinish()
             this.$router.push({ name: 'locations' })
@@ -29,7 +27,7 @@
           .catch(error => {
             Shake(document.getElementById('login-form'))
             this.inputSubmitFinish()
-            this.login.errors.record(error.response.data.errors)
+            this.form.errors.record(error.response.data.errors)
           })
       },
     },
@@ -46,7 +44,7 @@
 
       #login-form.mt-sm
         form(@submit.prevent='loginUser()')
-          input-error-message(v-bind:errors='login.errors.get("base")' :base='true')
+          input-error-message(v-bind:errors='form.errors.get("base")' :base='true')
 
           .input-row
             label.input-label(for='email') Email:
@@ -54,11 +52,11 @@
               input.input-field#email(
                 type='email'
                 placeholder='hford@gimmecar.com'
-                v-model='login.email'
-                v-error='login.errors.has("email")'
-                @input='login.errors.clear("email")')
+                v-model='form.email'
+                v-error='form.errors.has("email")'
+                @input='form.errors.clear("email")')
 
-            input-error-message(v-bind:errors='login.errors.get("email")')
+            input-error-message(v-bind:errors='form.errors.get("email")')
 
           .input-row
             label.input-label(for='password') Password:
@@ -66,11 +64,11 @@
               input.input-field#password(
                 type='password'
                 placeholder='!0nG-06scUr3-P@55wOrD'
-                v-model='login.password'
-                v-error='login.errors.has("password")'
-                @input='login.errors.clear("password")')
+                v-model='form.password'
+                v-error='form.errors.has("password")'
+                @input='form.errors.clear("password")')
 
-            input-error-message(v-bind:errors='login.errors.get("password")')
+            input-error-message(v-bind:errors='form.errors.get("password")')
 
           .input-submit.input-block
             input-submit.btn.btn-primary.right(:loading='input_submit_loading') Login

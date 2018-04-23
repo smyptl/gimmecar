@@ -28,7 +28,7 @@ class Lib::Spreadsheet::Row
     value(name, options)
   end
 
-  def fetch
+  def retrieve
     output = {}
     output[:cells]  = cells
     output[:group]  = default_options.fetch(:group)  if default_options.fetch(:group, nil)

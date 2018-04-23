@@ -4,11 +4,11 @@
   import ActionsIcon from 'Components/icons/actions'
   import VehicleInformation from 'Components/vehicle/information'
 
-  import VehicleStatus from './vehicle/_status'
+  import VehicleStatus from './vehicle/status'
 
   export default {
-    name: 'vehicle',
-    data () {
+    name: 'Vehicle',
+    data() {
       return {
         vehicle: {},
         change_status: false,
@@ -20,23 +20,23 @@
       VehicleInformation,
       VehicleStatus,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     methods: {
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.vehicle = response.data
         })
       },
-      statusChanged () {
+      statusChanged() {
         this.getData()
         this.change_status = false
       },
-      changeStatus () {
+      changeStatus() {
         this.change_status = true
       },
     },
@@ -56,7 +56,7 @@
               button.link(@click='changeStatus') Change Status
 
     vehicle-information(:vehicle='vehicle' :show_location='false')
-    vehicle-status(v-on:close='statusChanged' v-if='change_status')
+    vehicle-status(@close='statusChanged' v-if='change_status')
 
 </template>
 

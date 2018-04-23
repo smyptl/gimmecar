@@ -15,7 +15,7 @@
         required: true,
       },
     },
-    data () {
+    data() {
       return {
         driver_search: false,
         search_result: null,
@@ -34,16 +34,14 @@
     },
     methods: {
       searchDriver() {
-        this.$http.post(this.$route.path + '/driver-search', {
-          search: this.search.data(),
-        })
-        .then(response => {
-          this.search.errors.clear()
-          this.search_result = response.data
-        })
-        .catch(error => {
-          this.search.errors.record(error.response.data.errors)
-        })
+        this.$http.post(this.$route.path + '/driver-search', this.search.data())
+          .then(response => {
+            this.search.errors.clear()
+            this.search_result = response.data
+          })
+          .catch(error => {
+            this.search.errors.record(error.response.data.errors)
+          })
       },
     },
   }

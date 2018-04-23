@@ -18,7 +18,7 @@ describe 'change vehicle status', type: :system, js: true do
     click_button('Change Status')
     expect(page).to have_content('Change Status')
     select 'Clean', from: 'vehicle_status'
-    click_button('Update')
+    click_button('Change')
 
     expect(page).to have_css('svg#clean')
 

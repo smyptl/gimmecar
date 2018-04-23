@@ -11,14 +11,14 @@ export default {
     if (target.addEventListener) {
       target.addEventListener(eventType, callback, false);
       return {
-        remove () {
+        remove() {
           target.removeEventListener(eventType, callback, false);
         },
       };
     } else if (target.attachEvent) {
       target.attachEvent('on${eventType}', callback);
       return {
-        remove () {
+        remove() {
           target.detachEvent('on${eventType}', callback);
         },
       };

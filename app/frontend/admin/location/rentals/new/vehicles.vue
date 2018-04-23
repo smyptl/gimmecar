@@ -17,7 +17,7 @@
       Capitalize,
     },
     computed: {
-      sorted_vehicles () {
+      sorted_vehicles() {
         return this.vehicles.data
       },
     },
@@ -46,7 +46,11 @@
             th Color
             th License #
         tbody
-          tr(v-for='vehicle in sorted_vehicles' @click.prevent='selectVehicle(vehicle.id)' v-bind:class='{ selected: form.vehicle_id == vehicle.id }')
+          tr(v-for='vehicle in sorted_vehicles'
+             :key='vehicle.id'
+             @click.prevent='selectVehicle(vehicle.id)'
+             v-bind:class='{ selected: form.vehicle_id == vehicle.id }')
+
             td.checkbox
               input.input-field(type='radio' id='form_vehicle_id' v-error='form.errors.has("vehicle_id")' v-bind:checked='form.vehicle_id == vehicle.id')
             td {{ vehicle.make_model }}

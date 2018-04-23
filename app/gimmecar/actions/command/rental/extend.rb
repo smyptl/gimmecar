@@ -50,7 +50,8 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
     current_date = read_attribute(:date)
 
     days.times do
-      li           = LineItem.new(line_item_calculations.merge(date: current_date))
+      li           = LineItem.new(line_item_calculations)
+      li.date      = current_date
       li.charge    = charge
       li.invoice   = rental
       li.item_type = 'rental_rate'
@@ -63,7 +64,7 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
   end
 
   def charge_amount
-    @total ||= line_item_calculations.fetch(:total)*days
+    line_item_calculations.fetch(:total) * days
   end
 
   def line_item_calculations

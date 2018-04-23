@@ -9,19 +9,19 @@
         required: true,
       },
     },
-    data () {
+    data() {
       return {
         signature_pad: null,
         event_listener: null,
       }
     },
-    mounted () {
+    mounted() {
       this.resizeCanvas()
 
       var self = this
 
       this.signature_pad = new SignaturePad(this.canvas, {
-        onEnd: function () {
+        onEnd: function() {
           self.updateValue();
         }
       })
@@ -34,33 +34,33 @@
       this.drawSignature()
     },
     watch: {
-      value (val, oldVal) {
+      value(val, oldVal) {
         this.drawSignature()
       },
     },
-    destroyed () {
+    destroyed() {
       this.event_listener.remove()
     },
     computed: {
-      canvas () {
+      canvas() {
         return this.$el.getElementsByTagName('canvas')[0]
       },
     },
     methods: {
-      resizeCanvas () {
+      resizeCanvas() {
         var ratio =  Math.max(window.devicePixelRatio || 1, 1)
         this.canvas.width = this.canvas.offsetWidth * ratio
         this.canvas.height = this.canvas.offsetHeight * ratio
         this.canvas.getContext('2d').scale(ratio, ratio)
       },
-      updateValue () {
+      updateValue() {
         this.$emit('input', this.signature_pad.toDataURL())
       },
-      clearSignature () {
+      clearSignature() {
         this.signature_pad.clear()
         this.$emit('input', '')
       },
-      drawSignature () {
+      drawSignature() {
         this.signature_pad.fromDataURL(this.value)
       },
     },

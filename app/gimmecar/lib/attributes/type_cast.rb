@@ -79,5 +79,17 @@ class Lib::Attributes::TypeCast
     def signature(value)
       value
     end
+
+    def document(value)
+      if value.content_type == 'application/pdf'
+       value
+      end
+    end
+
+    def image(value)
+      if value.content_type.include? 'image'
+        value
+      end
+    end
   end
 end

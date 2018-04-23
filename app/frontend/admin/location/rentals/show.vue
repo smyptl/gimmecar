@@ -15,7 +15,7 @@
 
   export default {
     name: 'Rental',
-    data () {
+    data() {
       return {
         rental: {},
         close: false,
@@ -34,35 +34,35 @@
       Dropdown,
       RightArrowIcon,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     computed: {
-      is_closed () {
+      is_closed() {
         return this.rental.status == "closed"
       },
     },
     methods: {
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.rental = response.data
         })
       },
-      extendRental () {
+      extendRental() {
       },
-      closeRental () {
+      closeRental() {
         this.close = true
       },
-      rentalClosed () {
+      rentalClosed() {
         this.getData()
         this.close = false
       },
-      emailInvoice () {
+      emailInvoice() {
       },
-      printInvoice () {
+      printInvoice() {
         this.$router.push({ name: 'rental_print', params: { number: this.rental.number }})
       },
     },
@@ -131,7 +131,7 @@
       h6.left.pt-sm.pl-default Additional Driver
       driver-info(v-bind:driver='rental.additional_driver')
 
-    close(v-on:close='rentalClosed' v-if='close')
+    close(@close='rentalClosed' v-if='close')
 </template>
 
 <style lang='stylus' scoped>

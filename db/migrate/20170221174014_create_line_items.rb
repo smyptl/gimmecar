@@ -3,8 +3,8 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
     create_table :line_items do |t|
       t.timestamps
       t.references :invoice, polymorphic: true, index: true
-      t.references :item, polymorphic: true, index: true
       t.belongs_to :charge, index: true
+      t.string :item_type
       t.json :details
       t.date :date
       t.integer :quantity
@@ -22,6 +22,7 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
       t.integer :city_amount, limit: 8
       t.integer :district_taxable_amount, limit: 8
       t.integer :district_amount, limit: 8
+      t.text :description
     end
   end
 end

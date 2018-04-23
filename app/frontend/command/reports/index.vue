@@ -6,7 +6,7 @@
 
   export default {
     name: 'Reports',
-    data () {
+    data() {
       return {
         revenue: {},
       }
@@ -14,19 +14,19 @@
     filters: {
       Currency
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     computed: {
-      total () {
+      total() {
         return SumBy(Values(this.revenue), v => { return parseInt(v) })
       },
     },
     methods: {
-      getData () {
+      getData() {
         this.$http
           .get(this.$route.path)
           .then(response => {

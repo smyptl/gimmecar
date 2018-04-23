@@ -7,7 +7,7 @@ class Command::VehiclesController < Command::BaseController
   end
 
   def show
-    Services::Command::Vehicle.new(vin: vin).retrieve(success, failure)
+    Services::Command::Vehicle::Information.new(vin: vin).retrieve(success, failure)
   end
 
   private

@@ -1,33 +1,40 @@
 <script>
   import Moment from 'moment'
 
-  import Dropdown from 'Components/dropdown'
-  import ActionsIcon from 'Components/icons/actions'
+  import Dropdown           from 'Components/dropdown'
+  import ActionsIcon        from 'Components/icons/actions'
   import VehicleInformation from 'Components/vehicle/information'
-  import MonthlyRevenue from 'Command/vehicles/vehicle/monthly_revenue'
+  import RentalsTable       from 'Components/rental/table'
+  import MonthlyRevenue     from 'Command/vehicles/vehicle/monthly_revenue'
 
   import Percent from 'Filters/percent'
 
+  import AddRegistration from './vehicle/add_registration'
+
   export default {
     name: 'Vehicle',
-    data () {
+    data() {
       return {
         vehicle: {},
         rentals: {},
         revenue: {},
         tab: '',
         loading: true,
+        action: '',
+        action_url: ''
       }
     },
     components: {
       ActionsIcon,
+      AddRegistration,
       Dropdown,
       MonthlyRevenue,
+      RentalsTable,
       VehicleInformation,
     },
     filters: {
       Percent,
-      time (val) {
+      time(val) {
         var val = Moment(val)
 
         if (val.isValid()) {
@@ -35,26 +42,35 @@
         }
       },
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     methods: {
-      view (tab) {
+      view(tab) {
         this.$http.get(this.$route.path + '/' + tab).then(response => {
           this[tab] = response.data
           this.tab = tab
         })
       },
-      viewRental (number) {
+      refreshData() {
+        this.getData()
+        this.action = ''
+        this.view(this.tab)
+      },
+      addRegistration() {
+        this.action_url = this.vehicle.actions['add_registration'].url
+        this.action = 'addRegistration'
+      },
+      viewRental(number) {
         this.$router.push({ name: 'rental', params: { number: number }})
       },
-      tabActive (value) {
+      tabActive(value) {
         return this.tab === value;
       },
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.vehicle = response.data
           this.loading = false
@@ -69,6 +85,13 @@
     .panel.panel-base
       .panel-base-header
         h2 {{ vehicle.make }} {{ vehicle.model }}
+        dropdown.flex-element.right
+          a.right(href='#' data-toggle='dropdown')
+            actions-icon.action-icon
+          .dropdown-menu.right(slot='dropdown-menu')
+            ul
+              li
+                button.link(@click='addRegistration()') Add Registration
 
       vehicle-information(v-bind:vehicle='vehicle' :show_location='true')
         tr
@@ -83,35 +106,28 @@
         li
           a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
         li
+          a(@click.prevent='view("registrations")' v-bind:class='{ active: tabActive("registrations") }') Registrations
+        li
           a(@click.prevent='view("revenue")' v-bind:class='{ active: tabActive("revenue") }') Revenue
 
-    .panel.panel-base(v-if='tabActive("rentals")')
-      .gimmecar-app-vertical-scroll
-        table.panel-table
-          thead
-            tr
-              th #
-              th Name
-              th Location
-              th Pickup
-              th Drop Off
-          tbody
-            tr.clickable(
-              v-for='rental in rentals.data'
-              :key='rental.id'
-              @click.prevent='viewRental(rental.number)'
-            )
+    rentals-table(v-if='tabActive("rentals")'
+                  :rentals='rentals'
+                  :show_vehicle='false'
+                  @view-rental='viewRental($event)')
 
-              td {{ rental.number }}
-              td {{ rental.driver_name }}
-              td {{ rental.pickup_location_name }}
-              td {{ rental.pickup | time }}
-              td {{ rental.drop_off | time }}
+    monthly-revenue(v-if='tabActive("revenue")'
+                    :revenue='revenue')
 
-    monthly-revenue(v-if='tabActive("revenue")' :revenue='revenue')
+    component(:is='action'
+              :url='action_url'
+              @close='refreshData')
 </template>
 
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/table'
   @import '~Styles/components/panels/sub_navigation'
+
+  .action-icon
+    float: right
+    height: 1.25rem
 </style>

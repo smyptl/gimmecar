@@ -7,7 +7,7 @@ class Public::ReservationController < ApplicationController
   end
 
   def create
-    Actions::Public::CreateReservation.new(params.require(:reservation)).execute(success, failure)
+    Actions::Public::CreateReservation.new(params).execute(success, failure)
   end
 
   private

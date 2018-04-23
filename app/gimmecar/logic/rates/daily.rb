@@ -11,12 +11,12 @@ class Logic::Rates::Daily < Logic::Rates::Base
 
   def calculate
     premium = 0
-    premium += PREMIUM_ONE_DAY   if (days_apart == 1)
+    premium += PREMIUM_ONE_DAY   if (days_apart <= 1)
     premium += PREMIUM_DAILY     if (days_apart <= 4)
     premium += PREMIUM_WEEKEND   if (start_date.saturday? || start_date.friday? || start_date.thursday?)
     premium += PREMIUM_OFF_HOURS if off_hour?
 
-    (@base_rate * (1 + premium)).round
+    (base_rate * (1 + premium)).round
   end
 
   private

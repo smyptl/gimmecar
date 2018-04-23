@@ -7,7 +7,7 @@
 
   export default {
     name: 'new',
-    data () {
+    data() {
       return {
         quote: new this.$form({
           pickup: new Date().setHours(new Date().getHours() + 1),
@@ -22,19 +22,17 @@
       InputDateTime,
     },
     methods: {
-      getRates () {
-        this.$http.post(this.$route.path, {
-          quote: this.quote.data(),
-        })
-        .then(response => {
-          this.quote.errors.clear
-          this.summary = response.data
-          this.step = 'summary'
-        })
-        .catch(error => {
-          Shake(document.getElementById('quote-form'))
-          this.quote.errors.record(error.response.data.errors)
-        })
+      getRates() {
+        this.$http.post(this.$route.path, this.quote.data())
+          .then(response => {
+            this.quote.errors.clear
+            this.summary = response.data
+            this.step = 'summary'
+          })
+          .catch(error => {
+            Shake(document.getElementById('quote-form'))
+            this.quote.errors.record(error.response.data.errors)
+          })
       },
     },
   }

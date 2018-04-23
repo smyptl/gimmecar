@@ -3,26 +3,26 @@
   import EventListener from 'Utils/event_listener'
 
   export default {
-    data () {
+    data() {
       return {
         event_listener: null,
       }
     },
-    mounted () {
+    mounted() {
       this.event_listener = EventListener.listen(window, 'click', (e) => {
         if (!document.querySelector('#add-link').contains(e.target)) {
           this.closeAdd()
         }
       })
     },
-    destroyed () {
+    destroyed() {
       this.event_listener.remove()
     },
     methods: {
-      closeAdd () {
+      closeAdd() {
         this.$emit('close-add')
       },
-      addEnter (el, done) {
+      addEnter(el, done) {
         Snabbt(el, {
           scale: [1, 1],
           fromScale: [0.95, 0.95],
@@ -36,7 +36,7 @@
           },
         })
       },
-      addLeave (el, done) {
+      addLeave(el, done) {
         Snabbt(el, {
           scale: [0.95, 0.95],
           fromScale: [1, 1],

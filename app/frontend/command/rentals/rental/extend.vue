@@ -13,11 +13,11 @@
         required: true
       }
     },
-    data () {
+    data() {
       return {
         open: false,
         form: new this.$form({
-          date: new Date(),
+          date: '',
           days: 1,
           amount: '',
         }),
@@ -30,46 +30,44 @@
       InputDate,
       Popup,
     },
-    mounted () {
+    mounted() {
       this.$http.get(this.url).then(response => {
-        this.form.amount = response.data.last_rental_rate_amount
+        this.form.amount = response.data.rental_last_rate_amount
         this.form.date   = response.data.drop_off
       })
 
       this.open = true
     },
     methods: {
-      close () {
+      close() {
         this.$emit('close')
       },
-      extendRental () {
+      extendRental() {
         this.inputSubmitStart()
 
-        this.$http.post(this.url, {
-          extend: this.form.data(),
-        })
-        .then(response => {
-          this.form.errors.clear()
-          this.inputSubmitFinish()
-          this.close()
-        })
-        .catch(error => {
-          this.form.errors.record(error.response.data.errors)
-          this.inputSubmitFinish()
-        })
+        this.$http.post(this.url, this.form.data())
+          .then(response => {
+            this.form.errors.clear()
+            this.inputSubmitFinish()
+            this.close()
+          })
+          .catch(error => {
+            this.form.errors.record(error.response.data.errors)
+            this.inputSubmitFinish()
+          })
       },
     },
   }
 </script>
 
 <template lang='pug'>
-  popup(v-if='open' v-on:closed='close')
+  popup(v-if='open' @closed='close')
     .panel-form-popup
       .panel-form.panel-form-padding
         h4.panel-form-popup-header Extend
 
       .panel-form.panel-form-padding.panel-popup-form-content
-        .input-block.mt-default.mb-sm(v-if='form.errors.has("base")')
+        .input-block.whole.mt-default.mb-sm(v-if='form.errors.has("base")')
           input-error-message(v-bind:base='true' v-bind:errors='form.errors.get("base")')
 
         .input-row

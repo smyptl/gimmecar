@@ -10,27 +10,27 @@
         type: String,
       },
     },
-    data () {
+    data() {
       return {
         current_date: '',
         date_formatted: '',
       }
     },
-    mounted () {
+    mounted() {
       this.parseValue(this.value)
       this.emitInput()
     },
     watch: {
-      value (val, oldVal) {
+      value(val, oldVal) {
         this.parseValue(val)
       },
     },
     methods: {
-      parseValue (val) {
+      parseValue(val) {
         this.current_date = Moment(val)
         this.formatDate()
       },
-      parseDate () {
+      parseDate() {
         var date = Moment(this.date_formatted, 'M/D/YYYY')
 
         if (date.isValid()) {
@@ -42,14 +42,14 @@
         this.formatDate()
         this.emitInput()
       },
-      formatDate () {
+      formatDate() {
         if (this.current_date && this.current_date.isValid()) {
           this.date_formatted = this.current_date.format('M/D/YYYY')
         } else {
           this.date_formatted = null
         }
       },
-      emitInput () {
+      emitInput() {
         this.$emit('input', this.date_formatted)
       },
     },

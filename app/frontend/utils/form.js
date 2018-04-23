@@ -1,3 +1,5 @@
+import ForEach from 'lodash/forEach'
+
 class Errors {
 
   constructor() {
@@ -45,14 +47,44 @@ export default class Form {
     this.errors = new Errors()
   }
 
-  data() {
-    let data = {}
+  data(data = this.originalData, formData = new FormData(), namespace = []) {
+    let formKey;
+    let value;
+    let newFormKey;
+    let newValue;
 
-    for (let property in this.originalData) {
-      data[property] = this[property]
+    ForEach(namespace, (name) => {
+      formKey = (formKey || '') + '[' + name + ']'
+      value = (value || this)[name]
+    })
+
+    for (let field in data) {
+      if (data.hasOwnProperty(field)) {
+
+        if (namespace.length > 0) {
+          newFormKey = formKey + '[' + field + ']'
+          newValue = value[field]
+        } else {
+          newFormKey = field
+          newValue = this[field]
+        }
+
+
+        if (typeof newValue === 'object'
+            && newValue != null
+            && !(newValue instanceof File)) {
+
+          let newNamespace = namespace.slice(0)
+          newNamespace.push(field)
+
+          this.data(newValue, formData, newNamespace)
+        } else {
+          formData.append(newFormKey, newValue)
+        }
+      }
     }
 
-    return data
+    return formData
   }
 
   populate(data) {

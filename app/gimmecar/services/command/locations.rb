@@ -13,6 +13,6 @@ class Services::Command::Locations < Lib::Services::Base
   private
 
   def query
-    Location.all
+    ::Location.all
   end
 end

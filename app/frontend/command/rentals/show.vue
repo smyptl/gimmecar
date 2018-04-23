@@ -1,10 +1,10 @@
 <script>
-  import FDate from 'Filters/date'
-  import FTime from 'Filters/time'
-  import Percent from 'Filters/percent'
-  import Currency from 'Filters/currency'
+  import FDate      from 'Filters/date'
+  import FTime      from 'Filters/time'
+  import Percent    from 'Filters/percent'
+  import Currency   from 'Filters/currency'
   import Capitalize from 'lodash/capitalize'
-  import Camelcase from 'lodash/camelCase'
+  import Camelcase  from 'lodash/camelCase'
 
   import Dropdown from 'Components/dropdown'
 
@@ -18,7 +18,7 @@
 
   export default {
     name: 'Rental',
-    data () {
+    data() {
       return {
         rental: {},
         loading: true,
@@ -41,35 +41,35 @@
       ReturnDeposit,
       RightArrowIcon,
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     computed: {
-      is_closed () {
+      is_closed() {
         return this.rental.status == "closed"
       },
     },
     methods: {
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.rental = response.data
           this.loading = false
         })
       },
-      loadAction (action) {
+      loadAction(action) {
         this.action_url = this.rental.actions[action].url
         this.action = Camelcase(action)
       },
-      refreshData () {
+      refreshData() {
         this.getData()
         this.action = ''
       },
-      emailInvoice () {
+      emailInvoice() {
       },
-      printInvoice () {
+      printInvoice() {
         this.$router.push({ name: 'rental_print', params: { number: this.rental.number }})
       },
     },
@@ -87,7 +87,7 @@
           .dropdown-menu.right(slot='dropdown-menu')
             ul
               li
-                button.link(@click='printInvoice') Print Invoice
+                button.link(@click='printInvoice()') Print Invoice
               li(v-if='rental.actions.extend')
                 button.link(@click='loadAction("extend")') Extend Rental
               li(v-if='rental.actions.return_deposit')
@@ -182,7 +182,9 @@
               td Avg. Price / Mile
               td {{ rental.average_price_per_mile | currency }}
 
-    component(:is='action' :url='action_url' v-on:close='refreshData')
+    component(:is='action'
+              :url='action_url'
+              @close='refreshData')
 
 </template>
 
@@ -192,5 +194,4 @@
   .action-icon
     float: right
     height: 1.25rem
-
 </style>

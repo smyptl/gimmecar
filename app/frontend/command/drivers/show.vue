@@ -9,12 +9,14 @@
   import Dropdown          from 'Components/dropdown'
   import SourcesIcon       from 'Components/driver/sources_icon'
 
+  import RentalsTable      from 'Components/rental/table'
+
   import Currency from 'Filters/currency'
   import TDate from 'Filters/date'
 
   export default {
     name: 'Driver',
-    data () {
+    data() {
       return {
         driver: {},
         insurance_policies: {},
@@ -30,13 +32,14 @@
       AddCard,
       DriverInformation,
       Dropdown,
+      RentalsTable,
       SourcesIcon,
     },
     filters: {
       Capitalize,
       Currency,
       date: TDate,
-      time (val) {
+      time(val) {
         var val = Moment(val)
 
         if (val.isValid()) {
@@ -44,43 +47,43 @@
         }
       },
     },
-    created () {
+    created() {
       this.getData()
     },
     watch: {
       '$route': 'getData',
     },
     computed: {
-      card_sources () {
+      cardSources() {
         return(this.sources.data, n => {
           return n.object != 'card'
         })
       },
     },
     methods: {
-      addCard () {
+      addCard() {
         return this.action = 'add-card'
       },
-      getData () {
+      getData() {
         this.$http.get(this.$route.path).then(response => {
           this.driver = response.data
         })
       },
-      refreshData () {
+      refreshData() {
         this.getData()
         this.view(this.tab)
         this.action = ''
       },
-      tabActive (value) {
+      tabActive(value) {
         return this.tab === value;
       },
-      view (tab) {
+      view(tab) {
         this.$http.get(this.$route.path + '/' + tab).then(response => {
           this[SnackCase(tab)] = response.data
           this.tab = tab
         })
       },
-      viewRental (number) {
+      viewRental(number) {
         this.$router.push({ name: 'rental', params: { number: number }})
       },
     },
@@ -134,28 +137,10 @@
               td {{ policy.expiration_date | date }}
 
 
-    .panel.panel-base(v-if='tabActive("rentals")')
-      .gimmecar-app-vertical-scroll
-        table.panel-table
-          thead
-            tr
-              th #
-              th Location
-              th Vehicle
-              th Pickup
-              th Drop Off
-          tbody
-            tr.clickable(
-              v-for='rental in rentals.data'
-              :key='rental.id'
-              @click.prevent='viewRental(rental.number)'
-            )
-
-              td {{ rental.number }}
-              td {{ rental.pickup_location_name }}
-              td {{ rental.vehicle_make_model }}
-              td {{ rental.pickup | time }}
-              td {{ rental.drop_off | time }}
+    rentals-table(v-if='tabActive("rentals")'
+                  :rentals='rentals'
+                  :show_driver='false'
+                  @view-rental='viewRental($event)')
 
     .panel.panel-base(v-if='tabActive("sources")')
       .gimmecar-app-vertical-scroll
@@ -220,7 +205,7 @@
 
 
 
-    component(v-bind:is='action' v-on:close='refreshData')
+    component(v-bind:is='action' @close='refreshData')
 </template>
 
 <style lang='stylus' scoped>

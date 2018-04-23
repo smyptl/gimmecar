@@ -1,7 +1,7 @@
 import Snabbt from 'snabbt.js'
 
 export default {
-  enter (el, done, forward = true) {
+  enter(el, done, forward = true) {
     var settings = {}
 
     if (forward) {
@@ -22,7 +22,7 @@ export default {
       },
     })
   },
-  leave (el, done, forward = true) {
+  leave(el, done, forward = true) {
     var settings = {}
 
     if (forward) {

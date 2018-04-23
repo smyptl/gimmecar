@@ -7,7 +7,7 @@ class Command::LocationsController < Command::BaseController
   end
 
   def show
-    Services::Command::Location.new(slug: slug).retrieve(success, failure)
+    Services::Command::Location::Information.new(slug: slug).retrieve(success, failure)
   end
 
   private
