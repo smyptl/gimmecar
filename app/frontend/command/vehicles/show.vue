@@ -5,7 +5,8 @@
   import ActionsIcon        from 'Components/icons/actions'
   import VehicleInformation from 'Components/vehicle/information'
   import RentalsTable       from 'Components/rental/table'
-  import MonthlyRevenue     from 'Command/vehicles/vehicle/monthly_revenue'
+  import MonthlyRevenue     from './vehicle/monthly_revenue'
+  import RegistrationsList  from './vehicle/registrations'
 
   import Percent from 'Filters/percent'
 
@@ -18,6 +19,7 @@
         vehicle: {},
         rentals: {},
         revenue: {},
+        registrations: {},
         tab: '',
         loading: true,
         action: '',
@@ -30,6 +32,7 @@
       Dropdown,
       MonthlyRevenue,
       RentalsTable,
+      RegistrationsList,
       VehicleInformation,
     },
     filters: {
@@ -117,6 +120,10 @@
 
     monthly-revenue(v-if='tabActive("revenue")'
                     :revenue='revenue')
+
+    registrations-list(v-if='tabActive("registrations")'
+                       :registrations='registrations')
+
 
     component(:is='action'
               :url='action_url'

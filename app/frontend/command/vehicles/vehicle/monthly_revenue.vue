@@ -6,7 +6,7 @@
   import SumBy from 'lodash/sumBy'
 
   export default {
-    name: 'Monthly-Revenue',
+    name: 'MonthlyRevenue',
     props: {
       revenue: {
         type: Object,

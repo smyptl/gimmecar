@@ -3,7 +3,7 @@
     ["env", {
       "modules": false,
       "targets": {
-        "browsers": "> 1%",
+        "browsers": ">0.25%",
         "uglify": true
       },
       "useBuiltIns": true
