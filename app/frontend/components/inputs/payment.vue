@@ -7,7 +7,7 @@
 
       let self = this
 
-      card.addEventListener('change', function(event) {
+      card.addEventListener('change', (event) => {
         if (IsUndefined(event.error)) {
           self.$emit('clear-error')
         } else {

@@ -1,4 +1,4 @@
-class Services::Command::Driver < Lib::Services::Base
+class Services::Command::Driver::Information < Lib::Services::Base
 
   attributes do |a|
     a.integer :id
