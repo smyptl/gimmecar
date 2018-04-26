@@ -63,6 +63,7 @@ example_id                                                               | statu
 ./spec/gimmecar/logic/rates/base_spec.rb[1:1:2:2]                        | passed  | 0.01159 seconds |
 ./spec/gimmecar/services/admin/location/driver/search_spec.rb[1:1:1]     | passed  | 0.02944 seconds |
 ./spec/gimmecar/services/admin/location/driver/search_spec.rb[1:1:2]     | passed  | 0.02024 seconds |
+./spec/gimmecar/services/command/location/metrics_spec.rb[1:1:1]         | passed  | 0.23222 seconds |
 ./spec/gimmecar/services/command/vehicle/revenue_spec.rb[1:1:1]          | passed  | 0.07138 seconds |
 ./spec/gimmecar/services/rates_spec.rb[1:1:1]                            | passed  | 0.01344 seconds |
 ./spec/gimmecar/services/rates_spec.rb[1:1:2:1]                          | passed  | 0.01231 seconds |
