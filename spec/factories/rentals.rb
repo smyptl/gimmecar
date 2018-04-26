@@ -45,6 +45,11 @@ FactoryBot.define do
       status Rental::CLOSED
     end
 
+    trait :add_miles do
+      pickup_odometer 100
+      drop_off_odometer 200
+    end
+
     pickup_location { create(:location) }
     drop_off_location { pickup_location }
 

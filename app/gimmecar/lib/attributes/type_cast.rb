@@ -1,6 +1,6 @@
 class Lib::Attributes::TypeCast
 
-  JSON_REGEX = /(-?\d+)[-](\d{2})[-](\d{2})?(\d{2})?.*/
+  TIME_REGEX = /(-?\d+)[-](\d{2})[-](\d{2})?(\d{2})?.*/
   DATE_REGEX = /^((((0[13578])|([13578])|(1[02]))[\/](([1-9])|([0-2][0-9])|(3[01])))|(((0[469])|([469])|(11))[\/](([1-9])|([0-2][0-9])|(30)))|((2|02)[\/](([1-9])|([0-2][0-9]))))[\/]\d{4}$|^\d{4}$/
 
   class << self
@@ -21,8 +21,8 @@ class Lib::Attributes::TypeCast
 
       value = string(value)
 
-      if value =~ JSON_REGEX
-        parse = JSON_REGEX.match(value)
+      if value =~ TIME_REGEX
+        parse = TIME_REGEX.match(value)
         value = "#{parse[2]}/#{parse[3]}/#{parse[1]}"
       end
 
@@ -34,7 +34,7 @@ class Lib::Attributes::TypeCast
     def time(value)
       case value
       when String
-        if value =~ JSON_REGEX
+        if value =~ TIME_REGEX
           begin
             Time.zone.parse(value)
           rescue ArgumentError
@@ -81,13 +81,25 @@ class Lib::Attributes::TypeCast
     end
 
     def document(value)
-      if value.content_type == 'application/pdf'
+      value = file(value)
+
+      if value && value.content_type == 'application/pdf'
        value
       end
     end
 
     def image(value)
-      if value.content_type.include? 'image'
+      value = file(value)
+
+      if value && value.content_type.include?('image')
+        value
+      end
+    end
+
+    private
+
+    def file(value)
+      if value.class == ActionDispatch::Http::UploadedFile
         value
       end
     end

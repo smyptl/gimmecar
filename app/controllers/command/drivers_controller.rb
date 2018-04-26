@@ -7,7 +7,7 @@ class Command::DriversController < Command::BaseController
   end
 
   def show
-    Services::Command::Driver.new(id: id).retrieve(success, failure)
+    Services::Command::Driver::Information.new(id: id).retrieve(success, failure)
   end
 
   private

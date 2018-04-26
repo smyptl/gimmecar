@@ -1,4 +1,4 @@
-class Services::Command::Rental < Lib::Services::Base
+class Services::Command::Rental::Information < Lib::Services::Base
 
   attributes do |a|
     a.string :number
@@ -6,8 +6,17 @@ class Services::Command::Rental < Lib::Services::Base
 
   output do
     object :rental, component: Services::Builders::Rental, logic: Logic::Metrics::Rental do |o|
-      o.attributes :pickup_location_name, :pickup_location_slug
-      o.attributes :sub_total, :days_paid, :miles_driven, :average_miles_per_day, :average_rate, :average_price_per_mile
+      o.attributes :pickup_location_name,
+                   :pickup_location_slug,
+                   :drop_off_location_name,
+                   :drop_off_location_slug
+
+      o.attributes :sub_total,
+                   :days_paid,
+                   :miles_driven,
+                   :average_miles_per_day,
+                   :average_rate,
+                   :average_price_per_mile
 
       o.nested :actions do |n|
         n.nested :extend,         if: -> (r) { r.can_extend_rental? }  do |n|
@@ -27,7 +36,11 @@ class Services::Command::Rental < Lib::Services::Base
         o.attribute :name
       end
 
-      o.object :vehicle, component: Services::Builders::VehiclesTable
+      o.object :vehicle do |o|
+        o.attributes :make_model,
+                     :vin,
+                     :license_number
+      end
     end
   end
 

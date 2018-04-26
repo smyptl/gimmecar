@@ -29,6 +29,8 @@
 # Ignore
 node_modules
 xcrun
+spec/failures.txt
+storage
 
 # Ignore all files created by webpack
 app/assets/javascripts

@@ -23,12 +23,12 @@ class Actions::Command::Vehicle::AddRegistration < Lib::Actions::Base
 
   def save
     vehicle_registration = VehicleRegistration.create({
-      vehicle_id:      vehicle,
+      vehicle:         vehicle,
       date_effective:  date_effective,
       date_expiration: date_expiration,
     })
 
-    vehicle_registration.document.attach(:registration)
+    vehicle_registration.document.attach(registration)
   end
 
   def vehicle

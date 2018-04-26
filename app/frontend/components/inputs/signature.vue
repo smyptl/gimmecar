@@ -21,7 +21,7 @@
       var self = this
 
       this.signature_pad = new SignaturePad(this.canvas, {
-        onEnd: function() {
+        onEnd: () => {
           self.updateValue();
         }
       })

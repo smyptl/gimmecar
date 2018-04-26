@@ -7,7 +7,7 @@ class Command::RentalsController < Command::BaseController
   end
 
   def show
-    Services::Command::Rental.new(number: number).retrieve(success, failure)
+    Services::Command::Rental::Information.new(number: number).retrieve(success, failure)
   end
 
   private

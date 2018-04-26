@@ -82,4 +82,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless, options: { js_errors: true }
   end
+
+  # To run --only-failures
+  config.example_status_persistence_file_path = "spec/failures.txt"
 end

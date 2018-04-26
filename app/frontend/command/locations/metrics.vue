@@ -7,7 +7,7 @@
     props: {
       metrics: {
         required: true,
-        type: Object,
+        type: Array,
       },
     },
     filters: {
@@ -19,15 +19,17 @@
 
 <template lang='pug'>
   .panel.panel-base
-    table.panel-table.panel-table-key-pair
+    table.panel-table
       thead
         tr
           th Vehicle Type
-          th Price / Mile
+          th.text-right Price / Mile
+          th.text-right Average Rate
       tbody
-        tr(v-for='price_per_mile in metrics.price_per_mile')
-          td {{ price_per_mile.vehicle_type | capitalize }}
-          td {{ price_per_mile.metrics | currency }}
+        tr(v-for='metric in metrics')
+          td {{ metric.vehicle_type   | capitalize }}
+          td.text-right {{ metric.price_per_mile | currency }}
+          td.text-right {{ metric.average_rate   | currency }}
 </template>
 
 <style lang='stylus' scoped>
