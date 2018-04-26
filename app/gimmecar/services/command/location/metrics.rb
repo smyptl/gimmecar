@@ -5,10 +5,15 @@ class Services::Command::Location::Metrics < Lib::Services::Base
   end
 
   def output
-    {
-      price_per_mile: Logic::Metrics::Location::PricePerMile.new(location).calculate,
-    }
+    Vehicle::TYPES.map do |vehicle_type|
+      rentals = Logic::Metrics::Rentals.new(location.rentals_closed.vehicle_type(vehicle_type))
 
+      {
+        vehicle_type:   vehicle_type,
+        price_per_mile: rentals.average_price_per_mile,
+        average_rate:   rentals.average_rate
+      }
+    end
   end
 
   def location
