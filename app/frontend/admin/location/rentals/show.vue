@@ -1,8 +1,9 @@
 <script>
-  import FDate from 'Filters/date'
-  import FTime from 'Filters/time'
-  import Percent from 'Filters/percent'
+  import FDate      from 'Filters/date'
+  import FTime      from 'Filters/time'
+  import Percent    from 'Filters/percent'
   import Capitalize from 'lodash/capitalize'
+  import CamelCase  from 'lodash/camelCase'
 
   import Dropdown from 'Components/dropdown'
 
@@ -18,7 +19,8 @@
     data() {
       return {
         rental: {},
-        close: false,
+        action: '',
+        action_url: ''
       }
     },
     filters: {
@@ -41,7 +43,7 @@
       '$route': 'getData',
     },
     computed: {
-      is_closed() {
+      isClosed() {
         return this.rental.status == "closed"
       },
     },
@@ -51,16 +53,13 @@
           this.rental = response.data
         })
       },
-      extendRental() {
+      loadAction(action) {
+        this.action_url = this.rental.actions[action].url
+        this.action = CamelCase(action)
       },
-      closeRental() {
-        this.close = true
-      },
-      rentalClosed() {
+      refreshData() {
         this.getData()
-        this.close = false
-      },
-      emailInvoice() {
+        this.action = ''
       },
       printInvoice() {
         this.$router.push({ name: 'rental_print', params: { number: this.rental.number }})
@@ -79,8 +78,8 @@
             actions-icon.action-icon
           .dropdown-menu.right(slot='dropdown-menu')
             ul
-              li(v-if='rental.status == "open"')
-                button.link(@click='closeRental()') Close
+              li(v-if='rental.actions.close')
+                button.link(@click='loadAction("close")') Close
               li
                 button.link(@click='printInvoice') Print Invoice
 
@@ -114,24 +113,26 @@
             td Fuel
             td.text-right {{ rental.pickup_fuel/10 | percent }}
             td.text-right
-              template(v-if='is_closed') {{ rental.drop_off_fuel/10 | percent }}
+              template(v-if='isClosed') {{ rental.drop_off_fuel/10 | percent }}
               template(v-else) --
           tr
             td Odometer
             td.text-right {{ rental.pickup_odometer }}
             td.text-right
-              template(v-if='is_closed') {{ rental.drop_off_odometer }}
+              template(v-if='isClosed') {{ rental.drop_off_odometer }}
               template(v-else) --
 
     .panel.panel-base
       h6.left.pt-sm.pl-default Driver
-      driver-info(v-bind:driver='rental.driver')
+      driver-info.left(v-bind:driver='rental.driver')
 
     .panel.panel-base(v-if='rental.additional_driver')
       h6.left.pt-sm.pl-default Additional Driver
-      driver-info(v-bind:driver='rental.additional_driver')
+      driver-info.left(v-bind:driver='rental.additional_driver')
 
-    close(@close='rentalClosed' v-if='close')
+    component(:is='action'
+              :url='action_url'
+              @close='refreshData')
 </template>
 
 <style lang='stylus' scoped>

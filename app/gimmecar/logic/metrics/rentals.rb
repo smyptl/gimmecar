@@ -21,11 +21,11 @@ class Logic::Metrics::Rentals < SimpleDelegator
   end
 
   def average_miles_per_day
-    miles_driven/days_paid if days_paid > 0
+    miles_driven/days_paid if days_paid?
   end
 
   def average_rate
-    rental_rates_sub_total/days_paid if days_paid > 0
+    rental_rates_sub_total/days_paid if days_paid?
   end
 
   def average_price_per_mile
@@ -33,6 +33,10 @@ class Logic::Metrics::Rentals < SimpleDelegator
   end
 
   private
+
+  def days_paid?
+    days_paid > 0
+  end
 
   def rentals
     @rentals ||= Logic::Metrics::Rental.wrap(__getobj__)

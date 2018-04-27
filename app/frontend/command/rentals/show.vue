@@ -4,7 +4,7 @@
   import Percent    from 'Filters/percent'
   import Currency   from 'Filters/currency'
   import Capitalize from 'lodash/capitalize'
-  import Camelcase  from 'lodash/camelCase'
+  import CamelCase  from 'lodash/camelCase'
 
   import Dropdown from 'Components/dropdown'
 
@@ -61,7 +61,7 @@
       },
       loadAction(action) {
         this.action_url = this.rental.actions[action].url
-        this.action = Camelcase(action)
+        this.action = CamelCase(action)
       },
       refreshData() {
         this.getData()
@@ -185,7 +185,6 @@
     component(:is='action'
               :url='action_url'
               @close='refreshData')
-
 </template>
 
 <style lang='stylus' scoped>

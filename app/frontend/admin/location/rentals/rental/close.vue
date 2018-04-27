@@ -8,6 +8,12 @@
 
   export default {
     name: 'RentalClose',
+    props: {
+      url: {
+        type: String,
+        required: true
+      }
+    },
     data() {
       return {
         open: false,
@@ -35,7 +41,7 @@
       closeRental() {
         this.inputSubmitStart()
 
-        this.$http.post(this.$route.path + '/close', this.form.data())
+        this.$http.post(this.url, this.form.data())
           .then(response => {
             this.form.errors.clear
             this.inputSubmitFinish()

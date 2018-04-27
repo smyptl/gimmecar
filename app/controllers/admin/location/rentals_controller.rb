@@ -7,7 +7,7 @@ class Admin::Location::RentalsController < Admin::Location::BaseController
   end
 
   def show
-    Services::Admin::Location::Rental.new(number: number).retrieve(success, failure)
+    Services::Admin::Location::Rental::Information.new(number: number, slug: location.slug).retrieve(success, failure)
   end
 
   private
