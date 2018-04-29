@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe Lib::Attributes::TypeCast do
+  describe '.string' do
+    it 'value is "undefined"' do
+      expect(Lib::Attributes::TypeCast.string("undefined")).to eq(nil)
+    end
+
+    it 'value is "null"' do
+      expect(Lib::Attributes::TypeCast.string("null")).to eq(nil)
+    end
+  end
+
   describe '.boolean' do
     it 'value is a string' do
       expect(Lib::Attributes::TypeCast.boolean('false     ')).to eq(false)

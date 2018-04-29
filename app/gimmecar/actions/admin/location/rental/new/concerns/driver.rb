@@ -168,5 +168,6 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
   end
 
   def time_zone
+    raise NotImplementedError
   end
 end

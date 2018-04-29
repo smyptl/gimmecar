@@ -62,6 +62,12 @@ group :test do
   gem 'zonebie'
 end
 
+# ActiveStorage APIs
+group :production do
+  gem "aws-sdk-s3", require: false
+  gem "google-cloud-storage", "~> 1.8", require: false
+end
+
 # Developer Tools
 gem 'bugsnag'
 
