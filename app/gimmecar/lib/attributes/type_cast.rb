@@ -68,7 +68,12 @@ class Lib::Attributes::TypeCast
 
     def string(value)
       value = value.to_s.strip
-      value.blank? ? nil : value
+
+      if value.blank? || ['undefined', 'null'].include?(value)
+        return nil
+      end
+
+      value
     end
 
     def symbol(value)

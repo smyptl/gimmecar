@@ -1,9 +1,7 @@
 class Admin::Location::Vehicles::StatusController < Admin::Location::Vehicles::BaseController
 
   def index
-    v = Vehicle.find_by(vin: vin)
-
-    render status: 200, json: { status: v.status }
+    render status: 200, json: { status: Vehicle.find_by(vin: vin).status }
   end
 
   def create

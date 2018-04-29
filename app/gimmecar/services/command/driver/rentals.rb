@@ -13,6 +13,6 @@ class Services::Command::Driver::Rentals < Lib::Services::Base
   private
 
   def query
-    Driver.includes(rentals: [:pickup_location, :drop_off_location, :vehicle]).find(id).rentals.order(pickup: :desc)
+    Driver.find(id).rentals.order(pickup: :desc)
   end
 end

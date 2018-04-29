@@ -65,7 +65,8 @@ class Rental < ApplicationRecord
 
   delegate :name, :license_number,     to: :driver,            prefix: true
   delegate :name,                      to: :additional_driver, prefix: true, allow_nil: true
-  delegate :make_model, :vehicle_type, to: :vehicle,           prefix: true
+  delegate :make_model,                to: :vehicle,           prefix: true
+  delegate :vehicle_type,              to: :vehicle
 
   delegate :name, :slug, :description, to: :pickup_location,   prefix: true
   delegate :name, :slug,               to: :drop_off_location, prefix: true
