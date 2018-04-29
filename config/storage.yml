@@ -1,26 +1,26 @@
 test:
   service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Rails.root.join('tmp/storage') %>
 
 local:
   service: Disk
-  root: <%= Rails.root.join("storage") %>
+  root: <%= Rails.root.join('storage') %>
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 digital_ocean:
   service: S3
-  access_key_id: <%= ENV("DO_ACCESS_KEY_ID") %>
-  secret_access_key: <%= ENV("DO_SECRET_ACCESS_KEY") %>
+  access_key_id: <%= ENV['DO_ACCESS_KEY_ID'] %>
+  secret_access_key: <%= ENV['DO_SECRET_ACCESS_KEY'] %>
   region: nyc3
-  bucket: <%= ENV("DO_BUCKET") %>
-  endpoint: <%= ENV("DO_ENDPOINT") %>
+  bucket: <%= ENV['DO_BUCKET'] %>
+  endpoint: <%= ENV['DO_ENDPOINT'] %>
 
 # Remember not to checkin your GCS keyfile to a repository
 google:
   service: GCS
-  project: <%= ENV('GOOGLE_PROJECT_ID') %>
-  credentials: <%= ENV('GOOGLE_CREDENTIALS') %>
-  bucket: <%= ENV("GOOGLE_BUCKET") %>
+  project: <%= ENV['GOOGLE_PROJECT_ID'] %>
+  credentials: <%= ENV['GOOGLE_CREDENTIALS'] %>
+  bucket: <%= ENV['GOOGLE_BUCKET'] %>
 
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:
