@@ -17,6 +17,7 @@
     data() {
       return {
         open: false,
+        rental: {},
         form: new this.$form({
           drop_off: new Date(),
           drop_off_fuel: 10,
@@ -32,7 +33,11 @@
       Popup,
     },
     mounted() {
-      this.open = true
+      this.$http.get(this.url)
+        .then(response => {
+          this.rental = response.data
+          this.open = true
+        })
     },
     methods: {
       close() {

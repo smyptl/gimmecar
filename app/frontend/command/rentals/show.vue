@@ -157,7 +157,7 @@
               template(v-if='is_closed') {{ rental.drop_off_odometer }}
               template(v-else) --
 
-      table.panel-table.panel-table-key-pair
+      table.panel-table.panel-table-key-pair.thead-bt
         thead
           tr
             th(colspan='2') Metrics

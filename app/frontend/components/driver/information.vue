@@ -25,13 +25,13 @@
   div
     p.dnr.font-mono(v-if='driver.do_not_rent') DO NOT RENT!!!
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       tbody
         tr
           td Full Name
           td {{ driver.name_first }} {{ driver.name_middle }} {{ driver.name_last }}
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       thead
         tr
           th Contact Info
@@ -53,7 +53,7 @@
           td
             address-format(:address='driver')
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       thead
         tr
           th License

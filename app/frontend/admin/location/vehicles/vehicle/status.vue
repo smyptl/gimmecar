@@ -32,7 +32,11 @@
       VehicleStatusIcons,
     },
     mounted() {
-      this.open = true
+      this.$http.get(this.$route.path + '/status')
+        .then(response => {
+          this.form.status = response.data.status
+          this.open = true
+        })
     },
     methods: {
       close() {
@@ -99,5 +103,5 @@
 
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/form'
-  @import '~Styles/components/panels/table'
+  @import '~Styles/components/inputs/table'
 </style>
