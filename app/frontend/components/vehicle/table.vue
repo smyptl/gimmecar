@@ -52,7 +52,7 @@
             @click.prevent='$emit("view-vehicle", vehicle.vin)'
           )
 
-            td
+            td.status
               vehicle-status-icons(:status='vehicle.status')
             td {{ vehicle.make_model }}
             td {{ vehicle.vehicle_type }}

@@ -1,5 +1,6 @@
 <script>
   import Capitalize from 'lodash/capitalize'
+  import VehicleStatusIcons from 'Components/vehicle/status'
 
   export default {
     name: 'Vehicles',
@@ -15,6 +16,9 @@
     },
     filters: {
       Capitalize,
+    },
+    components: {
+      VehicleStatusIcons,
     },
     computed: {
       sorted_vehicles() {
@@ -38,28 +42,36 @@
   div
     input-error-message(v-bind:base='true' v-bind:errors='form.errors.get("vehicle_id")')
     .input-block.whole
-      table.panel-table
-        thead
-          tr
-            th
-            th Make - Model
-            th Color
-            th License #
-        tbody
-          tr(v-for='vehicle in sorted_vehicles'
-             :key='vehicle.id'
-             @click.prevent='selectVehicle(vehicle.id)'
-             v-bind:class='{ selected: form.vehicle_id == vehicle.id }')
+      .panel
+        .gimmecar-app-vertical-scroll
+          table.panel-table
+            thead
+              tr
+                th
+                th
+                th Make Model
+                th Color
+                th License #
+            tbody
+              tr(v-for='vehicle in sorted_vehicles'
+                :key='vehicle.id'
+                @click.prevent='selectVehicle(vehicle.id)'
+                v-bind:class='{ selected: form.vehicle_id == vehicle.id }')
 
-            td.checkbox
-              input.input-field(type='radio' id='form_vehicle_id' v-error='form.errors.has("vehicle_id")' v-bind:checked='form.vehicle_id == vehicle.id')
-            td {{ vehicle.make_model }}
-            td {{ vehicle.color | capitalize }}
-            td(v-if='vehicle.license_number') {{ vehicle.license_number }}
-            td(v-else)
-              i VIN: {{ lastFive(vehicle.vin) }}
+                td.checkbox
+                  input.input-field(type='radio'
+                                    v-error='form.errors.has("vehicle_id")'
+                                    v-bind:checked='form.vehicle_id == vehicle.id')
 
-    .input-row.mt-default
+                td.status
+                  vehicle-status-icons(:status='vehicle.status')
+                td {{ vehicle.make_model }}
+                td {{ vehicle.color | capitalize }}
+                td(v-if='vehicle.license_number') {{ vehicle.license_number }}
+                td(v-else)
+                  i VIN: {{ lastFive(vehicle.vin) }}
+
+    .input-row
       .input-container.two-fifths
         label.input-label(for='pickup_odometer') Vehicle Odometer *
         .input-block.whole
