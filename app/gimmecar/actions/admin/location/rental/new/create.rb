@@ -40,10 +40,6 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
     @location ||= Location.find(params.fetch(:location_id))
   end
 
-  def available_vehicle_ids
-    location.available_vehicle_ids(vehicle_type: vehicle_type)
-  end
-
   def valid?
     valid = super
 
