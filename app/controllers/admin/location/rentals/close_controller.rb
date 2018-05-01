@@ -1,6 +1,7 @@
 class Admin::Location::Rentals::CloseController < Admin::Location::Rentals::BaseController
 
   def index
+    Services::Admin::Location::Rental::Close.new(number: number).retrieve(success, failure)
   end
 
   def create

@@ -17,11 +17,19 @@ class Actions::Admin::Location::Rental::Close < Lib::Actions::Base
   validates :drop_off_fuel,
     presence: true
 
+  validate :can_close
+
   private
 
   def save
     rental.close(attributes)
     rental.vehicle.update_status_dirty
+  end
+
+  def can_close
+    unless rental.can_close?
+      errors.add(:base, 'cannot close rental')
+    end
   end
 
   def rental
