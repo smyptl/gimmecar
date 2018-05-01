@@ -74,7 +74,7 @@
                 v-model='form.date_effective'
                 v-error='form.errors.has("date_effective")'
                 @input='form.errors.clear("date_effective")')
-            input-error-message(v-bind:errors='form.errors.get("date_effective")')
+            input-error-message(:errors='form.errors.get("date_effective")')
 
           .input-container.one-half.fixed
             label.input-label(for='date_expiration') Expiration Date *
@@ -83,7 +83,7 @@
                 v-model='form.date_expiration'
                 v-error='form.errors.has("date_expiration")'
                 @input='form.errors.clear("date_expiration")')
-            input-error-message(v-bind:errors='form.errors.get("date_expiration")')
+            input-error-message(:errors='form.errors.get("date_expiration")')
 
         .input-row
           label.input-label(for='registration') Registration *
@@ -92,7 +92,7 @@
               v-model='form.registration'
               v-error='form.errors.has("registration")'
               @input='form.errors.clear("registration")')
-          input-error-message(v-bind:errors='form.errors.get("registration")')
+          input-error-message(:errors='form.errors.get("registration")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

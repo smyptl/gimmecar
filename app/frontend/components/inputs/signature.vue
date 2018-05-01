@@ -85,7 +85,7 @@
     border-width: 0.125rem
     border-style: dashed
     border-color: $border-color-input
-    border-radius: 0.125rem
+    border-radius: $input-border-radius
     background-color: rgba(255, 255, 255, 0.5)
 
   button

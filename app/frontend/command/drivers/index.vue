@@ -61,7 +61,7 @@
     padding: $padding-ex-sm
 
     background: $red
-    border-radius: 0.125rem
+    border-radius: $border-radius-default
 
     font-weight: 700
     color: #ffffff

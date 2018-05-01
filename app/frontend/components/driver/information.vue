@@ -43,11 +43,11 @@
         tr
           td Cell Phone #
           td
-            a(v-bind:href="'tel:' + driver.cell_phone_number") {{ driver.cell_phone_number }}
+            a(:href="'tel:' + driver.cell_phone_number") {{ driver.cell_phone_number }}
         tr(v-if='driver.home_phone_number')
           td Home Phone #
           td
-            a(v-bind:href="'tel:' + driver.home_phone_number") {{ driver.home_phone_number }}
+            a(:href="'tel:' + driver.home_phone_number") {{ driver.home_phone_number }}
         tr
           td Address
           td

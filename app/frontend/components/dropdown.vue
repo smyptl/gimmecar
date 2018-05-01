@@ -92,7 +92,7 @@
       list-style: none
       background: $white
 
-      border-radius: 0.125rem
+      border-radius: $border-radius-default
       box-shadow: 0 3.125rem 6.25rem rgba(50, 50, 50, .1), 0 0.5rem 2rem rgba(150, 150, 150, 0.15), 0 0.125rem 1rem rgba(0, 0, 0, .1)
 
     li

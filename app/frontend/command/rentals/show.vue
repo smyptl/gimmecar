@@ -137,7 +137,7 @@
               router-link.right(:to="{ name: 'driver', params: { id: rental.additional_driver.id } }")
                 span.block {{ rental.additional_driver.name }}
 
-      table.panel-table
+      table.panel-table.thead-bt
         thead
           tr
             th

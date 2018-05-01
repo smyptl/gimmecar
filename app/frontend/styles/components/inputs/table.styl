@@ -1,0 +1,67 @@
+@import '~Styles/global/colors'
+@import '~Styles/global/layout'
+@import '~Styles/global/type'
+
+.input-table
+  width: 100%
+  position: relative
+
+  border-collapse: collapse
+  border-radius: $input-border-radius
+
+  text-align: left
+  font-size: $input-font-size
+  font-weight: 400
+
+  tr
+    border-bottom: 1px solid $border-color-light
+
+  tr:last-of-type
+    border-bottom: 0
+
+  tr:first-child td:first-child
+  tr:first-child th:first-child
+    border-top-left-radius: $input-border-radius
+  tr:first-child td:last-child
+  tr:first-child th:last-child
+    border-top-right-radius: $input-border-radius
+  tr:last-child td:first-child
+    border-bottom-left-radius: $input-border-radius
+  tr:last-child td:last-child
+    border-bottom-right-radius: $input-border-radius
+
+  th
+  td
+    margin: 0
+    padding: $padding-sm
+
+  input[type=radio].input-field
+    margin: 0
+
+  thead
+    background: $white-dark
+    color: $black-ex-light
+    font-size: 0.6875rem
+    text-transform: uppercase
+    border-top: 0
+    border-bottom: 1px solid $border-color-light
+
+    th
+      font-weight: 600
+
+  tbody
+    font-family: $font-mono
+    color: $black
+
+    tr
+      background: $background-color-input
+      vertical-align: middle
+
+      &:hover
+        cursor: pointer
+
+    tr.selected
+      font-weight: 600
+
+    td.checkbox
+      width: 1rem + $padding-sm

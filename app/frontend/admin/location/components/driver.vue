@@ -29,7 +29,7 @@
               v-model='form.driver.name_first'
               v-error='form.errors.has("driver_name_first")'
               @input='form.errors.clear("driver_name_first")')
-          input-error-message(v-bind:errors='form.errors.get("driver_name_first")')
+          input-error-message(:errors='form.errors.get("driver_name_first")')
 
         .input-container.two-fifths.fixed
           .input-block.whole
@@ -39,7 +39,7 @@
               v-model='form.driver.name_middle'
               v-error='form.errors.has("driver_name_middle")'
               @input='form.errors.clear("driver_name_middle")')
-          input-error-message(v-bind:errors='form.errors.get("driver_name_middle")')
+          input-error-message(:errors='form.errors.get("driver_name_middle")')
 
       .input-container.two-fifths
         .input-block.whole
@@ -49,7 +49,7 @@
             v-model='form.driver.name_last'
             v-error='form.errors.has("driver_name_last")'
             @input='form.errors.clear("driver_name_last")')
-        input-error-message(v-bind:errors='form.errors.get("driver_name_last")')
+        input-error-message(:errors='form.errors.get("driver_name_last")')
 
     .input-row
       label.input-label(for='driver_license_number')
@@ -64,7 +64,7 @@
             v-model='form.driver.license_number'
             v-error='form.errors.has("driver_license_number")'
             @input='form.errors.clear("driver_license_number")')
-        input-error-message(v-bind:errors='form.errors.get("driver_license_number")')
+        input-error-message(:errors='form.errors.get("driver_license_number")')
 
       .input-container.two-fifths
         .input-container.one-half.fixed
@@ -75,7 +75,7 @@
               v-model='form.driver.license_state'
               v-error='form.errors.has("driver_license_state")'
               @input='form.errors.clear("driver_license_state")')
-          input-error-message(v-bind:errors='form.errors.get("driver_license_state")')
+          input-error-message(:errors='form.errors.get("driver_license_state")')
 
         .input-container.one-half.fixed
           .input-block.whole
@@ -85,7 +85,7 @@
               v-model='form.driver.license_country'
               v-error='form.errors.has("driver_license_country")'
               @input='form.errors.clear("driver_license_country")')
-          input-error-message(v-bind:errors='form.errors.get("driver_license_country")')
+          input-error-message(:errors='form.errors.get("driver_license_country")')
 
       .input-container.one-fifth
         .input-block.whole
@@ -94,7 +94,7 @@
             v-model='form.driver.license_expiration_date'
             v-error='form.errors.has("driver_license_expiration_date")'
             @input='form.errors.clear("driver_license_expiration_date")')
-        input-error-message(v-bind:errors='form.errors.get("driver_license_expiration_date")')
+        input-error-message(:errors='form.errors.get("driver_license_expiration_date")')
 
     .input-row
       label.input-label(for='driver_address_1')
@@ -109,7 +109,7 @@
             v-model='form.driver.address_1'
             v-error='form.errors.has("driver_address_1")'
             @input='form.errors.clear("driver_address_1")')
-        input-error-message(v-bind:errors='form.errors.get("driver_address_1")')
+        input-error-message(:errors='form.errors.get("driver_address_1")')
 
     .input-row
       .input-container.whole
@@ -120,7 +120,7 @@
             v-model='form.driver.address_2'
             v-error='form.errors.has("driver_address_2")'
             @input='form.errors.clear("driver_address_2")')
-        input-error-message(v-bind:errors='form.errors.get("driver_address_2")')
+        input-error-message(:errors='form.errors.get("driver_address_2")')
 
     .input-row
       .input-container.three-fifths
@@ -132,7 +132,7 @@
               v-model='form.driver.city'
               v-error='form.errors.has("driver_city")'
               @input='form.errors.clear("driver_city")')
-          input-error-message(v-bind:errors='form.errors.get("driver_city")')
+          input-error-message(:errors='form.errors.get("driver_city")')
 
         .input-container.one-third.fixed
           .input-block.whole
@@ -142,7 +142,7 @@
               v-model='form.driver.state'
               v-error='form.errors.has("driver_state")'
               @input='form.errors.clear("driver_state")')
-          input-error-message(v-bind:errors='form.errors.get("driver_state")')
+          input-error-message(:errors='form.errors.get("driver_state")')
 
       .input-container.two-fifths
         .input-container.one-third.fixed
@@ -153,7 +153,7 @@
               v-model='form.driver.zip_code'
               v-error='form.errors.has("driver_zip_code")'
               @input='form.errors.clear("driver_zip_code")')
-          input-error-message(v-bind:errors='form.errors.get("driver_zip_code")')
+          input-error-message(:errors='form.errors.get("driver_zip_code")')
 
         .input-container.two-thirds.fixed
           .input-block.whole
@@ -163,7 +163,7 @@
               v-model='form.driver.country'
               v-error='form.errors.has("driver_country")'
               @input='form.errors.clear("driver_country")')
-          input-error-message(v-bind:errors='form.errors.get("driver_country")')
+          input-error-message(:errors='form.errors.get("driver_country")')
 
     .input-row
       .input-container.one-half
@@ -175,7 +175,7 @@
             v-model='form.driver.date_of_birth'
             v-error='form.errors.has("driver_date_of_birth")'
             @input='form.errors.clear("driver_date_of_birth")')
-        input-error-message(v-bind:errors='form.errors.get("driver_date_of_birth")')
+        input-error-message(:errors='form.errors.get("driver_date_of_birth")')
 
       .input-container.one-half
         label.input-label(for='driver_gender') Gender
@@ -188,7 +188,7 @@
             option(value='' disabled) ----
             option(value='male') Male
             option(value='female') Female
-        input-error-message(v-bind:errors='form.errors.get("driver_gender")')
+        input-error-message(:errors='form.errors.get("driver_gender")')
 
     .input-row
       .input-container.two-fifths
@@ -199,7 +199,7 @@
             v-model='form.driver.email'
             v-error='form.errors.has("driver_email")'
             @input='form.errors.clear("driver_email")')
-        input-error-message(v-bind:errors='form.errors.get("driver_email")')
+        input-error-message(:errors='form.errors.get("driver_email")')
       .input-container.three-fifths
         .input-container.one-half.fixed
           label.input-label(for='driver_cell_phone_number') Cell Phone #
@@ -209,7 +209,7 @@
               v-model='form.driver.cell_phone_number'
               v-error='form.errors.has("driver_cell_phone_number")'
               @input='form.errors.clear("driver_cell_phone_number")')
-          input-error-message(v-bind:errors='form.errors.get("driver_cell_phone_number")')
+          input-error-message(:errors='form.errors.get("driver_cell_phone_number")')
         .input-container.one-half.fixed
           label.input-label(for='driver_home_phone_number') Home Phone #
           .input-block.whole
@@ -218,7 +218,7 @@
               v-model='form.driver.home_phone_number'
               v-error='form.errors.has("driver_home_phone_number")'
               @input='form.errors.clear("driver_home_phone_number")')
-          input-error-message(v-bind:errors='form.errors.get("driver_home_phone_number")')
+          input-error-message(:errors='form.errors.get("driver_home_phone_number")')
 
     .input-row
       label.input-label(for='driver_insurance_company_name')
@@ -232,7 +232,7 @@
             v-model='form.driver.insurance.company_name'
             v-error='form.errors.has("driver_insurance_company_name")'
             @input='form.errors.clear("driver_insurance_company_name")')
-        input-error-message(v-bind:errors='form.errors.get("driver_insurance_company_name")')
+        input-error-message(:errors='form.errors.get("driver_insurance_company_name")')
 
       .input-container.three-fifths
         .input-container.one-third.fixed
@@ -243,7 +243,7 @@
               v-model='form.driver.insurance.policy_number'
               v-error='form.errors.has("driver_insurance_policy_number")'
               @input='form.errors.clear("driver_insurance_policy_number")')
-          input-error-message(v-bind:errors='form.errors.get("driver_insurance_policy_number")')
+          input-error-message(:errors='form.errors.get("driver_insurance_policy_number")')
 
         .input-container.one-third.fixed
           .input-block.whole
@@ -253,7 +253,7 @@
               v-model='form.driver.insurance.effective_date'
               v-error='form.errors.has("driver_insurance_effective_date")'
               @input='form.errors.clear("driver_insurance_effective_date")')
-          input-error-message(v-bind:errors='form.errors.get("driver_insurance_effective_date")')
+          input-error-message(:errors='form.errors.get("driver_insurance_effective_date")')
 
         .input-container.one-third.fixed
           .input-block.whole
@@ -263,7 +263,7 @@
               v-model='form.driver.insurance.expiration_date'
               v-error='form.errors.has("driver_insurance_expiration_date")'
               @input='form.errors.clear("driver_insurance_expiration_date")')
-          input-error-message(v-bind:errors='form.errors.get("driver_insurance_expiration_date")')
+          input-error-message(:errors='form.errors.get("driver_insurance_expiration_date")')
 
     .input-row
       .input-container.one-half.fixed
@@ -274,7 +274,7 @@
             v-model='form.driver.insurance.agent'
             v-error='form.errors.has("driver_insurance_agent")'
             @input='form.errors.clear("driver_insurance_agent")')
-        input-error-message(v-bind:errors='form.errors.get("driver_insurance_agent")')
+        input-error-message(:errors='form.errors.get("driver_insurance_agent")')
 
       .input-container.one-half.fixed
         .input-block.whole
@@ -284,7 +284,7 @@
             v-model='form.driver.insurance.phone_number'
             v-error='form.errors.has("driver_insurance_phone_number")'
             @input='form.errors.clear("driver_insurance_phone_number")')
-        input-error-message(v-bind:errors='form.errors.get("driver_insurance_phone_number")')
+        input-error-message(:errors='form.errors.get("driver_insurance_phone_number")')
 
     .input-row
       label.input-label(for='driver_insurance_verified') Insurance Verified?
@@ -302,7 +302,7 @@
                   v-model='form.driver.insurance.verify_agent'
                   v-error='form.errors.has("driver_insurance_verify_agent")'
                   @input='form.errors.clear("driver_insurance_verify_agent")')
-              input-error-message(v-bind:errors='form.errors.get("driver_insurance_verify_agent")')
+              input-error-message(:errors='form.errors.get("driver_insurance_verify_agent")')
 
             .input-container.one-half.fixed
               .input-block.whole
@@ -312,7 +312,7 @@
                   v-model='form.driver.insurance.verify_call_center'
                   v-error='form.errors.has("driver_insurance_verify_call_center")'
                   @input='form.errors.clear("driver_insurance_verify_call_center")')
-              input-error-message(v-bind:errors='form.errors.get("driver_insurance_verify_call_center")')
+              input-error-message(:errors='form.errors.get("driver_insurance_verify_call_center")')
 
           .input-container.one-fifth
             .input-block.whole
@@ -322,7 +322,7 @@
                 v-model='form.driver.insurance.verify_date'
                 v-error='form.errors.has("driver_insurance_verify_date")'
                 @input='form.errors.clear("driver_insurance_verify_date")')
-            input-error-message(v-bind:errors='form.errors.get("driver_insurance_verify_date")')
+            input-error-message(:errors='form.errors.get("driver_insurance_verify_date")')
 </template>
 
 <style lang='stylus'>

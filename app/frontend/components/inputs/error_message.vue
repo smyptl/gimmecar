@@ -24,7 +24,7 @@
 </script>
 
 <template lang='pug'>
-  p.input-error-message(v-bind:class=" { 'error-message-base': base }")
+  p.input-error-message(:class=" { 'error-message-base': base }")
     template(v-for='(error, index) in errors')
       | {{ error }}
       template(v-if='errors.length > 1 && (index + 1) != errors.length')

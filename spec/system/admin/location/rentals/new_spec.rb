@@ -82,15 +82,15 @@ describe 'create rental', type: :system, js: true do
 
   scenario 'success in creating a single driver' do
     tax_rate = create(:tax_rate, location: location)
-    vehicle_1 = create(:vehicle, vehicle_type: :mid_size, original_location: location, location: location)
-    create(:vehicle, vehicle_type: :mid_size, original_location: location, location: location)
+    vehicle_1 = create(:vehicle, vehicle_type: :compact, original_location: location, location: location)
+    create(:vehicle, vehicle_type: :compact, original_location: location, location: location)
 
     create(:rate, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
     visit_admin admin_location_rentals_new_path(slug: location.slug)
 
     expect(page).to have_content('Rental: Details')
-    select 'Mid-Size', from: 'vehicle_type'
+    find('td', :text => 'Compact').click
     click_on 'Continue'
 
     check_rental_rates
@@ -190,14 +190,14 @@ describe 'create rental', type: :system, js: true do
 
   scenario 'success in creating a additional driver' do
     create(:tax_rate, location: location)
-    vehicle_1 = create(:vehicle, vehicle_type: 'compact', original_location: location, location: location)
+    vehicle_1 = create(:vehicle, :compact, original_location: location, location: location)
 
     create(:rate, vehicle_type: vehicle_1.vehicle_type, location: location, amount: 3500)
 
     visit_admin admin_location_rentals_new_path(slug: location.slug)
 
     expect(page).to have_content('Rental: Details')
-    select 'Compact', from: 'Vehicle Type'
+    find('td', :text => 'Compact').click
     click_on 'Continue'
 
     check_rental_rates

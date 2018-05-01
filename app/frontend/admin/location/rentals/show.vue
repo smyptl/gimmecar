@@ -102,7 +102,8 @@
                 span.block {{ rental.vehicle.make_model }}
                 span.block.description(v-if='rental.vehicle.license_number') License #: {{ rental.vehicle.license_number }}
                 span.block.description(v-else) VIN: {{ rental.vehicle.vin }}
-      table.panel-table
+
+      table.panel-table.thead-bt
         thead
           tr
             th
@@ -124,11 +125,11 @@
 
     .panel.panel-base
       h6.left.pt-sm.pl-default Driver
-      driver-info.left(v-bind:driver='rental.driver')
+      driver-info.left(:driver='rental.driver')
 
     .panel.panel-base(v-if='rental.additional_driver')
       h6.left.pt-sm.pl-default Additional Driver
-      driver-info.left(v-bind:driver='rental.additional_driver')
+      driver-info.left(:driver='rental.additional_driver')
 
     component(:is='action'
               :url='action_url'

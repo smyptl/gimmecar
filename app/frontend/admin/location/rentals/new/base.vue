@@ -5,13 +5,13 @@
 
   import InputSubmit from 'Mixins/input_submit'
 
-  import InputDateTime from 'Components/inputs/date_time'
   import Signature     from 'Components/inputs/signature'
   import Payment       from 'Components/inputs/payment'
 
   import FinancialResponsibilitySignatures from 'Admin/location/components/financial_responsibility_signatures'
   import TermsAndConditionsSignatures      from 'Admin/location/components/terms_and_conditions_signatures'
 
+  import DetailsForm from './details'
   import DriversForm from './drivers'
   import VehicleForm from './vehicles'
 
@@ -94,8 +94,8 @@
       InputSubmit,
     ],
     components: {
+      DetailsForm,
       DriversForm,
-      InputDateTime,
       FinancialResponsibilitySignatures,
       Payment,
       RentalInvoice,
@@ -253,70 +253,42 @@
       small.right {{ current_step_number }} of {{ number_of_steps }}
 
     template(v-if='current_step == "Details"')
-      .input-row
-        .input-container.one-half
-          label.input-label Pickup *
-          .input-block.whole
-            input-date-time(v-model='pickup' disabled=true)
-
-        .input-container.one-half
-          label.input-label Drop-off *
-          .input-block.whole
-            input-date-time(
-              v-model='rental.drop_off'
-              v-error='rental.errors.has("drop_off")'
-              @input='rental.errors.clear("drop_off")')
-          input-error-message(v-bind:errors='rental.errors.get("drop_off")')
-
-      .input-row
-        .input-container.whole
-          label.input-label(for='vehicle_type') Vehicle Type *
-          .input-block.whole
-            select.input-field#vehicle_type(
-              v-model='rental.vehicle_type'
-              v-error='rental.errors.has("vehicle_type")'
-              @input='rental.errors.clear("vehicle_type")')
-
-              option(value='' disabled) -- Select Vehicle Type --
-              option(value='subcompact') Subcompact (Toyota Yaris iA)
-              option(value='compact') Compact (Toyota Corolla)
-              option(value='mid_size') Mid-Size (Toyota Camry)
-          input-error-message(v-bind:errors='rental.errors.get("vehicle_type")')
+      details-form(:form='rental')
 
       .input-submit.input-block
         input-submit.btn.btn-primary.right(@click.native.prevent='getRates()' :loading='input_submit_loading') Continue
 
     template(v-if='current_step == "Rates"')
-      rental-invoice.input-block.mt-sm(v-bind:summary='summary' v-bind:estimated='true')
+      rental-invoice.input-block.mt-sm(:summary='summary' :estimated='true')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
         button.btn.btn-primary.right(@click.prevent='nextStep()') Continue
 
     template(v-if='current_step == "Drivers"')
-      drivers-form(v-bind:form='rental')
+      drivers-form(:form='rental')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
         input-submit.btn.btn-primary.right(@click.native.prevent='validateDrivers()' :loading='input_submit_loading') Continue
 
     template(v-if='current_step == "Vehicle"')
-      vehicle-form(v-bind:form='rental' v-bind:vehicles='vehicles')
+      vehicle-form(:form='rental' :vehicles='vehicles')
 
       .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
         input-submit.btn.btn-primary.right(@click.native.prevent='validateVehicle()' :loading='input_submit_loading') Continue
 
     template(v-if='current_step == "Financial Responsibility"')
-      financial-responsibility-signatures(v-bind:form='rental')
+      financial-responsibility-signatures(:form='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
         input-submit.btn.btn-primary.right(@click.native.prevent='validateFinancialResponsibility()' :loading='input_submit_loading') Continue
 
     template(v-if='current_step == "Terms & Conditions"')
-      rental-invoice.input-block.mt-sm(v-bind:summary='summary')
-      terms-and-conditions-signatures.mt-sm(v-bind:form='rental')
+      rental-invoice.input-block.mt-sm(:summary='summary')
+      terms-and-conditions-signatures.mt-sm(:form='rental')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -344,7 +316,7 @@
               @input='rental.errors.clear("paid_by")')
 
               option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
-        input-error-message(v-bind:errors='rental.errors.get("paid_by")')
+        input-error-message(:errors='rental.errors.get("paid_by")')
 
       .input-row
         label.input-label
@@ -355,7 +327,7 @@
             @add-error='rental.errors.record({ card: [$event] })'
             @clear-error="rental.errors.clear()"
             v-error='rental.errors.has("card")')
-        input-error-message(v-bind:errors='rental.errors.get("card")')
+        input-error-message(:errors='rental.errors.get("card")')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back
@@ -364,5 +336,5 @@
 
 <style lang='stylus'>
   @import '~Styles/components/panels/form'
-
+  @import '~Styles/components/panels/table'
 </style>

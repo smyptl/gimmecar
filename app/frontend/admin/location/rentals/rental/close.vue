@@ -70,7 +70,7 @@
               v-model='form.drop_off'
               v-error='form.errors.has("drop_off")'
               @input='form.errors.clear("drop_off")')
-          input-error-message(v-bind:errors='form.errors.get("drop_off")')
+          input-error-message(:errors='form.errors.get("drop_off")')
 
         .input-row
           .input-container.two-fifths
@@ -81,7 +81,7 @@
                 v-model='form.drop_off_odometer'
                 v-error='form.errors.has("drop_off_odometer")'
                 @input='form.errors.clear("drop_off_odometer")')
-            input-error-message(v-bind:errors='form.errors.get("drop_off_odometer")')
+            input-error-message(:errors='form.errors.get("drop_off_odometer")')
 
           .input-container.three-fifths
             label.input-label(for='drop_off_fuel')
@@ -95,7 +95,7 @@
                 max='10'
                 v-error='form.errors.has("drop_off_fuel")'
                 @input='form.errors.clear("drop_off_fuel")')
-            input-error-message(v-bind:errors='form.errors.get("drop_off_fuel")')
+            input-error-message(:errors='form.errors.get("drop_off_fuel")')
 
 
       .panel-form.panel-form-padding.panel-popup-form-footer
