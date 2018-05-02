@@ -102,6 +102,9 @@
                 @input='form.errors.clear("drop_off_fuel")')
             input-error-message(:errors='form.errors.get("drop_off_fuel")')
 
+            .input-block.whole(v-if='rental.pickup_fuel > form.drop_off_fuel')
+              p.message.message-warning Fuel is less than amount provided at pickup ({{ rental.pickup_fuel * 10 }}%), advise customer to fill up tank or they will be charged $10 plus cost of fuel.
+
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
@@ -109,5 +112,19 @@
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/global/colors'
+  @import '~Styles/global/layout'
   @import '~Styles/components/panels/form'
+
+  .message-warning
+    margin-top: $margin-sm
+
+    padding: $padding-sm
+
+    border-radius: $input-border-radius
+    background: $yellow
+
+    color: lighten($yellow, 98%)
+    text-shadow: 0.0625rem 0 0.25rem darken($yellow, 15%)
+    font-weight: 600
 </style>

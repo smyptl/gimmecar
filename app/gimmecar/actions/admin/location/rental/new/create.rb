@@ -47,13 +47,13 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
       success = lambda do |args|
         @charge = args.fetch(:charge)
         write_attribute(:stripe_customer_id, args.fetch(:customer_id))
-        return true
+        true
       end
 
       failure = lambda do |args|
         errors.add(:card, args.fetch(:message))
         write_attribute(:stripe_customer_id, args.fetch(:customer_id))
-        return false
+        false
       end
 
       charge_amount = rates.fetch(:total) + Rental::DEPOSIT_AMOUNT
