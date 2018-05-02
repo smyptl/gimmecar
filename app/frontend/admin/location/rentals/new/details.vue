@@ -4,7 +4,7 @@
   import InputDateTime from 'Components/inputs/date_time'
 
   export default {
-    name: 'drivers',
+    name: 'Details',
     props: {
       form: {
         type: Object,
