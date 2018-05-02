@@ -18,15 +18,25 @@ module Actions::Admin::Location::Rental::New::Concerns::Vehicle
 
     validates :pickup_odometer,
       presence: true,
-      numericality: { only_integer: true }
+      numericality: { greater_than_or_equal_to: :latest_odometer, message: "must be greater than %{count}"  }
 
     validates :pickup_fuel,
       presence: true,
       inclusion: { in: 0..10 }
   end
 
+  def latest_odometer
+    if vehicle_id
+      vehicle.odometer || 0
+    end
+  end
+
+  def vehicle
+    location.vehicles.find(vehicle_id)
+  end
+
   def available_vehicle_ids
-    raise NotImplementedError
+    location.available_vehicle_ids(vehicle_type: vehicle_type)
   end
 
   def location

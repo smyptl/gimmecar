@@ -68,7 +68,7 @@
 
       .panel-form.panel-form-padding.panel-popup-form-content
         .input-block.whole.mt-default.mb-sm(v-if='form.errors.has("base")')
-          input-error-message(v-bind:base='true' v-bind:errors='form.errors.get("base")')
+          input-error-message(:base='true' :errors='form.errors.get("base")')
 
         .input-row
           .input-container.two-fifths.fixed
@@ -78,7 +78,7 @@
                 v-model='form.date'
                 v-error='form.errors.has("date")'
                 @input='form.errors.clear("date")')
-            input-error-message(v-bind:errors='form.errors.get("date")')
+            input-error-message(:errors='form.errors.get("date")')
 
           .input-container.one-fifth.fixed
             label.input-label(for='days') Days *
@@ -88,7 +88,7 @@
                 v-model='form.days'
                 v-error='form.errors.has("days")'
                 @input='form.errors.clear("days")')
-            input-error-message(v-bind:errors='form.errors.get("days")')
+            input-error-message(:errors='form.errors.get("days")')
 
           .input-container.two-fifths.fixed
             label.input-label(for='amount') Amount
@@ -98,7 +98,7 @@
                 v-model='form.amount'
                 v-error='form.errors.has("amount")'
                 @input='form.errors.clear("amount")')
-            input-error-message(v-bind:errors='form.errors.get("amount")')
+            input-error-message(:errors='form.errors.get("amount")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

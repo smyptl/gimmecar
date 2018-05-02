@@ -59,8 +59,8 @@
   input.input-field(
     type='text'
     placeholder='mm/dd/yyyy'
-    v-bind:name='name'
-    v-bind:value='date_formatted'
+    :name='name'
+    :value='date_formatted'
     v-model='date_formatted'
     @change='parseDate')
 </template>

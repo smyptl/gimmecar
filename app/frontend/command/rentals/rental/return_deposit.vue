@@ -70,7 +70,7 @@
               v-model='form.amount'
               v-error='form.errors.has("amount")'
               @input='form.errors.clear("amount")')
-          input-error-message(v-bind:errors='form.errors.get("amount")')
+          input-error-message(:errors='form.errors.get("amount")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

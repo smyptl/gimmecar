@@ -27,7 +27,7 @@
         v-model='form.driver_financial_responsibility_signature'
         v-error='form.errors.has("driver_financial_responsibility_signature")'
         @input='form.errors.clear("driver_financial_responsibility_signature")')
-    input-error-message(v-bind:errors='form.errors.get("driver_financial_responsibility_signature")')
+    input-error-message(:errors='form.errors.get("driver_financial_responsibility_signature")')
 
     template(v-if='form.add_additional_driver')
       h6.input-label.mt-default {{ form.additional_driver.name_first }} {{ form.additional_driver.name_last }}
@@ -36,5 +36,5 @@
           v-model='form.additional_driver_financial_responsibility_signature'
           v-error='form.errors.has("additional_driver_financial_responsibility_signature")'
           @input='form.errors.clear("additional_driver_financial_responsibility_signature")')
-      input-error-message(v-bind:errors='form.errors.get("additional_driver_financial_responsibility_signature")')
+      input-error-message(:errors='form.errors.get("additional_driver_financial_responsibility_signature")')
 </template>

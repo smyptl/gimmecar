@@ -40,11 +40,10 @@
 
 <template lang='pug'>
   div
-    input-error-message(v-bind:base='true' v-bind:errors='form.errors.get("vehicle_id")')
     .input-block.whole
-      .panel
+      .panel.panel-input(v-error='form.errors.has("vehicle_id")')
         .gimmecar-app-vertical-scroll
-          table.panel-table
+          table.input-table
             thead
               tr
                 th
@@ -56,20 +55,21 @@
               tr(v-for='vehicle in sorted_vehicles'
                 :key='vehicle.id'
                 @click.prevent='selectVehicle(vehicle.id)'
-                v-bind:class='{ selected: form.vehicle_id == vehicle.id }')
+                :class='{ selected: form.vehicle_id == vehicle.id }')
 
                 td.checkbox
                   input.input-field(type='radio'
                                     v-error='form.errors.has("vehicle_id")'
-                                    v-bind:checked='form.vehicle_id == vehicle.id')
+                                    :checked='form.vehicle_id == vehicle.id')
 
-                td.status
+                td.checkbox
                   vehicle-status-icons(:status='vehicle.status')
                 td {{ vehicle.make_model }}
                 td {{ vehicle.color | capitalize }}
                 td(v-if='vehicle.license_number') {{ vehicle.license_number }}
                 td(v-else)
                   i VIN: {{ lastFive(vehicle.vin) }}
+    input-error-message(:errors='form.errors.get("vehicle_id")')
 
     .input-row
       .input-container.two-fifths
@@ -79,7 +79,7 @@
             v-model='form.pickup_odometer'
             v-error='form.errors.has("pickup_odometer")'
             @input='form.errors.clear("pickup_odometer")')
-        input-error-message(v-bind:errors='form.errors.get("pickup_odometer")')
+        input-error-message(:errors='form.errors.get("pickup_odometer")')
 
       .input-container.three-fifths
         label.input-label(for='pickup_fuel')
@@ -87,12 +87,9 @@
           .input-label-note.right {{ form.pickup_fuel * 10 }}%
         .input-block.whole
           input.input-range#pickup_fuel(type='range' v-model.number='form.pickup_fuel' min='0' max='10')
-        input-error-message(v-bind:errors='form.errors.get("pickup_fuel")')
+        input-error-message(:errors='form.errors.get("pickup_fuel")')
 </template>
 
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/table'
-
-  input[type=radio].input-field
-    margin: 0
 </style>

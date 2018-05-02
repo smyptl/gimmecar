@@ -14,11 +14,11 @@
   .text-nowrap
     white-space: nowrap
 
-  td:first-of-type,
+  td:first-of-type
   th:first-of-type
     padding-left: $padding-default
 
-  td:last-of-type,
+  td:last-of-type
   th:last-of-type
     padding-right: $padding-default
 
@@ -33,17 +33,14 @@
     font-size: 0.6875rem
     text-transform: uppercase
     border-top: 0
-    border-bottom: 1px solid $border-color-light
+    border-bottom: 0
 
     th
       font-weight: 600
 
   tbody
-    td.checkbox
-      width: 1rem + $padding-sm
-
     td.status
-      padding-right: 0
+      width: 1rem + $padding-sm
 
     tr
       background: $background-color-panel
@@ -57,10 +54,6 @@
 
     .clickable
       cursor: pointer
-
-    tr.selected
-      font-weight: 600
-      color: $black
 
   tbody.alternate-color
     tr
@@ -94,10 +87,8 @@
   tr
     vertical-align: top
 
-  tbody,
-  thead
-    tr
-      border-top: 1px solid $border-color-light
+  tbody tr
+    border-top: 1px solid $border-color-light
 
   td,
   th
@@ -124,3 +115,7 @@
 
   td:nth-of-type(2)
     color: $black
+
+.panel-table.thead-bt
+  thead
+    border-top: 1px solid $border-color-light

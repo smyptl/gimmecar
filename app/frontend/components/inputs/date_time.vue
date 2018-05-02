@@ -227,7 +227,7 @@
           .calendar-sub-header Sa
         .calendar-row
           .calendar-day(v-for='date in calendar_beginning_blank_dates')
-          .calendar-day(v-for='date in calendar_dates' @click='selectDate(date)' v-bind:class='[{ selected: calendar_selected_date(date) }]') {{ date.date() }}
+          .calendar-day(v-for='date in calendar_dates' @click='selectDate(date)' :class='[{ selected: calendar_selected_date(date) }]') {{ date.date() }}
           .calendar-day(v-for='date in calendar_ending_blank_dates')
 
       .clock

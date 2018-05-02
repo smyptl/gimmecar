@@ -77,7 +77,7 @@
                 @add-error='form.errors.record({ token: [$event] })'
                 @clear-error='form.errors.clear()'
                 v-error='form.errors.has("token")')
-            input-error-message(v-bind:errors='form.errors.get("token")')
+            input-error-message(:errors='form.errors.get("token")')
 
         .panel-form.panel-form-padding.panel-popup-form-footer
           .input-submit.input-block

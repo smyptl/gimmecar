@@ -25,13 +25,13 @@
   div
     p.dnr.font-mono(v-if='driver.do_not_rent') DO NOT RENT!!!
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       tbody
         tr
           td Full Name
           td {{ driver.name_first }} {{ driver.name_middle }} {{ driver.name_last }}
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       thead
         tr
           th Contact Info
@@ -43,17 +43,17 @@
         tr
           td Cell Phone #
           td
-            a(v-bind:href="'tel:' + driver.cell_phone_number") {{ driver.cell_phone_number }}
+            a(:href="'tel:' + driver.cell_phone_number") {{ driver.cell_phone_number }}
         tr(v-if='driver.home_phone_number')
           td Home Phone #
           td
-            a(v-bind:href="'tel:' + driver.home_phone_number") {{ driver.home_phone_number }}
+            a(:href="'tel:' + driver.home_phone_number") {{ driver.home_phone_number }}
         tr
           td Address
           td
             address-format(:address='driver')
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       thead
         tr
           th License

@@ -60,7 +60,7 @@
   input.input-field(
     type='text'
     placeholder='mm/dd/yyyy'
-    v-bind:name='name'
+    :name='name'
     v-model='date_formatted'
     @change='parseDate')
 </template>
