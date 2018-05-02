@@ -32,6 +32,7 @@
 class Rental < ApplicationRecord
 
   DEPOSIT_AMOUNT = 20000
+  LIMIT = 30
 
   OPEN   = 'open'
   CLOSED = 'closed'

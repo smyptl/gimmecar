@@ -30,7 +30,7 @@
 </script>
 
 <template lang='pug'>
-  .panel.panel-input
+  .input-field.input-field-table
     table.input-table
       tbody
         tr(
@@ -41,9 +41,9 @@
         )
 
           td.checkbox
-            input.input-field(type='radio' :checked='value == type')
-
-          td {{ type | capitalize }} ({{ example }})
+            input.input-field(type='radio' :id="'vehicle_type_' + type" :checked='value == type')
+          td
+            label.cursor-pointer.whole(:id="'vehicle_type_' + type") {{ type | capitalize }} ({{ example }})
 </template>
 
 <style lang='stylus'>

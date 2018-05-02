@@ -27,7 +27,7 @@
 class Vehicle < ApplicationRecord
 
   STATUS = ['clean', 'dirty', 'service']
-  TYPES = ['subcompact', 'compact', 'mid_size']
+  TYPES = ['subcompact', 'compact']
 
   belongs_to :original_location, class_name: 'Location'
   belongs_to :location

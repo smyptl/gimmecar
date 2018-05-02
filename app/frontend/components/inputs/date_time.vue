@@ -202,18 +202,27 @@
 </script>
 
 <template lang='pug'>
-  .whole.left
-    span.input-field.date-field(type='text' :class='{ focus: calendar, disabled: disabled }' @click='toggleCalendar') {{ date_time_formatted }}
+  .whole.left(
+    @focus='showCalendar'
+    @blur='closeCalendar'
+  )
+    input.input-field.date-field(
+      type='text'
+      :class='{ focus: calendar, disabled: disabled }'
+      @click='toggleCalendar'
+      :value='date_time_formatted'
+      readonly
+    )
 
     .calendar(v-if='calendar')
       .calendar-header
         a.left(@click.prevent='calendar_one_month_back()')
-          svg(xlmns='http://www.w3.org/2000/svg' viewBox='-175 -175 1000 1000' preserveAspectRatio='xMinYMin')
+          svg(xlmns='http://www.w3.org/2000/svg' viewBox='-175 -175 1000 1000' fill='currentColor' preserveAspectRatio='xMinYMin')
             path(d='M308 349l346-346-154-154-500 500 500 500 154-154z')
 
         span {{ calendar_month_name }} {{ calendar_year }}
         a.right(@click.prevent='calendar_one_month_forward()')
-          svg(xlmns='http://www.w3.org/2000/svg' viewBox='-250 -175 1000 1000' preserveAspectRatio='xMinYMin')
+          svg(xlmns='http://www.w3.org/2000/svg' viewBox='-250 -175 1000 1000' fill='currentColor' preserveAspectRatio='xMinYMin')
             path(d='M154 849l500-500-500-500-154 154 346 346-346 346z')
 
       .calendar-content
@@ -234,12 +243,12 @@
         .clock-hour
           .clock-plus
             a(@click.prevent='calendarAddHour()')
-              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-15 15 1000 1000' preserveAspectRatio='xMinYMin')
+              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-15 15 1000 1000' fill='currentColor' preserveAspectRatio='xMinYMin')
                path(d='M911 388.5l0 223l-335 0l0 335l-223 0l0 -335l-335 0l0 -223l335 0l0 -335l223 0l0 335l335 0z')
           .clock-item.selected {{ calendar_clock_hour }}
           .clock-minus
             a(@click.prevent='calendarSubtractHour()')
-              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-15 15 1000 1000' preserveAspectRatio='xMinYMin')
+              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-15 15 1000 1000' fill='currentColor' preserveAspectRatio='xMinYMin')
                path(d='M18 611.5l0 -223l893 0l0 223l-893 0z')
         .clock-colon
           .clock-plus
@@ -248,12 +257,12 @@
         .clock-minute
           .clock-plus
             a(@click.prevent='calendarAddMinute()')
-              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-15 15 1000 1000' preserveAspectRatio='xMinYMin')
+              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-15 15 1000 1000' fill='currentColor' preserveAspectRatio='xMinYMin')
                path(d='M911 388.5l0 223l-335 0l0 335l-223 0l0 -335l-335 0l0 -223l335 0l0 -335l223 0l0 335l335 0z')
           .clock-item.selected {{ calendar_clock_minute }}
           .clock-minus
             a(@click.prevent='calendarSubtractMinute()')
-              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-15 15 1000 1000' preserveAspectRatio='xMinYMin')
+              svg(xlmns='http://www.w3.org/2000/svg' viewBox='-15 15 1000 1000' fill='currentColor' preserveAspectRatio='xMinYMin')
                path(d='M18 611.5l0 -223l893 0l0 223l-893 0z')
         .clock-colon
         .clock-period

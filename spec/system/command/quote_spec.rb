@@ -19,7 +19,7 @@ describe 'quote', type: :system, js: true do
     expect(page).to have_content('Quote')
 
     select location.name, from: 'Location'
-    find('td', :text => 'Compact').click
+    find('td', text: 'Compact').click
     click_on 'Continue'
 
     expect(page).to have_content('Rental Details')

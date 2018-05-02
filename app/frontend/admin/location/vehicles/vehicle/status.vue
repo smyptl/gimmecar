@@ -75,7 +75,7 @@
         .input-row
           label.input-label Status
           .input-block.whole
-            .panel.panel-input(v-error='form.errors.has("status")')
+            .input-field.input-field-table(v-error='form.errors.has("status")')
               table.input-table
                 tbody
                   tr(
@@ -87,7 +87,6 @@
 
                     td.checkbox
                       input.input-field(type='radio'
-                                        v-error='form.errors.has("status")'
                                         :checked='form.status == status')
 
                     td.checkbox

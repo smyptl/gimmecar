@@ -41,7 +41,7 @@
 <template lang='pug'>
   div
     .input-block.whole
-      .panel.panel-input(v-error='form.errors.has("vehicle_id")')
+      .input-field.input-field-table(v-error='form.errors.has("vehicle_id")')
         .gimmecar-app-vertical-scroll
           table.input-table
             thead
@@ -52,16 +52,15 @@
                 th Color
                 th License #
             tbody
-              tr(v-for='vehicle in sorted_vehicles'
+              tr(
+                v-for='vehicle in sorted_vehicles'
                 :key='vehicle.id'
                 @click.prevent='selectVehicle(vehicle.id)'
-                :class='{ selected: form.vehicle_id == vehicle.id }')
+                :class='{ selected: form.vehicle_id == vehicle.id }'
+              )
 
                 td.checkbox
-                  input.input-field(type='radio'
-                                    v-error='form.errors.has("vehicle_id")'
-                                    :checked='form.vehicle_id == vehicle.id')
-
+                  input.input-field(type='radio' :checked='form.vehicle_id == vehicle.id')
                 td.checkbox
                   vehicle-status-icons(:status='vehicle.status')
                 td {{ vehicle.make_model }}

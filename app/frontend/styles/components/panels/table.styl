@@ -27,6 +27,9 @@
     margin: 0
     padding: $padding-sm
 
+  td.status
+    width: 1rem + $padding-sm
+
   thead
     background: $white-dark
     color: $black-ex-light
@@ -39,12 +42,9 @@
       font-weight: 600
 
   tbody
-    td.status
-      width: 1rem + $padding-sm
-
     tr
       background: $background-color-panel
-      border-top: 1px solid $border-color-light
+      border-top: 0.0625rem solid $border-color-light
 
       vertical-align: middle
       color: $black-light
@@ -68,12 +68,10 @@
 
   tfoot
     border-top: 0.1875rem double $border-color-panel
+    font-weight: 700
 
     tr
-      border-top: 1px solid $border-color-light
-
-    td
-      font-weight: 700
+      border-top: 0.0625rem solid $border-color-light
 
   span.description
     font-size: $font-size-default - 0.0625rem
@@ -81,14 +79,9 @@
 
 .panel-table.panel-table-key-pair
   table-layout: fixed
-  margin-top: 0
-  margin-bottom: 0
 
   tr
     vertical-align: top
-
-  tbody tr
-    border-top: 1px solid $border-color-light
 
   td,
   th
@@ -118,4 +111,4 @@
 
 .panel-table.thead-bt
   thead
-    border-top: 1px solid $border-color-light
+    border-top: 0.0625rem solid $border-color-light

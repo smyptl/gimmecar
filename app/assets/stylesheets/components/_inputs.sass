@@ -1,27 +1,3 @@
-.form-container
-  width: 100%
-  float: left
-
-  margin: 0 auto
-
-.form-header.form-header-first
-  margin-top: 0
-
-  &:before
-    content: ' '
-    height: 0.125rem
-    width: 3rem
-    display: block
-    margin-bottom: $padding-default
-
-    background: $purple
-
-
-.form-header
-  width: 100%
-  margin: $padding-default 0 $padding-sm
-  font-weight: 700
-
 .input-row,
 .input-submit,
 .input-label,
@@ -100,6 +76,10 @@ h6.input-label
   &::input-placeholder,
   &::placeholder,
     color: $text-color-placeholder
+
+.input-field.input-field-table
+  padding: 0
+  cursor: none
 
 .input-field.StripeElement
 .input-field[type=file]
@@ -208,7 +188,6 @@ input[type=radio].input-field:disabled,
   height: $input-height-lg
   font-size: $font-size-default
 
-.panel-input.input-field-error,
 .input-field.input-field-error,
 .input-field[type='checkbox'].input-field-error,
 .input-field[type='radio'].input-field-error,

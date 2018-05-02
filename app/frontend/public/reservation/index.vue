@@ -3,6 +3,7 @@
 
   import InputSubmit from 'Mixins/input_submit'
 
+  import InputVehicleTypes from 'Components/inputs/vehicle_types'
   import InputDateTime     from 'Components/inputs/date_time'
   import InputError        from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
@@ -38,6 +39,7 @@
     components: {
       InputDateTime,
       InputErrorMessage,
+      InputVehicleTypes,
       RentalInvoice,
     },
     directives: {
@@ -145,15 +147,10 @@
             .input-container.whole
               label.input-label(for='vehicle_type') Vehicle Type
               .input-block.whole
-                select.input-field#vehicle_type(
+                input-vehicle-types.input-contrast(
                   v-model='form.vehicle_type'
                   v-error='form.errors.has("vehicle_type")'
                   @input='form.errors.clear("vehicle_type")')
-
-                  option(value='' disabled) -- Select Vehicle Type --
-                  option(value='subcompact') Subcompact (Toyota Yaris iA)
-                  option(value='compact') Compact (Toyota Corolla)
-                  option(value='mid_size') Mid-Size (Toyota Camry)
               input-error-message(:errors='form.errors.get("vehicle_type")')
 
             .input-submit
@@ -253,4 +250,5 @@
 
   .input-field
     background-color: $background-color-contrast
+    border-color: $border-color-input-contrast
 </style>

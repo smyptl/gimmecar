@@ -90,7 +90,7 @@ describe 'create rental', type: :system, js: true do
     visit_admin admin_location_rentals_new_path(slug: location.slug)
 
     expect(page).to have_content('Rental: Details')
-    find('td', :text => 'Compact').click
+    find('td', text: 'Compact').click
     click_on 'Continue'
 
     check_rental_rates
@@ -197,7 +197,7 @@ describe 'create rental', type: :system, js: true do
     visit_admin admin_location_rentals_new_path(slug: location.slug)
 
     expect(page).to have_content('Rental: Details')
-    find('td', :text => 'Compact').click
+    find('td', text: 'Compact').click
     click_on 'Continue'
 
     check_rental_rates

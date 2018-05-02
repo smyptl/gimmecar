@@ -28,8 +28,8 @@ class Services::Command::Quote < Lib::Services::Base
   def valid_drop_off
     return if errors.any?
 
-    if Lib::DateRange.new(pickup, drop_off).days_apart > 29
-      errors.add(:drop_off, "can't book a rental for more than 29 days")
+    if Lib::DateRange.new(pickup, drop_off).days_apart > Rental::LIMIT
+      errors.add(:drop_off, "can't book a rental for more than #{Rental::LIMIT} days")
     end
   end
 

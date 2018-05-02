@@ -24,7 +24,7 @@ describe Lib::Attributes::Base do
     end
 
     it 'creates appropriate read write methods' do
-      form = test_form.new({ :confirmation_number => '12ASDF1' })
+      form = test_form.new({ confirmation_number: '12ASDF1' })
       expect(form.confirmation_number).to eq('12ASDF1')
 
       new_confirmation_number = SecureRandom.hex(4)

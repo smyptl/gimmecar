@@ -30,13 +30,19 @@
   tr:last-child td:last-child
     border-bottom-right-radius: $input-border-radius
 
+  tr.selected
+    background: lighten($purple-light, 93%)
+
+  td.checkbox
+    width: 1rem + $padding-sm
+
   th
   td
     margin: 0
     padding: $padding-sm
 
-  input[type=radio].input-field
-    margin: 0
+  th
+    font-weight: 600
 
   thead
     background: $white-dark
@@ -46,22 +52,18 @@
     border-top: 0
     border-bottom: 1px solid $border-color-light
 
-    th
-      font-weight: 600
-
   tbody
     font-family: $font-mono
     color: $black
 
     tr
-      background: $background-color-input
-      vertical-align: middle
-
       &:hover
         cursor: pointer
 
-    tr.selected
-      background: lighten($purple-light, 93%)
+  input[type=radio].input-field
+    margin: 0
 
-    td.checkbox
-      width: 1rem + $padding-sm
+.input-contrast
+.input-contrast .input-table
+  tr.selected
+    background: lighten($purple-light, 97%)
