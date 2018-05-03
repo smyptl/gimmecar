@@ -74,7 +74,7 @@
 
     template(v-else)
       .input-row
-        label.input-label(for='location_id') Location *
+        label.input-label(for='location_id') Location
         .input-block.whole
           select.input-field#location_id(
             v-model='form.location_id'
@@ -87,7 +87,7 @@
 
       .input-row
         .input-container.one-half
-          label.input-label Pickup *
+          label.input-label Pickup
           .input-block.whole
             input-date-time(
               v-model='form.pickup'
@@ -96,7 +96,7 @@
           input-error-message(:errors='form.errors.get("pickup")')
 
         .input-container.one-half
-          label.input-label Drop-off *
+          label.input-label Drop-off
           .input-block.whole
             input-date-time(
               v-model='form.drop_off'
@@ -106,7 +106,7 @@
 
       .input-row
         .input-container.whole
-          label.input-label(for='vehicle_type') Vehicle Type *
+          label.input-label(for='vehicle_type') Vehicle Type
           .input-block.whole
             input-vehicle-types(
               v-model='form.vehicle_type'

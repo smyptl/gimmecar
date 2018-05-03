@@ -72,7 +72,7 @@
 
         .input-row
           .input-container.two-fifths.fixed
-            label.input-label(for='date') Date *
+            label.input-label(for='date') Date
             .input-block.whole
               input-date#date(
                 v-model='form.date'
@@ -81,7 +81,7 @@
             input-error-message(:errors='form.errors.get("date")')
 
           .input-container.one-fifth.fixed
-            label.input-label(for='days') Days *
+            label.input-label(for='days') Days
             .input-block.whole
               input.input-field#days(
                 type='text'

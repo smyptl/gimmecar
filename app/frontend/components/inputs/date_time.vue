@@ -202,17 +202,13 @@
 </script>
 
 <template lang='pug'>
-  .whole.left(
-    @focus='showCalendar'
-    @blur='closeCalendar'
-  )
-    input.input-field.date-field(
+  .whole.left
+    span.input-field(
       type='text'
       :class='{ focus: calendar, disabled: disabled }'
       @click='toggleCalendar'
-      :value='date_time_formatted'
       readonly
-    )
+    ) {{ date_time_formatted }}
 
     .calendar(v-if='calendar')
       .calendar-header

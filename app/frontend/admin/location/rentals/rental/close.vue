@@ -69,7 +69,7 @@
 
       .panel-form.panel-form-padding.panel-popup-form-content
         .input-row
-          label.input-label(for='drop_off') Drop Off *
+          label.input-label(for='drop_off') Drop Off
           .input-block.whole
             input-date-time#drop_off(
               v-model='form.drop_off'
@@ -79,7 +79,7 @@
 
         .input-row
           .input-container.two-fifths
-            label.input-label(for='drop_off_odometer') Vehicle Odometer *
+            label.input-label(for='drop_off_odometer') Vehicle Odometer
             .input-block.whole
               input.input-field#drop_off_odometer(
                 type='text'
@@ -90,7 +90,7 @@
 
           .input-container.three-fifths
             label.input-label(for='drop_off_fuel')
-              | Fuel Level *
+              | Fuel Level
               .input-label-note.right {{ form.drop_off_fuel * 10 }}%
             .input-block.whole
               input.input-range#drop_off_fuel(

@@ -101,7 +101,7 @@
           .dropdown-menu.right(slot='dropdown-menu')
             ul
               li
-                button.link(@click='addCard') Add Card
+                button.link(@click='addCard()') Add Card
 
       driver-information.left(:driver='driver')
 
