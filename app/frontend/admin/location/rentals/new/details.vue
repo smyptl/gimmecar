@@ -42,7 +42,6 @@
           v-model='form.vehicle_type'
           v-error='form.errors.has("vehicle_type")'
           @input='form.errors.clear("vehicle_type")')
-
       input-error-message(:errors='form.errors.get("vehicle_type")')
 
 </template>
