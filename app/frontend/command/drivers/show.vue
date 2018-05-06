@@ -53,13 +53,6 @@
     watch: {
       '$route': 'getData',
     },
-    computed: {
-      cardSources() {
-        return(this.sources.data, n => {
-          return n.object != 'card'
-        })
-      },
-    },
     methods: {
       addCard() {
         return this.action = 'add-card'
@@ -144,7 +137,7 @@
             )
 
               template(v-if='source.object == "card"')
-                td.source-icon
+                td.source-icon.status
                   sources-icon(:brand='source.brand')
                 td.text-nowrap {{ source.brand }} - {{ source.funding | capitalize }}
                 td.text-nowrap.text-right {{ source.last4 }}
