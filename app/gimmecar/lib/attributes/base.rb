@@ -19,7 +19,7 @@ class Lib::Attributes::Base
   class << self
     # It passes the form attributes to its inherited class, checks if class created prohibited method
     def inherited(subclass)
-      subclass._form_attributes = self._form_attributes.clone
+      clone_form_attributes(subclass)
 
       subclass.class_eval do
         def self.method_added(name)
@@ -32,6 +32,10 @@ class Lib::Attributes::Base
     end
 
     private
+
+    def clone_form_attributes(klass)
+      klass._form_attributes = self._form_attributes.clone
+    end
 
     # For each attribute in the form, it includes it in the _form_attributes
     # hash, which gets passed down to inherited classes (see inherited() above.!

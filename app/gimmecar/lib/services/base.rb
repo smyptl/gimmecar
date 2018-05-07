@@ -15,6 +15,8 @@ class Lib::Services::Base < Lib::Attributes::Base
 
   class << self
     def inherited(subclass)
+      clone_form_attributes(subclass)
+
       subclass.class_eval do
         def self.method_added(name)
           if Lib::Services::Base::PROHIBITED_METHODS.include?(name.to_sym)
