@@ -8,7 +8,17 @@
   "scripts": {
     "dev": "./bin/webpack-dev-server",
     "dev-test": "RAILS_ENV=test ./bin/webpack-watcher",
-    "test": "karma start ./spec/frontend/karma.conf.js"
+    "test": "jest /spec/frontend"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "app/frontend"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    }
   },
   "dependencies": {
     "@rails/webpacker": "^3.3.1",
@@ -43,13 +53,16 @@
     "webpack": "^3.11.0"
   },
   "devDependencies": {
+    "babel-jest": "^22.4.3",
     "compression-webpack-plugin": "^0.4.0",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.11.1",
     "glob": "^7.1.2",
+    "jest": "^22.4.3",
     "js-yaml": "^3.8.4",
     "path-complete-extname": "^0.1.0",
+    "vue-jest": "^2.5.0",
     "vue-template-compiler": "^2.5.15",
     "webpack-cli": "^2.0.10",
     "webpack-dev-server": "^2.11.1",

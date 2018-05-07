@@ -13,7 +13,7 @@
     data() {
       return {
         current_date: '',
-        date_formatted: '',
+        formatted: '',
       }
     },
     mounted() {
@@ -31,7 +31,7 @@
         this.formatDate()
       },
       parseDate() {
-        var date = Moment(this.date_formatted, 'M/D/YYYY')
+        var date = Moment(this.formatted, 'M/D/YYYY')
 
         if (date.isValid()) {
           this.current_date = date
@@ -44,13 +44,13 @@
       },
       formatDate() {
         if (this.current_date && this.current_date.isValid()) {
-          this.date_formatted = this.current_date.format('M/D/YYYY')
+          this.formatted = this.current_date.format('M/D/YYYY')
         } else {
-          this.date_formatted = null
+          this.formatted = null
         }
       },
       emitInput() {
-        this.$emit('input', this.date_formatted)
+        this.$emit('input', this.formatted)
       },
     },
   }
@@ -61,6 +61,6 @@
     type='text'
     placeholder='mm/dd/yyyy'
     :name='name'
-    v-model='date_formatted'
+    v-model='formatted'
     @change='parseDate')
 </template>

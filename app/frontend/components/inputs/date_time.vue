@@ -31,17 +31,11 @@
         type: Boolean,
         default: false,
       },
-      classes: {
-        type: Array,
-        default() {
-          return []
-        },
-      },
     },
     data() {
       return {
         current_date_time: '',
-        date_time_formatted: '',
+        formatted: '',
         calendar: false,
         calendar_date_time: '',
       }
@@ -174,7 +168,7 @@
         this.formatDateTime()
       },
       formatDateTime() {
-        this.date_time_formatted = this.current_date_time.format('M/D/YYYY @ h:mm A')
+        this.formatted = this.current_date_time.format('M/D/YYYY @ h:mm A')
         this.emitInput()
       },
       emitInput() {
@@ -208,7 +202,7 @@
       :class='{ focus: calendar, disabled: disabled }'
       @click='toggleCalendar'
       readonly
-    ) {{ date_time_formatted }}
+    ) {{ formatted }}
 
     .calendar(v-if='calendar')
       .calendar-header

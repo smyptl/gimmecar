@@ -82,7 +82,12 @@
             @input='form.errors.clear("location_id")')
 
             option(value='') --
-            option(v-for='location in locations.data' :key='location.id' :value='location.id') {{ location.name }} -- {{ location.city }}, {{ location.state }}
+            option(
+              v-for='location in locations.data'
+              :key='location.id'
+              :value='location.id')
+              | {{ location.name }} -- {{ location.city }}, {{ location.state }}
+
         input-error-message(:errors='form.errors.get("location_id")')
 
       .input-row

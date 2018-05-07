@@ -17,8 +17,11 @@ module Actions::Admin::Location::Rental::New::Concerns::Vehicle
       inclusion: { in: :available_vehicle_ids, message: 'Select a vehicle.' }
 
     validates :pickup_odometer,
-      presence: true,
-      numericality: { greater_than_or_equal_to: :latest_odometer, message: "must be greater than %{count}"  }
+      presence: true
+
+    validates :pickup_odometer,
+      numericality: { greater_than_or_equal_to: :latest_odometer, message: "must be greater than %{count}" },
+      if: :latest_odometer
 
     validates :pickup_fuel,
       presence: true,

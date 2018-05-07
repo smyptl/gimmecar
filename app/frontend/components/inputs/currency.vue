@@ -1,8 +1,6 @@
 <script>
-  import Moment from 'moment'
-  import MomentTimeZone from 'moment-timezone'
-
   export default {
+    name: 'InputCurrency',
     props: {
       value: {
         required: true,
@@ -13,8 +11,7 @@
     },
     data() {
       return {
-        current_date: '',
-        date_formatted: '',
+        formatted: '',
       }
     },
     mounted() {
@@ -28,7 +25,7 @@
     },
     methods: {
       parseValue (val) {
-        this.current_date = Moment(val)
+        this.formatted = Moment(val)
         this.formatDate()
       },
       parseDate() {

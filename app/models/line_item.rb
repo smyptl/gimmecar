@@ -39,6 +39,7 @@ class LineItem < ApplicationRecord
   scope :gas,            -> { where(item_type: 'gas') }
   scope :cleaning,       -> { where(item_type: 'cleaning') }
   scope :processing_fee, -> { where(item_type: 'processing_fee') }
+  scope :vehicle_damage, -> { where(item_type: 'vehicle_damage') }
   scope :deposits_unreturned, -> { includes(:invoice).deposits.where(invoice_type: 'Rental').select(&:invoice_closed?) }
 
   delegate :number, :closed?, to: :invoice, prefix: true
