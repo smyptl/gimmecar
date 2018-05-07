@@ -62,5 +62,5 @@
     placeholder='mm/dd/yyyy'
     :name='name'
     v-model='formatted'
-    @change='parseDate')
+    @change='parseDate()')
 </template>
