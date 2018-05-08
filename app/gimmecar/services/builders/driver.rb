@@ -8,8 +8,6 @@ class Services::Builders::Driver < Lib::Services::Builder
       :state,
       :zip_code,
       :country,
-      :home_phone_number,
-      :cell_phone_number,
       :email,
       :date_of_birth,
       :license_number,
@@ -21,6 +19,10 @@ class Services::Builders::Driver < Lib::Services::Builder
       :name_first,
       :name_middle,
       :name_last
+
+    c.collection :phone_numbers, nested: true do |c|
+      c.attributes :phone_type, :number, :extension, :notes
+    end
 
     c.attribute :do_not_rent, as: :do_not_rent?
   end

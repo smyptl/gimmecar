@@ -1,0 +1,131 @@
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'subcompact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '6TRJ244'
+  make: 'Toyota'
+  model: 'Yaris iA'
+  year: 2017
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'subcompact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '6TRJ245'
+  make: 'Toyota'
+  model: 'Yaris iA'
+  year: 2017
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'subcompact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '6TRJ246'
+  make: 'Toyota'
+  model: 'Yaris iA'
+  year: 2017
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'subcompact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '6TRJ247'
+  make: 'Toyota'
+  model: 'Yaris iA'
+  year: 2018
+  color: 'white'
+  status: 'dirty'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'subcompact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '7TRY247'
+  make: 'Toyota'
+  model: 'Yaris iA'
+  year: 2018
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'compact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '7TRY921'
+  make: 'Toyota'
+  model: 'Corolla'
+  year: 2017
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'compact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '7TRY921'
+  make: 'Toyota'
+  model: 'Corolla'
+  year: 2018
+  color: 'white'
+  status: 'service'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'compact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '7TRY051'
+  make: 'Toyota'
+  model: 'Corolla'
+  year: 2018
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'compact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '7ZGY090'
+  make: 'Toyota'
+  model: 'Corolla'
+  year: 2018
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'compact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '7ZGY091'
+  make: 'Toyota'
+  model: 'Corolla'
+  year: 2018
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>
+
+- original_location_id: 1
+  location_id: 1
+  vehicle_type: 'compact'
+  vin: <%= Faker::Vehicle.vin %>
+  license_number: '7ZDA055'
+  make: 'Toyota'
+  model: 'Corolla'
+  year: 2018
+  color: 'white'
+  status: 'clean'
+  original_odometer: <%= rand(0..20) %>

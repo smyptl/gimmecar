@@ -97,13 +97,6 @@
                 button.link(@click='addRegistration()') Add Registration
 
       vehicle-information(:vehicle='vehicle' :show_location='true')
-        tr
-          td Odometer
-          td {{ vehicle.odometer }}
-        tr
-          td Fuel
-          td {{ vehicle.fuel_level/10 | percent }}
-
     .sub-navigation
       ul.list-horizontal
         li

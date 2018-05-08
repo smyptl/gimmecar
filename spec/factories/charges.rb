@@ -2,15 +2,16 @@
 #
 # Table name: charges
 #
-#  id               :integer          not null, primary key
+#  id               :bigint(8)        not null, primary key
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  owner_type       :string
-#  owner_id         :integer
+#  owner_id         :bigint(8)
 #  stripe_charge_id :string
-#  amount           :integer
+#  amount           :bigint(8)
 #  deposit          :boolean          default(FALSE)
 #
+
 require 'helpers/stripe_helper'
 
 FactoryBot.define do

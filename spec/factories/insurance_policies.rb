@@ -2,11 +2,11 @@
 #
 # Table name: insurance_policies
 #
-#  id                 :integer          not null, primary key
+#  id                 :bigint(8)        not null, primary key
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  user_id            :integer
-#  driver_id          :integer
+#  user_id            :bigint(8)
+#  driver_id          :bigint(8)
 #  company_name       :string
 #  agent              :string
 #  policy_number      :string
