@@ -15,8 +15,8 @@ describe Lib::Attributes::Base do
               i.string :policy_number
             end
           end
-          a.nested :promo_codes, array: true do |p|
-            p.string :code
+          a.nested :promo_codes, array: true do |n|
+            n.string :code
           end
           a.integer :ids, array: true
         end
@@ -43,6 +43,7 @@ describe Lib::Attributes::Base do
       })
 
       expect(form.driver_name_first).to eq('John')
+      expect(form.driver_insurance).to eq({ 'policy_number' => 'ASDF!@#$' })
       expect(form.driver_insurance_policy_number).to eq('ASDF!@#$')
       expect(form.driver).to eq({
         'name_first' => 'John',

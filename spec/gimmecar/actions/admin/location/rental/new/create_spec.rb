@@ -10,24 +10,34 @@ require 'helpers/stripe_helper'
 
 describe Actions::Admin::Location::Rental::New::Create do
 
+  let(:user)     { create(:user) }
+  let(:location) { create(:location) }
+  let(:tax_rate) { create(:tax_rate, location: location) }
+  let(:vehicle)  { create(:vehicle, :compact, original_location: location, location: location) }
+  let(:rate)     { create(:rate, vehicle_type: vehicle.vehicle_type, location: location, amount: 3500) }
+
+  before(:each) { tax_rate; rate; }
+
+  let(:success) { double(:success) }
+  let(:failure) { double(:failure) }
+
+  let(:driver_attrs) do
+    driver_attrs = attributes_for(:driver)
+    driver_attrs[:insurance] = attributes_for(:insurance_policy)
+    driver_attrs[:phone_numbers] = { cell: '9091231234', home: '' }
+    driver_attrs
+  end
+
+  let(:additional_driver_attrs) do
+    driver_attrs.except(:insurance)
+  end
+
+  let(:drop_off) { Time.current + 2.days }
+
+
   describe '#save' do
     it 'saves driver, insurance policy, rental' do
-      user = create(:user)
-      location = create(:location)
-      tax_rate = create(:tax_rate, location: location)
-      vehicle = create(:vehicle, original_location: location, location: location)
-
-      create(:rate, vehicle_type: 'mid_size', location: location, amount: 3500)
-
-      driver_attrs = attributes_for(:driver)
-      driver_attrs[:insurance] = attributes_for(:insurance_policy)
-
-      success = double(:success)
-      failure = double(:failure)
-
       expect(success).to receive(:call)
-
-      drop_off = Time.current + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
         drop_off:                                  drop_off,
@@ -55,8 +65,6 @@ describe Actions::Admin::Location::Rental::New::Create do
       expect(driver.state).to eq(driver_attrs[:state])
       expect(driver.zip_code).to eq(driver_attrs[:zip_code])
       expect(driver.country).to eq(driver_attrs[:country])
-      expect(driver.home_phone_number).to eq(driver_attrs[:home_phone_number])
-      expect(driver.cell_phone_number).to eq(driver_attrs[:cell_phone_number])
       expect(driver.email).to eq(driver_attrs[:email])
       expect(driver.date_of_birth).to eq(driver_attrs[:date_of_birth])
       expect(driver.license_number).to eq(driver_attrs[:license_number])
@@ -64,6 +72,13 @@ describe Actions::Admin::Location::Rental::New::Create do
       expect(driver.license_country).to eq(driver_attrs[:license_country])
       expect(driver.license_expiration_date).to eq(driver_attrs[:license_expiration_date])
       expect(driver.stripe_id).to_not eq(nil)
+      expect(driver.phone_numbers.count).to eq(1)
+
+      expect(PhoneNumber.count).to eq(1)
+      PhoneNumber.all.each do |phone_number|
+        expect(phone_number.phone_type).to eq('cell')
+        expect(phone_number.number).to eq(driver_attrs[:phone_numbers][:cell])
+      end
 
       expect(InsurancePolicy.count).to eq(1)
       insurance_policy = InsurancePolicy.first
@@ -117,23 +132,7 @@ describe Actions::Admin::Location::Rental::New::Create do
     end
 
     it 'saves additional driver' do
-      user = create(:user)
-      location = create(:location)
-      create(:tax_rate, location: location)
-      vehicle = create(:vehicle, original_location: location, location: location)
-
-      create(:rate, vehicle_type: 'mid_size', location: location, amount: 3500)
-
-      driver_attrs = attributes_for(:driver)
-      driver_attrs[:insurance] = attributes_for(:insurance_policy)
-      additional_driver_attrs = attributes_for(:driver)
-
-      success = double(:success)
-      failure = double(:failure)
-
       expect(success).to receive(:call)
-
-      drop_off = Time.current + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
         drop_off:                                             drop_off,
@@ -167,8 +166,6 @@ describe Actions::Admin::Location::Rental::New::Create do
       expect(additional_driver.state).to eq(additional_driver_attrs[:state])
       expect(additional_driver.zip_code).to eq(additional_driver_attrs[:zip_code])
       expect(additional_driver.country).to eq(additional_driver_attrs[:country])
-      expect(additional_driver.home_phone_number).to eq(additional_driver_attrs[:home_phone_number])
-      expect(additional_driver.cell_phone_number).to eq(additional_driver_attrs[:cell_phone_number])
       expect(additional_driver.email).to eq(additional_driver_attrs[:email])
       expect(additional_driver.date_of_birth).to eq(additional_driver_attrs[:date_of_birth])
       expect(additional_driver.license_number).to eq(additional_driver_attrs[:license_number])
@@ -184,23 +181,7 @@ describe Actions::Admin::Location::Rental::New::Create do
     end
 
     it 'paid for by additional driver' do
-      user = create(:user)
-      location = create(:location)
-      create(:tax_rate, location: location)
-      vehicle = create(:vehicle, original_location: location, location: location)
-
-      create(:rate, vehicle_type: 'mid_size', location: location, amount: 3500)
-
-      driver_attrs = attributes_for(:driver)
-      driver_attrs[:insurance] = attributes_for(:insurance_policy)
-      additional_driver_attrs = attributes_for(:driver)
-
-      success = double(:success)
-      failure = double(:failure)
-
       expect(success).to receive(:call)
-
-      drop_off = Time.current + 2.days
 
       Actions::Admin::Location::Rental::New::Create.new({
         drop_off:                                             drop_off,

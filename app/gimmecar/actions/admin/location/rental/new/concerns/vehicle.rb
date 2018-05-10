@@ -28,6 +28,8 @@ module Actions::Admin::Location::Rental::New::Concerns::Vehicle
       inclusion: { in: 0..10 }
   end
 
+  private
+
   def latest_odometer
     if vehicle_id
       vehicle.odometer || 0

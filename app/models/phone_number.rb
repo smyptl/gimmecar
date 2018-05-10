@@ -19,4 +19,6 @@ class PhoneNumber < ApplicationRecord
 
   belongs_to :owner, polymorphic: true
 
+  scope :cell, -> { where(phone_type: :cell) }
+  scope :home, -> { where(phone_type: :home) }
 end

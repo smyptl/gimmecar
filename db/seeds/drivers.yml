@@ -41,6 +41,7 @@
       license_state:           'California'
       license_country:         'United States'
       license_expiration_date: <%= Time.current + 1.year %>
+      do_not_rent:             true
     phone_numbers:
       - phone_type: 'home'
         number: '9095551234'

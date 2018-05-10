@@ -2,6 +2,7 @@
   import InputDate from 'Components/inputs/date'
 
   export default {
+    name: 'Driver',
     props: {
       form: {
         type: Object,
@@ -80,6 +81,7 @@
         .input-container.one-half.fixed
           .input-block.whole
             input.input-field#driver_license_country(
+              disabled
               type='text'
               placeholder='Issue Country'
               v-model='form.driver.license_country'
@@ -158,6 +160,7 @@
         .input-container.two-thirds.fixed
           .input-block.whole
             input.input-field#driver_country(
+              disabled
               type='text'
               placeholder='Country'
               v-model='form.driver.country'
@@ -202,23 +205,23 @@
         input-error-message(:errors='form.errors.get("driver_email")')
       .input-container.three-fifths
         .input-container.one-half.fixed
-          label.input-label(for='driver_cell_phone_number') Cell Phone #
+          label.input-label(for='driver_phone_numbers_cell') Cell Phone #
           .input-block.whole
-            input.input-field#driver_cell_phone_number(type='text'
+            input.input-field#driver_phone_numbers_cell(type='text'
               placeholder='909.555.8639'
-              v-model='form.driver.cell_phone_number'
-              v-error='form.errors.has("driver_cell_phone_number")'
-              @input='form.errors.clear("driver_cell_phone_number")')
-          input-error-message(:errors='form.errors.get("driver_cell_phone_number")')
+              v-model='form.driver.phone_numbers.cell'
+              v-error='form.errors.has("driver_phone_numbers_cell")'
+              @input='form.errors.clear("driver_phone_numbers_cell")')
+          input-error-message(:errors='form.errors.get("driver_phone_numbers_cell")')
         .input-container.one-half.fixed
-          label.input-label(for='driver_home_phone_number') Home Phone #
+          label.input-label(for='driver_phone_numbers_home') Home Phone #
           .input-block.whole
-            input.input-field#driver_home_phone_number(type='text'
+            input.input-field#driver_phone_numbers_home(type='text'
               placeholder='805.555.1234'
-              v-model='form.driver.home_phone_number'
-              v-error='form.errors.has("driver_home_phone_number")'
-              @input='form.errors.clear("driver_home_phone_number")')
-          input-error-message(:errors='form.errors.get("driver_home_phone_number")')
+              v-model='form.driver.phone_numbers.home'
+              v-error='form.errors.has("driver_phone_numbers_home")'
+              @input='form.errors.clear("driver_phone_numbers_home")')
+          input-error-message(:errors='form.errors.get("driver_phone_numbers_home")')
 
     .input-row
       label.input-label(for='driver_insurance_company_name')

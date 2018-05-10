@@ -63,13 +63,12 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
   end
 
   def save
-    d = Driver.create(driver_attributes)
-    InsurancePolicy.create(driver.fetch(:insurance).except(:verified).merge(driver: d, user_id: params.fetch(:user_id)))
-    ad = Driver.create(additional_driver_attributes) if add_additional_driver
+    driver            = create_driver
+    additional_driver = create_additional_driver
 
     @rental = Rental.create_open({
-      driver:                                               d,
-      additional_driver:                                    (ad if add_additional_driver),
+      driver:                                               driver,
+      additional_driver:                                    additional_driver,
       vehicle_id:                                           vehicle_id,
       tax_rate:                                             location.latest_tax_rate,
       pickup_location:                                      location,
@@ -82,29 +81,60 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
       driver_financial_responsibility_signature:            driver_financial_responsibility_signature,
       driver_signature:                                     driver_signature,
       additional_driver_financial_responsibility_signature: (additional_driver_financial_responsibility_signature if add_additional_driver),
-      additional_driver_signature:                          (additional_driver_signature if add_additional_driver),
+      additional_driver_signature:                          (additional_driver_signature                          if add_additional_driver),
     })
 
     @charge.owner = @rental
     @charge.save
 
     rates.fetch(:rental_rates).each do |l|
-      @rental.line_items.create(l.merge(charge: @charge, item_type: 'rental_rate'))
+      @rental.line_items.create(l.merge(charge: @charge, item_type: :rental_rate))
     end
 
     deposit = LineItem.calculate(date: pickup, amount: Rental::DEPOSIT_AMOUNT, taxable_amount: 0, tax_rate: location.latest_tax_rate)
-    @rental.line_items.create(deposit.merge(charge: @charge, item_type: 'deposit'))
+    @rental.line_items.create(deposit.merge(charge: @charge, item_type: :deposit))
+  end
+
+  def create_driver
+    driver = Driver.create(driver_attributes)
+    InsurancePolicy.create(driver_insurance_attributes(driver))
+    save_phone_numbers(numbers: driver_phone_numbers, driver: driver)
+    driver
+  end
+
+  def create_additional_driver
+    if add_additional_driver
+      driver = Driver.create(additional_driver_attributes)
+      save_phone_numbers(numbers: additional_driver_phone_numbers, driver: driver)
+      driver
+    end
+  end
+
+  def save_phone_numbers(numbers:, driver:)
+    numbers.compact.each do |type, number|
+      PhoneNumber.create({
+        owner:      driver,
+        phone_type: type,
+        number:     number,
+      })
+    end
   end
 
   def driver_attributes
-    a = driver.except(:insurance)
+    a = driver.except(:insurance, :phone_numbers)
     a[:email] = a[:email].downcase
     a[:stripe_id] = stripe_customer_id if paid_by_driver?
     a
   end
 
+  def driver_insurance_attributes(driver)
+    read_attribute(:driver).fetch(:insurance)
+                           .except(:verified)
+                           .merge(driver: driver, user_id: params.fetch(:user_id))
+  end
+
   def additional_driver_attributes
-    a = additional_driver
+    a = additional_driver.except(:phone_numbers)
     a[:email] = a[:email].downcase
     a[:stripe_id] = stripe_customer_id if !paid_by_driver?
     a
