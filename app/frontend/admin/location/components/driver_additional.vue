@@ -2,7 +2,7 @@
   import InputDate from 'Components/inputs/date'
 
   export default {
-    name: 'driver_additional',
+    name: 'DriverAdditional',
     props: {
       form: {
         type: Object,
@@ -80,6 +80,7 @@
         .input-container.one-half.fixed
           .input-block.whole
             input.input-field#additional_driver_license_country(
+              disabled
               type='text'
               placeholder='Issue Country'
               v-model='form.additional_driver.license_country'
@@ -158,6 +159,7 @@
         .input-container.two-thirds.fixed
           .input-block.whole
             input.input-field#additional_driver_country(
+              disabled
               type='text'
               placeholder='Country'
               v-model='form.additional_driver.country'
@@ -197,11 +199,11 @@
           input.input-field#additional_driver_email(type='text' v-model='form.additional_driver.email' placeholder='john@gmail.com')
       .input-container.three-fifths
         .input-container.one-half.fixed
-          label.input-label(for='additional_driver_cell_phone_number') Cell Phone #
+          label.input-label(for='additional_driver_phone_numbers_cell') Cell Phone #
           .input-block.whole
-            input.input-field#additional_driver_cell_phone_number(type='number' v-model='form.additional_driver.cell_phone_number' placeholder='909.555.8639')
+            input.input-field#additional_driver_phone_numbers_cell(type='number' v-model='form.additional_driver.phone_numbers.cell' placeholder='909.555.8639')
         .input-container.one-half.fixed
-          label.input-label(for='additional_driver_home_phone_number') Home Phone #
+          label.input-label(for='additional_driver_phone_numbers_home') Home Phone #
           .input-block.whole
-            input.input-field#additional_driver_home_phone_number(type='number' v-model='form.additional_driver.home_phone_number' placeholder='805.555.1231')
+            input.input-field#additional_driver_phone_numbers_home(type='number' v-model='form.additional_driver.phone_numbers.home' placeholder='805.555.1231')
 </template>

@@ -2,7 +2,7 @@
 #
 # Table name: locations
 #
-#  id           :integer          not null, primary key
+#  id           :bigint(8)        not null, primary key
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  name         :string
@@ -21,6 +21,8 @@
 class Location < ApplicationRecord
 
   has_and_belongs_to_many :users
+
+  has_many :phone_numbers
 
   has_many :rentals,        -> (location) { as(:pickup_location, :drop_off_location, id: location.id) }
   has_many :rentals_open,   -> (location) { as(:pickup_location, :drop_off_location, id: location.id).open_status },   class_name: 'Rental'

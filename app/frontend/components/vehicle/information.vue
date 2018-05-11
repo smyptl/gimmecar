@@ -51,6 +51,12 @@
       tr
         td Color
         td {{ vehicle.color | capitalize }}
+      tr
+        td Odometer
+        td {{ vehicle.odometer }}
+      tr(v-if='vehicle.fuel_level')
+        td Fuel
+        td {{ vehicle.fuel_level/10 | percent }}
       slot
 
 </template>

@@ -2,11 +2,11 @@
 #
 # Table name: vehicles
 #
-#  id                   :integer          not null, primary key
+#  id                   :bigint(8)        not null, primary key
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  original_location_id :integer
-#  location_id          :integer
+#  original_location_id :bigint(8)
+#  location_id          :bigint(8)
 #  vehicle_type         :string
 #  vin                  :string
 #  license_number       :string
@@ -67,7 +67,11 @@ class Vehicle < ApplicationRecord
   end
 
   def odometer
-    (rental_latest.drop_off_odometer || rental_latest.pickup_odometer) if rental_latest
+    if rental_latest
+      (rental_latest.drop_off_odometer || rental_latest.pickup_odometer)
+    else
+      original_odometer
+    end
   end
 
   def fuel_level

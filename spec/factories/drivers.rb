@@ -2,7 +2,7 @@
 #
 # Table name: drivers
 #
-#  id                      :integer          not null, primary key
+#  id                      :bigint(8)        not null, primary key
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  gender                  :string
@@ -41,8 +41,6 @@ FactoryBot.define do
     state { Faker::Address.state }
     zip_code { Faker::Address.zip_code }
     country { Faker::Address.country }
-    cell_phone_number '9091231234'
-    home_phone_number '9091239021'
     gender { ['male', 'female'].sample }
     email { Faker::Internet.email }
     date_of_birth (Time.current - 26.years).to_date

@@ -40,14 +40,15 @@
         tr
           td Email
           td {{ driver.email }}
-        tr
-          td Cell Phone #
+        tr(
+          v-for='phone in driver.phone_numbers'
+          :key='phone.id'
+        )
+          td {{ phone.phone_type | capitalize }} Phone #
           td
-            a(:href="'tel:' + driver.cell_phone_number") {{ driver.cell_phone_number }}
-        tr(v-if='driver.home_phone_number')
-          td Home Phone #
-          td
-            a(:href="'tel:' + driver.home_phone_number") {{ driver.home_phone_number }}
+            a(:href="'tel:' + phone.number")
+              span.block {{ phone.number }}
+              i.block(v-if='phone.extension') Ext: {{ phone.extension }}
         tr
           td Address
           td

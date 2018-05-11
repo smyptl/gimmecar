@@ -21,7 +21,7 @@ class Errors {
   }
 
   record(errors) {
-    this.errors = errors
+    this.errors = (errors || {})
   }
 
   clear(field) {

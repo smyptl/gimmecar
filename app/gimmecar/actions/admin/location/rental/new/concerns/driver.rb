@@ -21,8 +21,17 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         n.string  :gender
         n.date    :date_of_birth
         n.string  :email
-        n.integer :cell_phone_number
-        n.integer :home_phone_number
+
+        n.nested :phone_numbers do |n|
+          n.integer :cell
+          n.integer :home
+        end
+
+        #n.nested :phone_numbers, multiple: true do |n|
+          #n.string :phone_type
+          #n.integer :number
+          #n.integer :extension
+        #end
 
         n.nested :insurance do |i|
           i.string  :company_name
@@ -59,8 +68,11 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         n.string  :gender
         n.date    :date_of_birth
         n.string  :email
-        n.integer :cell_phone_number
-        n.integer :home_phone_number
+
+        n.nested :phone_numbers do |p|
+          p.integer :cell
+          p.integer :home
+        end
       end
     end
 
@@ -94,11 +106,11 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
       presence: true,
       email: true
 
-    validates :driver_cell_phone_number,
+    validates :driver_phone_numbers_cell,
       presence: true,
       numericality: { only_integer: true }
 
-    validates :driver_home_phone_number,
+    validates :driver_phone_numbers_home,
       allow_blank: true,
       numericality: { only_integer: true }
 
@@ -149,11 +161,11 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         presence: true,
         email: true
 
-      a.validates :additional_driver_cell_phone_number,
+      a.validates :additional_driver_phone_numbers_cell,
         presence: true,
         numericality: { only_integer: true }
 
-      a.validates :additional_driver_home_phone_number,
+      a.validates :additional_driver_phone_numbers_home,
         allow_blank: true,
         numericality: { only_integer: true }
     end

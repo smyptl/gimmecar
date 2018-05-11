@@ -2,11 +2,11 @@
 #
 # Table name: rates
 #
-#  id           :integer          not null, primary key
+#  id           :bigint(8)        not null, primary key
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  location_id  :integer
-#  amount       :integer
+#  location_id  :bigint(8)
+#  amount       :bigint(8)
 #  vehicle_type :string
 #
 

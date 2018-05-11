@@ -38,8 +38,10 @@
             country: 'United States',
             gender: '',
             date_of_birth: '',
-            cell_phone_number: '',
-            home_phone_number: '',
+            phone_numbers: {
+              cell: '',
+              home: '',
+            },
             insurance: {
               company_name: '',
               policy_number: '',
@@ -71,8 +73,10 @@
             country: 'United States',
             gender: '',
             date_of_birth: '',
-            cell_phone_number: '',
-            home_phone_number: '',
+            phone_numbers: {
+              cell: '',
+              home: '',
+            },
           },
           vehicle_id: '',
           pickup_odometer: '',
