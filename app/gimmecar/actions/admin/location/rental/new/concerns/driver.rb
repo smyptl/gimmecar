@@ -12,15 +12,17 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         n.string  :license_state
         n.string  :license_country
         n.date    :license_expiration_date
-        n.string  :address_1
-        n.string  :address_2
-        n.string  :city
-        n.string  :state
-        n.string  :zip_code
-        n.string  :country
         n.string  :gender
         n.date    :date_of_birth
         n.string  :email
+
+        n.nested :address do |n|
+          n.string  :street1
+          n.string  :street2
+          n.string  :city
+          n.string  :state
+          n.integer :zip_code
+        end
 
         n.nested :phone_numbers do |n|
           n.integer :cell
@@ -59,15 +61,17 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         n.string  :license_state
         n.string  :license_country
         n.date    :license_expiration_date
-        n.string  :address_1
-        n.string  :address_2
-        n.string  :city
-        n.string  :state
-        n.string  :zip_code
-        n.string  :country
         n.string  :gender
         n.date    :date_of_birth
         n.string  :email
+
+        n.nested :address do |n|
+          n.string  :street1
+          n.string  :street2
+          n.string  :city
+          n.string  :state
+          n.integer :zip_code
+        end
 
         n.nested :phone_numbers do |p|
           p.integer :cell
@@ -89,10 +93,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
       presence: true,
       after_date: -> { drop_off }
 
-    validates :driver_address_1, :driver_city, :driver_state, :driver_zip_code,
-      presence: true
-
-    validates :driver_country,
+    validates :driver_address_street1, :driver_address_city, :driver_address_state, :driver_address_zip_code,
       presence: true
 
     validates :driver_gender,
@@ -144,10 +145,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         presence: true,
         after_date: -> { drop_off }
 
-      a.validates :additional_driver_address_1, :additional_driver_city, :additional_driver_state, :additional_driver_zip_code,
-        presence: true
-
-      a.validates :additional_driver_country,
+      a.validates :additional_driver_address_street1, :additional_driver_address_city, :additional_driver_address_state, :additional_driver_address_zip_code,
         presence: true
 
       a.validates :additional_driver_gender,

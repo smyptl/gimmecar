@@ -3,19 +3,20 @@
       name_first:              <%= Faker::Name.first_name %>
       name_middle:             <%= Faker::Name.first_name %>
       name_last:               <%= Faker::Name.last_name %>
-      address_1:               <%= Faker::Address.street_address %>
-      address_2:               <%= Faker::Address.secondary_address %>
-      city:                    <%= Faker::Address.city %>
-      state:                   'California'
-      zip_code:                <%= Faker::Address.zip_code %>
-      country:                 'United States'
       gender:                  <%= ['male', 'female'].sample %>
-      email:                   <%= Faker::Internet.email %>
       date_of_birth:           <%= Faker::Date.birthday(25, 65) %>
       license_number:          '123JAS12'
       license_state:           'California'
       license_country:         'United States'
       license_expiration_date: <%= Time.current + 1.year %>
+      email:                   <%= Faker::Internet.email %>
+    addresses:
+      - street1:  <%= Faker::Address.street_address %>
+        street2:  <%= Faker::Address.secondary_address %>
+        city:     <%= Faker::Address.city %>
+        state:    'California'
+        zip_code: <%= Faker::Address.zip_code %>
+        primary:  true
     phone_numbers:
       - phone_type: 'home'
         number: '9095551234'
@@ -28,20 +29,21 @@
       name_first:              <%= Faker::Name.first_name %>
       name_middle:             <%= Faker::Name.first_name %>
       name_last:               <%= Faker::Name.last_name %>
-      address_1:               <%= Faker::Address.street_address %>
-      address_2:               <%= Faker::Address.secondary_address %>
-      city:                    <%= Faker::Address.city %>
-      state:                   'California'
-      zip_code:                <%= Faker::Address.zip_code %>
-      country:                 'United States'
       gender:                  <%= ['male', 'female'].sample %>
-      email:                   <%= Faker::Internet.email %>
       date_of_birth:           <%= Faker::Date.birthday(25, 65) %>
       license_number:          '123JAS12'
       license_state:           'California'
       license_country:         'United States'
       license_expiration_date: <%= Time.current + 1.year %>
+      email:                   <%= Faker::Internet.email %>
       do_not_rent:             true
+    addresses:
+      - street1:  <%= Faker::Address.street_address %>
+        street2:  <%= Faker::Address.secondary_address %>
+        city:     <%= Faker::Address.city %>
+        state:    'California'
+        zip_code: <%= Faker::Address.zip_code %>
+        primary:  true
     phone_numbers:
       - phone_type: 'home'
         number: '9095551234'

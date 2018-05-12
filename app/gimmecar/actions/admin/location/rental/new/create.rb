@@ -63,12 +63,9 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
   end
 
   def save
-    driver            = create_driver
-    additional_driver = create_additional_driver
-
     @rental = Rental.create_open({
-      driver:                                               driver,
-      additional_driver:                                    additional_driver,
+      driver:                                               create_primary_driver,
+      additional_driver:                                    create_additional_driver,
       vehicle_id:                                           vehicle_id,
       tax_rate:                                             location.latest_tax_rate,
       pickup_location:                                      location,
@@ -95,19 +92,32 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
     @rental.line_items.create(deposit.merge(charge: @charge, item_type: :deposit))
   end
 
-  def create_driver
-    driver = Driver.create(driver_attributes)
-    InsurancePolicy.create(driver_insurance_attributes(driver))
-    save_phone_numbers(numbers: driver_phone_numbers, driver: driver)
-    driver
+  def create_primary_driver
+    create_driver(attributes: read_attribute(:driver), paid_by: paid_by_primary_driver?)
   end
 
   def create_additional_driver
     if add_additional_driver
-      driver = Driver.create(additional_driver_attributes)
-      save_phone_numbers(numbers: additional_driver_phone_numbers, driver: driver)
-      driver
+      create_driver(attributes: read_attribute(:additional_driver), paid_by: paid_by_additional_driver?)
     end
+  end
+
+  def create_driver(attributes:, paid_by:)
+    driver = Driver.create(attributes.except(:insurance, :phone_numbers, :address)) do |d|
+      d.email     = d.email.downcase
+      d.stripe_id = stripe_customer_id if paid_by
+    end
+
+    if attributes.fetch(:insurance, false)
+      InsurancePolicy.create(attributes.fetch(:insurance)
+                                       .except(:verified)
+                                       .merge(driver: driver, user_id: params.fetch(:user_id)))
+    end
+
+    save_phone_numbers(numbers: attributes.fetch(:phone_numbers), driver: driver)
+    save_address(address: attributes.fetch(:address), driver: driver)
+
+    driver
   end
 
   def save_phone_numbers(numbers:, driver:)
@@ -120,28 +130,16 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
     end
   end
 
-  def driver_attributes
-    a = driver.except(:insurance, :phone_numbers)
-    a[:email] = a[:email].downcase
-    a[:stripe_id] = stripe_customer_id if paid_by_driver?
-    a
+  def save_address(address:, driver:)
+    Address.create(address.merge(owner: driver))
   end
 
-  def driver_insurance_attributes(driver)
-    read_attribute(:driver).fetch(:insurance)
-                           .except(:verified)
-                           .merge(driver: driver, user_id: params.fetch(:user_id))
+  def paid_by_primary_driver?
+    !paid_by_additional_driver?
   end
 
-  def additional_driver_attributes
-    a = additional_driver.except(:phone_numbers)
-    a[:email] = a[:email].downcase
-    a[:stripe_id] = stripe_customer_id if !paid_by_driver?
-    a
-  end
-
-  def paid_by_driver?
-    !(add_additional_driver && paid_by == :additional_driver)
+  def paid_by_additional_driver?
+    add_additional_driver && paid_by == :additional_driver
   end
 
   def failure_args

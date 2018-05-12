@@ -51,7 +51,7 @@
       p
         span.block Address:&nbsp;
         b
-          address-d(:address='summary.driver')
+          address-d(:address='summary.driver.address_primary')
 
     .whole.mt-default.rental-invoice-summary
       h4.invoice-one-line We appreicate your business!

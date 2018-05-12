@@ -1,7 +1,8 @@
 <script>
   import AddressFormat from 'Components/address'
-  import Capitalize from 'lodash/capitalize'
-  import TDate from 'Filters/date'
+  import PhoneFormat   from 'Components/phone_number'
+  import Capitalize    from 'lodash/capitalize'
+  import TDate         from 'Filters/date'
 
   export default {
     name: 'Information',
@@ -13,6 +14,7 @@
     },
     components: {
       AddressFormat,
+      PhoneFormat,
     },
     filters: {
       Capitalize,
@@ -40,19 +42,14 @@
         tr
           td Email
           td {{ driver.email }}
-        tr(
-          v-for='phone in driver.phone_numbers'
-          :key='phone.id'
-        )
+        tr(v-for='phone in driver.phone_numbers' :key='phone.id')
           td {{ phone.phone_type | capitalize }} Phone #
           td
-            a(:href="'tel:' + phone.number")
-              span.block {{ phone.number }}
-              i.block(v-if='phone.extension') Ext: {{ phone.extension }}
-        tr
-          td Address
+            phone-format(:phone='phone')
+        tr(v-for='address in driver.addresses' :key='address.id')
+          td {{ address.address_type | capitalize }} Address
           td
-            address-format(:address='driver')
+            address-format(:address='address')
 
     table.panel-table.panel-table-key-pair.thead-bt
       thead

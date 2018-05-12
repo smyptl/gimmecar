@@ -10,13 +10,13 @@ class Services::Builders::RentalInvoice < Lib::Services::Builder
     c.object :driver do |o|
       o.attribute :name, as: :name_full
       o.attribute :license_number
-      o.component Services::Builders::Address
+      o.object :address_primary, nested: true, component: Services::Builders::Address
     end
 
     c.object :additional_driver do |o|
       o.attribute :name, as: :name_full
       o.attribute :license_number
-      o.component Services::Builders::Address
+      o.object :address_primary, nested: true, component: Services::Builders::Address
     end
 
     c.attributes :pickup,

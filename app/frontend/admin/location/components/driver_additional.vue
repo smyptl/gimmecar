@@ -49,7 +49,7 @@
             v-model='form.additional_driver.name_last'
             v-error='form.errors.has("additional_driver_name_last")'
             @input='form.errors.clear("additional_driver_name_last")')
-          input-error-message(:errors='form.errors.get("additional_driver_name_last")')
+        input-error-message(:errors='form.errors.get("additional_driver_name_last")')
 
     .input-row
       label.input-label(for='additional_driver_license_number')
@@ -98,74 +98,62 @@
         input-error-message(:errors='form.errors.get("additional_driver_license_expiration_date")')
 
     .input-row
-      label.input-label(for='additional_driver_address_1')
+      label.input-label(for='additional_driver_address_street1')
         | Address
         span.input-label-note.right Customer must have an actual home street address. DO NOT accept a POST OFFICE BOX as an address.
 
       .input-container.whole
         .input-block.whole
-          input.input-field#additional_driver_address_1(
+          input.input-field#additional_driver_address_street1(
             type='text'
             placeholder='Address 1'
-            v-model='form.additional_driver.address_1'
-            v-error='form.errors.has("additional_driver_address_1")'
-            @input='form.errors.clear("additional_driver_address_1")')
-        input-error-message(:errors='form.errors.get("additional_driver_address_1")')
+            v-model='form.additional_driver.address.street1'
+            v-error='form.errors.has("additional_driver_address_street1")'
+            @input='form.errors.clear("additional_driver_address_street1")')
+        input-error-message(:errors='form.errors.get("additional_driver_address_street1")')
 
     .input-row
       .input-container.whole
         .input-block.whole
-          input.input-field#additional_driver_address_2(
+          input.input-field#additional_driver_address_street2(
             type='text'
             placeholder='Address 2'
-            v-model='form.additional_driver.address_2'
-            v-error='form.errors.has("additional_driver_address_2")'
-            @input='form.errors.clear("additional_driver_address_2")')
-        input-error-message(:errors='form.errors.get("additional_driver_address_2")')
+            v-model='form.additional_driver.address.street2'
+            v-error='form.errors.has("additional_driver_address_street2")'
+            @input='form.errors.clear("additional_driver_address_street2")')
+        input-error-message(:errors='form.errors.get("additional_driver_address_street2")')
 
     .input-row
+      .input-container.two-fifths
+        .input-block.whole
+          input.input-field#additional_driver_address_city(
+            type='text'
+            placeholder='City'
+            v-model='form.additional_driver.address.city'
+            v-error='form.errors.has("additional_driver_address_city")'
+            @input='form.errors.clear("additional_driver_address_city")')
+        input-error-message(:errors='form.errors.get("additional_driver_address_city")')
+
       .input-container.three-fifths
         .input-container.two-thirds.fixed
           .input-block.whole
-            input.input-field#additional_driver_city(
-              type='text'
-              placeholder='City'
-              v-model='form.additional_driver.city'
-              v-error='form.errors.has("additional_driver_city")'
-              @input='form.errors.clear("additional_driver_city")')
-          input-error-message(:errors='form.errors.get("additional_driver_city")')
-
-        .input-container.one-third.fixed
-          .input-block.whole
-            input.input-field#additional_driver_state(
+            input.input-field#additional_driver_address_state(
               type='text'
               placeholder='State'
-              v-model='form.additional_driver.state'
-              v-error='form.errors.has("additional_driver_state")'
-              @input='form.errors.clear("additional_driver_state")')
-          input-error-message(:errors='form.errors.get("additional_driver_state")')
+              v-model='form.additional_driver.address.state'
+              v-error='form.errors.has("additional_driver_address_state")'
+              @input='form.errors.clear("additional_driver_address_state")')
+          input-error-message(:errors='form.errors.get("additional_driver_address_state")')
 
-      .input-container.two-fifths
         .input-container.one-third.fixed
           .input-block.whole
-            input.input-field#additional_driver_zip_code(
+            input.input-field#additional_driver_address_zip_code(
               type='text'
               placeholder='Zip Code'
-              v-model='form.additional_driver.zip_code'
-              v-error='form.errors.has("additional_driver_zip_code")'
-              @input='form.errors.clear("additional_driver_zip_code")')
-          input-error-message(:errors='form.errors.get("additional_driver_zip_code")')
-
-        .input-container.two-thirds.fixed
-          .input-block.whole
-            input.input-field#additional_driver_country(
-              disabled
-              type='text'
-              placeholder='Country'
-              v-model='form.additional_driver.country'
-              v-error='form.errors.has("additional_driver_country")'
-              @input='form.errors.clear("additional_driver_country")')
-          input-error-message(:errors='form.errors.get("additional_driver_country")')
+              v-model='form.additional_driver.address.zip_code'
+              v-error='form.errors.has("additional_driver_address_zip_code")'
+              @input='form.errors.clear("additional_driver_address_zip_code")')
+          input-error-message(:errors='form.errors.get("additional_driver_address_zip_code")')
 
     .input-row
       .input-container.one-half

@@ -23,10 +23,10 @@
       }
     },
     mixins: [
-      InputCurrency,
       InputSubmit,
     ],
     components: {
+      InputCurrency,
       Popup,
     },
     mounted() {
