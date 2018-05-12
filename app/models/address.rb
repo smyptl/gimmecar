@@ -21,4 +21,6 @@ class Address < ApplicationRecord
 
   belongs_to :owner, polymorphic: true
 
+  scope :primary, -> { where(primary: true) }
+
 end

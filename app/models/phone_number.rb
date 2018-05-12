@@ -22,4 +22,7 @@ class PhoneNumber < ApplicationRecord
 
   scope :cell, -> { where(phone_type: :cell) }
   scope :home, -> { where(phone_type: :home) }
+
+  scope :primary, -> { where(primary: true) }
+
 end

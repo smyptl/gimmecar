@@ -76,7 +76,7 @@ describe Location do
       available_vehicles = location.available_vehicles(vehicle_type: :compact)
 
       expect(available_vehicles.count).to eq(1)
-      expect(available_vehicles).to include(vehicle_1)
+      expect(available_vehicles).to contain_exactly(vehicle_1)
     end
 
     it 'returns empty list if none available' do

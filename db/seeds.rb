@@ -35,6 +35,10 @@ ActiveRecord::Base.transaction(requires_new: true) do
     values['phone_numbers'].each do |x|
       driver.phone_numbers << PhoneNumber.create(x)
     end
+
+    values['addresses'].each do |x|
+      driver.addresses << Address.create(x)
+    end
   end
 
   rental_vehicle = Vehicle.first
