@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_08_012400) do
+ActiveRecord::Schema.define(version: 2018_05_11_220646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(version: 2018_05_08_012400) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "address_type"
+    t.string "street1"
+    t.string "street2"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.text "notes"
+    t.boolean "primary", default: false
+    t.index ["owner_type", "owner_id"], name: "index_addresses_on_owner_type_and_owner_id"
   end
 
   create_table "charges", force: :cascade do |t|
@@ -154,6 +170,7 @@ ActiveRecord::Schema.define(version: 2018_05_08_012400) do
     t.string "number"
     t.string "extension"
     t.text "notes"
+    t.boolean "primary", default: false
     t.index ["owner_type", "owner_id"], name: "index_phone_numbers_on_owner_type_and_owner_id"
   end
 

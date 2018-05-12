@@ -11,6 +11,7 @@
 #  number     :string
 #  extension  :string
 #  notes      :text
+#  primary    :boolean          default(FALSE)
 #
 
 class PhoneNumber < ApplicationRecord

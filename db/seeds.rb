@@ -36,20 +36,20 @@ ActiveRecord::Base.transaction(requires_new: true) do
       driver.phone_numbers << PhoneNumber.create(x)
     end
   end
+
+  rental_vehicle = Vehicle.first
+  rental_driver = Driver.first
+
+  Rental.create_open({
+    tax_rate:                Location.first.latest_tax_rate,
+    driver:                  rental_driver,
+    vehicle:                 rental_vehicle,
+    pickup_location:         Location.first,
+    pickup:                  Time.current - 1.day,
+    pickup_odometer:         14500,
+    pickup_fuel:             10,
+    drop_off_location:       Location.first,
+    drop_off:                Time.current + 2.days,
+    collision_damage_waiver: false,
+  })
 end
-
-rental_vehicle = Vehicle.first
-rental_driver = Driver.first
-
-Rental.create_open({
-  tax_rate:                Location.first.latest_tax_rate,
-  driver:                  rental_driver,
-  vehicle:                 rental_vehicle,
-  pickup_location:         Location.first,
-  pickup:                  Time.current - 1.day,
-  pickup_odometer:         14500,
-  pickup_fuel:             10,
-  drop_off_location:       Location.first,
-  drop_off:                Time.current + 2.days,
-  collision_damage_waiver: false,
-})

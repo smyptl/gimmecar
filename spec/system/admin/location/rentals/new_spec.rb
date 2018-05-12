@@ -19,11 +19,11 @@ def fill_in_driver(driver:, type:, insurance: nil)
   fill_in "#{type}_license_state",           with: driver.license_state
   fill_in "#{type}_license_expiration_date", with: driver.license_expiration_date.strftime('%m/%d/%Y')
 
-  fill_in "#{type}_address_1",               with: driver.address_1
-  fill_in "#{type}_address_2",               with: driver.address_2
-  fill_in "#{type}_city",                    with: driver.city
-  fill_in "#{type}_state",                   with: driver.state
-  fill_in "#{type}_zip_code",                with: driver.zip_code
+  fill_in "#{type}_address_street1",         with: driver.address_1
+  fill_in "#{type}_address_street2",         with: driver.address_2
+  fill_in "#{type}_address_city",            with: driver.city
+  fill_in "#{type}_address_state",           with: driver.state
+  fill_in "#{type}_address_zip_code",        with: driver.zip_code
 
   fill_in "#{type}_date_of_birth",           with: driver.date_of_birth.strftime('%m/%d/%Y')
   select driver.gender.capitalize, from: "#{type}_gender"
