@@ -49,7 +49,7 @@
             v-model='form.additional_driver.name_last'
             v-error='form.errors.has("additional_driver_name_last")'
             @input='form.errors.clear("additional_driver_name_last")')
-          input-error-message(:errors='form.errors.get("additional_driver_name_last")')
+        input-error-message(:errors='form.errors.get("additional_driver_name_last")')
 
     .input-row
       label.input-label(for='additional_driver_license_number')
@@ -107,7 +107,7 @@
           input.input-field#additional_driver_address_street1(
             type='text'
             placeholder='Address 1'
-            v-model='form.additional_driver.address_1'
+            v-model='form.additional_driver.address.street1'
             v-error='form.errors.has("additional_driver_address_street1")'
             @input='form.errors.clear("additional_driver_address_street1")')
         input-error-message(:errors='form.errors.get("additional_driver_address_street1")')
@@ -118,7 +118,7 @@
           input.input-field#additional_driver_address_street2(
             type='text'
             placeholder='Address 2'
-            v-model='form.additional_driver.address_2'
+            v-model='form.additional_driver.address.street2'
             v-error='form.errors.has("additional_driver_address_street2")'
             @input='form.errors.clear("additional_driver_address_street2")')
         input-error-message(:errors='form.errors.get("additional_driver_address_street2")')
@@ -129,7 +129,7 @@
           input.input-field#additional_driver_address_city(
             type='text'
             placeholder='City'
-            v-model='form.driver.city'
+            v-model='form.additional_driver.address.city'
             v-error='form.errors.has("additional_driver_address_city")'
             @input='form.errors.clear("additional_driver_address_city")')
         input-error-message(:errors='form.errors.get("additional_driver_address_city")')
@@ -140,7 +140,7 @@
             input.input-field#additional_driver_address_state(
               type='text'
               placeholder='State'
-              v-model='form.driver.state'
+              v-model='form.additional_driver.address.state'
               v-error='form.errors.has("additional_driver_address_state")'
               @input='form.errors.clear("additional_driver_address_state")')
           input-error-message(:errors='form.errors.get("additional_driver_address_state")')
@@ -150,7 +150,7 @@
             input.input-field#additional_driver_address_zip_code(
               type='text'
               placeholder='Zip Code'
-              v-model='form.driver.zip_code'
+              v-model='form.additional_driver.address.zip_code'
               v-error='form.errors.has("additional_driver_address_zip_code")'
               @input='form.errors.clear("additional_driver_address_zip_code")')
           input-error-message(:errors='form.errors.get("additional_driver_address_zip_code")')

@@ -108,7 +108,7 @@
           input.input-field#driver_address_street1(
             type='text'
             placeholder='Address 1'
-            v-model='form.driver.address_1'
+            v-model='form.driver.address.street1'
             v-error='form.errors.has("driver_address_street1")'
             @input='form.errors.clear("driver_address_street1")')
         input-error-message(:errors='form.errors.get("driver_address_street1")')
@@ -119,7 +119,7 @@
           input.input-field#driver_address_street2(
             type='text'
             placeholder='Address 2'
-            v-model='form.driver.address_2'
+            v-model='form.driver.address.street2'
             v-error='form.errors.has("driver_address_street2")'
             @input='form.errors.clear("driver_address_street2")')
         input-error-message(:errors='form.errors.get("driver_address_street2")')
@@ -130,7 +130,7 @@
           input.input-field#driver_address_city(
             type='text'
             placeholder='City'
-            v-model='form.driver.city'
+            v-model='form.driver.address.city'
             v-error='form.errors.has("driver_address_city")'
             @input='form.errors.clear("driver_address_city")')
         input-error-message(:errors='form.errors.get("driver_address_city")')
@@ -141,7 +141,7 @@
             input.input-field#driver_address_state(
               type='text'
               placeholder='State'
-              v-model='form.driver.state'
+              v-model='form.driver.address.state'
               v-error='form.errors.has("driver_address_state")'
               @input='form.errors.clear("driver_address_state")')
           input-error-message(:errors='form.errors.get("driver_address_state")')
@@ -151,7 +151,7 @@
             input.input-field#driver_address_zip_code(
               type='text'
               placeholder='Zip Code'
-              v-model='form.driver.zip_code'
+              v-model='form.driver.address.zip_code'
               v-error='form.errors.has("driver_address_zip_code")'
               @input='form.errors.clear("driver_address_zip_code")')
           input-error-message(:errors='form.errors.get("driver_address_zip_code")')
