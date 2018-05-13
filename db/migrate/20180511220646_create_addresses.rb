@@ -12,7 +12,5 @@ class CreateAddresses < ActiveRecord::Migration[5.2]
       t.text :notes
       t.boolean :primary, default: false
     end
-
-    add_column :phone_numbers, :primary, :boolean, default: false
   end
 end

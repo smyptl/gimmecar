@@ -7,6 +7,7 @@ class CreatePhoneNumbers < ActiveRecord::Migration[5.2]
       t.string :number
       t.string :extension
       t.text :notes
+      t.boolean :primary, default: false
     end
   end
 end
