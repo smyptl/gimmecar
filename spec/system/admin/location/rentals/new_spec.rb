@@ -19,6 +19,7 @@ describe 'create rental', type: :system, js: true do
            **attributes_for(:driver),
            cell_phone_number: '1231231234',
            home_phone_number: '9098768765',
+           email: Faker::Internet.email,
            address: build_stubbed(:address))
   end
 
@@ -29,6 +30,7 @@ describe 'create rental', type: :system, js: true do
            **attributes_for(:driver),
            cell_phone_number: '7601234561',
            home_phone_number: '8516781234',
+           email: Faker::Internet.email,
            address: build_stubbed(:address))
   end
 
@@ -92,31 +94,44 @@ describe 'create rental', type: :system, js: true do
     expect(driver.license_number).to          eq(driver_stub.license_number)
     expect(driver.license_state).to           eq(driver_stub.license_state)
     expect(driver.license_country).to         eq('United States')
-    expect(driver.email).to                   eq(driver_stub.email)
+    expect(driver.license_expiration_date).to eq(driver_stub.license_expiration_date)
+
+    expect(driver.email).to                   eq(nil)
     expect(driver.address_1).to               eq(nil)
     expect(driver.address_2).to               eq(nil)
     expect(driver.city).to                    eq(nil)
     expect(driver.state).to                   eq(nil)
     expect(driver.zip_code).to                eq(nil)
     expect(driver.country).to                 eq(nil)
-    expect(driver.license_expiration_date).to eq(driver_stub.license_expiration_date)
     expect(driver.cell_phone_number).to       eq(nil)
     expect(driver.home_phone_number).to       eq(nil)
 
+    expect(Email.count).to eq(1)
+    emails = Email.all
+    expect(driver.emails).to contain_exactly(*emails)
+    emails.each do |email|
+      expect(email.email).to eq(driver_stub.email)
+      expect(email.primary).to eq(true)
+      expect(email.owner).to eq(driver)
+    end
+
     expect(PhoneNumber.count).to eq(2)
-    expect(driver.phone_numbers).to contain_exactly(*PhoneNumber.all)
+    phone_numbers = PhoneNumber.all
+    expect(driver.phone_numbers).to contain_exactly(*phone_numbers)
     expect(driver.phone_numbers.cell.first.number).to eq(driver_stub.cell_phone_number)
     expect(driver.phone_numbers.home.first.number).to eq(driver_stub.home_phone_number)
 
     expect(Address.count).to eq(1)
-    expect(driver.addresses).to contain_exactly(*Address.all)
-    address = driver.addresses.first
-    expect(address.street1).to  eq(driver_stub.address.street1)
-    expect(address.street2).to  eq(driver_stub.address.street2)
-    expect(address.city).to     eq(driver_stub.address.city)
-    expect(address.state).to    eq(driver_stub.address.state)
-    expect(address.zip_code).to eq(driver_stub.address.zip_code)
-    expect(address.owner).to    eq(driver)
+    addresses = Address.all
+    expect(driver.addresses).to contain_exactly(*addresses)
+    addresses.each do |address|
+      expect(address.street1).to  eq(driver_stub.address.street1)
+      expect(address.street2).to  eq(driver_stub.address.street2)
+      expect(address.city).to     eq(driver_stub.address.city)
+      expect(address.state).to    eq(driver_stub.address.state)
+      expect(address.zip_code).to eq(driver_stub.address.zip_code)
+      expect(address.owner).to    eq(driver)
+    end
 
     expect(InsurancePolicy.count).to eq(1)
     insurance_policy = InsurancePolicy.first
@@ -217,8 +232,7 @@ describe 'create rental', type: :system, js: true do
     expect(additional_driver.license_expiration_date).to eq(additional_driver_stub.license_expiration_date)
     expect(additional_driver.stripe_id).to_not           eq(nil)
 
-    expect(additional_driver.email).to                   eq(additional_driver_stub.email)
-
+    expect(additional_driver.email).to                   eq(nil)
     expect(additional_driver.address_1).to               eq(nil)
     expect(additional_driver.address_2).to               eq(nil)
     expect(additional_driver.city).to                    eq(nil)
@@ -227,6 +241,14 @@ describe 'create rental', type: :system, js: true do
     expect(additional_driver.country).to                 eq(nil)
     expect(additional_driver.home_phone_number).to eq(nil)
     expect(additional_driver.cell_phone_number).to eq(nil)
+
+    expect(additional_driver.emails.count).to eq(1)
+    expect(additional_driver.phone_numbers.count).to eq(2)
+    expect(additional_driver.addresses.count).to eq(1)
+
+    additional_driver.emails.each do |email|
+      expect(email.email).to eq(additional_driver_stub.email)
+    end
 
     expect(additional_driver.phone_numbers).to contain_exactly(*PhoneNumber.last(2))
     expect(additional_driver.phone_numbers.cell.first.number).to eq(additional_driver_stub.cell_phone_number)

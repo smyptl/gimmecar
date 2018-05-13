@@ -2,7 +2,6 @@ class Services::Builders::Driver < Lib::Services::Builder
 
   component do |c|
     c.attributes :gender,
-      :email,
       :date_of_birth,
       :license_number,
       :license_state,
@@ -14,6 +13,7 @@ class Services::Builders::Driver < Lib::Services::Builder
       :name_middle,
       :name_last
 
+    c.collection :emails,        nested: true, component: Services::Builders::Email
     c.collection :phone_numbers, nested: true, component: Services::Builders::PhoneNumber
     c.collection :addresses,     nested: true, component: Services::Builders::Address
 

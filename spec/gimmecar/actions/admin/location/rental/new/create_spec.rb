@@ -24,9 +24,10 @@ describe Actions::Admin::Location::Rental::New::Create do
 
   let(:driver_attrs) do
     driver_attrs = attributes_for(:driver)
-    driver_attrs[:insurance] = attributes_for(:insurance_policy)
+    driver_attrs[:insurance]     = attributes_for(:insurance_policy)
     driver_attrs[:phone_numbers] = { cell: '9091231234', home: '' }
-    driver_attrs[:address] = attributes_for(:address).except(:address_type)
+    driver_attrs[:email]         = Faker::Internet.email
+    driver_attrs[:address]       = attributes_for(:address).except(:address_type)
     driver_attrs
   end
 
@@ -61,29 +62,39 @@ describe Actions::Admin::Location::Rental::New::Create do
 
       expect(Driver.count).to eq(1)
       driver = Driver.first
-      expect(driver.name_first).to eq(driver_attrs[:name_first])
-      expect(driver.name_middle).to eq(driver_attrs[:name_middle])
-      expect(driver.name_last).to eq(driver_attrs[:name_last])
-      expect(driver.gender).to eq(driver_attrs[:gender])
-      expect(driver.email).to eq(driver_attrs[:email])
-      expect(driver.date_of_birth).to eq(driver_attrs[:date_of_birth])
-      expect(driver.license_number).to eq(driver_attrs[:license_number])
-      expect(driver.license_state).to eq(driver_attrs[:license_state])
-      expect(driver.license_country).to eq(driver_attrs[:license_country])
+      expect(driver.name_first).to              eq(driver_attrs[:name_first])
+      expect(driver.name_middle).to             eq(driver_attrs[:name_middle])
+      expect(driver.name_last).to               eq(driver_attrs[:name_last])
+      expect(driver.gender).to                  eq(driver_attrs[:gender])
+      expect(driver.date_of_birth).to           eq(driver_attrs[:date_of_birth])
+      expect(driver.license_number).to          eq(driver_attrs[:license_number])
+      expect(driver.license_state).to           eq(driver_attrs[:license_state])
+      expect(driver.license_country).to         eq(driver_attrs[:license_country])
       expect(driver.license_expiration_date).to eq(driver_attrs[:license_expiration_date])
-      expect(driver.stripe_id).to_not eq(nil)
-      expect(driver.phone_numbers.count).to eq(1)
-      expect(driver.addresses.count).to eq(1)
+      expect(driver.stripe_id).to_not           eq(nil)
+
+      expect(Email.count).to eq(1)
+      emails = Email.all
+      expect(driver.emails).to contain_exactly(*emails)
+      emails.each do |email|
+        expect(email.email).to eq(driver_attrs[:email])
+        expect(email.primary).to eq(true)
+        expect(email.owner).to eq(driver)
+      end
 
       expect(PhoneNumber.count).to eq(1)
-      PhoneNumber.all.each do |phone_number|
+      phone_numbers = PhoneNumber.all
+      expect(driver.phone_numbers).to contain_exactly(*phone_numbers)
+      phone_numbers.each do |phone_number|
         expect(phone_number.owner).to eq(driver)
         expect(phone_number.phone_type).to eq('cell')
         expect(phone_number.number).to eq(driver_attrs[:phone_numbers][:cell])
       end
 
       expect(Address.count).to eq(1)
-      Address.all.each do |address|
+      addresses = Address.all
+      expect(driver.addresses).to contain_exactly(*addresses)
+      addresses.each do |address|
         expect(address.attributes).to include(driver_attrs[:address].stringify_keys)
         expect(address.owner).to eq(driver)
       end
@@ -95,22 +106,22 @@ describe Actions::Admin::Location::Rental::New::Create do
 
       expect(Rental.count).to eq(1)
       rental = Rental.first
-      expect(rental.driver).to eq(driver)
+      expect(rental.driver).to            eq(driver)
       expect(rental.additional_driver).to eq(nil)
-      expect(rental.status).to eq('open')
-      expect(rental.number).to_not eq(nil)
-      expect(rental.driver).to eq(driver)
-      expect(rental.vehicle).to eq(vehicle)
+      expect(rental.open?).to             eq(true)
+      expect(rental.number).to_not        eq(nil)
+      expect(rental.driver).to            eq(driver)
+      expect(rental.vehicle).to           eq(vehicle)
       expect(rental.additional_driver).to eq(nil)
-      expect(rental.tax_rate).to eq(tax_rate)
-      expect(rental.pickup).to_not eq(nil)
-      expect(rental.pickup_location).to eq(location)
-      expect(rental.drop_off).to eq(drop_off)
+      expect(rental.tax_rate).to          eq(tax_rate)
+      expect(rental.pickup).to_not        eq(nil)
+      expect(rental.pickup_location).to   eq(location)
+      expect(rental.drop_off).to          eq(drop_off)
       expect(rental.drop_off_location).to eq(location)
       expect(rental.drop_off_odometer).to eq(nil)
-      expect(rental.drop_off_fuel).to eq(nil)
-      expect(rental.pickup_odometer).to eq(1250)
-      expect(rental.pickup_fuel).to eq(10)
+      expect(rental.drop_off_fuel).to     eq(nil)
+      expect(rental.pickup_odometer).to   eq(1250)
+      expect(rental.pickup_fuel).to       eq(10)
 
       expect(Charge.count).to eq(1)
       charge = Charge.first
@@ -160,21 +171,27 @@ describe Actions::Admin::Location::Rental::New::Create do
       expect(rental.driver.stripe_id).to_not eq(nil)
 
       additional_driver = rental.additional_driver
-      expect(additional_driver.name_first).to eq(additional_driver_attrs[:name_first])
-      expect(additional_driver.name_middle).to eq(additional_driver_attrs[:name_middle])
-      expect(additional_driver.name_last).to eq(additional_driver_attrs[:name_last])
-      expect(additional_driver.gender).to eq(additional_driver_attrs[:gender])
-      expect(additional_driver.email).to eq(additional_driver_attrs[:email])
-      expect(additional_driver.date_of_birth).to eq(additional_driver_attrs[:date_of_birth])
-      expect(additional_driver.license_number).to eq(additional_driver_attrs[:license_number])
-      expect(additional_driver.license_state).to eq(additional_driver_attrs[:license_state])
-      expect(additional_driver.license_country).to eq(additional_driver_attrs[:license_country])
+      expect(additional_driver.name_first).to              eq(additional_driver_attrs[:name_first])
+      expect(additional_driver.name_middle).to             eq(additional_driver_attrs[:name_middle])
+      expect(additional_driver.name_last).to               eq(additional_driver_attrs[:name_last])
+      expect(additional_driver.gender).to                  eq(additional_driver_attrs[:gender])
+      expect(additional_driver.date_of_birth).to           eq(additional_driver_attrs[:date_of_birth])
+      expect(additional_driver.license_number).to          eq(additional_driver_attrs[:license_number])
+      expect(additional_driver.license_state).to           eq(additional_driver_attrs[:license_state])
+      expect(additional_driver.license_country).to         eq(additional_driver_attrs[:license_country])
       expect(additional_driver.license_expiration_date).to eq(additional_driver_attrs[:license_expiration_date])
       expect(additional_driver.stripe_id).to eq(nil)
+
+      expect(additional_driver.emails.count).to eq(1)
       expect(additional_driver.phone_numbers.count).to eq(1)
       expect(additional_driver.addresses.count).to eq(1)
 
-      additional_driver.phone_numbers.all.each do |phone_number|
+      additional_driver.emails.each do |email|
+        expect(email.email).to eq(additional_driver_attrs[:email])
+        expect(email.primary?).to eq(true)
+      end
+
+      additional_driver.phone_numbers.each do |phone_number|
         expect(phone_number.owner).to eq(additional_driver)
         expect(phone_number.phone_type).to eq('cell')
         expect(phone_number.number).to eq(additional_driver_attrs[:phone_numbers][:cell])

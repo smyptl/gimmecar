@@ -103,8 +103,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
   end
 
   def create_driver(attributes:, paid_by:)
-    driver = Driver.create(attributes.except(:insurance, :phone_numbers, :address)) do |d|
-      d.email     = d.email.downcase
+    driver = Driver.create(attributes.except(:insurance, :email, :phone_numbers, :address)) do |d|
       d.stripe_id = stripe_customer_id if paid_by
     end
 
@@ -114,6 +113,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
                                        .merge(driver: driver, user_id: params.fetch(:user_id)))
     end
 
+    save_email(email: attributes.fetch(:email), driver: driver)
     save_phone_numbers(numbers: attributes.fetch(:phone_numbers), driver: driver)
     save_address(address: attributes.fetch(:address), driver: driver)
 
@@ -128,6 +128,10 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
         number:     number,
       })
     end
+  end
+
+  def save_email(email:, driver:)
+    Email.create(email: email, primary: true, owner: driver)
   end
 
   def save_address(address:, driver:)
