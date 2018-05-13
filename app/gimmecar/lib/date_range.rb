@@ -2,23 +2,12 @@ class Lib::DateRange
 
   attr_reader :start_date, :end_date
 
-  def initialize(start_date, end_date, time_zone: 'UTC')
+  def initialize(start_date, end_date)
     if end_date.before?(start_date)
       raise ArgumentError, 'Start date cannot be before end date.'
     end
 
-    if start_date.class != end_date.class
-      raise ArgumentError, 'Start date and end date not same class type.'
-    end
-
-    @start_date, @end_date = case start_date
-                             when Time || ActiveSupport::TimeWithZone
-                               convert_to_same_time_zone(start_date, end_date, time_zone: time_zone)
-                             when Date
-                               start_date, end_date
-                             else
-                               raise NotImplementedError
-                             end
+    @start_date, @end_date = start_date, end_date
   end
 
   #def range
@@ -39,11 +28,5 @@ class Lib::DateRange
 
   def hours_apart
     ((end_date.to_time - start_date.to_time)/1.hour.second).to_i
-  end
-
-  private
-
-  def convert_to_same_time_zone(start_date, end_date, time_zone:)
-    start_date.in_time_zone(time_zone), end_date.in_time_zone(time_zone)
   end
 end
