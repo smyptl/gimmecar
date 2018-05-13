@@ -39,9 +39,9 @@
           th Contact Info
           th
       tbody
-        tr
-          td Email
-          td {{ driver.email }}
+        tr(v-for='email in driver.emails' :key='email.id')
+          td {{ email.email_type | capitalize }} Email
+          td {{ email.email }}
         tr(v-for='phone in driver.phone_numbers' :key='phone.id')
           td {{ phone.phone_type | capitalize }} Phone #
           td

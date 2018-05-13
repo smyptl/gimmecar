@@ -42,7 +42,7 @@ FactoryBot.define do
     license_country { Faker::Address.country }
     license_expiration_date (Time.current + 1.year).to_date
 
-    email { Faker::Internet.email }
+    #email { Faker::Internet.email }
 
     #address_1 { Faker::Address.street_address }
     #address_2 { Faker::Address.secondary_address }
