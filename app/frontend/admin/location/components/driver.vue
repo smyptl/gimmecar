@@ -185,7 +185,8 @@
       .input-container.two-fifths
         label.input-label(for='driver_email') Email
         .input-block.whole
-          input.input-field#driver_email(type='text'
+          input.input-field#driver_email(
+            type='text'
             placeholder='john@gmail.com'
             v-model='form.driver.email'
             v-error='form.errors.has("driver_email")'
@@ -195,7 +196,8 @@
         .input-container.one-half.fixed
           label.input-label(for='driver_phone_numbers_cell') Cell Phone #
           .input-block.whole
-            input.input-field#driver_phone_numbers_cell(type='text'
+            input.input-field#driver_phone_numbers_cell(
+              type='text'
               placeholder='909.555.8639'
               v-model='form.driver.phone_numbers.cell'
               v-error='form.errors.has("driver_phone_numbers_cell")'
@@ -204,7 +206,8 @@
         .input-container.one-half.fixed
           label.input-label(for='driver_phone_numbers_home') Home Phone #
           .input-block.whole
-            input.input-field#driver_phone_numbers_home(type='text'
+            input.input-field#driver_phone_numbers_home(
+              type='text'
               placeholder='805.555.1234'
               v-model='form.driver.phone_numbers.home'
               v-error='form.errors.has("driver_phone_numbers_home")'
