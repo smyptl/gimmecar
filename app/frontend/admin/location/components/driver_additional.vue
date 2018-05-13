@@ -184,14 +184,32 @@
       .input-container.two-fifths
         label.input-label(for='additional_driver_email') Email
         .input-block.whole
-          input.input-field#additional_driver_email(type='text' v-model='form.additional_driver.email' placeholder='john@gmail.com')
+          input.input-field#additional_driver_email(
+            type='text'
+            placeholder='john@gmail.com'
+            v-model='form.additional_driver.email'
+            v-error='form.errors.has("additional_driver_email")'
+            @input='form.errors.clear("additional_driver_email")')
+        input-error-message(:errors='form.errors.get("additional_driver_email")')
       .input-container.three-fifths
         .input-container.one-half.fixed
           label.input-label(for='additional_driver_phone_numbers_cell') Cell Phone #
           .input-block.whole
-            input.input-field#additional_driver_phone_numbers_cell(type='number' v-model='form.additional_driver.phone_numbers.cell' placeholder='909.555.8639')
+            input.input-field#additional_driver_phone_numbers_cell(
+              type='text'
+              placeholder='909.555.8639'
+              v-model='form.additional_driver.phone_numbers.cell'
+              v-error='form.errors.has("additional_driver_phone_numbers_cell")'
+              @input='form.errors.clear("additional_driver_phone_numbers_cell")')
+          input-error-message(:errors='form.errors.get("additional_driver_phone_numbers_cell")')
         .input-container.one-half.fixed
           label.input-label(for='additional_driver_phone_numbers_home') Home Phone #
           .input-block.whole
-            input.input-field#additional_driver_phone_numbers_home(type='number' v-model='form.additional_driver.phone_numbers.home' placeholder='805.555.1231')
+            input.input-field#additional_driver_phone_numbers_home(
+              type='text'
+              placeholder='805.555.1234'
+              v-model='form.additional_driver.phone_numbers.home'
+              v-error='form.errors.has("additional_driver_phone_numbers_home")'
+              @input='form.errors.clear("additional_driver_phone_numbers_home")')
+          input-error-message(:errors='form.errors.get("additional_driver_phone_numbers_home")')
 </template>

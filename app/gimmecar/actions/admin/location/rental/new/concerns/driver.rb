@@ -73,9 +73,9 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
           n.integer :zip_code
         end
 
-        n.nested :phone_numbers do |p|
-          p.integer :cell
-          p.integer :home
+        n.nested :phone_numbers do |n|
+          n.integer :cell
+          n.integer :home
         end
       end
     end
