@@ -45,6 +45,7 @@
             th Type
             th(v-if='show_location') Location
             th License #
+            slot(name='header')
         tbody
           tr.clickable(
             v-for='vehicle in sorted_vehicles'
@@ -61,7 +62,7 @@
               template(v-if='vehicle.license_number') {{ vehicle.license_number }}
               template(v-else)
                 i VIN: {{ lastFive(vehicle.vin) }}
-
+            slot(name='body' :vehicle='vehicle')
 </template>
 
 <style lang='stylus' scoped>
