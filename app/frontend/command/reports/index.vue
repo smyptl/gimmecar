@@ -5,7 +5,7 @@
   import Values from 'lodash/values'
   import SumBy from 'lodash/sumBy'
 
-  import Vehicles from './vehicles'
+  import Vehicles from 'Components/vehicle/table'
 
   export default {
     name: 'Reports',
@@ -75,8 +75,19 @@
             td {{ total | currency }}
 
     vehicles(v-if='tabActive("vehicles")'
+             :show_location='false'
              @view-vehicle='viewVehicle($event)'
              :vehicles='vehicles')
+
+      template(slot='header')
+        th Fuel Level
+        th Odometer
+        th Revenue
+      template(slot='body' slot-scope='slotProps')
+        td {{ slotProps.vehicle.fuel_level*10 }}%
+        td {{ slotProps.vehicle.odometer }}
+        td {{ slotProps.vehicle.revenue | currency }}
+
 </template>
 
 <style lang='stylus' scoped>
