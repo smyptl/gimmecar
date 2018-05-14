@@ -35,10 +35,9 @@ class Vehicle < ApplicationRecord
   has_many :vehicle_registrations
 
   has_many :rentals
-  has_many :rentals_closed, -> { closed },                      class_name: 'Rental'
-  has_one :rental_open,     -> { open_status },                 class_name: 'Rental'
-  has_one :rental_last,     -> { past.order(drop_off: :desc) }, class_name: 'Rental'
-  has_one :rental_latest,   -> { order(drop_off: :desc) },      class_name: 'Rental'
+  has_many :rentals_closed, -> { closed },                 class_name: 'Rental'
+  has_one :rental_open,     -> { open_status },            class_name: 'Rental'
+  has_one :rental_latest,   -> { order(drop_off: :desc) }, class_name: 'Rental'
   has_many :rental_rates, through: :rentals
   has_many :line_items, through: :rentals
 
