@@ -32,6 +32,10 @@ ActiveRecord::Base.transaction(requires_new: true) do
   load_file('drivers.yml').each do |values|
     driver = Driver.create(values['data'])
 
+    values['emails'].each do |x|
+      driver.emails << Email.create(x)
+    end
+
     values['phone_numbers'].each do |x|
       driver.phone_numbers << PhoneNumber.create(x)
     end
