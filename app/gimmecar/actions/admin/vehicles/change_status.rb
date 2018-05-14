@@ -5,7 +5,7 @@ class Actions::Admin::Vehicles::ChangeStatus < Lib::Actions::Base
   end
 
   validates :status,
-    inclusion: { in: Vehicle::STATUS, message: 'not a valid status' }
+    inclusion: { in: Vehicle::STATUS, message: 'Select a valid status.' }
 
   def save
     Vehicle.find_by(vin: @params.fetch(:vin)).update(status: status)

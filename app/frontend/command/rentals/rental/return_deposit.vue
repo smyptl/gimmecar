@@ -1,6 +1,7 @@
 <script>
   import Shake from 'Utils/transitions/shake'
 
+  import InputCurrency from 'Components/inputs/currency'
   import InputSubmit from 'Mixins/input_submit'
 
   import InputDate from 'Components/inputs/date'
@@ -25,6 +26,7 @@
       InputSubmit,
     ],
     components: {
+      InputCurrency,
       Popup,
     },
     mounted() {
@@ -65,12 +67,11 @@
         .input-container.whole
           label.input-label(for='amount') Amount
           .input-block.whole
-            input.input-field#amount(
-              type='text'
+            input-currency#amount(
               v-model='form.amount'
               v-error='form.errors.has("amount")'
               @input='form.errors.clear("amount")')
-          input-error-message(v-bind:errors='form.errors.get("amount")')
+          input-error-message(:errors='form.errors.get("amount")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

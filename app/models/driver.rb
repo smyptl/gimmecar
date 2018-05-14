@@ -2,7 +2,7 @@
 #
 # Table name: drivers
 #
-#  id                      :integer          not null, primary key
+#  id                      :bigint(8)        not null, primary key
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  gender                  :string
@@ -29,6 +29,12 @@
 #
 
 class Driver < ApplicationRecord
+
+  has_many :phone_numbers, as: :owner
+  has_many :addresses,     as: :owner
+  has_many :emails,        as: :owner
+  has_one :address_primary, -> { primary }, as: :owner, class_name: 'Address'
+  has_one :email_primary,   -> { primary }, as: :owner, class_name: 'Email'
 
   has_many :rentals,        -> (driver) { as(:driver, :additional_driver, id: driver.id) }
   has_many :rentals_closed, -> (driver) { as(:driver, :additional_driver, id: driver.id).closed_status }, class_name: 'Rental'

@@ -54,7 +54,7 @@
               v-error='quote.errors.has("pickup")'
               @input='quote.errors.clear("pickup")')
 
-            input-error-message(v-bind:errors='quote.errors.get("pickup")')
+            input-error-message(:errors='quote.errors.get("pickup")')
 
           .input-container.one-half
             label.input-label To:
@@ -63,14 +63,14 @@
               v-error='quote.errors.has("drop_off")'
               @input='quote.errors.clear("drop_off")')
 
-            input-error-message(v-bind:errors='quote.errors.get("drop_off")')
+            input-error-message(:errors='quote.errors.get("drop_off")')
 
         .input-submit.input-block
           input.btn.btn-primary.right(type='submit' value='Rates')
 
     template(v-if='step == "summary"')
       h3.form-header.form-header-first Quote
-      quote(v-bind:summary='summary')
+      quote(:summary='summary')
 
       .input-submit.input-flex-container
         .input-block.input-element-fixed

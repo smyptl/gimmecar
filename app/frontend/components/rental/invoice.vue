@@ -51,14 +51,14 @@
       p
         span.block Address:&nbsp;
         b
-          address-d(:address='summary.driver')
+          address-d(:address='summary.driver.address_primary')
 
     .whole.mt-default.rental-invoice-summary
       h4.invoice-one-line We appreicate your business!
       p Thanks for being a customer. A detailed summary of your invoice is below. If you have any questions, we are happy to help. Email support@gimmecar.com or call 909.318.0450.
       h4.invoice-one-line.mb-default
 
-    rental-invoice.page-break(v-bind:summary='summary')
+    rental-invoice.page-break(:summary='summary')
 
     .page-break
       financial-responsibility.whole.left

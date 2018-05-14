@@ -96,8 +96,10 @@ Rails.application.routes.draw do
       get 'metrics',  to: 'locations/metrics#index'
     end
 
-    get '/reports',     to: 'reports#index'
-    get '/reports/tax', to: 'reports#tax'
+    get '/reports',          to: 'reports#index'
+    get '/reports/tax',      to: 'reports#tax'
+    get '/reports/revenue',  to: 'reports#revenue'
+    get '/reports/vehicles', to: 'reports#vehicles'
 
     get '/quote',   to: 'quote#index'
     post  '/quote', to: 'quote#create'

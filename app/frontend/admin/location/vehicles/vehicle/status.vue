@@ -1,4 +1,7 @@
 <script>
+  import Capitalize from 'lodash/capitalize'
+  import VehicleStatusIcons from 'Components/vehicle/status'
+
   import Shake from 'Utils/transitions/shake'
   import InputSubmit from 'Mixins/input_submit'
   import Popup from 'Components/popup'
@@ -8,6 +11,11 @@
     data() {
       return {
         open: false,
+        statuses: [
+          'clean',
+          'dirty',
+          'service',
+        ],
         form: new this.$form({
           status: '',
         })
@@ -16,15 +24,28 @@
     mixins: [
       InputSubmit,
     ],
+    filters: {
+      Capitalize
+    },
     components: {
       Popup,
+      VehicleStatusIcons,
     },
     mounted() {
-      this.open = true
+      this.$http.get(this.$route.path + '/status')
+        .then(response => {
+          this.form.status = response.data.status
+          this.open = true
+        })
     },
     methods: {
       close() {
         this.$emit('close')
+      },
+      selectStatus(status) {
+        this.form.status = status
+        this.form.errors.clear('status')
+        return null
       },
       changeVehicleStatus() {
         this.inputSubmitStart()
@@ -52,18 +73,27 @@
 
       .panel-form.panel-form-padding.panel-popup-form-content
         .input-row
-          label.input-label(for='vehicle_status') Status
+          label.input-label Status
           .input-block.whole
-            select.input-field#vehicle_status(
-              v-model='form.status'
-              v-error='form.errors.has("status")'
-              @input='form.errors.clear("status")')
+            .input-field.input-field-table(v-error='form.errors.has("status")')
+              table.input-table
+                tbody
+                  tr(
+                    v-for='status in statuses'
+                    :key='status'
+                    @click.prevent='selectStatus(status)'
+                    :class='{ selected: form.status == status }'
+                  )
 
-              option(value='' disabled) ----
-              option(value='clean') Clean
-              option(value='dirty') Dirty
-              option(value='service') In Service
-          input-error-message(v-bind:errors='form.errors.get("status")')
+                    td.checkbox
+                      input.input-field(type='radio'
+                                        :checked='form.status == status')
+
+                    td.checkbox
+                      vehicle-status-icons(:status='status')
+                    td {{ status | capitalize }}
+
+          input-error-message(:errors='form.errors.get("status")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
@@ -72,4 +102,5 @@
 
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/form'
+  @import '~Styles/components/inputs/table'
 </style>

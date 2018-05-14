@@ -2,11 +2,11 @@
 #
 # Table name: vehicles
 #
-#  id                   :integer          not null, primary key
+#  id                   :bigint(8)        not null, primary key
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  original_location_id :integer
-#  location_id          :integer
+#  original_location_id :bigint(8)
+#  location_id          :bigint(8)
 #  vehicle_type         :string
 #  vin                  :string
 #  license_number       :string
@@ -27,7 +27,7 @@
 class Vehicle < ApplicationRecord
 
   STATUS = ['clean', 'dirty', 'service']
-  TYPES = ['subcompact', 'compact', 'mid_size']
+  TYPES = ['subcompact', 'compact']
 
   belongs_to :original_location, class_name: 'Location'
   belongs_to :location
@@ -35,10 +35,9 @@ class Vehicle < ApplicationRecord
   has_many :vehicle_registrations
 
   has_many :rentals
-  has_many :rentals_closed, -> { closed },                      class_name: 'Rental'
-  has_one :rental_open,     -> { open_status },                 class_name: 'Rental'
-  has_one :rental_last,     -> { past.order(drop_off: :desc) }, class_name: 'Rental'
-  has_one :rental_latest,   -> { order(drop_off: :desc) },      class_name: 'Rental'
+  has_many :rentals_closed, -> { closed },                 class_name: 'Rental'
+  has_one :rental_open,     -> { open_status },            class_name: 'Rental'
+  has_one :rental_latest,   -> { order(drop_off: :desc) }, class_name: 'Rental'
   has_many :rental_rates, through: :rentals
   has_many :line_items, through: :rentals
 
@@ -67,7 +66,11 @@ class Vehicle < ApplicationRecord
   end
 
   def odometer
-    (rental_latest.drop_off_odometer || rental_latest.pickup_odometer) if rental_latest
+    if rental_latest
+      (rental_latest.drop_off_odometer || rental_latest.pickup_odometer)
+    else
+      original_odometer
+    end
   end
 
   def fuel_level

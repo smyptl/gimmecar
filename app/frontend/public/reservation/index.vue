@@ -3,6 +3,7 @@
 
   import InputSubmit from 'Mixins/input_submit'
 
+  import InputVehicleTypes from 'Components/inputs/vehicle_types'
   import InputDateTime     from 'Components/inputs/date_time'
   import InputError        from 'Components/inputs/error'
   import InputErrorMessage from 'Components/inputs/error_message'
@@ -38,6 +39,7 @@
     components: {
       InputDateTime,
       InputErrorMessage,
+      InputVehicleTypes,
       RentalInvoice,
     },
     directives: {
@@ -121,7 +123,7 @@
                 option(value='2') Adelanto, CA - California Inn - 11628 Bartlett Ave., Adelanto, CA 92301
                 option(value='3') Hesperia, CA - Day & Night Inn - 14865 Bear Valley Rd., Hesperia, CA 92345
                 option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
-            input-error-message(v-bind:errors='form.errors.get("location_id")')
+            input-error-message(:errors='form.errors.get("location_id")')
 
           .input-row
             .input-container.one-half
@@ -131,7 +133,7 @@
                   v-model='form.pickup'
                   v-error='form.errors.has("pickup")'
                   @input='form.errors.clear("pickup")')
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("pickup")')
+              input-error-message.input-message-lg(:errors='form.errors.get("pickup")')
 
             .input-container.one-half
               label.input-label(for='drop_off') To:
@@ -140,21 +142,16 @@
                   v-model='form.drop_off'
                   v-error='form.errors.has("drop_off")'
                   @input='form.errors.clear("drop_off")')
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("drop_off")')
+              input-error-message.input-message-lg(:errors='form.errors.get("drop_off")')
 
             .input-container.whole
               label.input-label(for='vehicle_type') Vehicle Type
               .input-block.whole
-                select.input-field#vehicle_type(
+                input-vehicle-types.input-contrast(
                   v-model='form.vehicle_type'
                   v-error='form.errors.has("vehicle_type")'
                   @input='form.errors.clear("vehicle_type")')
-
-                  option(value='' disabled) -- Select Vehicle Type --
-                  option(value='subcompact') Subcompact (Toyota Yaris iA)
-                  option(value='compact') Compact (Toyota Corolla)
-                  option(value='mid_size') Mid-Size (Toyota Camry)
-              input-error-message(v-bind:errors='form.errors.get("vehicle_type")')
+              input-error-message(:errors='form.errors.get("vehicle_type")')
 
             .input-submit
               .input-block.whole
@@ -182,7 +179,7 @@
                   v-error='form.errors.has("name_first")'
                   @input='form.errors.clear("name_first")')
 
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("name_first")')
+              input-error-message.input-message-lg(:errors='form.errors.get("name_first")')
 
             .input-container.one-half.fixed
               .input-block.whole
@@ -193,7 +190,7 @@
                   v-error='form.errors.has("name_last")'
                   @input='form.errors.clear("name_last")')
 
-              input-error-message.input-message-lg(v-bind:errors='form.errors.get("name_last")')
+              input-error-message.input-message-lg(:errors='form.errors.get("name_last")')
 
           .input-row
             label.input-label(for='input_email')
@@ -208,7 +205,7 @@
                 v-error='form.errors.has("email")'
                 @input='form.errors.clear("email")')
 
-            input-error-message.input-message-lg(v-bind:errors='form.errors.get("email")')
+            input-error-message.input-message-lg(:errors='form.errors.get("email")')
 
           .input-row
             label.input-label(for='input_phone_number')
@@ -223,7 +220,7 @@
                 v-error='form.errors.has("phone_number")'
                 @input='form.errors.clear("phone_number")')
 
-            input-error-message.input-message-lg(v-bind:errors='form.errors.get("phone_number")')
+            input-error-message.input-message-lg(:errors='form.errors.get("phone_number")')
 
 
           .input-submit.input-flex-container
@@ -253,4 +250,5 @@
 
   .input-field
     background-color: $background-color-contrast
+    border-color: $border-color-input-contrast
 </style>

@@ -96,22 +96,15 @@
               li
                 button.link(@click='addRegistration()') Add Registration
 
-      vehicle-information(v-bind:vehicle='vehicle' :show_location='true')
-        tr
-          td Odometer
-          td {{ vehicle.odometer }}
-        tr
-          td Fuel
-          td {{ vehicle.fuel_level/10 | percent }}
-
+      vehicle-information(:vehicle='vehicle' :show_location='true')
     .sub-navigation
       ul.list-horizontal
         li
-          a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
+          a(@click.prevent='view("rentals")' :class='{ active: tabActive("rentals") }') Rentals
         li
-          a(@click.prevent='view("registrations")' v-bind:class='{ active: tabActive("registrations") }') Registrations
+          a(@click.prevent='view("registrations")' :class='{ active: tabActive("registrations") }') Registrations
         li
-          a(@click.prevent='view("revenue")' v-bind:class='{ active: tabActive("revenue") }') Revenue
+          a(@click.prevent='view("revenue")' :class='{ active: tabActive("revenue") }') Revenue
 
     rentals-table(v-if='tabActive("rentals")'
                   :rentals='rentals'

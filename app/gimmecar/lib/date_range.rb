@@ -4,7 +4,7 @@ class Lib::DateRange
 
   def initialize(start_date, end_date)
     if end_date.before?(start_date)
-      raise ArgumentError, "Start date cannot be before end date."
+      raise ArgumentError, 'Start date cannot be before end date.'
     end
 
     @start_date, @end_date = start_date, end_date
@@ -18,9 +18,9 @@ class Lib::DateRange
     #range(*args, &block)
   #end
 
-  def include?(date)
-    range.cover?(date)
-  end
+  #def include?(date)
+    #range.cover?(date)
+  #end
 
   def days_apart
     ((end_date.to_time - start_date.to_time)/1.day.second).to_i

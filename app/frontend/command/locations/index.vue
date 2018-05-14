@@ -56,7 +56,7 @@
             td
               address-format(:address='location')
             td.text-nowrap
-              a(v-bind:href="'tel:' + location.phone_number") {{ location.phone_number }}
+              a(:href="'tel:' + location.phone_number") {{ location.phone_number }}
 </template>
 
 <style lang='stylus' scoped>

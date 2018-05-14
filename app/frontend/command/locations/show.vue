@@ -70,18 +70,18 @@
           tr
             td Phone #
             td
-              a(v-bind:href="'tel:' + location.phone_number") {{ location.phone_number }}
+              a(:href="'tel:' + location.phone_number") {{ location.phone_number }}
 
     .sub-navigation
       ul.list-horizontal
         li
-          a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
+          a(@click.prevent='view("rentals")' :class='{ active: tabActive("rentals") }') Rentals
         li
-          a(@click.prevent='view("vehicles")' v-bind:class='{ active: tabActive("vehicles") }') Vehicles
+          a(@click.prevent='view("vehicles")' :class='{ active: tabActive("vehicles") }') Vehicles
         li
-          a(@click.prevent='view("revenue")' v-bind:class='{ active: tabActive("revenue") }') Revenue
+          a(@click.prevent='view("revenue")' :class='{ active: tabActive("revenue") }') Revenue
         li
-          a(@click.prevent='view("metrics")' v-bind:class='{ active: tabActive("metrics") }') Metrics
+          a(@click.prevent='view("metrics")' :class='{ active: tabActive("metrics") }') Metrics
 
     rentals-table(
       v-if='tabActive("rentals")'

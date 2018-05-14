@@ -1,9 +1,12 @@
 <script>
+  import Fuse from 'fuse.js'
+
   export default {
     name: 'Drivers',
     data() {
       return {
         drivers: {},
+        search: '',
       }
     },
     created() {
@@ -14,6 +17,13 @@
     },
     computed: {
       sortedDrivers() {
+        if (this.search) {
+          return new Fuse(this.drivers.data, {
+            shouldSort: true,
+            keys: ['name_full'],
+          }).search(this.search)
+        }
+
         return this.drivers.data
       },
     },
@@ -35,7 +45,10 @@
 <template lang='pug'>
   .panel.panel-base
     .gimmecar-app-vertical-scroll
-      table.panel-table
+      .p-default
+        input.input-field.input-contrast(type='text' v-model='search' placeholder='Search')
+
+      table.panel-table.thead-bt
         thead
           tr
             th Name
@@ -61,7 +74,7 @@
     padding: $padding-ex-sm
 
     background: $red
-    border-radius: 0.125rem
+    border-radius: $border-radius-default
 
     font-weight: 700
     color: #ffffff

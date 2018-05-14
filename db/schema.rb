@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_17_181333) do
+ActiveRecord::Schema.define(version: 2018_05_12_195123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(version: 2018_04_17_181333) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "address_type"
+    t.string "street1"
+    t.string "street2"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.text "notes"
+    t.boolean "primary", default: false
+    t.index ["owner_type", "owner_id"], name: "index_addresses_on_owner_type_and_owner_id"
   end
 
   create_table "charges", force: :cascade do |t|
@@ -71,6 +87,18 @@ ActiveRecord::Schema.define(version: 2018_04_17_181333) do
     t.string "name_first"
     t.string "name_middle"
     t.string "name_last"
+  end
+
+  create_table "emails", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "email_type"
+    t.string "email"
+    t.text "notes"
+    t.boolean "primary", default: false
+    t.index ["owner_type", "owner_id"], name: "index_emails_on_owner_type_and_owner_id"
   end
 
   create_table "insurance_policies", force: :cascade do |t|
@@ -143,6 +171,19 @@ ActiveRecord::Schema.define(version: 2018_04_17_181333) do
     t.bigint "location_id"
     t.index ["location_id"], name: "index_locations_users_on_location_id"
     t.index ["user_id"], name: "index_locations_users_on_user_id"
+  end
+
+  create_table "phone_numbers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "phone_type"
+    t.string "number"
+    t.string "extension"
+    t.text "notes"
+    t.boolean "primary", default: false
+    t.index ["owner_type", "owner_id"], name: "index_phone_numbers_on_owner_type_and_owner_id"
   end
 
   create_table "rates", force: :cascade do |t|

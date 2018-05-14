@@ -11,10 +11,10 @@ describe 'Reservations', type: :system, js: true do
 
     location = create(:location, id: 1)
     create(:tax_rate, location: location)
-    create(:rate, vehicle_type: :mid_size, location: location, amount: 3500)
+    create(:rate, vehicle_type: :compact, location: location, amount: 3500)
 
     select 'Redlands, CA', from: 'Where'
-    select 'Mid-Size', from: 'Vehicle Type'
+    find('td', text: 'Compact').click
     click_button "View Rates"
 
     within("#rental-summary") do

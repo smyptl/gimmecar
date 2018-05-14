@@ -9,7 +9,6 @@ class Lib::Attributes::Base
     :set_attributes,
     :get_attributes,
     :read_attribute,
-    :read_nested_attribute,
     :write_attributes,
   ]
 
@@ -19,7 +18,7 @@ class Lib::Attributes::Base
   class << self
     # It passes the form attributes to its inherited class, checks if class created prohibited method
     def inherited(subclass)
-      subclass._form_attributes = self._form_attributes.clone
+      clone_form_attributes(subclass)
 
       subclass.class_eval do
         def self.method_added(name)
@@ -32,6 +31,10 @@ class Lib::Attributes::Base
     end
 
     private
+
+    def clone_form_attributes(klass)
+      klass._form_attributes = self._form_attributes.clone
+    end
 
     # For each attribute in the form, it includes it in the _form_attributes
     # hash, which gets passed down to inherited classes (see inherited() above.!
@@ -57,23 +60,33 @@ class Lib::Attributes::Base
     end
 
     def define_attribute_read_and_write_method(name)
-      define_method(name) { read_attribute(name) }
+      define_attribute_read_method(name)
       define_method("#{name}=") { |value| write_attribute(name, value) }
     end
 
     def define_nested_attribute_read_methods(name, settings, nested = [])
       return if settings.dig(:options, :array)
 
+      define_attribute_read_method(name, nested: nested)
       nested = nested + [name]
 
       settings.fetch(:attributes).each do |a_name, a_settings|
         if a_settings.fetch(:type) == :nested
           define_nested_attribute_read_methods(a_name, a_settings, nested)
         else
-          method_name = "#{nested.join('_')}_#{a_name}"
-          define_method(method_name) { read_nested_attribute(a_name, nested) }
+          define_attribute_read_method(a_name, nested: nested)
         end
       end
+    end
+
+    def define_attribute_read_method(name, nested: [])
+      if nested.present?
+        method_name = "#{nested.join('_')}_#{name}"
+      else
+        method_name = name
+      end
+
+      define_method(method_name) { read_attribute(name, nested: nested) }
     end
   end
 
@@ -109,11 +122,7 @@ class Lib::Attributes::Base
   end
   alias_method :get_attributes, :set_attributes
 
-  def read_attribute(attribute)
-    get_attributes[attribute]
-  end
-
-  def read_nested_attribute(attribute, nested)
+  def read_attribute(attribute, nested: [])
     get_attributes.dig(*nested, attribute)
   end
 

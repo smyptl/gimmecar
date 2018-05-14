@@ -1,0 +1,4 @@
+- data:
+  vehicle_id: 1
+  pickup: <%= Time.current - 25.days %>
+  pickup_odometer: 10

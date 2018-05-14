@@ -14,8 +14,8 @@ describe 'Return Deposit', type: :system, js: true do
     amount         = deposit_amount + charge_amount
     rental         = create(:rental, :closed, pickup_odometer: 100, drop_off_odometer: 1400)
     charge         = create(:charge, :create_stripe_charge, amount: amount, owner: rental)
-    line_item      = create(:line_item, :deposit, total: deposit_amount, charge: charge, invoice: rental)
-    line_item      = create(:line_item, :rental_rate, total: charge_amount, charge: charge, invoice: rental)
+    deposit        = create(:line_item, :deposit, total: deposit_amount, charge: charge, invoice: rental)
+    rental_rate    = create(:line_item, :rental_rate, total: charge_amount, charge: charge, invoice: rental)
 
     expect(LineItem.count).to eq(2)
 
@@ -26,6 +26,7 @@ describe 'Return Deposit', type: :system, js: true do
     click_button('Return Deposit')
 
     expect(page).to have_content('Return Deposit')
+    expect(page).to have_field('Amount', with: '$40.00')
 
     within('div.popup') do
       click_button('Return')

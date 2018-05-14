@@ -2,25 +2,25 @@
 #
 # Table name: rentals
 #
-#  id                                                   :integer          not null, primary key
+#  id                                                   :bigint(8)        not null, primary key
 #  created_at                                           :datetime         not null
 #  updated_at                                           :datetime         not null
 #  number                                               :string
 #  source                                               :string
 #  status                                               :string
 #  confirmed                                            :boolean
-#  driver_id                                            :integer
-#  additional_driver_id                                 :integer
-#  vehicle_id                                           :integer
-#  tax_rate_id                                          :integer
+#  driver_id                                            :bigint(8)
+#  additional_driver_id                                 :bigint(8)
+#  vehicle_id                                           :bigint(8)
+#  tax_rate_id                                          :bigint(8)
 #  notes                                                :text
-#  pickup_location_id                                   :integer
+#  pickup_location_id                                   :bigint(8)
 #  pickup                                               :datetime
-#  pickup_odometer                                      :integer
+#  pickup_odometer                                      :bigint(8)
 #  pickup_fuel                                          :float
-#  drop_off_location_id                                 :integer
+#  drop_off_location_id                                 :bigint(8)
 #  drop_off                                             :datetime
-#  drop_off_odometer                                    :integer
+#  drop_off_odometer                                    :bigint(8)
 #  drop_off_fuel                                        :float
 #  collision_damage_waiver                              :boolean
 #  driver_financial_responsibility_signature            :text
@@ -32,6 +32,7 @@
 class Rental < ApplicationRecord
 
   DEPOSIT_AMOUNT = 20000
+  LIMIT = 30
 
   OPEN   = 'open'
   CLOSED = 'closed'

@@ -3,14 +3,6 @@ class Actions::Admin::Location::Rental::New::ValidateVehicle < Lib::Actions::Bas
 
   private
 
-  def pickup
-    Time.current
-  end
-
-  def available_vehicle_ids
-    location.available_vehicle_ids(vehicle_type: vehicle_type)
-  end
-
   def location
     @location ||= Location.find(params.fetch(:location_id))
   end

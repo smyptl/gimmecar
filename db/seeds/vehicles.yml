@@ -1,0 +1,27 @@
+<% 6.times do |x| %>
+  - original_location_id: 1
+    location_id: 1
+    vehicle_type: 'subcompact'
+    vin: <%= Faker::Vehicle.vin %>
+    license_number: <%= "6TR#{('A'..'Z').to_a[rand(0..26)]}#{rand(100..999)}" %>
+    make: 'Toyota'
+    model: 'Yaris iA'
+    year: <%= x < 3 ? '2017' : '2018' %>
+    color: 'white'
+    status: <%= ['clean', 'dirty', 'service'].sample %>
+    original_odometer: <%= rand(0..20) %>
+<% end %>
+
+<% 16.times do |x| %>
+  - original_location_id: 1
+    location_id: 1
+    vehicle_type: 'compact'
+    vin: <%= Faker::Vehicle.vin %>
+    license_number: <%= "6TR#{('A'..'Z').to_a[rand(0..26)]}#{rand(100..999)}" %>
+    make: 'Toyota'
+    model: 'Corolla'
+    year: <%= x < 5 ? '2017' : '2018' %>
+    color: 'white'
+    status: <%= ['clean', 'dirty'].sample %>
+    original_odometer: <%= rand(0..20) %>
+<% end %>

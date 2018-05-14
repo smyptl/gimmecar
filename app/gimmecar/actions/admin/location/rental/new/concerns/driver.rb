@@ -12,17 +12,28 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         n.string  :license_state
         n.string  :license_country
         n.date    :license_expiration_date
-        n.string  :address_1
-        n.string  :address_2
-        n.string  :city
-        n.string  :state
-        n.string  :zip_code
-        n.string  :country
         n.string  :gender
         n.date    :date_of_birth
         n.string  :email
-        n.integer :cell_phone_number
-        n.integer :home_phone_number
+
+        n.nested :address do |n|
+          n.string  :street1
+          n.string  :street2
+          n.string  :city
+          n.string  :state
+          n.integer :zip_code
+        end
+
+        n.nested :phone_numbers do |n|
+          n.integer :cell
+          n.integer :home
+        end
+
+        #n.nested :phone_numbers, multiple: true do |n|
+          #n.string :phone_type
+          #n.integer :number
+          #n.integer :extension
+        #end
 
         n.nested :insurance do |i|
           i.string  :company_name
@@ -50,17 +61,22 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         n.string  :license_state
         n.string  :license_country
         n.date    :license_expiration_date
-        n.string  :address_1
-        n.string  :address_2
-        n.string  :city
-        n.string  :state
-        n.string  :zip_code
-        n.string  :country
         n.string  :gender
         n.date    :date_of_birth
         n.string  :email
-        n.integer :cell_phone_number
-        n.integer :home_phone_number
+
+        n.nested :address do |n|
+          n.string  :street1
+          n.string  :street2
+          n.string  :city
+          n.string  :state
+          n.integer :zip_code
+        end
+
+        n.nested :phone_numbers do |n|
+          n.integer :cell
+          n.integer :home
+        end
       end
     end
 
@@ -77,10 +93,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
       presence: true,
       after_date: -> { drop_off }
 
-    validates :driver_address_1, :driver_city, :driver_state, :driver_zip_code,
-      presence: true
-
-    validates :driver_country,
+    validates :driver_address_street1, :driver_address_city, :driver_address_state, :driver_address_zip_code,
       presence: true
 
     validates :driver_gender,
@@ -94,11 +107,11 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
       presence: true,
       email: true
 
-    validates :driver_cell_phone_number,
+    validates :driver_phone_numbers_cell,
       presence: true,
       numericality: { only_integer: true }
 
-    validates :driver_home_phone_number,
+    validates :driver_phone_numbers_home,
       allow_blank: true,
       numericality: { only_integer: true }
 
@@ -132,10 +145,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         presence: true,
         after_date: -> { drop_off }
 
-      a.validates :additional_driver_address_1, :additional_driver_city, :additional_driver_state, :additional_driver_zip_code,
-        presence: true
-
-      a.validates :additional_driver_country,
+      a.validates :additional_driver_address_street1, :additional_driver_address_city, :additional_driver_address_state, :additional_driver_address_zip_code,
         presence: true
 
       a.validates :additional_driver_gender,
@@ -149,11 +159,11 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
         presence: true,
         email: true
 
-      a.validates :additional_driver_cell_phone_number,
+      a.validates :additional_driver_phone_numbers_cell,
         presence: true,
         numericality: { only_integer: true }
 
-      a.validates :additional_driver_home_phone_number,
+      a.validates :additional_driver_phone_numbers_home,
         allow_blank: true,
         numericality: { only_integer: true }
     end

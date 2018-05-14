@@ -10,9 +10,9 @@
   import SourcesIcon       from 'Components/driver/sources_icon'
 
   import RentalsTable      from 'Components/rental/table'
+  import InsurancePolicies from 'Components/driver/insurance_policies'
 
   import Currency from 'Filters/currency'
-  import TDate from 'Filters/date'
 
   export default {
     name: 'Driver',
@@ -31,6 +31,7 @@
       ActionsIcon,
       AddCard,
       DriverInformation,
+      InsurancePolicies,
       Dropdown,
       RentalsTable,
       SourcesIcon,
@@ -38,7 +39,6 @@
     filters: {
       Capitalize,
       Currency,
-      date: TDate,
       time(val) {
         var val = Moment(val)
 
@@ -52,13 +52,6 @@
     },
     watch: {
       '$route': 'getData',
-    },
-    computed: {
-      cardSources() {
-        return(this.sources.data, n => {
-          return n.object != 'card'
-        })
-      },
     },
     methods: {
       addCard() {
@@ -101,46 +94,32 @@
           .dropdown-menu.right(slot='dropdown-menu')
             ul
               li
-                button.link(@click='addCard') Add Card
+                button.link(@click='addCard()') Add Card
 
       driver-information.left(:driver='driver')
 
     .sub-navigation
       ul.list-horizontal
         li
-          a(@click.prevent='view("insurance-policies")' v-bind:class='{ active: tabActive("insurance-policies") }') Insurance Policies
+          a(@click.prevent='view("insurance-policies")' :class='{ active: tabActive("insurance-policies") }') Insurance Policies
         li(v-if='driver.rentals_closed_count > 0')
-          a(@click.prevent='view("metrics")' v-bind:class='{ active: tabActive("metrics") }') Metrics
+          a(@click.prevent='view("metrics")' :class='{ active: tabActive("metrics") }') Metrics
         li
-          a(@click.prevent='view("rentals")' v-bind:class='{ active: tabActive("rentals") }') Rentals
+          a(@click.prevent='view("rentals")' :class='{ active: tabActive("rentals") }') Rentals
         li(v-if='driver.stripe_id')
-          a(@click.prevent='view("sources")' v-bind:class='{ active: tabActive("sources") }') Payment Sources
+          a(@click.prevent='view("sources")' :class='{ active: tabActive("sources") }') Payment Sources
 
-    template(v-if='tabActive("insurance-policies")')
-      .panel.panel-base(
-        v-for='policy in insurance_policies.data'
-        :key='policy.id'
-      )
-        table.panel-table.panel-table-key-pair
-          tbody
-            tr
-              td Company
-              td {{ policy.company_name }}
-            tr
-              td Policy #
-              td {{ policy.policy_number }}
-            tr
-              td Effective Date
-              td {{ policy.effective_date | date }}
-            tr
-              td Expiration Date
-              td {{ policy.expiration_date | date }}
+    insurance-policies(
+      v-if='tabActive("insurance-policies")'
+      :insurance_policies='insurance_policies'
+    )
 
-
-    rentals-table(v-if='tabActive("rentals")'
-                  :rentals='rentals'
-                  :show_driver='false'
-                  @view-rental='viewRental($event)')
+    rentals-table(
+      v-if='tabActive("rentals")'
+      :rentals='rentals'
+      :show_driver='false'
+      @view-rental='viewRental($event)'
+    )
 
     .panel.panel-base(v-if='tabActive("sources")')
       .gimmecar-app-vertical-scroll
@@ -158,7 +137,7 @@
             )
 
               template(v-if='source.object == "card"')
-                td.source-icon
+                td.source-icon.status
                   sources-icon(:brand='source.brand')
                 td.text-nowrap {{ source.brand }} - {{ source.funding | capitalize }}
                 td.text-nowrap.text-right {{ source.last4 }}
@@ -205,7 +184,7 @@
 
 
 
-    component(v-bind:is='action' @close='refreshData')
+    component(:is='action' @close='refreshData')
 </template>
 
 <style lang='stylus' scoped>

@@ -19,7 +19,7 @@ describe 'quote', type: :system, js: true do
     expect(page).to have_content('Quote')
 
     select location.name, from: 'Location'
-    select 'Compact (Toyota Corolla)', from: 'Vehicle Type'
+    find('td', text: 'Compact').click
     click_on 'Continue'
 
     expect(page).to have_content('Rental Details')

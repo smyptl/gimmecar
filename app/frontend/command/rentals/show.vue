@@ -137,7 +137,7 @@
               router-link.right(:to="{ name: 'driver', params: { id: rental.additional_driver.id } }")
                 span.block {{ rental.additional_driver.name }}
 
-      table.panel-table
+      table.panel-table.thead-bt
         thead
           tr
             th
@@ -157,7 +157,7 @@
               template(v-if='is_closed') {{ rental.drop_off_odometer }}
               template(v-else) --
 
-      table.panel-table.panel-table-key-pair
+      table.panel-table.panel-table-key-pair.thead-bt
         thead
           tr
             th(colspan='2') Metrics

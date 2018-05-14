@@ -1,0 +1,22 @@
+- data:
+    id:        1
+    name:      'Hotel California'
+    slug:      'hotel-california'
+    address_1: <%= Faker::Address.street_address %>
+    city:      'Beverly Hills'
+    state:     'California'
+    zip_code:  90210
+    country:   'United States'
+    latitude:  <%= Faker::Address.latitude %>
+    longitude: <%= Faker::Address.longitude %>
+  tax_rates:
+    - combined_tax_rate: 0.07750
+      state_tax_rate:    0.06000
+      county_tax_rate:   0.00250
+      city_tax_rate:     0.00000
+      district_tax_rate: 0.01500
+  rates:
+    - amount:       3600
+      vehicle_type: 'compact'
+    - amount:       3300
+      vehicle_type: 'subcompact'

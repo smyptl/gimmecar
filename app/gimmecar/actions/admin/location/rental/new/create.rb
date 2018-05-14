@@ -40,10 +40,6 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
     @location ||= Location.find(params.fetch(:location_id))
   end
 
-  def available_vehicle_ids
-    location.available_vehicle_ids(vehicle_type: vehicle_type)
-  end
-
   def valid?
     valid = super
 
@@ -51,13 +47,13 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
       success = lambda do |args|
         @charge = args.fetch(:charge)
         write_attribute(:stripe_customer_id, args.fetch(:customer_id))
-        return true
+        true
       end
 
       failure = lambda do |args|
         errors.add(:card, args.fetch(:message))
         write_attribute(:stripe_customer_id, args.fetch(:customer_id))
-        return false
+        false
       end
 
       charge_amount = rates.fetch(:total) + Rental::DEPOSIT_AMOUNT
@@ -67,13 +63,9 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
   end
 
   def save
-    d = Driver.create(driver_attributes)
-    InsurancePolicy.create(driver.fetch(:insurance).except(:verified).merge(driver: d, user_id: params.fetch(:user_id)))
-    ad = Driver.create(additional_driver_attributes) if add_additional_driver
-
     @rental = Rental.create_open({
-      driver:                                               d,
-      additional_driver:                                    (ad if add_additional_driver),
+      driver:                                               create_primary_driver,
+      additional_driver:                                    create_additional_driver,
       vehicle_id:                                           vehicle_id,
       tax_rate:                                             location.latest_tax_rate,
       pickup_location:                                      location,
@@ -86,36 +78,72 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
       driver_financial_responsibility_signature:            driver_financial_responsibility_signature,
       driver_signature:                                     driver_signature,
       additional_driver_financial_responsibility_signature: (additional_driver_financial_responsibility_signature if add_additional_driver),
-      additional_driver_signature:                          (additional_driver_signature if add_additional_driver),
+      additional_driver_signature:                          (additional_driver_signature                          if add_additional_driver),
     })
 
     @charge.owner = @rental
     @charge.save
 
     rates.fetch(:rental_rates).each do |l|
-      @rental.line_items.create(l.merge(charge: @charge, item_type: 'rental_rate'))
+      @rental.line_items.create(l.merge(charge: @charge, item_type: :rental_rate))
     end
 
     deposit = LineItem.calculate(date: pickup, amount: Rental::DEPOSIT_AMOUNT, taxable_amount: 0, tax_rate: location.latest_tax_rate)
-    @rental.line_items.create(deposit.merge(charge: @charge, item_type: 'deposit'))
+    @rental.line_items.create(deposit.merge(charge: @charge, item_type: :deposit))
   end
 
-  def driver_attributes
-    a = driver.except(:insurance)
-    a[:email] = a[:email].downcase
-    a[:stripe_id] = stripe_customer_id if paid_by_driver?
-    a
+  def create_primary_driver
+    create_driver(attributes: read_attribute(:driver), paid_by: paid_by_primary_driver?)
   end
 
-  def additional_driver_attributes
-    a = additional_driver
-    a[:email] = a[:email].downcase
-    a[:stripe_id] = stripe_customer_id if !paid_by_driver?
-    a
+  def create_additional_driver
+    if add_additional_driver
+      create_driver(attributes: read_attribute(:additional_driver), paid_by: paid_by_additional_driver?)
+    end
   end
 
-  def paid_by_driver?
-    !(add_additional_driver && paid_by == :additional_driver)
+  def create_driver(attributes:, paid_by:)
+    driver = Driver.create(attributes.except(:insurance, :email, :phone_numbers, :address)) do |d|
+      d.stripe_id = stripe_customer_id if paid_by
+    end
+
+    if attributes.fetch(:insurance, false)
+      InsurancePolicy.create(attributes.fetch(:insurance)
+                                       .except(:verified)
+                                       .merge(driver: driver, user_id: params.fetch(:user_id)))
+    end
+
+    save_email(email: attributes.fetch(:email), driver: driver)
+    save_phone_numbers(numbers: attributes.fetch(:phone_numbers), driver: driver)
+    save_address(address: attributes.fetch(:address), driver: driver)
+
+    driver
+  end
+
+  def save_phone_numbers(numbers:, driver:)
+    numbers.compact.each do |type, number|
+      PhoneNumber.create({
+        owner:      driver,
+        phone_type: type,
+        number:     number,
+      })
+    end
+  end
+
+  def save_email(email:, driver:)
+    Email.create(email: email, primary: true, owner: driver)
+  end
+
+  def save_address(address:, driver:)
+    Address.create(address.merge(owner: driver))
+  end
+
+  def paid_by_primary_driver?
+    !paid_by_additional_driver?
+  end
+
+  def paid_by_additional_driver?
+    add_additional_driver && paid_by == :additional_driver
   end
 
   def failure_args

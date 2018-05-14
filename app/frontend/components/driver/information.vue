@@ -1,7 +1,8 @@
 <script>
   import AddressFormat from 'Components/address'
-  import Capitalize from 'lodash/capitalize'
-  import TDate from 'Filters/date'
+  import PhoneFormat   from 'Components/phone_number'
+  import Capitalize    from 'lodash/capitalize'
+  import TDate         from 'Filters/date'
 
   export default {
     name: 'Information',
@@ -13,6 +14,7 @@
     },
     components: {
       AddressFormat,
+      PhoneFormat,
     },
     filters: {
       Capitalize,
@@ -25,35 +27,31 @@
   div
     p.dnr.font-mono(v-if='driver.do_not_rent') DO NOT RENT!!!
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       tbody
         tr
           td Full Name
           td {{ driver.name_first }} {{ driver.name_middle }} {{ driver.name_last }}
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       thead
         tr
           th Contact Info
           th
       tbody
-        tr
-          td Email
-          td {{ driver.email }}
-        tr
-          td Cell Phone #
+        tr(v-for='email in driver.emails' :key='email.id')
+          td {{ email.email_type | capitalize }} Email
+          td {{ email.email }}
+        tr(v-for='phone in driver.phone_numbers' :key='phone.id')
+          td {{ phone.phone_type | capitalize }} Phone #
           td
-            a(v-bind:href="'tel:' + driver.cell_phone_number") {{ driver.cell_phone_number }}
-        tr(v-if='driver.home_phone_number')
-          td Home Phone #
+            phone-format(:phone='phone')
+        tr(v-for='address in driver.addresses' :key='address.id')
+          td {{ address.address_type | capitalize }} Address
           td
-            a(v-bind:href="'tel:' + driver.home_phone_number") {{ driver.home_phone_number }}
-        tr
-          td Address
-          td
-            address-format(:address='driver')
+            address-format(:address='address')
 
-    table.panel-table.panel-table-key-pair
+    table.panel-table.panel-table-key-pair.thead-bt
       thead
         tr
           th License

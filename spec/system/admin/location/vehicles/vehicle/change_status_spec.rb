@@ -17,7 +17,7 @@ describe 'change vehicle status', type: :system, js: true do
     find("a[data-toggle='dropdown']").click
     click_button('Change Status')
     expect(page).to have_content('Change Status')
-    select 'Clean', from: 'vehicle_status'
+    find('td', text: 'Clean').click
     click_button('Change')
 
     expect(page).to have_css('svg#clean')
