@@ -61,11 +61,11 @@
     .sub-navigation
       ul.list-horizontal
         li
-          a(@click.prevent='view("revenue")' :class='{ active: tabActive("revenue") }') Revenue
+          a(href='#' @click.prevent='view("revenue")' :class='{ active: tabActive("revenue") }') Revenue
         li
-          a(@click.prevent='view("vehicles")' :class='{ active: tabActive("vehicles") }') Vehicles
+          a(href='#' @click.prevent='view("vehicles")' :class='{ active: tabActive("vehicles") }') Vehicles
         li
-          a(@click.prevent='view("deposits")' :class='{ active: tabActive("deposits") }') Unreturned Deposits
+          a(href='#' @click.prevent='view("deposits")' :class='{ active: tabActive("deposits") }') Unreturned Deposits
 
     .panel.panel-base(v-if='tabActive("revenue")')
       table.panel-table.panel-table-key-pair
