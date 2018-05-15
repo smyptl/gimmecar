@@ -6,15 +6,6 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  gender                  :string
-#  address_1               :string
-#  address_2               :string
-#  city                    :string
-#  state                   :string
-#  zip_code                :string
-#  country                 :string
-#  home_phone_number       :string
-#  cell_phone_number       :string
-#  email                   :string
 #  date_of_birth           :date
 #  license_number          :string
 #  license_state           :string
@@ -41,15 +32,6 @@ FactoryBot.define do
     license_state { Faker::Address.state }
     license_country { Faker::Address.country }
     license_expiration_date (Time.current + 1.year).to_date
-
-    #email { Faker::Internet.email }
-
-    #address_1 { Faker::Address.street_address }
-    #address_2 { Faker::Address.secondary_address }
-    #city { Faker::Address.city }
-    #state { Faker::Address.state }
-    #zip_code { Faker::Address.zip_code }
-    #country { Faker::Address.country }
 
     transient do
       create_stripe_id false
