@@ -96,16 +96,6 @@ describe 'create rental', type: :system, js: true do
     expect(driver.license_country).to         eq('United States')
     expect(driver.license_expiration_date).to eq(driver_stub.license_expiration_date)
 
-    expect(driver.email).to                   eq(nil)
-    expect(driver.address_1).to               eq(nil)
-    expect(driver.address_2).to               eq(nil)
-    expect(driver.city).to                    eq(nil)
-    expect(driver.state).to                   eq(nil)
-    expect(driver.zip_code).to                eq(nil)
-    expect(driver.country).to                 eq(nil)
-    expect(driver.cell_phone_number).to       eq(nil)
-    expect(driver.home_phone_number).to       eq(nil)
-
     expect(Email.count).to eq(1)
     emails = Email.all
     expect(driver.emails).to contain_exactly(*emails)
@@ -231,16 +221,6 @@ describe 'create rental', type: :system, js: true do
     expect(additional_driver.license_country).to         eq('United States')
     expect(additional_driver.license_expiration_date).to eq(additional_driver_stub.license_expiration_date)
     expect(additional_driver.stripe_id).to_not           eq(nil)
-
-    expect(additional_driver.email).to                   eq(nil)
-    expect(additional_driver.address_1).to               eq(nil)
-    expect(additional_driver.address_2).to               eq(nil)
-    expect(additional_driver.city).to                    eq(nil)
-    expect(additional_driver.state).to                   eq(nil)
-    expect(additional_driver.zip_code).to                eq(nil)
-    expect(additional_driver.country).to                 eq(nil)
-    expect(additional_driver.home_phone_number).to eq(nil)
-    expect(additional_driver.cell_phone_number).to eq(nil)
 
     expect(additional_driver.emails.count).to eq(1)
     expect(additional_driver.phone_numbers.count).to eq(2)

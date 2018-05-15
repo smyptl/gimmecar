@@ -100,6 +100,7 @@ Rails.application.routes.draw do
     get '/reports/tax',      to: 'reports#tax'
     get '/reports/revenue',  to: 'reports#revenue'
     get '/reports/vehicles', to: 'reports#vehicles'
+    get '/reports/deposits', to: 'reports#deposits'
 
     get '/quote',   to: 'quote#index'
     post  '/quote', to: 'quote#create'

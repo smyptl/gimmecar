@@ -9,7 +9,9 @@
       license_state:           'California'
       license_country:         'United States'
       license_expiration_date: <%= Time.current + 1.year %>
-      email:                   <%= Faker::Internet.email %>
+    emails:
+      - email: <%= Faker::Internet.email %>
+        primary: true
     addresses:
       - street1:  <%= Faker::Address.street_address %>
         street2:  <%= Faker::Address.secondary_address %>
@@ -35,8 +37,10 @@
       license_state:           'California'
       license_country:         'United States'
       license_expiration_date: <%= Time.current + 1.year %>
-      email:                   <%= Faker::Internet.email %>
       do_not_rent:             true
+    emails:
+      - email: <%= Faker::Internet.email %>
+        primary: true
     addresses:
       - street1:  <%= Faker::Address.street_address %>
         street2:  <%= Faker::Address.secondary_address %>

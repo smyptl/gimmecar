@@ -6,15 +6,6 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  gender                  :string
-#  address_1               :string
-#  address_2               :string
-#  city                    :string
-#  state                   :string
-#  zip_code                :string
-#  country                 :string
-#  home_phone_number       :string
-#  cell_phone_number       :string
-#  email                   :string
 #  date_of_birth           :date
 #  license_number          :string
 #  license_state           :string
@@ -48,7 +39,7 @@ class Driver < ApplicationRecord
     if stripe_id
       stripe_customer
     else
-      customer = Stripe::Customer.create({ description: name, email: email })
+      customer = Stripe::Customer.create({ description: name, email: email_primary.try(:email) })
       update(stripe_id: customer['id'])
       customer
     end

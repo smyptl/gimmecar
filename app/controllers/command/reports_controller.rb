@@ -13,6 +13,10 @@ class Command::ReportsController < Command::BaseController
     Services::Command::Reports::Vehicles.retrieve(success, failure)
   end
 
+  def deposits
+    Services::Command::Reports::DepositsUnreturned.retrieve(success, failure)
+  end
+
   def tax
     @report = Services::Command::Reports::Spreadsheets::Revenue.retrieve!
     render xlsx: 'excel.axlsx', filename: @report.filename

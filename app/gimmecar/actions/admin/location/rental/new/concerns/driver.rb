@@ -126,44 +126,44 @@ module Actions::Admin::Location::Rental::New::Concerns::Driver
       presence: true,
       after_date: { with: -> { drop_off.in_time_zone(time_zone).to_date }, allow_nil: true }
 
-    with_options if: :driver_insurance_verified do |a|
-      a.validates :driver_insurance_verify_date, :driver_insurance_verify_agent, :driver_insurance_verify_call_center,
+    with_options if: :driver_insurance_verified do
+      validates :driver_insurance_verify_date, :driver_insurance_verify_agent, :driver_insurance_verify_call_center,
         presence: true
     end
 
-    with_options if: :add_additional_driver do |a|
-      a.validates :additional_driver_name_first, :additional_driver_name_last,
+    with_options if: :add_additional_driver do
+      validates :additional_driver_name_first, :additional_driver_name_last,
         presence: true
 
-      a.validates :additional_driver_license_number, :additional_driver_license_state,
+      validates :additional_driver_license_number, :additional_driver_license_state,
         presence: true
 
-      a.validates :additional_driver_license_country,
+      validates :additional_driver_license_country,
         presence: true
 
-      a.validates :additional_driver_license_expiration_date,
+      validates :additional_driver_license_expiration_date,
         presence: true,
         after_date: -> { drop_off }
 
-      a.validates :additional_driver_address_street1, :additional_driver_address_city, :additional_driver_address_state, :additional_driver_address_zip_code,
+      validates :additional_driver_address_street1, :additional_driver_address_city, :additional_driver_address_state, :additional_driver_address_zip_code,
         presence: true
 
-      a.validates :additional_driver_gender,
+      validates :additional_driver_gender,
         inclusion: { in: %w(male female), message: "%{value} is not a valid gender" }
 
-      a.validates :additional_driver_date_of_birth,
+      validates :additional_driver_date_of_birth,
         presence: true,
         before_date: -> { Time.current.in_time_zone(time_zone).to_date - 21.years }
 
-      a.validates :additional_driver_email,
+      validates :additional_driver_email,
         presence: true,
         email: true
 
-      a.validates :additional_driver_phone_numbers_cell,
+      validates :additional_driver_phone_numbers_cell,
         presence: true,
         numericality: { only_integer: true }
 
-      a.validates :additional_driver_phone_numbers_home,
+      validates :additional_driver_phone_numbers_home,
         allow_blank: true,
         numericality: { only_integer: true }
     end
