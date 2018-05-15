@@ -11,8 +11,8 @@ module Actions::Admin::Location::Rental::New::Concerns::TermsAndConditions
     validates :driver_signature,
       signature: true
 
-    with_options if: :add_additional_driver do |a|
-      a.validates :additional_driver_signature,
+    with_options if: :add_additional_driver do
+      validates :additional_driver_signature,
         signature: true
     end
   end

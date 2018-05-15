@@ -6,6 +6,7 @@
   import SumBy from 'lodash/sumBy'
 
   import Vehicles from 'Components/vehicle/table'
+  import Rentals  from 'Components/rental/table'
 
   export default {
     name: 'Reports',
@@ -13,6 +14,7 @@
       return {
         revenue: {},
         vehicles: {},
+        deposits: {},
         tab: '',
       }
     },
@@ -21,6 +23,7 @@
     },
     components: {
       Vehicles,
+      Rentals
     },
     created() {
       this.view('revenue')
@@ -46,6 +49,9 @@
       viewVehicle(vin) {
         this.$router.push({ name: 'vehicle', params: { vin: vin }})
       },
+      viewRental(number) {
+        this.$router.push({ name: 'rental', params: { number: number }})
+      },
     },
   }
 </script>
@@ -58,6 +64,8 @@
           a(@click.prevent='view("revenue")' :class='{ active: tabActive("revenue") }') Revenue
         li
           a(@click.prevent='view("vehicles")' :class='{ active: tabActive("vehicles") }') Vehicles
+        li
+          a(@click.prevent='view("deposits")' :class='{ active: tabActive("deposits") }') Unreturned Deposits
 
     .panel.panel-base(v-if='tabActive("revenue")')
       table.panel-table.panel-table-key-pair
@@ -88,6 +96,9 @@
         td {{ slotProps.vehicle.odometer }}
         td {{ slotProps.vehicle.revenue | currency }}
 
+    rentals(v-if='tabActive("deposits")'
+            @view-rental='viewRental($event)'
+            :rentals='deposits')
 </template>
 
 <style lang='stylus' scoped>
