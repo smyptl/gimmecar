@@ -68,31 +68,31 @@
         h4.panel-form-popup-header Close
 
       .panel-form.panel-form-padding.panel-popup-form-content
-        .input-row
-          label.input-label(for='drop_off') Drop Off
-          .input-block.whole
+        .input-container.whole
+          .input-block
+            label.input-label(for='drop_off') Drop Off
             input-date-time#drop_off(
               v-model='form.drop_off'
               v-error='form.errors.has("drop_off")'
               @input='form.errors.clear("drop_off")')
-          input-error-message(:errors='form.errors.get("drop_off")')
+            input-error-message(:errors='form.errors.get("drop_off")')
 
-        .input-row
+        .input-container.whole
           .input-container.two-fifths
-            label.input-label(for='drop_off_odometer') Vehicle Odometer
-            .input-block.whole
+            .input-block
+              label.input-label(for='drop_off_odometer') Vehicle Odometer
               input.input-field#drop_off_odometer(
                 type='text'
                 v-model='form.drop_off_odometer'
                 v-error='form.errors.has("drop_off_odometer")'
                 @input='form.errors.clear("drop_off_odometer")')
-            input-error-message(:errors='form.errors.get("drop_off_odometer")')
+              input-error-message(:errors='form.errors.get("drop_off_odometer")')
 
           .input-container.three-fifths
-            label.input-label(for='drop_off_fuel')
-              | Fuel Level
-              .input-label-note.right {{ form.drop_off_fuel * 10 }}%
-            .input-block.whole
+            .input-block
+              label.input-label(for='drop_off_fuel')
+                | Fuel Level
+                .input-label-note.right {{ form.drop_off_fuel * 10 }}%
               input.input-range#drop_off_fuel(
                 type='range'
                 v-model.number='form.drop_off_fuel'
@@ -100,9 +100,9 @@
                 max='10'
                 v-error='form.errors.has("drop_off_fuel")'
                 @input='form.errors.clear("drop_off_fuel")')
-            input-error-message(:errors='form.errors.get("drop_off_fuel")')
+              input-error-message(:errors='form.errors.get("drop_off_fuel")')
 
-            .input-block.whole(v-if='rental.pickup_fuel > form.drop_off_fuel')
+            .input-block(v-if='rental.pickup_fuel > form.drop_off_fuel')
               p.message.message-warning Fuel is less than amount provided at pickup ({{ rental.pickup_fuel * 10 }}%), advise customer to fill up tank or they will be charged $10 plus cost of fuel.
 
 

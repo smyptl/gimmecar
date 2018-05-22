@@ -72,9 +72,9 @@
         h4.panel-form-popup-header Change Status
 
       .panel-form.panel-form-padding.panel-popup-form-content
-        .input-row
-          label.input-label Status
-          .input-block.whole
+        .input-container.whole
+          .input-block
+            label.input-label Status
             .input-field.input-field-table(v-error='form.errors.has("status")')
               table.input-table
                 tbody
@@ -93,7 +93,7 @@
                       vehicle-status-icons(:status='status')
                     td {{ status | capitalize }}
 
-          input-error-message(:errors='form.errors.get("status")')
+            input-error-message(:errors='form.errors.get("status")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

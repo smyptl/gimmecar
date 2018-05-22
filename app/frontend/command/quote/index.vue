@@ -73,9 +73,9 @@
         button.btn.left(@click.prevent='resetSummary()') Back
 
     template(v-else)
-      .input-row
-        label.input-label(for='location_id') Location
-        .input-block.whole
+      .input-container.whole
+        .input-block
+          label.input-label(for='location_id') Location
           select.input-field#location_id(
             v-model='form.location_id'
             v-error='form.errors.has("location_id")'
@@ -88,36 +88,36 @@
               :value='location.id')
               | {{ location.name }} -- {{ location.city }}, {{ location.state }}
 
-        input-error-message(:errors='form.errors.get("location_id")')
+          input-error-message(:errors='form.errors.get("location_id")')
 
-      .input-row
+      .input-container.whole
         .input-container.one-half
-          label.input-label Pickup
-          .input-block.whole
+          .input-block
+            label.input-label Pickup
             input-date-time(
               v-model='form.pickup'
               v-error='form.errors.has("pickup")'
               @input='form.errors.clear("pickup")')
-          input-error-message(:errors='form.errors.get("pickup")')
+            input-error-message(:errors='form.errors.get("pickup")')
 
         .input-container.one-half
-          label.input-label Drop-off
-          .input-block.whole
+          .input-block
+            label.input-label Drop-off
             input-date-time(
               v-model='form.drop_off'
               v-error='form.errors.has("drop_off")'
               @input='form.errors.clear("drop_off")')
-          input-error-message(:errors='form.errors.get("drop_off")')
+            input-error-message(:errors='form.errors.get("drop_off")')
 
-      .input-row
+      .input-container.whole
         .input-container.whole
-          label.input-label(for='vehicle_type') Vehicle Type
-          .input-block.whole
+          .input-block
+            label.input-label(for='vehicle_type') Vehicle Type
             input-vehicle-types(
               v-model='form.vehicle_type'
               v-error='form.errors.has("vehicle_type")'
               @input='form.errors.clear("vehicle_type")')
-          input-error-message(:errors='form.errors.get("vehicle_type")')
+            input-error-message(:errors='form.errors.get("vehicle_type")')
 
       .input-block.input-submit
         input-submit.btn.btn-primary.right(@click.native.prevent='getQuote' :loading='input_submit_loading') Continue

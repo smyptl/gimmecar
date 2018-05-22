@@ -47,9 +47,9 @@
         form(@submit.prevent='loginUser()')
           input-error-message(:errors='form.errors.get("base")' :base='true')
 
-          .input-row
-            label.input-label(for='email') Email:
-            .input-block.whole
+          .input-container.whole
+            .input-block
+              label.input-label(for='email') Email:
               input.input-field#email(
                 type='email'
                 placeholder='hford@gimmecar.com'
@@ -57,11 +57,11 @@
                 v-error='form.errors.has("email")'
                 @input='form.errors.clear("email")')
 
-            input-error-message(:errors='form.errors.get("email")')
+              input-error-message(:errors='form.errors.get("email")')
 
-          .input-row
-            label.input-label(for='password') Password:
-            .input-block.whole
+          .input-container.whole
+            .input-block
+              label.input-label(for='password') Password:
               input.input-field#password(
                 type='password'
                 placeholder='!0nG-06scUr3-P@55wOrD'
@@ -69,7 +69,7 @@
                 v-error='form.errors.has("password")'
                 @input='form.errors.clear("password")')
 
-            input-error-message(:errors='form.errors.get("password")')
+              input-error-message(:errors='form.errors.get("password")')
 
           .input-submit.input-block
             input-submit.btn.btn-primary.right(:loading='input_submit_loading') Login

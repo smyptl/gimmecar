@@ -40,7 +40,7 @@
 
 <template lang='pug'>
   div
-    .input-block.whole
+    .input-block
       .input-field.input-field-table(v-error='form.errors.has("vehicle_id")')
         .gimmecar-app-vertical-scroll
           table.input-table
@@ -68,25 +68,25 @@
                 td(v-if='vehicle.license_number') {{ vehicle.license_number }}
                 td(v-else)
                   i VIN: {{ lastFive(vehicle.vin) }}
-    input-error-message(:errors='form.errors.get("vehicle_id")')
+      input-error-message(:errors='form.errors.get("vehicle_id")')
 
-    .input-row
+    .input-container.whole
       .input-container.two-fifths
-        label.input-label(for='pickup_odometer') Vehicle Odometer 
-        .input-block.whole
+        .input-block
+          label.input-label(for='pickup_odometer') Vehicle Odometer
           input.input-field#pickup_odometer(type='text'
             v-model='form.pickup_odometer'
             v-error='form.errors.has("pickup_odometer")'
             @input='form.errors.clear("pickup_odometer")')
-        input-error-message(:errors='form.errors.get("pickup_odometer")')
+          input-error-message(:errors='form.errors.get("pickup_odometer")')
 
       .input-container.three-fifths
-        label.input-label(for='pickup_fuel')
-          | Fuel Level 
-          .input-label-note.right {{ form.pickup_fuel * 10 }}%
-        .input-block.whole
+        .input-block
+          label.input-label(for='pickup_fuel')
+            | Fuel Level
+            .input-label-note.right {{ form.pickup_fuel * 10 }}%
           input.input-range#pickup_fuel(type='range' v-model.number='form.pickup_fuel' min='0' max='10')
-        input-error-message(:errors='form.errors.get("pickup_fuel")')
+          input-error-message(:errors='form.errors.get("pickup_fuel")')
 </template>
 
 <style lang='stylus' scoped>

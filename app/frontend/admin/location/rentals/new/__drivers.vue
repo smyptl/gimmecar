@@ -51,45 +51,46 @@
   div
     template(v-if='driver_search')
       driver.left(:form='form')
-    .input-row(v-else)
-      label.input-label(for='search_driver_name_first') Search
+    .input-container.whole(v-else)
+      .input-block
+        label.input-label(for='search_driver_name_first') Search
 
       .input-container.whole
         .input-container.two-thirds
           .input-container.one-half.fixed
-            .input-block.whole
+            .input-block
               input.input-field#search_name_first(
                 type='text'
                 placeholder='First'
                 v-model='search.name_first'
                 v-error='search.errors.has("name_first")'
                 @input='search.errors.clear("name_first")')
-            input-error-message(:errors='search.errors.get("name_first")')
+              input-error-message(:errors='search.errors.get("name_first")')
 
           .input-container.one-half.fixed
-            .input-block.whole
+            .input-block
               input.input-field#search_name_last(
                 type='text'
                 placeholder='Last'
                 v-model='search.name_last'
                 v-error='search.errors.has("name_last")'
                 @input='search.errors.clear("name_last")')
-            input-error-message(:errors='search.errors.get("name_last")')
+              input-error-message(:errors='search.errors.get("name_last")')
 
         .input-container.one-third
-          .input-block.whole
+          .input-block
             input-date.input-field#search_date_of_birth(
               placeholder='Date of Birth'
               v-model='search.date_of_birth'
               v-error='search.errors.has("date_of_birth")'
               @input='search.errors.clear("date_of_birth")')
-          input-error-message(:errors='search.errors.get("date_of_birth")')
+            input-error-message(:errors='search.errors.get("date_of_birth")')
 
-      .input-block.mt-ex-sm.whole
+      .input-block.mt-ex-sm
         button.btn.btn-primary.btn-sm.right(@click.prevent='searchDriver') Search
 
-      .input-row.mt-default(v-if='search_result')
-        .input-flex-container.input-block.whole
+      .input-container.whole.mt-default(v-if='search_result')
+        .input-flex-container.input-block
           .input-element-fixed
             input.input-field(type='checkbox' :disabled='search_result.do_not_rent')
 
