@@ -87,6 +87,7 @@ Rails.application.routes.draw do
       get 'sources',            to: 'drivers/sources#index'
 
       post 'add-card',          to: 'drivers/add_card#create'
+      post 'add-contact-info',  to: 'drivers/add_contact_info#create'
     end
 
     resources :locations, only: [:index, :show] do

@@ -2,13 +2,15 @@
   import Moment     from 'moment'
   import Capitalize from 'lodash/capitalize'
   import SnackCase  from 'lodash/snakeCase'
+  import CamelCase  from 'lodash/camelCase'
+
+  import AddCard           from './driver/add_card'
+  import AddContactInfo    from './driver/add_contact_info'
 
   import ActionsIcon       from 'Components/icons/actions'
-  import AddCard           from './driver/add_card'
   import DriverInformation from 'Components/driver/information'
   import Dropdown          from 'Components/dropdown'
   import SourcesIcon       from 'Components/driver/sources_icon'
-
   import RentalsTable      from 'Components/rental/table'
   import InsurancePolicies from 'Components/driver/insurance_policies'
 
@@ -19,17 +21,19 @@
     data() {
       return {
         driver: {},
+        tab: '',
         insurance_policies: {},
         sources: {},
         rentals: {},
         metrics: {},
         action: '',
-        tab: '',
+        action_url: '',
       }
     },
     components: {
       ActionsIcon,
       AddCard,
+      AddContactInfo,
       DriverInformation,
       InsurancePolicies,
       Dropdown,
@@ -61,6 +65,10 @@
         this.$http.get(this.$route.path).then(response => {
           this.driver = response.data
         })
+      },
+      loadAction(action) {
+        this.action_url = this.driver.actions[action].url
+        this.action = CamelCase(action)
       },
       refreshData() {
         this.getData()
@@ -94,7 +102,9 @@
           .dropdown-menu.right(slot='dropdown-menu')
             ul
               li
-                button.link(@click='addCard()') Add Card
+                button.link(@click='loadAction("add_card")') Add Card
+              li
+                button.link(@click='loadAction("add_contact_info")') Add Contact Info
 
       driver-information.left(:driver='driver')
 
@@ -183,8 +193,9 @@
             td {{ metrics.average_price_per_mile | currency }}
 
 
-
-    component(:is='action' @close='refreshData')
+    component(:is='action'
+              :url='action_url'
+              @close='refreshData')
 </template>
 
 <style lang='stylus' scoped>

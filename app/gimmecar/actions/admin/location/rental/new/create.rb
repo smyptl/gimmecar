@@ -135,7 +135,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
   end
 
   def save_address(address:, driver:)
-    Address.create(address.merge(owner: driver))
+    Address.create(address.merge(owner: driver, primary: true))
   end
 
   def paid_by_primary_driver?

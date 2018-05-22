@@ -7,6 +7,10 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
     a.date    :date
     a.integer :days
     a.integer :amount
+    a.boolean :add_card
+    a.string  :paid_by
+    a.string  :stripe_token
+    a.string  :source
   end
 
   validates :date,
@@ -15,6 +19,21 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
   validates :days, :amount,
     presence: true,
     numericality: true
+
+  validates :source,
+    presence: true,
+    inclusion: { in: :valid_sources }
+
+  with_options if: :add_card do
+    validates :paid_by,
+      presence: true,
+      inclusion: { in: [:driver, :additional_driver] }
+
+    validates :stripe_token,
+      presence: true
+  end
+
+  end
 
   private
 

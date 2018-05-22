@@ -7,7 +7,13 @@
   import Popup from 'Components/popup'
 
   export default {
-    name: 'Add-Card',
+    name: 'AddCard',
+    props: {
+      url: {
+        type: String,
+        required: true,
+      }
+    },
     data() {
       return {
         open: false,
@@ -43,7 +49,7 @@
             // Send the token to your server
             this.form.token = result.token.id
 
-            this.$http.post(this.$route.path + '/add-card', this.form.data())
+            this.$http.post(this.url, this.form.data())
               .then(response => {
                 this.form.errors.clear
                 this.close()
