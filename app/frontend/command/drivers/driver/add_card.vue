@@ -70,20 +70,19 @@
     .panel-form-popup
       .panel-form.panel-form-padding
         h4.panel-form-popup-header Add Card
-
-
+        
       form(@submit.prevent='addToken()')
         .panel-form.panel-form-padding.panel-popup-form-content
-          .input-row
-            label.input-label
-              | Card Number
-              .input-label-note.right DO NOT accept prepaid cards.
-            .input-block.whole
+          .input-container.whole
+            .input-block
+              label.input-label
+                | Card Number
+                .input-label-note.right DO NOT accept prepaid cards.
               payment(
                 @add-error='form.errors.record({ token: [$event] })'
                 @clear-error='form.errors.clear()'
                 v-error='form.errors.has("token")')
-            input-error-message(:errors='form.errors.get("token")')
+              input-error-message(:errors='form.errors.get("token")')
 
         .panel-form.panel-form-padding.panel-popup-form-footer
           .input-submit.input-block

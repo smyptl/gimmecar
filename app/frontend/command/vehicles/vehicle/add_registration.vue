@@ -66,33 +66,33 @@
         h4.panel-form-popup-header Add Registration
 
       .panel-form.panel-form-padding.panel-popup-form-content
-        .input-row
+        .input-container.whole
           .input-container.one-half.fixed
-            label.input-label(for='date_effective') Effective Date
-            .input-block.whole
+            .input-block
+              label.input-label(for='date_effective') Effective Date
               input-date#date_effective(
                 v-model='form.date_effective'
                 v-error='form.errors.has("date_effective")'
                 @input='form.errors.clear("date_effective")')
-            input-error-message(:errors='form.errors.get("date_effective")')
+              input-error-message(:errors='form.errors.get("date_effective")')
 
           .input-container.one-half.fixed
-            label.input-label(for='date_expiration') Expiration Date
-            .input-block.whole
+            .input-block
+              label.input-label(for='date_expiration') Expiration Date
               input-date#date_expiration(
                 v-model='form.date_expiration'
                 v-error='form.errors.has("date_expiration")'
                 @input='form.errors.clear("date_expiration")')
-            input-error-message(:errors='form.errors.get("date_expiration")')
+              input-error-message(:errors='form.errors.get("date_expiration")')
 
-        .input-row
-          label.input-label(for='registration') Registration
-          .input-block.whole
+        .input-container.whole
+          .input-block
+            label.input-label(for='registration') Registration
             input-file#registration(
               v-model='form.registration'
               v-error='form.errors.has("registration")'
               @input='form.errors.clear("registration")')
-          input-error-message(:errors='form.errors.get("registration")')
+            input-error-message(:errors='form.errors.get("registration")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

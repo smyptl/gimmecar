@@ -21,12 +21,6 @@ export default {
             },
           ],
         },
-        { path: 'reservations/new', name: 'new_reservation', component: require('./base').default },
-        { path: 'reservations', component: require('./base').default,
-          children: [
-            { path: '',    name: 'reservations',    component: require('./location/reservations/index').default },
-          ]
-        },
         { path: 'quote', name: 'quote', component: require('./location/quote/index').default },
         { path: 'vehicles', component: require('./base').default,
           children: [

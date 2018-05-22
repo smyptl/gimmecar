@@ -20,28 +20,28 @@
 
 <template lang='pug'>
   div
-    .input-row
+    .input-container.whole
       .input-container.one-half
-        label.input-label Pickup
-        .input-block.whole
+        .input-block
+          label.input-label Pickup
           input-date-time(v-model='pickup' disabled=true)
 
       .input-container.one-half
-        label.input-label Drop-off
-        .input-block.whole
+        .input-block
+          label.input-label Drop-off
           input-date-time(
             v-model='form.drop_off'
             v-error='form.errors.has("drop_off")'
             @input='form.errors.clear("drop_off")')
-        input-error-message(:errors='form.errors.get("drop_off")')
+          input-error-message(:errors='form.errors.get("drop_off")')
 
-    .input-row
-      label.input-label(for='vehicle_type') Vehicle Type
-      .input-block.whole
+    .input-container.whole
+      .input-block
+        label.input-label(for='vehicle_type') Vehicle Type
         input-vehicle-types(
           v-model='form.vehicle_type'
           v-error='form.errors.has("vehicle_type")'
           @input='form.errors.clear("vehicle_type")')
-      input-error-message(:errors='form.errors.get("vehicle_type")')
+        input-error-message(:errors='form.errors.get("vehicle_type")')
 
 </template>

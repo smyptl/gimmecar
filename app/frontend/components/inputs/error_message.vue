@@ -38,7 +38,7 @@
 
   .input-error-message
     float: left
-    margin: -($input-margin-x) $input-padding-y $input-margin-x
+    margin: -($input-margin-x) 0 $input-margin-x
     padding: $input-margin-x $padding-ex-sm
 
     border: 1px solid $border-color-yellow

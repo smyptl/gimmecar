@@ -290,7 +290,7 @@
     template(v-if='current_step == "Financial Responsibility"')
       financial-responsibility-signatures(:form='rental')
 
-      .input-block.input-submit
+      .input-submit.input-block
         button.btn.left(@click.prevent='goBack()') Go Back
         input-submit.btn.btn-primary.right(@click.native.prevent='validateFinancialResponsibility()' :loading='input_submit_loading') Continue
 
@@ -303,11 +303,11 @@
         input-submit.btn.btn-primary.right(@click.native.prevent='validateTermsAndConditions()' :loading='input_submit_loading')  Continue
 
     template(v-if='current_step == "Payment"')
-      .input-row
-        label.input-label(for='paid_by')
-          | Paid By
-          .input-label-note.right Insure it matches name on card.
-        .input-block.whole
+      .input-container.whole
+        .input-block
+          label.input-label(for='paid_by')
+            | Paid By
+            .input-label-note.right Insure it matches name on card.
           template(v-if='rental.add_additional_driver')
             select.input-field#paid_by(
               v-model='rental.paid_by'
@@ -324,18 +324,18 @@
               @input='rental.errors.clear("paid_by")')
 
               option(value='driver') {{ rental.driver.name_first }} {{ rental.driver.name_last }}
-        input-error-message(:errors='rental.errors.get("paid_by")')
+          input-error-message(:errors='rental.errors.get("paid_by")')
 
-      .input-row
-        label.input-label
-          | Card Number
-          .input-label-note.right DO NOT accept prepaid cards.
-        .input-block.whole
+      .input-container.whole
+        .input-block
+          label.input-label
+            | Card Number
+            .input-label-note.right DO NOT accept prepaid cards.
           payment(
             @add-error='rental.errors.record({ card: [$event] })'
             @clear-error="rental.errors.clear()"
             v-error='rental.errors.has("card")')
-        input-error-message(:errors='rental.errors.get("card")')
+          input-error-message(:errors='rental.errors.get("card")')
 
       .input-block.input-submit
         button.btn.left(@click.prevent='goBack()') Go Back

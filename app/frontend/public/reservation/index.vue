@@ -112,9 +112,9 @@
 
       #rental-details(v-if="current_step == 'rental-details'" key='details')
         form(@submit.prevent='viewRates()')
-          .input-row.mt-ex-sm
-            label.input-label(for='location_id') Where:
-            .input-block.whole
+          .input-container.whole.mt-ex-sm
+            .input-block
+              label.input-label(for='location_id') Where:
               select.input-field#location_id(
                   v-model='form.location_id'
                   v-error='form.errors.has("location_id")'
@@ -123,39 +123,38 @@
                 option(value='2') Adelanto, CA - California Inn - 11628 Bartlett Ave., Adelanto, CA 92301
                 option(value='3') Hesperia, CA - Day & Night Inn - 14865 Bear Valley Rd., Hesperia, CA 92345
                 option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
-            input-error-message(:errors='form.errors.get("location_id")')
+              input-error-message(:errors='form.errors.get("location_id")')
 
-          .input-row
+          .input-container.whole
             .input-container.one-half
-              label.input-label(for='pickup') From:
-              .input-block.whole
+              .input-block
+                label.input-label(for='pickup') From:
                 input-date-time(
                   v-model='form.pickup'
                   v-error='form.errors.has("pickup")'
                   @input='form.errors.clear("pickup")')
-              input-error-message.input-message-lg(:errors='form.errors.get("pickup")')
+                input-error-message.input-message-lg(:errors='form.errors.get("pickup")')
 
             .input-container.one-half
-              label.input-label(for='drop_off') To:
-              .input-block.whole
+              .input-block
+                label.input-label(for='drop_off') To:
                 input-date-time#drop_off(
                   v-model='form.drop_off'
                   v-error='form.errors.has("drop_off")'
                   @input='form.errors.clear("drop_off")')
-              input-error-message.input-message-lg(:errors='form.errors.get("drop_off")')
+                input-error-message.input-message-lg(:errors='form.errors.get("drop_off")')
 
             .input-container.whole
-              label.input-label(for='vehicle_type') Vehicle Type
-              .input-block.whole
+              .input-block
+                label.input-label(for='vehicle_type') Vehicle Type
                 input-vehicle-types.input-contrast(
                   v-model='form.vehicle_type'
                   v-error='form.errors.has("vehicle_type")'
                   @input='form.errors.clear("vehicle_type")')
-              input-error-message(:errors='form.errors.get("vehicle_type")')
+                input-error-message(:errors='form.errors.get("vehicle_type")')
 
-            .input-submit
-              .input-block.whole
-                input-submit.btn.btn-full.btn-primary(:loading='input_submit_loading') View Rates
+            .input-submit.input-block
+              input-submit.btn.btn-full.btn-primary(:loading='input_submit_loading') View Rates
 
       #rental-summary(v-if="current_step == 'rental-summary'" key='summary')
         rental-invoice.input-block.mt-default(:summary='summary')
@@ -168,10 +167,11 @@
 
       #rental-reserve(v-if="current_step == 'rental-reserve'" key='reserve')
         form(@submit.prevent='createReservation()')
-          .input-row.mt-ex-sm
-            label.input-label(for='name_first') Name
+          .input-container.whole.mt-ex-sm
+            .input-block
+              label.input-label(for='name_first') Name
             .input-container.one-half.fixed
-              .input-block.whole
+              .input-block
                 input.input-field#name_first(
                   type='text'
                   placeholder='Henry'
@@ -179,10 +179,10 @@
                   v-error='form.errors.has("name_first")'
                   @input='form.errors.clear("name_first")')
 
-              input-error-message.input-message-lg(:errors='form.errors.get("name_first")')
+                input-error-message.input-message-lg(:errors='form.errors.get("name_first")')
 
             .input-container.one-half.fixed
-              .input-block.whole
+              .input-block
                 input.input-field#name_last(
                   type='text'
                   placeholder='Ford'
@@ -190,14 +190,13 @@
                   v-error='form.errors.has("name_last")'
                   @input='form.errors.clear("name_last")')
 
-              input-error-message.input-message-lg(:errors='form.errors.get("name_last")')
+                input-error-message.input-message-lg(:errors='form.errors.get("name_last")')
 
-          .input-row
-            label.input-label(for='input_email')
-              | Email
-              span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
-
-            .input-block.whole
+          .input-container.whole
+            .input-block
+              label.input-label(for='input_email')
+                | Email
+                span.input-label-note.text-warning.right Valid email must be provided to confirm reservation.
               input.input-field#input_email(
                 type='email'
                 placeholder='hford@gmail.com'
@@ -205,14 +204,13 @@
                 v-error='form.errors.has("email")'
                 @input='form.errors.clear("email")')
 
-            input-error-message.input-message-lg(:errors='form.errors.get("email")')
+              input-error-message.input-message-lg(:errors='form.errors.get("email")')
 
-          .input-row
-            label.input-label(for='input_phone_number')
-              | Phone #
-              span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
-
-            .input-block.whole
+          .input-container.whole
+            .input-block
+              label.input-label(for='input_phone_number')
+                | Phone #
+                span.input-label-note.text-warning.right Valid number must be provided to confirm reservation.
               input.input-field#input_phone_number(
                 type='number'
                 placeholder='805-990-1234'
@@ -220,7 +218,7 @@
                 v-error='form.errors.has("phone_number")'
                 @input='form.errors.clear("phone_number")')
 
-            input-error-message.input-message-lg(:errors='form.errors.get("phone_number")')
+              input-error-message.input-message-lg(:errors='form.errors.get("phone_number")')
 
 
           .input-submit.input-flex-container

@@ -33,5 +33,12 @@ describe Actions::Admin::Location::Rental::New::Concerns::Vehicle do
       expect(action.errors[:pickup_odometer].empty?).to eq(true)
       expect(action.errors[:vehicle_id].empty?).to eq(false)
     end
+
+    it 'if no odometer, returns error' do
+      action = klass.new(vehicle_id: 1)
+      action.valid?
+
+      expect(action.errors[:pickup_odometer].empty?).to eq(false)
+    end
   end
 end

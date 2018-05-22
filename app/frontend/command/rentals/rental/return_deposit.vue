@@ -65,13 +65,13 @@
 
       .panel-form.panel-form-padding.panel-popup-form-content
         .input-container.whole
-          label.input-label(for='amount') Amount
-          .input-block.whole
+          .input-block
+            label.input-label(for='amount') Amount
             input-currency#amount(
               v-model='form.amount'
               v-error='form.errors.has("amount")'
               @input='form.errors.clear("amount")')
-          input-error-message(:errors='form.errors.get("amount")')
+            input-error-message(:errors='form.errors.get("amount")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

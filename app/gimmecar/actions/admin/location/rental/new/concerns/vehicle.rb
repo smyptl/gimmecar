@@ -21,7 +21,7 @@ module Actions::Admin::Location::Rental::New::Concerns::Vehicle
 
     validates :pickup_odometer,
       numericality: { greater_than_or_equal_to: :latest_odometer, message: "must be greater than %{count}" },
-      if: :latest_odometer
+      if: [:latest_odometer, :pickup_odometer]
 
     validates :pickup_fuel,
       presence: true,
