@@ -20,20 +20,18 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
     presence: true,
     numericality: true
 
-  validates :source,
-    presence: true,
-    inclusion: { in: :valid_sources }
+  #validates :source,
+    #presence: true,
+    #inclusion: { in: :valid_sources }
 
-  with_options if: :add_card do
-    validates :paid_by,
-      presence: true,
-      inclusion: { in: [:driver, :additional_driver] }
+  #with_options if: :add_card do
+    #validates :paid_by,
+      #presence: true,
+      #inclusion: { in: [:driver, :additional_driver] }
 
-    validates :stripe_token,
-      presence: true
-  end
-
-  end
+    #validates :stripe_token,
+      #presence: true
+  #end
 
   private
 

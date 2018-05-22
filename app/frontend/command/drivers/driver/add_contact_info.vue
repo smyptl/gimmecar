@@ -30,7 +30,7 @@
             street2: '',
             city: '',
             state: '',
-            zip_cide: '',
+            zip_code: '',
             notes: '',
           },
           add_phone_number: false,
@@ -81,11 +81,14 @@
 
       form(@submit.prevent='addContactInfo()')
         .panel-form.panel-form-padding.panel-popup-form-content
+          .input-block.whole.mt-default.mb-sm(v-if='form.errors.has("base")')
+            input-error-message(:base='true' :errors='form.errors.get("base")')
+
           .input-row
             label.input-label(for='add_email') Email
             .input-flex-container.whole
               .input-block.input-element-fixed
-                input.input-field#add_email(type='checkbox' v-model='form.add_email')
+                input.input-field#add_email(type='checkbox' v-model='form.add_email' @input='form.errors.clear("base")')
 
               .input-element-flex(v-if='form.add_email')
                 .input-row
@@ -114,7 +117,7 @@
             label.input-label(for='add_address') Address
             .input-flex-container.whole
               .input-block.input-element-fixed
-                input.input-field#add_address(type='checkbox' v-model='form.add_address')
+                input.input-field#add_address(type='checkbox' v-model='form.add_address' @input='form.errors.clear("base")')
 
               .input-element-flex(v-if='form.add_address')
                 .input-row
@@ -185,7 +188,7 @@
             label.input-label(for='add_phone_number') Phone Number
             .input-flex-container.whole
               .input-block.input-element-fixed
-                input.input-field#add_phone_number(type='checkbox' v-model='form.add_phone_number')
+                input.input-field#add_phone_number(type='checkbox' v-model='form.add_phone_number' @input='form.errors.clear("base")')
 
               .input-element-flex(v-if='form.add_phone_number')
                 .input-row

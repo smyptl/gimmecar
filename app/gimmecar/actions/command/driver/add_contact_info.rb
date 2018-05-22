@@ -15,7 +15,7 @@ class Actions::Command::Driver::AddContactInfo < Lib::Actions::Base
       n.string :street2
       n.string :city
       n.string :state
-      n.string :zip_cide
+      n.string :zip_code
       n.string :notes
     end
 
@@ -28,11 +28,38 @@ class Actions::Command::Driver::AddContactInfo < Lib::Actions::Base
     end
   end
 
-  validates :email_email_type,
-    presence: true
+  validate :add_one_contact
 
+  with_options if: :add_email do
+    validates :email_email,
+      presence: true,
+      email: true
+  end
+
+  with_options if: :add_address do
+    validates :address_street1, :address_city, :address_state, :address_zip_code,
+      presence: true
+  end
+
+  with_options if: :add_phone_number do
+    validates :phone_number_number,
+      presence: true,
+      numericality: { only_integer: true }
+  end
 
   private
+
+  def add_one_contact
+    unless add_email || add_address || add_phone_number
+      errors.add(:base, 'Must add at least one contact info.')
+    end
+  end
+
+  def success_args
+    {
+      driver_id: params.fetch(:driver_id)
+    }
+  end
 
   def save
     save_email
@@ -42,19 +69,19 @@ class Actions::Command::Driver::AddContactInfo < Lib::Actions::Base
 
   def save_email
     if add_email
-      Email.create(**email, owner: driver)
+      Email.create(email.merge(owner: driver))
     end
   end
 
-  def address
+  def save_address
     if add_address
-      Address.create(**address, owner: driver)
+      Address.create(address.merge(owner: driver))
     end
   end
 
-  def phone_number
+  def save_phone_number
     if add_phone_number
-      PhoneNumber.create(**phone_number, owner: driver)
+      PhoneNumber.create(phone_number.merge(owner: driver))
     end
   end
 
