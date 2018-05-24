@@ -46,11 +46,15 @@ class Driver < ApplicationRecord
   end
 
   def stripe_customer
-    Stripe::Customer.retrieve(stripe_id)
+    Stripe::Customer.retrieve(stripe_id) if stripe_id
   end
 
   def stripe_sources
-    stripe_customer[:sources]
+    stripe_customer[:sources] if stripe_id
+  end
+
+  def stripe_default_source
+    stripe_customer[:default_source] if stripe_id
   end
 
   def name

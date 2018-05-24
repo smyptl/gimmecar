@@ -7,10 +7,11 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
     a.date    :date
     a.integer :days
     a.integer :amount
+    a.string  :customer_id
+    a.string  :source_id
     a.boolean :add_card
     a.string  :paid_by
     a.string  :stripe_token
-    a.string  :source
   end
 
   validates :date,
@@ -20,11 +21,18 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
     presence: true,
     numericality: true
 
-  #validates :source,
-    #presence: true,
-    #inclusion: { in: :valid_sources }
+  #with_option unless: :add_card do
+    validates :source_id, :customer_id,
+      presence: true
+
+    validate :valid_source_ids
+  #end
 
   #with_options if: :add_card do
+    #validates :paid_by,
+      #presence: true,
+      #inclusion: { in: ['driver', 'additional_driver'] }
+
     #validates :paid_by,
       #presence: true,
       #inclusion: { in: [:driver, :additional_driver] }
@@ -35,10 +43,24 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
 
   private
 
-  def valid?
-    valid = super
+  def valid_source_ids
+    if source_id && customer_id && !valid_sources.map(&:id).include?(source_id)
+      errors.add(:source_id, 'invalid source selected')
+    end
+  end
 
-    if valid
+  def valid_sources
+    case customer_id
+    when rental.driver_stripe_id
+      rental.driver_stripe_sources[:data]
+    when rental.additional_driver_stripe_id
+      rental.additional_driver_stripe_sources[:data]
+    end
+
+  end
+
+  def valid?
+    if super
       success = lambda do |args|
         @charge = args.fetch(:charge)
         return true
@@ -49,7 +71,9 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
         return false
       end
 
-      Charge.new({ amount: charge_amount }).execute(success, failure, customer_id: stripe_customer_id)
+      Charge.new({ amount: charge_amount }).execute(success, failure, source_id: source_id, customer_id: customer_id)
+    else
+      false
     end
   end
 

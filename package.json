@@ -4,6 +4,7 @@
   "main": "index.js",
   "repository": "git@github.com:smyptl/gimmecar.git",
   "author": "Samay Patel <samay@gimmecar.com>",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "dev": "./bin/webpack-dev-server",

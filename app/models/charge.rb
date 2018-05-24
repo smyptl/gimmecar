@@ -17,7 +17,7 @@ class Charge < ApplicationRecord
   belongs_to :owner, polymorphic: true
   has_many :line_items
 
-  def execute(success, failure, token: nil, customer_id: nil)
+  def execute(success, failure, token: nil, source_id: nil, customer_id: nil)
     raise ArgumentError if amount.nil?
 
     begin
@@ -28,6 +28,7 @@ class Charge < ApplicationRecord
           amount:   amount,
           currency: 'usd',
           customer: customer_id,
+          source: source_id,
         })
       end
 
