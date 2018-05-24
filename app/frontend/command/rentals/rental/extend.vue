@@ -115,11 +115,11 @@
             label.input-label Payment
             input-payment-sources(
               v-model='form.source'
-              v-error='form.errors.has("source")'
-              :error='form.errors.has("source")'
+              v-error='form.errors.has("source_source_id")'
+              :error='form.errors.has("source_source_id")'
               :sources='rental'
-              @input='form.errors.clear("source")')
-            input-error-message(:errors='form.errors.get("source")')
+              @input='form.errors.clear("source_source_id")')
+            input-error-message(:errors='form.errors.get("source_source_id")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block

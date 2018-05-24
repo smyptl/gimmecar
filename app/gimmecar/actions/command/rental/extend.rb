@@ -47,7 +47,7 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
 
   def valid_source_ids
     if source_source_id && source_customer_id && !valid_sources.map(&:id).include?(source_source_id)
-      errors.add(:source_id, 'invalid source selected')
+      errors.add(:source_source_id, 'invalid source selected')
     end
   end
 
@@ -58,7 +58,6 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
     when rental.additional_driver_stripe_id
       rental.additional_driver_stripe_sources[:data]
     end
-
   end
 
   def valid?
