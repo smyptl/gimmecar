@@ -2,12 +2,11 @@
   import Shake from 'Utils/transitions/shake'
 
   import InputSubmit from 'Mixins/input_submit'
-  import Capitalize from 'lodash/capitalize'
 
-  import InputCurrency from 'Components/inputs/currency'
-  import InputDate     from 'Components/inputs/date'
-  import Popup         from 'Components/popup'
-  import SourcesIcon   from 'Components/driver/sources_icon'
+  import InputCurrency       from 'Components/inputs/currency'
+  import InputDate           from 'Components/inputs/date'
+  import InputPaymentSources from 'Components/inputs/payment_sources'
+  import Popup               from 'Components/popup'
 
   export default {
     name: 'RentalExtend',
@@ -25,22 +24,21 @@
           date: '',
           days: 1,
           amount: '',
-          customer_id: '',
-          source_id: '',
+          source: {
+            customer_id: '',
+            source_id: '',
+          },
         }),
       }
     },
     mixins: [
       InputSubmit,
     ],
-    filters: {
-      Capitalize,
-    },
     components: {
       InputCurrency,
       InputDate,
+      InputPaymentSources,
       Popup,
-      SourcesIcon,
     },
     mounted() {
       this.$http.get(this.url).then(response => {
@@ -48,32 +46,10 @@
         this.form.amount = this.rental.rental_last_rate_amount;
         this.form.date   = this.rental.drop_off;
 
-        if (this.rental.driver_default_source) {
-          this.form.customer_id = this.rental.driver_stripe_id;
-          this.form.source_id = this.rental.driver_default_source;
-        } else if (this.rental.additional_driver_default_source) {
-          this.form.customer_id = this.rental.additional_driver_stripe_id;
-          this.form.source_id = this.rental.additional_driver_default_source;
-        }
+        this.open = true
       })
-
-      this.open = true
-    },
-    computed: {
-      driver_sources() {
-        return this.rental.driver_sources.data;
-      },
     },
     methods: {
-      selectSource(source) {
-        this.form.customer_id = source.customer;
-        this.form.source_id = source.id;
-        this.form.errors.clear('source_id');
-        return null;
-      },
-      sourceSelected(source) {
-        return this.form.customer_id == source.customer && this.form.source_id == source.id;
-      },
       close() {
         this.$emit('close')
       },
@@ -137,66 +113,13 @@
         .input-container.whole
           .input-block
             label.input-label Payment
-            .input-field.input-field-table(v-error='form.errors.has("source_id")')
-              .gimmecar-app-vertical-scroll
-                table.input-table
-                  template(v-if='rental.driver_stripe_id')
-                    thead
-                      tr
-                        th(colspan='5') {{ rental.driver_name }} (Driver)
-                    tbody
-                      tr(
-                        v-for='source in driver_sources'
-                        :key='source.id'
-                        @click.prevent='selectSource(source)'
-                        :class='{ selected: sourceSelected(source) }'
-                      )
-                        td.checkbox
-                          input.input-field(type='radio'
-                                            :checked='sourceSelected(source)')
-                        template(v-if='source.object == "card"')
-                          td.source-icon.status
-                            sources-icon(:brand='source.brand')
-                          td.text-nowrap {{ source.brand }} - {{ source.funding | capitalize }}
-                          td.text-nowrap.text-right •••• {{ source.last4 }}
-                          td.text-nowrap.text-right {{ source.exp_month }} / {{ source.exp_year }}
-
-                        template(v-if='source.object == "bank_account"')
-                          td.source-icon
-                            sources-icon(brand='default')
-                          td.text-nowrap {{ source.bank_name | capitalize }} - Bank
-                          td.text-nowrap.text-right {{ source.last4 }}
-                          td --
-
-                  template(v-if='rental.additional_driver_stripe_id')
-                    thead
-                      tr
-                        th(colspan='5') {{ rental.additional_driver_name }} (Driver - Additional)
-                    tbody
-                      tr(
-                        v-for='source in driver_sources'
-                        :key='source.id'
-                        @click.prevent='selectSource(source)'
-                        :class='{ selected: sourceSelected(source) }'
-                      )
-                        td.checkbox
-                          input.input-field(type='radio'
-                                            :checked='sourceSelected(source)')
-                        template(v-if='source.object == "card"')
-                          td.source-icon.status
-                            sources-icon(:brand='source.brand')
-                          td.text-nowrap {{ source.brand }} - {{ source.funding | capitalize }}
-                          td.text-nowrap.text-right •••• {{ source.last4 }}
-                          td.text-nowrap.text-right {{ source.exp_month }} / {{ source.exp_year }}
-
-                        template(v-if='source.object == "bank_account"')
-                          td.source-icon
-                            sources-icon(brand='default')
-                          td.text-nowrap {{ source.bank_name | capitalize }} - Bank
-                          td.text-nowrap.text-right {{ source.last4 }}
-                          td --
-
-            input-error-message(:errors='form.errors.get("source_id")')
+            input-payment-sources(
+              v-model='form.source'
+              v-error='form.errors.has("source_source_id")'
+              :error='form.errors.has("source_source_id")'
+              :sources='rental'
+              @input='form.errors.clear("source_source_id")')
+            input-error-message(:errors='form.errors.get("source_source_id")')
 
       .panel-form.panel-form-padding.panel-popup-form-footer
         .input-submit.input-block
@@ -205,14 +128,4 @@
 
 <style lang='stylus' scoped>
   @import '~Styles/components/panels/form'
-  @import '~Styles/components/inputs/table'
-
-  .source-icon
-    svg
-      float: left
-      display: inline-block
-
-      height: 1.25rem
-      width: auto
-
 </style>

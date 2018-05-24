@@ -90,11 +90,17 @@
       template(slot='header')
         th Fuel Level
         th Odometer
+        th Commissioned Date
+        th Decommissioned Date
         th Revenue
+        th Purchase Price
       template(slot='body' slot-scope='slotProps')
         td {{ slotProps.vehicle.fuel_level*10 }}%
         td {{ slotProps.vehicle.odometer }}
+        td {{ slotProps.vehicle.date_commissioned }}
+        td {{ slotProps.vehicle.date_decommissioned }}
         td {{ slotProps.vehicle.revenue | currency }}
+        td {{ slotProps.vehicle.purchase_price | currency }}
 
     rentals(v-if='tabActive("deposits")'
             @view-rental='viewRental($event)'

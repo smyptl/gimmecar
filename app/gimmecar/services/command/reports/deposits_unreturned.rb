@@ -1,7 +1,9 @@
 class Services::Command::Reports::DepositsUnreturned < Lib::Services::Base
 
   output do
-    collection :rentals, component: Services::Builders::RentalsTable
+    collection :rentals, component: Services::Builders::RentalsTable do |c|
+      c.attribute :pickup_location_name
+    end
   end
 
   private

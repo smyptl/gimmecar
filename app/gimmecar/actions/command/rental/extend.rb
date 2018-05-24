@@ -7,8 +7,10 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
     a.date    :date
     a.integer :days
     a.integer :amount
-    a.string  :customer_id
-    a.string  :source_id
+    a.nested :source do |n|
+      n.string  :customer_id
+      n.string  :source_id
+    end
     a.boolean :add_card
     a.string  :paid_by
     a.string  :stripe_token
@@ -22,7 +24,7 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
     numericality: true
 
   #with_option unless: :add_card do
-    validates :source_id, :customer_id,
+    validates :source_source_id, :source_customer_id,
       presence: true
 
     validate :valid_source_ids
@@ -44,19 +46,20 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
   private
 
   def valid_source_ids
-    if source_id && customer_id && !valid_sources.map(&:id).include?(source_id)
-      errors.add(:source_id, 'invalid source selected')
+    if source_source_id && source_customer_id && !valid_sources.map(&:id).include?(source_source_id)
+      errors.add(:source_source_id, 'invalid source selected')
     end
   end
 
   def valid_sources
-    case customer_id
+    case source_customer_id
     when rental.driver_stripe_id
       rental.driver_stripe_sources[:data]
     when rental.additional_driver_stripe_id
       rental.additional_driver_stripe_sources[:data]
+    else
+      []
     end
-
   end
 
   def valid?
@@ -71,7 +74,7 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
         return false
       end
 
-      Charge.new({ amount: charge_amount }).execute(success, failure, source_id: source_id, customer_id: customer_id)
+      Charge.new({ amount: charge_amount }).execute(success, failure, source_id: source_source_id, customer_id: source_customer_id)
     else
       false
     end
