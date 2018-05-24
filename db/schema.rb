@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_15_185259) do
+ActiveRecord::Schema.define(version: 2018_05_24_221712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,6 +274,9 @@ ActiveRecord::Schema.define(version: 2018_05_15_185259) do
     t.integer "tank_size"
     t.text "notes"
     t.string "status"
+    t.date "date_commissioned"
+    t.date "date_decommissioned"
+    t.integer "purchase_price"
     t.index ["location_id"], name: "index_vehicles_on_location_id"
     t.index ["original_location_id"], name: "index_vehicles_on_original_location_id"
   end

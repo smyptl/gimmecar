@@ -22,6 +22,9 @@
 #  tank_size            :integer
 #  notes                :text
 #  status               :string
+#  date_commissioned    :date
+#  date_decommissioned  :date
+#  purchase_price       :integer
 #
 
 require 'factories/locations'
