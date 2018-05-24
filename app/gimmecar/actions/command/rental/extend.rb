@@ -57,6 +57,8 @@ class Actions::Command::Rental::Extend < Lib::Actions::Base
       rental.driver_stripe_sources[:data]
     when rental.additional_driver_stripe_id
       rental.additional_driver_stripe_sources[:data]
+    else
+      []
     end
   end
 
