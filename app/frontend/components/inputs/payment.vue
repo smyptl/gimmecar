@@ -26,9 +26,6 @@
 </template>
 
 <style lang='stylus'>
-  @import '~Styles/global/colors'
-  @import '~Styles/global/layout'
-
   .__PrivateStripeElement
     flex: 1
     align-self: center

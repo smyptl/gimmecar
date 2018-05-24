@@ -1,9 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Make javascript_pack_tag lookup digest hash to enable long-term caching
-  config.serve_static_assets = true
-
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
@@ -28,8 +25,13 @@ Rails.application.configure do
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 
-  # Enable request forgery protection in test environment.
+  # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = true
+  config.action_mailer.perform_caching = false
+
+  # Store uploaded files on the local file system in a temporary directory
+  config.active_storage.service = :test
+
   config.action_mailer.perform_caching = false
 
   # Tell Action Mailer not to deliver emails to the real world.
@@ -50,4 +52,7 @@ Rails.application.configure do
 
   # Allow for subdomains
   config.action_dispatch.tld_length = 0
+
+  # Make javascript_pack_tag lookup digest hash to enable long-term caching
+  #config.serve_static_assets = true
 end

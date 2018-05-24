@@ -24,6 +24,7 @@ describe 'Extend', type: :system, js: true do
     click_button('Extend')
 
     expect(page).to have_content('Extend')
+    expect(page).to have_field('Amount', with: '$40.00')
 
     fill_in 'Days', with: days
     within('div.popup') do

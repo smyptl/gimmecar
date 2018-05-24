@@ -138,8 +138,6 @@
             th(colspan='2') Source
             th.text-nowrap.text-right Last 4
             th.text-right Exp
-            th.text-right CVC
-            th.text-right Zip
           tbody
             tr(
               v-for='source in sources.data'
@@ -150,19 +148,15 @@
                 td.source-icon.status
                   sources-icon(:brand='source.brand')
                 td.text-nowrap {{ source.brand }} - {{ source.funding | capitalize }}
-                td.text-nowrap.text-right {{ source.last4 }}
+                td.text-nowrap.text-right •••• {{ source.last4 }}
                 td.text-right {{ source.exp_month }} / {{ source.exp_year }}
-                td.text-right {{ source.cvc_check }}
-                td.text-right {{ source.address_zip_check }}
 
               template(v-if='source.object == "bank_account"')
                 td.source-icon
                   sources-icon(brand='default')
                 td.text-nowrap {{ source.bank_name | capitalize }} - Bank
                 td.text-nowrap.text-right {{ source.last4 }}
-                td
-                td
-                td
+                td --
 
     .panel.panel-base(v-if='tabActive("metrics")')
       table.panel-table.panel-table-key-pair

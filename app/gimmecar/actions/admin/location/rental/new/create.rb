@@ -41,9 +41,7 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
   end
 
   def valid?
-    valid = super
-
-    if valid
+    if super
       success = lambda do |args|
         @charge = args.fetch(:charge)
         write_attribute(:stripe_customer_id, args.fetch(:customer_id))
@@ -59,6 +57,8 @@ class Actions::Admin::Location::Rental::New::Create < Lib::Actions::Base
       charge_amount = rates.fetch(:total) + Rental::DEPOSIT_AMOUNT
 
       Charge.new({ amount: charge_amount }).execute(success, failure, token: stripe_token, customer_id: stripe_customer_id)
+    else
+      false
     end
   end
 
