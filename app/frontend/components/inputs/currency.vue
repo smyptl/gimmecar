@@ -2,7 +2,7 @@
   import FormatCurrency from 'Filters/currency';
 
   export default {
-    name: 'InputCurrency',
+    name: 'Input-Currency',
     props: {
       value: {
         required: true,

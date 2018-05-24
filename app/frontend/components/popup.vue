@@ -73,6 +73,7 @@
     max-width: 46rem
     margin-left: auto
     margin-right: auto
+    overflow-y: scroll
     text-align: center
 
   .popup-content
