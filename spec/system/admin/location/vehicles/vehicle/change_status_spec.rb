@@ -20,7 +20,7 @@ describe 'change vehicle status', type: :system, js: true do
     find('td', text: 'Clean').click
     click_button('Change')
 
-    expect(page).to have_css('svg#clean')
+    expect(page).to have_css('svg.clean')
 
 
     expect(Vehicle.count).to eq(1)

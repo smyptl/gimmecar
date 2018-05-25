@@ -46,7 +46,7 @@ class Vehicle < ApplicationRecord
 
   scope :vehicle_type, -> (type) { where(vehicle_type: type) }
 
-  delegate :name, :slug, to: :location, prefix: true
+  delegate :name, :slug, to: :location, prefix: true, allow_nil: true
 
   def update_status_dirty
     update(status: 'dirty')

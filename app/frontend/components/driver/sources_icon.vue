@@ -70,15 +70,4 @@
 
     height: 1rem
     width: 1rem
-    color: $blue-dark
-
-  svg#service
-    color: $text-color-yellow
-
-  svg#clean
-    color: $text-color-green
-
-  svg#dirty
-    color: $text-color-red
-
 </style>

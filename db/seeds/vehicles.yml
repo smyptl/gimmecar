@@ -25,3 +25,17 @@
     status: <%= ['clean', 'dirty'].sample %>
     original_odometer: <%= rand(0..20) %>
 <% end %>
+
+<% 2.times do |x| %>
+  - original_location_id: 1
+    vehicle_type: 'compact'
+    vin: <%= Faker::Vehicle.vin %>
+    license_number: <%= "6TR#{('A'..'Z').to_a[rand(0..26)]}#{rand(100..999)}" %>
+    make: 'Toyota'
+    model: 'Corolla'
+    year: <%= x < 5 ? '2017' : '2018' %>
+    color: 'white'
+    status: <%= ['clean', 'dirty'].sample %>
+    original_odometer: <%= rand(0..20) %>
+    date_decommissioned: <%= Date.new(2018, 1, 1) %>
+<% end %>
