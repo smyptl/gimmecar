@@ -44,4 +44,18 @@ describe Vehicle do
       expect(vehicle.rental_latest).to eq(rental)
     end
   end
+
+  describe '#available?' do
+
+    it 'false if vehicle is rented' do
+      vehicle = create(:vehicle)
+      create(:rental, :open, vehicle: vehicle, pickup_location: vehicle.location)
+      expect(vehicle.available?).to eq(false)
+    end
+
+    it 'false if vehicle is decommissioned' do
+      vehicle = build(:vehicle, :decommissioned)
+      expect(vehicle.available?).to eq(false)
+    end
+  end
 end

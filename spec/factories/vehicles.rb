@@ -50,5 +50,9 @@ FactoryBot.define do
     trait :subcompact do
       vehicle_type :subcompact
     end
+
+    trait :decommissioned do
+      date_decommissioned { Date.new(2018, 2, 5) }
+    end
   end
 end
