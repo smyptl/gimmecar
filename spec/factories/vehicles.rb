@@ -33,7 +33,7 @@ FactoryBot.define do
 
   factory :vehicle do
     location { create(:location) }
-    original_location { location }
+    original_location { location || create(:location) }
     vehicle_type :mid_size
     make { ['BMW', 'Toyota', 'Ford', 'Porsche'].sample }
     model '5 Series'
@@ -49,6 +49,11 @@ FactoryBot.define do
 
     trait :subcompact do
       vehicle_type :subcompact
+    end
+
+    trait :decommissioned do
+      location { nil }
+      date_decommissioned { Date.new(2018, 2, 5) }
     end
   end
 end

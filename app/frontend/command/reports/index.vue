@@ -1,5 +1,6 @@
 <script>
   import Currency from 'Filters/currency'
+  import FDate from 'Filters/date'
   import SnackCase  from 'lodash/snakeCase'
 
   import Values from 'lodash/values'
@@ -19,7 +20,8 @@
       }
     },
     filters: {
-      Currency
+      Currency,
+      date: FDate,
     },
     components: {
       Vehicles,
@@ -90,17 +92,17 @@
       template(slot='header')
         th Fuel Level
         th Odometer
-        th Commissioned Date
-        th Decommissioned Date
         th Revenue
         th Purchase Price
+        th Commissioned Date
+        th Decommissioned Date
       template(slot='body' slot-scope='slotProps')
         td {{ slotProps.vehicle.fuel_level*10 }}%
         td {{ slotProps.vehicle.odometer }}
-        td {{ slotProps.vehicle.date_commissioned }}
-        td {{ slotProps.vehicle.date_decommissioned }}
         td {{ slotProps.vehicle.revenue | currency }}
         td {{ slotProps.vehicle.purchase_price | currency }}
+        td {{ slotProps.vehicle.date_commissioned | date }}
+        td {{ slotProps.vehicle.date_decommissioned | date }}
 
     rentals(v-if='tabActive("deposits")'
             @view-rental='viewRental($event)'

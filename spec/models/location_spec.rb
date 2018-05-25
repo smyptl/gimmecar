@@ -68,15 +68,13 @@ describe Location do
     it 'returns list of available vehicles' do
       location = create(:location)
 
-      vehicle_1 = create(:vehicle, vehicle_type: :compact, location: location, original_location: location)
-      vehicle_2 = create(:vehicle, vehicle_type: :compact, location: location, original_location: location)
-      create(:rental, :open, vehicle: vehicle_2, pickup_location: location, drop_off_location: location)
-      create(:vehicle, vehicle_type: :mid_size, location: location, original_location: location)
+      vehicle = create(:vehicle, :compact, location: location, original_location: location)
+      create(:vehicle, :subcompact, location: location, original_location: location)
 
       available_vehicles = location.available_vehicles(vehicle_type: :compact)
 
       expect(available_vehicles.count).to eq(1)
-      expect(available_vehicles).to contain_exactly(vehicle_1)
+      expect(available_vehicles).to contain_exactly(vehicle)
     end
 
     it 'returns empty list if none available' do

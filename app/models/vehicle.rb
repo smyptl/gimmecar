@@ -33,7 +33,7 @@ class Vehicle < ApplicationRecord
   TYPES = ['subcompact', 'compact']
 
   belongs_to :original_location, class_name: 'Location'
-  belongs_to :location
+  belongs_to :location, required: false
 
   has_many :vehicle_registrations
 
@@ -46,18 +46,22 @@ class Vehicle < ApplicationRecord
 
   scope :vehicle_type, -> (type) { where(vehicle_type: type) }
 
-  delegate :name, :slug, to: :location, prefix: true
+  delegate :name, :slug, to: :location, prefix: true, allow_nil: true
 
   def update_status_dirty
     update(status: 'dirty')
   end
 
   def available?
-    !rental_open?
+    !rental_open? && !decommissioned?
   end
 
   def dirty?
     status == 'dirty'
+  end
+
+  def decommissioned?
+    date_decommissioned.present?
   end
 
   def rental_open?
@@ -81,7 +85,8 @@ class Vehicle < ApplicationRecord
   end
 
   def status
-    return 'rented' if rental_open?
+    return 'decommissioned' if decommissioned?
+    return 'rented'         if rental_open?
     super
   end
 end
