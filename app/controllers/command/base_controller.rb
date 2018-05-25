@@ -7,7 +7,7 @@ class Command::BaseController < ApplicationController
   private
 
   def render_layout
-    render template: 'command', layout: false
+    render template: '/command', layout: false
   end
 
   def login_path

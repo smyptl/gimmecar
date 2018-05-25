@@ -7,7 +7,7 @@ class Admin::BaseController < ApplicationController
   private
 
   def render_layout
-    render template: 'admin', layout: false
+    render template: '/admin', layout: false
   end
 
   def login_path

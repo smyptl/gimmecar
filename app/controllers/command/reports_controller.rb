@@ -19,6 +19,6 @@ class Command::ReportsController < Command::BaseController
 
   def tax
     @report = Services::Command::Reports::Spreadsheets::Revenue.retrieve!
-    render xlsx: 'excel.axlsx', filename: @report.filename
+    render template: 'excel.axlsx', xlsx: @report.filename
   end
 end
