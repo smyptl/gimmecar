@@ -1,7 +1,7 @@
 doctype html
 html#bg-app
   head
-    title GimmeCar
+    title GimmeCar | Command
     = stylesheet_link_tag 'application', media: 'all'
     = stylesheet_link_tag 'admin'
     meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
@@ -21,7 +21,5 @@ html#bg-app
 
   body(lang='en')
     #gimmecar-app
-
-    == yield
-
+    = javascript_pack_tag 'command'
     = render 'shared/stripe'

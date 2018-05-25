@@ -1,10 +1,7 @@
-class Command::LoginController < ApplicationController
-  include Command::Concerns::User
-  include ::Concerns::Api
-
-  layout 'command'
+class Command::LoginController < Command::BaseController
 
   before_action :authorize_api, only: :create
+  skip_before_action :authenticate_user
 
   def index
     if current_user
@@ -32,10 +29,4 @@ class Command::LoginController < ApplicationController
   #def destroy
     #cookies.delete(:token)
   #end
-
-  private
-
-  def render_layout
-    render 'command/index'
-  end
 end
