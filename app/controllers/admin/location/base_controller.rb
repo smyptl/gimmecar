@@ -1,28 +1,18 @@
-class Admin::Location::BaseController < ApplicationController
-  include ::Admin::Concerns::User
-  include ::Concerns::Api
+class Admin::Location::BaseController < Admin::BaseController
 
-  before_action :authenticate_user, :authenticate_location, :authorize_api
-
-  layout 'admin'
+  before_action :authenticate_location
 
   private
 
-  def render_layout
-    render 'admin/index'
-  end
-
   def authenticate_location
-    return if location
-
-    if api?
-      head 404
-    else
-      raise ApplicationController::Error404
-    end
+    head 404 unless location?
   end
 
   def location
-    @location ||= current_user.locations.try(:find_by, slug: params[:slug]) if current_user
+    @location ||= current_user.locations.try(:find_by, slug: params[:slug]) if current_user?
+  end
+
+  def location?
+    location.present?
   end
 end

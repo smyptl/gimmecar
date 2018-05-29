@@ -1,4 +1,4 @@
-class Command::BaseController < ApplicationController
+class Admin::BaseController < ApplicationController
   include Concerns::Authentication
   include Concerns::Api
 
@@ -7,10 +7,10 @@ class Command::BaseController < ApplicationController
   private
 
   def render_layout
-    render template: '/command', layout: false
+    render template: '/admin', layout: false
   end
 
   def login_path
-    command_login_path
+    admin_login_path
   end
 end

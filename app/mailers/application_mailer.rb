@@ -3,8 +3,8 @@ class ApplicationMailer < ActionMailer::Base
 
   helper_method :format_percent, :format_currency, :format_time, :format_date
 
-  default from: 'GimmeCar | Car Rentals <team@gimmecar.com>'
-  layout 'email'
+  default from: 'GimmeCar | 24/7 Car Rental <team@gimmecar.com>'
+  layout false
 
   def format_percent(value)
     "#{value*100}%"

@@ -1,4 +1,4 @@
-module Admin::Concerns::User
+module Concerns::Authentication
 
   private
 
@@ -8,19 +8,27 @@ module Admin::Concerns::User
     if api?
       head 400
     else
-      redirect_to admin_login_path
+      redirect_to login_path
     end
   end
 
   def current_user
     @current_user ||= begin
-                        ::User.authenticate_by_token(token)
+                        ::User.authenticate_by_token(token, command: command?)
                       rescue JWT::DecodeError
                         nil
                       end
   end
 
+  def current_user?
+    current_user.present?
+  end
+
   def token
     cookies.encrypted[:token]
+  end
+
+  def command?
+    request.original_url.include?('command.')
   end
 end
