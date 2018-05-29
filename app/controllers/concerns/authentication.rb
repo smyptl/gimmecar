@@ -14,7 +14,7 @@ module Concerns::Authentication
 
   def current_user
     @current_user ||= begin
-                        ::User.authenticate_command_by_token(token)
+                        ::User.authenticate_by_token(token, command: command?)
                       rescue JWT::DecodeError
                         nil
                       end
@@ -26,5 +26,9 @@ module Concerns::Authentication
 
   def token
     cookies.encrypted[:token]
+  end
+
+  def command?
+    request.original_url.include?('command.')
   end
 end

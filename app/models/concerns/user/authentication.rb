@@ -11,19 +11,20 @@ module Concerns::User::Authentication
   end
 
   class_methods do
-    def authenticate_by_token(token)
+    def authenticate_by_token(token, command: false)
       payload = Lib::AuthToken.authenticate(token)
 
-      find_by({
+      user = find_by({
         id:                payload.fetch('sub'),
         email:             payload.fetch('email'),
         persistence_token: payload.fetch('persistence_token')
       })
-    end
 
-    def authenticate_command_by_token(token)
-      user = authenticate_by_token(token)
-      user && user.command? ? user : nil
+      if command
+        user && user.command? ? user : nil
+      else
+        user
+      end
     end
   end
 
