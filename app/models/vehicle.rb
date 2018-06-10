@@ -45,6 +45,7 @@ class Vehicle < ApplicationRecord
   has_many :line_items, through: :rentals
 
   scope :vehicle_type, -> (type) { where(vehicle_type: type) }
+  scope :decommissioned, -> { where.not(date_decommissioned: nil) }
 
   delegate :name, :slug, to: :location, prefix: true, allow_nil: true
 

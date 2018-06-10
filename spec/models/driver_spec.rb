@@ -66,12 +66,29 @@ describe Driver do
     end
   end
 
+  describe '#rentals' do
+    it 'finds rental as driver primary' do
+      driver = create(:driver)
+      rental = create(:rental, driver: driver)
+      create(:rental)
+
+      expect(driver.rentals).to contain_exactly(rental)
+    end
+
+    it 'finds rental as driver additional' do
+      driver = create(:driver)
+      rental = create(:rental, additional_driver: driver)
+
+      expect(driver.rentals).to contain_exactly(rental)
+    end
+  end
+
   describe '#rentals_closed' do
     it 'returns closed rental as additional driver' do
       driver = create(:driver)
       rental = create(:rental, :closed, additional_driver: driver)
 
-      expect(driver.rentals_closed).to include(rental)
+      expect(driver.rentals_closed).to contain_exactly(rental)
     end
   end
 
