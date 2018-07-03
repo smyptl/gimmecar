@@ -28,7 +28,7 @@ class Charge < ApplicationRecord
           amount:   amount,
           currency: 'usd',
           customer: customer_id,
-          source: source_id,
+          source:   source_id,
         })
       end
 
