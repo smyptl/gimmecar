@@ -23,19 +23,19 @@ require 'helpers/stripe_helper'
 
 FactoryBot.define do
   factory :driver do
-    name_first { Faker::Name.first_name }
-    name_middle { Faker::Name.last_name }
-    name_last { Faker::Name.last_name }
-    gender { ['male', 'female'].sample }
-    date_of_birth (Time.current - 26.years).to_date
-    license_number { Faker::Number.number(7) }
-    license_state { Faker::Address.state }
-    license_country { Faker::Address.country }
-    license_expiration_date (Time.current + 1.year).to_date
+    name_first              { Faker::Name.first_name }
+    name_middle             { Faker::Name.last_name }
+    name_last               { Faker::Name.last_name }
+    gender                  { ['male', 'female'].sample }
+    date_of_birth           { (Time.current - 26.years).to_date }
+    license_number          { Faker::Number.number(7) }
+    license_state           { Faker::Address.state }
+    license_country         { Faker::Address.country }
+    license_expiration_date { (Time.current + 1.year).to_date }
 
     transient do
-      create_stripe_id false
-      card_type :valid
+      create_stripe_id { false }
+      card_type { :valid }
     end
 
     before :create do |driver, evaluator|

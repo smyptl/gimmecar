@@ -27,6 +27,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 # Audit Log
 gem 'paper_trail'
+gem 'paper_trail-association_tracking'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

@@ -20,15 +20,15 @@
 
 FactoryBot.define do
   factory :insurance_policy do
-    company_name Faker::Company.name
-    agent Faker::Name.name
-    policy_number SecureRandom.hex(10)
-    phone_number "9091231234"
-    effective_date (Time.current - 6.months).to_date
-    expiration_date (Time.current + 6.months).to_date
+    company_name       { Faker::Company.name }
+    agent              { Faker::Name.name }
+    policy_number      { SecureRandom.hex(10) }
+    phone_number       { "9091231234" }
+    effective_date     { (Time.current - 6.months).to_date }
+    expiration_date    { (Time.current + 6.months).to_date }
 
-    verify_date (Time.current).to_date
-    verify_agent Faker::Name.name
-    verify_call_center Faker::Address.city
+    verify_date        { (Time.current).to_date }
+    verify_agent       { Faker::Name.name }
+    verify_call_center { Faker::Address.city }
   end
 end

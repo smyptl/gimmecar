@@ -20,7 +20,7 @@
 FactoryBot.define do
 
   factory :address do
-    address_type :home
+    address_type { :home }
     street1      { Faker::Address.street_address }
     street2      { Faker::Address.secondary_address }
     city         { Faker::Address.city }
@@ -28,7 +28,7 @@ FactoryBot.define do
     zip_code     { rand(10000..99999).to_s }
 
     trait :primary do
-      primary true
+      primary { true }
     end
   end
 end

@@ -21,7 +21,7 @@
 FactoryBot.define do
 
   factory :location do
-    name 'Hotel California'
+    name { 'Hotel California' }
     slug { Faker::Internet.slug(name, '-') }
   end
 end

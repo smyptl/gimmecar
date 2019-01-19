@@ -34,21 +34,21 @@ FactoryBot.define do
   factory :vehicle do
     location { create(:location) }
     original_location { location || create(:location) }
-    vehicle_type :mid_size
+    vehicle_type { :mid_size }
     make { ['BMW', 'Toyota', 'Ford', 'Porsche'].sample }
-    model '5 Series'
+    model { '5 Series' }
     year { [2017, 2018].sample }
     color { Faker::Color.color_name }
     vin { Faker::Vehicle.vin }
     license_number { SecureRandom.hex(4) }
-    status :clean
+    status { :clean }
 
     trait :compact do
-      vehicle_type :compact
+      vehicle_type { :compact }
     end
 
     trait :subcompact do
-      vehicle_type :subcompact
+      vehicle_type { :subcompact }
     end
 
     trait :decommissioned do

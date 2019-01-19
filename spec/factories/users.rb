@@ -21,7 +21,7 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     sequence(:email) { |n| "#{n}_#{Faker::Internet.email}" }
-    password '1234'
-    password_confirmation '1234'
+    password { '1234' }
+    password_confirmation { '1234' }
   end
 end

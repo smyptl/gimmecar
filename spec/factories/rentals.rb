@@ -38,16 +38,16 @@ FactoryBot.define do
 
   factory :rental do
     trait :open do
-      status Rental::OPEN
+      status { Rental::OPEN }
     end
 
     trait :closed do
-      status Rental::CLOSED
+      status { Rental::CLOSED }
     end
 
     trait :add_miles do
-      pickup_odometer 100
-      drop_off_odometer 200
+      pickup_odometer { 100 }
+      drop_off_odometer { 200 }
     end
 
     pickup_location { create(:location) }

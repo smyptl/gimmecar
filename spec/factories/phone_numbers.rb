@@ -17,12 +17,12 @@
 FactoryBot.define do
 
   factory :phone_number do
-    phone_type :cell
-    number 1231231234
-    extension 1231
+    phone_type { :cell }
+    number { 1231231234 }
+    extension { 1231 }
 
     trait :primary do
-      primary true
+      primary { true }
     end
   end
 end
