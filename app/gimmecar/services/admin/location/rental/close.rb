@@ -6,7 +6,7 @@ class Services::Admin::Location::Rental::Close < Lib::Services::Base
 
   output do
     object :rental do |o|
-      o.attributes :pickup_fuel
+      o.attributes :pickup_fuel, :pickup_odometer, :days_apart
     end
   end
 

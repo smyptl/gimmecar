@@ -8,6 +8,7 @@ class Services::Admin::Location::Vehicles::Available < Lib::Services::Base
   output do
     collection :vehicles, component: Services::Builders::VehiclesTable do |c|
       c.attribute :color
+      c.attribute :odometer
     end
   end
 

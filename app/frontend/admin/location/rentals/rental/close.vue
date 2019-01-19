@@ -39,6 +39,18 @@
           this.open = true
         })
     },
+    computed: {
+      drop_off_odometer_wrong() {
+        if (this.form.drop_off_odometer && this.form.drop_off_odometer > this.odometer_estimate) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      odometer_estimate() {
+        return this.rental.pickup_odometer + (this.rental.days_apart * 100)
+      }
+    },
     methods: {
       close() {
         this.$emit('close')
@@ -87,6 +99,9 @@
                 v-error='form.errors.has("drop_off_odometer")'
                 @input='form.errors.clear("drop_off_odometer")')
               input-error-message(:errors='form.errors.get("drop_off_odometer")')
+
+            .input-block(v-if='drop_off_odometer_wrong')
+              p.message.message-warning The drop off odometer looks incorrect, please double check.
 
           .input-container.three-fifths
             .input-block

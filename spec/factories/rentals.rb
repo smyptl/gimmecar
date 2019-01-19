@@ -45,6 +45,11 @@ FactoryBot.define do
       status { Rental::CLOSED }
     end
 
+    trait :add_dates do
+      pickup { Date.today - 4.days }
+      drop_off { Date.today + 1.days }
+    end
+
     trait :add_miles do
       pickup_odometer { 100 }
       drop_off_odometer { 200 }

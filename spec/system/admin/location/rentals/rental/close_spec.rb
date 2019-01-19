@@ -10,9 +10,8 @@ describe 'Close', type: :system, js: true do
   scenario 'success' do
     pickup_odometer = 550
     drop_off_odometer = pickup_odometer + 500
-    rental = create(:rental, :open,
+    rental = create(:rental, :open, :add_dates,
                     pickup_location: location,
-                    pickup: (Time.current - 1.day),
                     pickup_odometer: pickup_odometer,
                     pickup_fuel: 10)
 

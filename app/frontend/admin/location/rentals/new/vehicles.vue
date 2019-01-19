@@ -1,5 +1,6 @@
 <script>
   import Capitalize from 'lodash/capitalize'
+  import Find from 'lodash/find'
   import VehicleStatusIcons from 'Components/vehicle/status'
 
   export default {
@@ -24,17 +25,27 @@
       sorted_vehicles() {
         return this.vehicles.data
       },
+      pickup_odometer_wrong() {
+        if (this.vehicle && this.form.pickup_odometer) {
+          return this.form.pickup_odometer > this.vehicle.odometer + 100;
+        } else {
+          return false;
+        }
+      },
+      vehicle() {
+        return Find(this.vehicles.data, ['id', this.form.vehicle_id]);
+      }
     },
     methods: {
       lastFive(vin) {
         return vin.slice(-5)
       },
-      selectVehicle(vehicle_id) {
-        this.form.vehicle_id = vehicle_id
-        this.form.errors.clear('vehicle_id')
-        return null
+      selectVehicle(vehicle) {
+        this.form.vehicle_id = vehicle.id;
+        this.form.errors.clear('vehicle_id');
+        return null;
       }
-    }
+    },
   }
 </script>
 
@@ -55,7 +66,7 @@
               tr(
                 v-for='vehicle in sorted_vehicles'
                 :key='vehicle.id'
-                @click.prevent='selectVehicle(vehicle.id)'
+                @click.prevent='selectVehicle(vehicle)'
                 :class='{ selected: form.vehicle_id == vehicle.id }'
               )
 
@@ -80,6 +91,9 @@
             @input='form.errors.clear("pickup_odometer")')
           input-error-message(:errors='form.errors.get("pickup_odometer")')
 
+        .input-block(v-if='pickup_odometer_wrong')
+          p.message.message-warning The pickup odometer looks incorrect, last odometer was {{ this.vehicle.odometer }}, please double check.
+
       .input-container.three-fifths
         .input-block
           label.input-label(for='pickup_fuel')
@@ -90,5 +104,20 @@
 </template>
 
 <style lang='stylus' scoped>
+  @import '~Styles/global/colors'
+  @import '~Styles/global/layout'
+  @import '~Styles/components/panels/form'
   @import '~Styles/components/panels/table'
+
+  .message-warning
+    margin-top: $margin-sm
+
+    padding: $padding-sm
+
+    border-radius: $input-border-radius
+    background: $yellow
+
+    color: lighten($yellow, 98%)
+    text-shadow: 0.0625rem 0 0.25rem darken($yellow, 15%)
+    font-weight: 600
 </style>
