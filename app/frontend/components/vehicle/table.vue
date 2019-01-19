@@ -59,7 +59,10 @@
             td {{ vehicle.vehicle_type }}
             td(v-if='show_location') {{ vehicle.location_name }}
             td
-              template(v-if='vehicle.license_number') {{ vehicle.license_number }}
+              template(v-if='vehicle.license_number')
+                .block
+                  | {{ vehicle.license_number }}
+                  i.text-light.font-mono &nbsp;({{ lastFive(vehicle.vin) }})
               template(v-else)
                 i VIN: {{ lastFive(vehicle.vin) }}
             slot(name='body' :vehicle='vehicle')
