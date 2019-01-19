@@ -13,6 +13,7 @@
   import DriverInfo from 'Components/driver/information'
 
   import Close from './rental/close'
+  import Extend from 'Components/rental/extend'
 
   export default {
     name: 'Rental',
@@ -34,6 +35,7 @@
       Close,
       DriverInfo,
       Dropdown,
+      Extend,
       RightArrowIcon,
     },
     created() {
@@ -80,6 +82,8 @@
             ul
               li(v-if='rental.actions.close')
                 button.link(@click='loadAction("close")') Close
+              li(v-if='rental.actions.extend')
+                button.link(@click='loadAction("extend")') Extend
               li
                 button.link(@click='printInvoice') Print Invoice
 

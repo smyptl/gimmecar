@@ -15,6 +15,10 @@ class Services::Admin::Location::Rental::Information < Lib::Services::Base
         n.nested :close, if: -> (r) { r.can_close? }  do |n|
           n.attribute :url, output: -> (r) { urls.admin_location_rental_close_path(rental_id: r.number, slug: slug) }
         end
+
+        n.nested :extend, if: -> (r) { r.can_extend_rental? }  do |n|
+          n.attribute :url, output: -> (r) { urls.admin_location_rental_extend_path(rental_id: r.number, slug: slug) }
+        end
       end
     end
   end

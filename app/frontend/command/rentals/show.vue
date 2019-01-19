@@ -12,7 +12,7 @@
   import RightArrowIcon from 'Components/icons/right_arrow'
 
   import DriverInfo from 'Components/driver/information'
-  import Extend from './rental/extend'
+  import Extend from 'Components/rental/extend'
   import ReturnDeposit from './rental/return_deposit'
 
 
