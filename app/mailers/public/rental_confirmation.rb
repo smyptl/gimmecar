@@ -10,8 +10,8 @@ class Public::RentalConfirmation < ApplicationMailer
 
   def samay(email)
     @email = email
-    mail(to: 'samay@gimmecar.com',
-         subject: "New Reservation!!!",
+    mail(to: 'samay@gimmecar.com, gm@super8redlands.com',
+         subject: "GimmeCar - New Reservation!",
          content_type: "text/html",
          template_path: "public/emails")
   end
