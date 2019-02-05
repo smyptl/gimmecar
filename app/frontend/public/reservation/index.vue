@@ -20,7 +20,7 @@
         form: new Form({
           pickup: new Date().setDate(new Date().getDate() + 1),
           drop_off: new Date().setDate(new Date().getDate() + 2),
-          location_id: '',
+          location_id: '1',
           vehicle_type: '',
           name_first: '',
           name_last: '',
@@ -119,10 +119,7 @@
                   v-model='form.location_id'
                   v-error='form.errors.has("location_id")'
                   @input='form.errors.clear("location_id")')
-                option(value='' disabled) -- Select Location --
-                option(value='2') Adelanto, CA - California Inn - 11628 Bartlett Ave., Adelanto, CA 92301
-                option(value='3') Hesperia, CA - Day & Night Inn - 14865 Bear Valley Rd., Hesperia, CA 92345
-                option(value='1') Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
+                option(value='1' disabled) Redlands, CA - Super 8 - 1160 Arizona St., Redlands, CA 92374
               input-error-message(:errors='form.errors.get("location_id")')
 
           .input-container.whole
