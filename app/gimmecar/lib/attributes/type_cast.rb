@@ -2,6 +2,7 @@ class Lib::Attributes::TypeCast
 
   TIME_REGEX = /(-?\d+)[-](\d{2})[-](\d{2})?(\d{2})?.*/
   DATE_REGEX = /^((((0[13578])|([13578])|(1[02]))[\/](([1-9])|([0-2][0-9])|(3[01])))|(((0[469])|([469])|(11))[\/](([1-9])|([0-2][0-9])|(30)))|((2|02)[\/](([1-9])|([0-2][0-9]))))[\/]\d{4}$|^\d{4}$/
+  INTEGER_REGEX = /^[-+]?\d+$/
 
   class << self
     def boolean(value)
@@ -61,7 +62,7 @@ class Lib::Attributes::TypeCast
       when ::Float || ::BigDecimal
         value.to_i
       else
-        value = value.to_s.gsub(/([^0-9.])/, "")
+        value = INTEGER_REGEX.match(value).to_s
         value.blank? ? nil : value.to_i
       end
     end

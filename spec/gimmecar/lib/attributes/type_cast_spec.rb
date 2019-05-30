@@ -127,11 +127,19 @@ describe Lib::Attributes::TypeCast do
     end
 
     it 'value is a negative string' do
-      expect(Lib::Attributes::TypeCast.integer('-123')).to eq(123)
+      expect(Lib::Attributes::TypeCast.integer('-123')).to eq(-123)
+    end
+
+    it 'value is a negative string with extra negative' do
+      expect(Lib::Attributes::TypeCast.integer('--123')).to eq(nil)
     end
 
     it 'value is contains number' do
-      expect(Lib::Attributes::TypeCast.integer('123x')).to eq(123)
+      expect(Lib::Attributes::TypeCast.integer('123x')).to eq(nil)
+    end
+
+    it 'value is contains decimals' do
+      expect(Lib::Attributes::TypeCast.integer('123.123')).to eq(nil)
     end
 
     it 'value is number in integer' do
@@ -140,6 +148,10 @@ describe Lib::Attributes::TypeCast do
 
     it 'value is a negative number' do
       expect(Lib::Attributes::TypeCast.integer(-123)).to eq(-123)
+    end
+
+    it 'value is a float' do
+      expect(Lib::Attributes::TypeCast.integer(123.12)).to eq(123)
     end
   end
 

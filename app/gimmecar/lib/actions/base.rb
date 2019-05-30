@@ -5,10 +5,6 @@ class Lib::Actions::Base < Lib::Attributes::Base
   define_callbacks :save, :execute
 
   class << self
-    def populate_form(data: nil, id: nil)
-      new().populate_form(data: data, id: id)
-    end
-
     def execute(success, failure, **params)
       self.new().execute(success, failure, params)
     end
@@ -39,15 +35,6 @@ class Lib::Actions::Base < Lib::Attributes::Base
     success = lambda { |_| true }
     failure = lambda { |_| false }
     execute(success, failure, params)
-  end
-
-  def populate_form(data: nil, id: nil)
-    if id
-      data = send(:data, id)
-    end
-
-    self._form_attributes.each { |key, _| send("#{key}=", data.send(key)) } if data
-    self
   end
 
   private

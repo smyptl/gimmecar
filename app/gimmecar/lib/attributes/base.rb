@@ -49,12 +49,10 @@ class Lib::Attributes::Base
 
     def define_attribute_read_and_write_methods
       _form_attributes.each do |name, settings|
-        case settings.fetch(:type)
-        when :nested
-          define_attribute_read_and_write_method(name)
+        define_attribute_read_and_write_method(name)
+
+        if settings.fetch(:type) == :nested
           define_nested_attribute_read_methods(name, settings)
-        else
-          define_attribute_read_and_write_method(name)
         end
       end
     end
