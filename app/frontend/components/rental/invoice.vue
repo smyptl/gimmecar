@@ -53,6 +53,17 @@
         b
           address-d(:address='summary.driver.address_primary')
 
+    .whole.mt-default(v-if='this.summary.additional_driver')
+      h4 {{ summary.additional_driver.name }}
+      p
+        span.block License #:&nbsp;
+        b.block {{ summary.additional_driver.license_number }}
+      p
+        span.block Address:&nbsp;
+        b
+          address-d(:address='summary.additional_driver.address_primary')
+
+
     .whole.mt-default.rental-invoice-summary
       h4.invoice-one-line We appreicate your business!
       p Thanks for being a customer. A detailed summary of your invoice is below. If you have any questions, we are happy to help. Email support@gimmecar.com or call 909.318.0450.
@@ -66,7 +77,7 @@
       .one-half.left
         img.signature(:src='this.summary.driver_financial_responsibility_signature')
         h5 {{ this.summary.driver.name }}
-      .one-half.left(v-if='this.summary.additional_driver_name')
+      .one-half.left(v-if='this.summary.additional_driver')
         img.signature(:src='this.summary.additional_driver_financial_responsibility_signature')
         h5 {{ this.summary.additional_driver.name }}
 
@@ -76,7 +87,7 @@
       .one-half.left
         img.signature(:src='this.summary.driver_signature')
         h5 {{ this.summary.driver.name }}
-      .one-half.left(v-if='this.summary.additional_driver_name')
+      .one-half.left(v-if='this.summary.additional_driver')
         img.signature(:src='this.summary.additional_driver_signature')
         h5 {{ this.summary.additional_driver.name }}
 
