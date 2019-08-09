@@ -33,7 +33,8 @@ class Location < ApplicationRecord
   has_many :rental_rates, through: :rentals
 
   has_many :vehicles
-  has_many :vehicles_with_type, -> (vehicle_type) { vehicles.where(vehicle_type: vehicle_type) }
+  has_many :vehicles_commissioned, -> { commissioned }, class_name: 'Vehicle'
+  has_many :vehicles_with_type,    -> (vehicle_type) { where(vehicle_type: vehicle_type) }, class_name: 'Vehicle'
 
   has_many :rates
 

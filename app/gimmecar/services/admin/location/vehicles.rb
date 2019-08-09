@@ -7,6 +7,6 @@ class Services::Admin::Location::Vehicles < Lib::Services::Base
   private
 
   def query
-    Location.includes(:vehicles).find(params.fetch(:location_id)).vehicles
+    Location.includes(:vehicles_commissioned).find(params.fetch(:location_id)).vehicles_commissioned
   end
 end
