@@ -47,6 +47,7 @@
         | Vehicle:&nbsp;
         b {{ summary.vehicle.make_model }}
         template(v-if='summary.vehicle.vin') &nbsp; {{ summary.vehicle.vin }}
+        template(v-if='summary.vehicle.license_number') &nbsp;-&nbsp; {{ summary.vehicle.license_number }}
 
       li
         | Pickup:&nbsp;
